@@ -22,13 +22,15 @@ import lombok.RequiredArgsConstructor;
 		public User loginCheck(User user) {
 			// 아이디에 해당하는 회원정보를 조회한다.
 			User test = userRep.findById(user.getUserId()).orElse(null);
-			
+			System.out.println(user.getUserId());
+			System.out.println(test);
 			// 조회된 결과가 null이면 throw new RuntimeException("존재하지 않는 ID로 로그인할수 없습니다.");
 			if (test == null) {
 				return null;
 			} else {
 				// 조회된결과가 있으면 비밀번호 일치확인 후 틀리면 throw new RuntimeException("비밀번호를 다시 확인해주세요.");
 				if (!test.getUserPw().equals(user.getUserPw())) {
+					System.out.println("여기 왜? 비번");
 					return null;
 				}
 			}
@@ -49,5 +51,9 @@ import lombok.RequiredArgsConstructor;
 	    public boolean checkId(String userId) {
 	    	return userRep.existsByuserId(userId);
 	    };
-
+	    
+	    @Override
+	    public void signup(User user) {
+	    	userRep.save(user);
+	    }
 }

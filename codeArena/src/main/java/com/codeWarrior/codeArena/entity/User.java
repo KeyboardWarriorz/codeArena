@@ -19,9 +19,9 @@ import lombok.Setter;
 public class User {
     @Id
     @Column(name = "user_id")
-    String userId;
+    private String userId;
     @Column(name = "user_pw")
-    String userPw;
-    String nickname;
-    Integer point;
+    private String userPw;
+    private String nickname;
+    private Integer point;
 }

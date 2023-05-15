@@ -8,4 +8,6 @@ public interface UserService {
     boolean checkNickname(String nickname);
 
     boolean checkId(String userId);
+    
+    public void signup(User user);
 }
