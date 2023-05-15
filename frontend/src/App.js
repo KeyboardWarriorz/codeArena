@@ -64,18 +64,18 @@ const YesHeader = (
       <Route element={<MainLayout />}>
         <Route path="/user/:user_id" element={<Mypage />} />
 
-        <Route path="/board/:category_id" element={<Board />} />
-        <Route path="/article/:article_id" element={<BoardDetail />} />
+        <Route path="/board" element={<Board />} />
+        <Route path="/board/detail/:article_id" element={<BoardDetail />} />
         <Route path="/board/regist" element={<BoardRegist />} />
 
         <Route path="/lecture" element={<LectureList />} />
         <Route path="/lecture/:subcategory" element={<LectureItem />} />
 
-        <Route path="/problemSet" element={<ProblemList />} />
-        <Route path="/problemDesc/:problem_id" element={<ProblemDesc />} />
+        <Route path="/problem" element={<ProblemList />} />
+        <Route path="/problem/desc/:problem_id" element={<ProblemDesc />} />
         <Route path="/problem/:problem_id" element={<ProblemItem />} />
 
-        <Route path="/result/:problem_id" element={<SubmitResult />} />
+        <Route path="problem/result/:problem_id" element={<SubmitResult />} />
 
         <Route path="/user/:user_id/word" element={<WordList />} />
         <Route path="/user/:user_id/problem" element={<UserProblem />} />
