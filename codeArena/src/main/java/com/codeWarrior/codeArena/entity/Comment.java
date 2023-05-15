@@ -10,13 +10,17 @@ import java.util.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer comment_id;
+    @Column(name="comment_id")
+    Integer commentId;
     @ManyToOne(targetEntity = Article.class, fetch = FetchType.LAZY)
-    Integer article_id;
+    @JoinColumn(name="article_id")
+    Integer articleId;
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    Integer user_id;
+    @JoinColumn(name="user_id")
+    Integer userId;
     @ManyToOne(targetEntity = Board.class, fetch = FetchType.LAZY)
-    Integer board_id;
+    @JoinColumn(name="board_id")
+    Integer boardId;
     String content;
     @CreationTimestamp
     Date createdTime;

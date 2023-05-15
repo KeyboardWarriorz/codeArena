@@ -6,11 +6,14 @@ import javax.persistence.*;
 public class Solved {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer solved_id;
+    @Column(name="solved_id")
+    Integer solvedId;
     @ManyToOne(targetEntity = User.class, fetch =FetchType.LAZY)
-    String user_id;
+    @JoinColumn(name="user_id")
+    String userId;
     @ManyToOne(targetEntity = Problem.class, fetch = FetchType.LAZY)
-    Integer problem_id;
+    @JoinColumn(name="problem_id")
+    Integer problemId;
     Integer success;
 
 }

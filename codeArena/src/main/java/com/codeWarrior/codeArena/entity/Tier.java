@@ -1,16 +1,17 @@
 package com.codeWarrior.codeArena.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Tier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer tier_id;
-    String tier_name;
-    Integer tier_low;
-    Integer tier_higth;
+    @Column(name = "tier_id")
+    Integer tierId;
+    @Column(name = "tier_name")
+    String tierName;
+    @Column(name = "tier_low")
+    Integer tierLow;
+    @Column(name = "tier_higth")
+    Integer tierHigth;
 }

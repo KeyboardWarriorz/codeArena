@@ -6,14 +6,21 @@ import javax.persistence.*;
 public class Problem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer problem_id;
+    @Column(name="problem_id")
+    Integer problemId;
     @ManyToOne(targetEntity = SubCategory.class, fetch = FetchType.LAZY)
-    Integer subcategory_id;
+    @JoinColumn(name="subcategory_id")
+    Integer subcategoryId;
     String title;
     String question;
-    Integer answer_index;
-    String answer_1;
-    String answer_2;
-    String answer_3;
-    String answer_4;
+    @Column(name="answer_index")
+    Integer answerIndex;
+    @Column(name="answer_1")
+    String answer1;
+    @Column(name="answer_2")
+    String answer2;
+    @Column(name="answer_3")
+    String answer3;
+    @Column(name="answer_4")
+    String answer4;
 }

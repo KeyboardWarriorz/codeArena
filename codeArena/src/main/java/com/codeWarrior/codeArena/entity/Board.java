@@ -6,6 +6,8 @@ import javax.persistence.*;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer board_id;
-    String board_name;
+    @Column(name="board_id")
+    Integer boardId;
+    @Column(name="board_name")
+    String boardName;
 }
