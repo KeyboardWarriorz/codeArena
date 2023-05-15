@@ -25,12 +25,13 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	private final ArticleRepository articleRepo;
 	
-	private final JPAQueryFactory queryFactory;
+	//private final JPAQueryFactory queryFactory;
 	
 
+
 	@Override
-	public ResponseEntity selectAll(final Pageable pageable) {
-		Page<Article> articleList = articleRepo.findAll(pageable);
-		return new ResponseEntity<>(articleList, HttpStatus.OK);
+	public List<Article> selectAll() {
+		List<Article> list = articleRepo.findAll();
+		return list;
 	}
 }

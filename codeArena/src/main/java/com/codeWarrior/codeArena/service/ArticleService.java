@@ -1,10 +1,11 @@
 package com.codeWarrior.codeArena.service;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import java.util.List;
+
+import com.codeWarrior.codeArena.entity.Article;
 
 public interface ArticleService {
 
-	ResponseEntity selectAll(Pageable pageable);
-
+	public List<Article> selectAll();
+	
 }
