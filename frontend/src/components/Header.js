@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const Div = styled.div`
@@ -37,14 +38,14 @@ const Contents = styled.div`
   // min-width: 500px;
   display: flex;
   justify-content: space-between;
+
+  .selected {
+    font-weight: bold;
+    color: #c25450;
+  }
 `;
 
 const Content = styled.div``;
-
-const CurContent = styled.div`
-  // font-weight: bold;
-  // color: #506bb1;
-`;
 
 const Login = styled.div`
   display: flex;
@@ -54,22 +55,30 @@ const Login = styled.div`
 const User = styled.div`
   display: flex;
   margin-right: 20px;
+  cursor: default;
 
   .nickname {
     color: #006e61;
     font-weight: bold;
+  }
+
+  .line {
+    color: #fab809;
+  }
+
+  .out {
+    cursor: pointer;
   }
 `;
 
 function Header() {
   const [page, setPage] = useState(useLocation().pathname);
 
-  // useEffect(() => {
-  //   setPage = page1;
-  // }, [page]);
-
   const [login, setLogin] = useState("true"); // 로그인시 set
+  const [userId, setUserId] = useState(1);
   const [nickname, setNickname] = useState("성환조");
+
+  function logout() {}
 
   return (
     <Div>
@@ -81,45 +90,34 @@ function Header() {
       </Link>
 
       <Contents>
-        <Link to="/lecture">
-          {page.includes("lecture") ? (
-            <CurContent>📚 기초 개념</CurContent>
-          ) : (
-            <Content>📚 기초 개념</Content>
-          )}
-        </Link>
+        <NavLink to="/lecture" className={({ isActive }) => (isActive ? "selected" : "")}>
+          <div>📚 기초 개념</div>
+        </NavLink>
 
-        <a Link to="/problemSet">
-          {page.includes("problem") || page.includes("result") ? (
-            <CurContent>📝 문제 풀이</CurContent>
-          ) : (
-            <Content>📝 문제 풀이</Content>
-          )}
-        </a>
+        <NavLink to="/problem" className={({ isActive }) => (isActive ? "selected" : "")}>
+          <div>📝 문제 풀이</div>
+        </NavLink>
 
-        <Link to="/board/1">
-          {page.includes("board") || page.includes("article") ? (
-            <CurContent>📚 커뮤니티</CurContent>
-          ) : (
-            <Content>📚 커뮤니티</Content>
-          )}
-        </Link>
+        <NavLink to={`/board`} className={({ isActive }) => (isActive ? "selected" : "")}>
+          <div>😍 커뮤니티</div>
+        </NavLink>
 
-        <Link to="/multiquiz">
-          {page.includes("quiz") ? (
-            <CurContent>🎮 단체 퀴즈</CurContent>
-          ) : (
-            <Content>🎮 단체 퀴즈</Content>
-          )}
-        </Link>
+        <NavLink to="/multiquiz" className={({ isActive }) => (isActive ? "selected" : "")}>
+          <div>🎮 단체 퀴즈</div>
+        </NavLink>
       </Contents>
 
       {login ? (
         <User>
-          <p className="nickname">{nickname}</p>
+          <Link to="/user/1">
+            <p className="nickname">{nickname}</p>
+          </Link>
+
           <p>&nbsp;님</p>
-          <p style={{ color: "#FAB809" }}>&nbsp;|&nbsp;</p>
-          <p>로그아웃</p>
+          <p className="line">&nbsp;|&nbsp;</p>
+          <p className="out" onClick={logout}>
+            로그아웃
+          </p>
         </User>
       ) : (
         <Login>
