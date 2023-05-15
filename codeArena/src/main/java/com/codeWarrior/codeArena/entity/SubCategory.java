@@ -6,10 +6,13 @@ import javax.persistence.*;
 public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer subcategory_id;
+    @Column(name="subcategory_id")
+    Integer subcategoryId;
 
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
-    Integer category_id;
+    @JoinColumn(name="category_id")
+    Integer categoryId;
     String content;
-    String subcategory_name;
+    @Column(name="subcategory_name")
+    String subcategoryName;
 }

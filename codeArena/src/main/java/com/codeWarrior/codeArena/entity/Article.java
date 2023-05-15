@@ -9,11 +9,15 @@ import java.util.Date;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer article_id;
+    @Column(name ="article_id")
+    Integer articleId;
+
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    String user_id;
+    @JoinColumn(name ="user_id")
+    String userId;
     @ManyToOne(targetEntity = Board.class, fetch = FetchType.LAZY)
-    Integer board_id;
+    @JoinColumn(name ="board_id")
+    Integer boardId;
     String title;
     String content;
     @CreationTimestamp
