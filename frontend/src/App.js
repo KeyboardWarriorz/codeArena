@@ -1,23 +1,104 @@
-import logo from './logo.svg';
-import './App.css';
+// import Header from "./components/Header";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Fragment } from "react";
+
+import Main from "./pages/Main";
+
+import Login from "./pages/Login";
+import Signup from "./pages/SignUp";
+import Mypage from "./pages/MyPage";
+import ChangePW from "./pages/ChangePW";
+
+import Board from "./pages/Board";
+import BoardDetail from "./pages/BoardDetail";
+import BoardRegist from "./pages/BoardRegist";
+
+import LectureList from "./pages/LectureList";
+import LectureItem from "./pages/LectureItem";
+
+import ProblemList from "./pages/ProblemList";
+import ProblemDesc from "./pages/ProblemDesc";
+import ProblemItem from "./pages/ProblemItem";
+
+import SubmitResult from "./pages/SubmitResult";
+
+import WordList from "./pages/WordList";
+import UserProblem from "./pages/UserProblem";
+
+import MultiQuiz from "./pages/MultiQuiz";
+import QuizRoom from "./pages/QuizRoom";
+
+import Notfound from "./pages/NotFound";
+import MainLayout from "./MainLayout";
+
+// 비로그인도 접근 가능한 페이지
+const pages = (
+  <Fragment>
+    <Route element={<MainLayout />}>
+      <Route path="/" element={<Main />} />
+      <Route path="/*" element={<Notfound />} />
+    </Route>
+  </Fragment>
+);
+
+// 로그인 안했을 때 헤더가 없음
+const noneHeader = (
+  <Fragment>
+    <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<Signup />} />
+  </Fragment>
+);
+
+// 로그인 했을 때 헤더가 없음
+const ChangePassWord = (
+  <Fragment>
+    <Route path="/user/:user_id/changepassword" element={<ChangePW />} />
+  </Fragment>
+);
+
+// 로그인 했을 때 헤더가 있음
+const YesHeader = (
+  <Fragment>
+    <Route>
+      <Route element={<MainLayout />}>
+        <Route path="/user/:user_id" element={<Mypage />} />
+
+        <Route path="/board/:category_id" element={<Board />} />
+        <Route path="/article/:article_id" element={<BoardDetail />} />
+        <Route path="/board/regist" element={<BoardRegist />} />
+
+        <Route path="/lecture" element={<LectureList />} />
+        <Route path="/lecture/:subcategory" element={<LectureItem />} />
+
+        <Route path="/problemSet" element={<ProblemList />} />
+        <Route path="/problemDesc/:problem_id" element={<ProblemDesc />} />
+        <Route path="/problem/:problem_id" element={<ProblemItem />} />
+
+        <Route path="/result/:problem_id" element={<SubmitResult />} />
+
+        <Route path="/user/:user_id/word" element={<WordList />} />
+        <Route path="/user/:user_id/problem" element={<UserProblem />} />
+
+        <Route path="/multiquiz" element={<MultiQuiz />} />
+        <Route path="/multiquiz/:room_id" element={<QuizRoom />} />
+      </Route>
+    </Route>
+  </Fragment>
+);
+
+const isLogin = true;
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          {isLogin ? ChangePassWord && YesHeader : null}
+          {noneHeader}
+          {pages}
+        </Routes>
+      </Router>
     </div>
   );
 }
