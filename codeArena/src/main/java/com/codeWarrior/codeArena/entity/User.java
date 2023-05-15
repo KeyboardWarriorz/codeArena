@@ -1,5 +1,6 @@
 package com.codeWarrior.codeArena.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,8 +9,10 @@ import javax.persistence.Table;
 @Table(name = "Users")
 public class User {
     @Id
-    String user_id;
-    String user_pw;
+    @Column(name = "user_id")
+    String userId;
+    @Column(name = "user_pw")
+    String userPw;
     String nickname;
     Integer point;
 }
