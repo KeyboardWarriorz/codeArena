@@ -55,25 +55,36 @@ public class UserController {
 	/**
 	 * 회원가입
 	 * */
+	
 	@GetMapping("/check/nickname/{nickname}")
 	public ResponseEntity<?> checkNickname(@PathVariable("nickname") String nickname) {
-
 	    if(userService.checkNickname(nickname)) {
-	            return ResponseEntity.status(HttpStatus.OK).body(false);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("닉네임 중복");
 	    }
 
 	    return ResponseEntity.status(HttpStatus.OK).body(true);
 	}
 
 	@GetMapping("/check/userid/{userId}")
-	public ResponseEntity<?> checkEmail(@PathVariable("email") String email) {
+	public ResponseEntity<?> checkEmail(@PathVariable("userId") String userId) {
 
-	    if(userService.checkId(email)) {
-	        return ResponseEntity.status(HttpStatus.OK).body(false);
+	    if(userService.checkId(userId)) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이디 중복");
 	    }
 
 	    return ResponseEntity.status(HttpStatus.OK).body(true);
 	}
+	
+	@PostMapping("/signup")
+	public ResponseEntity<?> signup(@RequestBody User user){
+		if (user == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
+		}
+		user.setPoint(0);
+		userService.signup(user);
+		return ResponseEntity.status(HttpStatus.OK).body("회원가입 성공");
+	}
+	
 	
 }
 
