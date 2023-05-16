@@ -37,7 +37,6 @@ const pages = (
   <Fragment>
     <Route element={<MainLayout />}>
       <Route path="/" element={<Main />} />
-      <Route path="/*" element={<Notfound />} />
     </Route>
   </Fragment>
 );
@@ -47,20 +46,15 @@ const noneHeader = (
   <Fragment>
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
+    <Route path="/*" element={<Notfound />} />
   </Fragment>
 );
 
-// 로그인 했을 때 헤더가 없음
-const ChangePassWord = (
-  <Fragment>
-    <Route path="/user/:user_id/changepassword" element={<ChangePW />} />
-  </Fragment>
-);
-
-// 로그인 했을 때 헤더가 있음
-const YesHeader = (
+// 로그인 했을 때 접근 가능
+const userPage = (
   <Fragment>
     <Route>
+      <Route path="/user/:user_id/changepw" element={<ChangePW />} />
       <Route element={<MainLayout />}>
         <Route path="/user/:user_id" element={<Mypage />} />
 
@@ -75,7 +69,7 @@ const YesHeader = (
         <Route path="/problem/desc/:problem_id" element={<ProblemDesc />} />
         <Route path="/problem/:problem_id" element={<ProblemItem />} />
 
-        <Route path="problem/result/:problem_id" element={<SubmitResult />} />
+        <Route path="/problem/result/:problem_id" element={<SubmitResult />} />
 
         <Route path="/user/:user_id/word" element={<WordList />} />
         <Route path="/user/:user_id/problem" element={<UserProblem />} />
@@ -94,7 +88,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          {isLogin ? ChangePassWord && YesHeader : null}
+          {isLogin ? userPage : null}
           {noneHeader}
           {pages}
         </Routes>

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 
 const Div = styled.div`
   width: 100%;
@@ -45,11 +44,14 @@ const Contents = styled.div`
   }
 `;
 
-const Content = styled.div``;
-
 const Login = styled.div`
   display: flex;
   margin-right: 20px;
+
+  #vline {
+    cursor: default;
+    color: #fab809;
+  }
 `;
 
 const User = styled.div`
@@ -72,9 +74,7 @@ const User = styled.div`
 `;
 
 function Header() {
-  const [page, setPage] = useState(useLocation().pathname);
-
-  const [login, setLogin] = useState("true"); // 로그인시 set
+  const [login, setLogin] = useState(false); // 로그인시 set
   const [userId, setUserId] = useState(1);
   const [nickname, setNickname] = useState("성환조");
 
@@ -90,19 +90,31 @@ function Header() {
       </Link>
 
       <Contents>
-        <NavLink to="/lecture" className={({ isActive }) => (isActive ? "selected" : "")}>
+        <NavLink
+          to="/lecture"
+          className={({ isActive }) => (isActive ? "selected" : "")}
+        >
           <div>📚 기초 개념</div>
         </NavLink>
 
-        <NavLink to="/problem" className={({ isActive }) => (isActive ? "selected" : "")}>
+        <NavLink
+          to="/problem"
+          className={({ isActive }) => (isActive ? "selected" : "")}
+        >
           <div>📝 문제 풀이</div>
         </NavLink>
 
-        <NavLink to={`/board`} className={({ isActive }) => (isActive ? "selected" : "")}>
+        <NavLink
+          to={`/board`}
+          className={({ isActive }) => (isActive ? "selected" : "")}
+        >
           <div>😍 커뮤니티</div>
         </NavLink>
 
-        <NavLink to="/multiquiz" className={({ isActive }) => (isActive ? "selected" : "")}>
+        <NavLink
+          to="/multiquiz"
+          className={({ isActive }) => (isActive ? "selected" : "")}
+        >
           <div>🎮 단체 퀴즈</div>
         </NavLink>
       </Contents>
@@ -125,7 +137,7 @@ function Header() {
             <p>로그인</p>
           </Link>
 
-          <p style={{ color: "#FAB809" }}>&nbsp;|&nbsp;</p>
+          <p id="vline">&nbsp;|&nbsp;</p>
           <Link to="/signup">
             <p>회원가입</p>
           </Link>
