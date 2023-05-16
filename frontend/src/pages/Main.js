@@ -15,6 +15,12 @@ import iu1 from "../assets/images/아이유1.jpg";
 import iu2 from "../assets/images/아이유2.jpg";
 import iu3 from "../assets/images/아이유3.jpg";
 
+import an1 from "../assets/images/브콜.svg";
+import an2 from "../assets/images/아거.svg";
+import an3 from "../assets/images/은효.svg";
+import an4 from "../assets/images/준서.svg";
+import an5 from "../assets/images/톢.svg";
+
 const ImgBanner = styled.img`
   width: 50%;
   height: 50%;
@@ -53,15 +59,16 @@ const StyledSwiper = styled(Swiper)`
 `;
 
 const MainContainer = styled.div`
-  border: 2px red solid;
-  padding: 2rem 4rem 16rem;
+  // border: 2px red solid;
+  padding: 2rem 6rem 16rem;
 `;
 
 const SubContainer = styled.div`
   display: flex;
   flex-direction: column;
+
   gap: 2rem;
-  border: 2px blue solid;
+  // border: 2px blue solid;
 `;
 
 const H2Title = styled.h2`
@@ -72,22 +79,31 @@ const H2Title = styled.h2`
 
 // 내부에 반복문 돌릴 예정
 const ListBox = styled.div`
-  border: 2px pink solid;
+  // border: 2px pink solid;
   display: flex;
+  justify-content: space-around;
   flex-flow: row wrap;
   column-gap: 4.3rem;
   row-gap: 3.5 rem;
 `;
 
+const Box = styled.a`
+  display: flex;
+  flex-direction: column;
+  align-center: center;
+  gap: 1.6rem;
+`;
+
 const LectureBox = styled.div`
-  border: 2px green solid;
+  // border: 2px green solid;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 9.5rem;
-  height: 9.5 rem;
+  height: 9.5rem;
   background-color: #f6f6f8;
   transition: 0.2s linear;
+  border-radius: 10px;
 
   &:hover {
     background: #5cdbc7;
@@ -95,6 +111,15 @@ const LectureBox = styled.div`
     transition: 0.5s;
     cursor: pointer;
   }
+`;
+
+const BoxTitle = styled.h3`
+  margin: 0;
+`;
+
+const SmallImg = styled.img`
+  width: 55px;
+  height: 55px;
 `;
 
 export default function Main() {
@@ -138,12 +163,36 @@ export default function Main() {
         <SubContainer>
           <H2Title>&gt; Join Arena!</H2Title>
           <ListBox>
-            <LectureBox>asdasd</LectureBox>
-            <LectureBox>asdasd</LectureBox>
-            <LectureBox>asdasd</LectureBox>
-            <LectureBox>asdasd</LectureBox>
-            <LectureBox>asdasd</LectureBox>
-            <LectureBox>asdasd</LectureBox>
+            <Box>
+              <LectureBox>
+                <SmallImg src={an1} />
+              </LectureBox>
+              <BoxTitle>브로콜리</BoxTitle>
+            </Box>
+            <Box>
+              <LectureBox>
+                <SmallImg src={an2} />
+              </LectureBox>
+              <BoxTitle>악어</BoxTitle>
+            </Box>
+            <Box>
+              <LectureBox>
+                <SmallImg src={an3} />
+              </LectureBox>
+              <BoxTitle>고라니</BoxTitle>
+            </Box>
+            <Box>
+              <LectureBox>
+                <SmallImg src={an4} />
+              </LectureBox>
+              <BoxTitle>곰.</BoxTitle>
+            </Box>
+            <Box>
+              <LectureBox>
+                <SmallImg src={an5} />
+              </LectureBox>
+              <BoxTitle>토끼</BoxTitle>
+            </Box>
           </ListBox>
         </SubContainer>
       </MainContainer>
