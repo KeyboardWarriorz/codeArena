@@ -16,5 +16,5 @@ const Button = styled.button`
   }
 `;
 export default function MiniButton(props) {
-  return <Button>{props.text}</Button>;
+  return <Button onClick={props.func}>{props.text}</Button>;
 }

@@ -1,4 +1,8 @@
 import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import swal from "sweetalert";
+
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AuthDiv from "../components/organisms/AuthDiv";
@@ -12,6 +16,10 @@ const Div = styled.div`
 
   a {
     text-decoration: none;
+  }
+
+  #button {
+    margin-top: 20px;
   }
 `;
 
@@ -60,9 +68,88 @@ const Nav = styled.div`
 `;
 
 export default function SignUp() {
-  // 이메일, 닉네임 중복 확인 후 둘 다 true 처리 되면 가입하기 버튼 누를 수 있게
-  // 200 완료되면 input을 read-only로 바꾸고 중복 확인 버튼은 수정 버튼으로 바뀜
-  // 수정 누르면 input 열리고 false로 바뀌고 중복 확인 버튼 다시 생김
+  useEffect(() => {
+    if (pw1 != "" && pw2 != "" && pw1 === pw2) {
+      setEqual(true);
+    }
+  });
+
+  const [id, setID] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [idcheck, setIdCheck] = useState(false);
+  const [idstate, setIdState] = useState("");
+  const [namecheck, setNameCheck] = useState(false);
+  const [namestate, setNameState] = useState("닉네임 설정 후 변경 불가");
+
+  const [pw1, setPw1] = useState("");
+  const [pw2, setPw2] = useState("");
+  const [equal, setEqual] = useState(false);
+
+  const [data, setData] = useState({ userId: "", userPw: "", nickname: "" });
+
+  function onChangeId(e) {
+    setID(e.target.value);
+    setIdCheck(false);
+    setIdState("");
+  }
+
+  function onChangeNickname(e) {
+    setNickname(e.target.value);
+    setNameCheck(false);
+    setNameState("닉네임 설정 후 변경 불가");
+  }
+
+  function onChange1(e) {
+    setPw1(e.target.value);
+    setEqual(false);
+  }
+
+  function onChange2(e) {
+    setPw2(e.target.value);
+    setEqual(false);
+  }
+
+  useEffect(() => {
+    setData({ userId: id, userPw: pw1, nickname: nickname });
+  }, [id, pw1, pw2, nickname]);
+
+  function idCheck() {
+    axios
+      .get(`http://localhost:8080/user/check/userid/${id}`)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setIdCheck(true);
+          setIdState("사용 가능한 아이디입니다");
+        }
+      })
+      .catch((e) => alert(e.response.data));
+  }
+
+  function nameCheck() {
+    axios
+      .get(`http://localhost:8080/user/check/nickname/${nickname}`)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setNameCheck(true);
+          setNameState("사용 가능한 닉네임입니다");
+        }
+      })
+      .catch((e) => alert(e.response.data));
+  }
+
+  function onSubmit() {
+    if (!equal) {
+      swal("비밀번호가 서로 일치하지 않습니다");
+    } else if (!idcheck) {
+      alert("아이디 중복 확인을 해주세요");
+    } else if (!namecheck) {
+      alert("닉네임 중복 확인을 해주세요");
+    } else {
+      console.log(data);
+    }
+  }
 
   return (
     <Div>
@@ -72,37 +159,49 @@ export default function SignUp() {
           <Arena>Arena</Arena>
         </Title>
       </Link>
-
       <Nav>
         <p>이미 회원이신가요?&nbsp;&nbsp;</p>
         <Link to="/login">
           <p id="login">로그인</p>
         </Link>
       </Nav>
+      <div onChange={onChangeId}>
+        <AuthDiv
+          title="아이디"
+          es={true}
+          placeholder="ex. sunzzang412"
+          added={idstate}
+          isbutton={true}
+          buttonfunc={idCheck}
+        ></AuthDiv>
+      </div>
 
-      <AuthDiv
-        title="아이디"
-        es={true}
-        placeholder="ex. ca412@gmail.com"
-        isbutton={true}
-      ></AuthDiv>
-      <AuthDiv
-        title="비밀번호"
-        es={true}
-        type="password"
-        placeholder="영문, 숫자 포함 6~12자"
-      ></AuthDiv>
-      <AuthDiv title="비밀번호 확인" es={true}></AuthDiv>
-      <AuthDiv
-        title="닉네임"
-        es={true}
-        type="password"
-        placeholder="공백 미포함 8자 이하"
-        added="닉네임 설정 후 변경 불가"
-        isbutton={true}
-      ></AuthDiv>
+      <div onChange={onChange1}>
+        <AuthDiv
+          title="비밀번호"
+          es={true}
+          type="password"
+          placeholder="영문, 숫자 포함 6~12자"
+        />
+      </div>
 
-      <MidButton text="가입하기"></MidButton>
+      <div onChange={onChange2}>
+        <AuthDiv title="비밀번호 확인" es={true} type="password" />
+      </div>
+
+      <div onChange={onChangeNickname}>
+        <AuthDiv
+          title="닉네임"
+          es={true}
+          placeholder="공백 미포함 8자 이하"
+          added={namestate}
+          isbutton={true}
+          buttonfunc={nameCheck}
+        />
+      </div>
+      <div id="button" onClick={onSubmit}>
+        <MidButton text="가입하기" />
+      </div>
     </Div>
   );
 }

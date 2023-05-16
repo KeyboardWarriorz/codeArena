@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Div = styled.div`
@@ -74,11 +75,23 @@ const User = styled.div`
 `;
 
 function Header() {
-  const [login, setLogin] = useState(false); // 로그인시 set
-  const [userId, setUserId] = useState(1);
-  const [nickname, setNickname] = useState("성환조");
+  const navigate = useNavigate();
+  const [login, setLogin] = useState(window.localStorage.login); // 로그인시 set
+  const [userId, setUserId] = useState(window.localStorage.userId);
+  const [nickname, setNickname] = useState(window.localStorage.nickname);
 
-  function logout() {}
+  function logout() {
+    axios
+      .get("http://localhost:8080/user/logout")
+      .then((res) => {
+        if (res.status === 200) {
+          window.localStorage.clear();
+          navigate("/");
+          window.location.reload();
+        }
+      })
+      .catch((e) => window.alert(e.response.data));
+  }
 
   return (
     <Div>
@@ -121,7 +134,7 @@ function Header() {
 
       {login ? (
         <User>
-          <Link to="/user/1">
+          <Link to={`user/${userId}`} onClick={() => console.log(userId)}>
             <p className="nickname">{nickname}</p>
           </Link>
 
