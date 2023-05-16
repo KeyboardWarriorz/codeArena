@@ -1,11 +1,17 @@
 package com.kw.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kw.dto.MypageDTO;
+import com.kw.dto.UserDTO;
+import com.kw.entity.Article;
 import com.kw.entity.User;
+import com.kw.repository.ArticleRepository;
 import com.kw.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +24,10 @@ public class UserServieImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRep;
+	
+	@Autowired
+	private ArticleRepository articleRep;
+	
 
 	@Override
 	public User loginCheck(User user) {
@@ -54,5 +64,16 @@ public class UserServieImpl implements UserService {
     public void signup(User user) {
     	userRep.save(user);
     }
+    
+//    @Override 
+//    public MypageDTO Mydata(String userId) {
+//    	User user = userRep.findById(userId).orElse(null);
+//    	UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint());
+//    	
+//    	List<Article> art = articleRep.findAllByUser(user);
+//    	
+//    	MypageDTO mp = new MypageDTO(dto, art);
+//    	return mp;
+//    }
 
 }

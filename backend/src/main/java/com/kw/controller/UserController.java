@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kw.dto.MypageDTO;
+import com.kw.dto.UserDTO;
 import com.kw.entity.User;
+import com.kw.response.responseApi;
 import com.kw.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -87,5 +90,17 @@ public class UserController {
 		user.setPoint(0);
 		userService.signup(user);
 		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	/**
+	 * 회원 정보 조회
+	 * */
+	
+	@GetMapping("/mypage/{userId}")
+	public ResponseEntity<?> getUserDate(@PathVariable("userId") String userId){
+//		MypageDTO dto = userService.Mydata(userId);
+		UserDTO dto = new UserDTO();
+		
+		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
 }
