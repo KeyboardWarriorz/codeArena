@@ -1,7 +1,7 @@
-// import Header from "./components/Header";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Fragment } from "react";
+import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from "recoil";
 
 import Main from "./pages/Main";
 
@@ -85,15 +85,17 @@ const isLogin = true;
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          {isLogin ? userPage : null}
-          {noneHeader}
-          {pages}
-        </Routes>
-      </Router>
-    </div>
+    <RecoilRoot>
+      <div className="App">
+        <Router>
+          <Routes>
+            {isLogin ? userPage : null}
+            {noneHeader}
+            {pages}
+          </Routes>
+        </Router>
+      </div>
+    </RecoilRoot>
   );
 }
 
