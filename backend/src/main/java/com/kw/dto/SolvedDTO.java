@@ -20,6 +20,6 @@ import lombok.ToString;
 @Builder
 public class SolvedDTO {
 	private Long solvedId;
-	private Problem problem; 
+	private ProblemDTO problem; 
 	private Integer success;
 }
