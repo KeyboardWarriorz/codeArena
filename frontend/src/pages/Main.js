@@ -15,11 +15,11 @@ import iu1 from "../assets/images/아이유1.jpg";
 import iu2 from "../assets/images/아이유2.jpg";
 import iu3 from "../assets/images/아이유3.jpg";
 
-import an1 from "../assets/images/브콜.svg";
-import an2 from "../assets/images/아거.svg";
-import an3 from "../assets/images/은효.svg";
-import an4 from "../assets/images/준서.svg";
-import an5 from "../assets/images/톢.svg";
+import an1 from "../assets/images/Jieun.svg";
+import an2 from "../assets/images/Seongwhan.svg";
+import an3 from "../assets/images/Eunhyo.svg";
+import an4 from "../assets/images/Junseo.svg";
+import an5 from "../assets/images/Sunyeong.svg";
 
 const ImgBanner = styled.img`
   width: 50%;
