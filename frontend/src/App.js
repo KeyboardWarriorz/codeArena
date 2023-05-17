@@ -24,7 +24,8 @@ import ProblemItem from "./pages/ProblemItem";
 import SubmitResult from "./pages/SubmitResult";
 
 import WordList from "./pages/WordList";
-import UserProblem from "./pages/UserProblem";
+import FailedProblem from "./pages/FailedProblem";
+import SolvedProblem from "./pages/SolvedProblem";
 
 import MultiQuiz from "./pages/MultiQuiz";
 import QuizRoom from "./pages/QuizRoom";
@@ -72,7 +73,8 @@ const userPage = (
         <Route path="/problem/result/:problem_id" element={<SubmitResult />} />
 
         <Route path="/user/:user_id/word" element={<WordList />} />
-        <Route path="/user/:user_id/problem" element={<UserProblem />} />
+        <Route path="/user/:user_id/solved" element={<SolvedProblem />} />
+        <Route path="/user/:user_id/failed" element={<FailedProblem />} />
 
         <Route path="/multiquiz" element={<MultiQuiz />} />
         <Route path="/multiquiz/:room_id" element={<QuizRoom />} />
