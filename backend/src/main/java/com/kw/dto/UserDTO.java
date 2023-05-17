@@ -1,6 +1,5 @@
 package com.kw.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -13,4 +12,5 @@ public class UserDTO {
 	private String userId;
 	private String nickname;
 	private int point;
+	private String profile_image;
 }

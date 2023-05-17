@@ -16,6 +16,7 @@ public class MypageDTO {
 	// 유저 단어 문제
 	
 	private UserDTO user;
-//	private List<Article> article;
+	private List<SolvedDTO> success_solved;
+	private List<SolvedDTO> failed_solved;
 //	private List<Object> problem;
 }
