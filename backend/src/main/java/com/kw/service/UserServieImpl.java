@@ -24,10 +24,10 @@ public class UserServieImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRep;
-	
+
 	@Autowired
 	private ArticleRepository articleRep;
-	
+
 
 	@Override
 	public User loginCheck(User user) {
@@ -45,9 +45,9 @@ public class UserServieImpl implements UserService {
 		// 일치하면 조회된 회원정보 리턴
 		return test;
 	}
-	
-	
-    @Transactional
+
+
+	@Transactional
     @Override
     public boolean checkNickname(String nickname) {
         return userRep.existsByNickname(nickname);
@@ -57,12 +57,12 @@ public class UserServieImpl implements UserService {
     @Transactional
     @Override
     public boolean checkId(String userId) {
-    	return userRep.existsByuserId(userId);
+		return userRep.existsByuserId(userId);
     };
     
     @Override
     public void signup(User user) {
-    	userRep.save(user);
+		userRep.save(user);
     }
     
 //    @Override 
@@ -75,5 +75,11 @@ public class UserServieImpl implements UserService {
 //    	MypageDTO mp = new MypageDTO(dto, art);
 //    	return mp;
 //    }
-
+@Override
+public void addUserPoint(String userId, Integer point){
+	User user = userRep.findByUserId(userId);
+	user.setPoint(user.getPoint()+point);
+	System.out.println(user);
+	userRep.save(user);
+}
 }

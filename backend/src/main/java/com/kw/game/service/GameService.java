@@ -42,6 +42,7 @@ public class GameService {
             Integer userScore = entry.getValue();
             if (cur_max < userScore) {
                 winner = new ArrayList<>(Arrays.asList(userId));
+                cur_max = userScore;
             }
             else if (cur_max == userScore) {
                 winner.add(userId);
@@ -65,14 +66,13 @@ public class GameService {
         if (answer_cnt == user_cnt) {  //변경 해야 함
             this.answer_cnt=0;
             this.question_cnt+=1;
-
+            sendResult("result");
             if (question_cnt == gameScenario.getProblem_cnt()-1) {
                 //종료
                 System.out.println("game over");
                 sendResult("end");
                 return;
             }
-            sendResult("result");
             sendQuestion();
         }
 
