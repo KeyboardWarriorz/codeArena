@@ -215,10 +215,7 @@ export default function Board() {
       <Contents>
         <SearchBar>
           <Input type="text" placeholder="검색어를 입력해 주세요" />
-          <span
-            className="material-symbols-outlined"
-            style={{ color: "#00000080" }}
-          >
+          <span className="material-symbols-outlined" style={{ color: "#00000080" }}>
             search
           </span>
           <button>작성하기</button>
