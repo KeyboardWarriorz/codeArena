@@ -4,6 +4,7 @@
 
 ### 📚 친절한 프로그래밍 지식 설명과 재미있는 퀴즈 풀이까지, 코딩 교육 웹 플랫폼 codeArena
 
+
 ##### Git Commit Convention
 [#지라이슈번호][BE/FE] feat: <메시지>
 
@@ -28,4 +29,10 @@ comment : 주석
 
 ```
 
+##### PR Convention
+```
+[BE/FE] <커밋 사항>
+ex. [BE] 유저 로그인 API 완성
 
++) 관련 멤버 reviewer 설정 권장
+```
