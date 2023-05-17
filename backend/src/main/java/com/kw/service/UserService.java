@@ -5,13 +5,15 @@ import com.kw.dto.UserDTO;
 import com.kw.entity.User;
 
 public interface UserService {
-	public User loginCheck(User user);
-	
+    public User loginCheck(User user);
+
     boolean checkNickname(String nickname);
 
     boolean checkId(String userId);
     
     public void signup(User user);
+
+    public void addUserPoint(String user_id, Integer point);
     
     public UserDTO selectUser(String userId);
 }

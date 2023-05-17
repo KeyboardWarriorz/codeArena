@@ -81,5 +81,13 @@ public class UserServieImpl implements UserService {
 
     	return dto;
     }
+    
+    @Override
+    public void addUserPoint(String userId, Integer point){
+    	User user = userRep.findByUserId(userId);
+    	user.setPoint(user.getPoint()+point);
+    	System.out.println(user);
+    	userRep.save(user);
+    }
 
 }

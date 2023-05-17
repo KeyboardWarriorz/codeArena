@@ -2,6 +2,7 @@ package com.kw.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -111,4 +112,22 @@ public class UserController {
 		
 		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
+	
+	/**
+	 * 유저 포인트 추가
+	 */
+	@PostMapping("/point")
+	public ResponseEntity<?> addPoint(HttpServletRequest request) {
+		System.out.println("addPoint called");
+		String user_id = request.getParameter("user_id");
+		System.out.println(user_id);
+		Integer point = Integer.parseInt(request.getParameter("point"));
+		System.out.println(point);
+		try {
+			userService.addUserPoint(user_id, point);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity(HttpStatus.OK);
+}
 }
