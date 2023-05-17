@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AuthDiv from "../components/organisms/AuthDiv";
 import MidButton from "../components/buttons/MidButton";
@@ -68,6 +68,7 @@ const Nav = styled.div`
 `;
 
 export default function SignUp() {
+  const navigate = useNavigate();
   useEffect(() => {
     if (pw1 != "" && pw2 != "" && pw1 === pw2) {
       setEqual(true);
@@ -114,40 +115,80 @@ export default function SignUp() {
   }, [id, pw1, pw2, nickname]);
 
   function idCheck() {
-    axios
-      .get(`http://localhost:8080/user/check/userid/${id}`)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          setIdCheck(true);
-          setIdState("사용 가능한 아이디입니다");
-        }
-      })
-      .catch((e) => alert(e.response.data));
+    if (id === "") {
+      swal("아이디를 입력해주세요");
+    } else {
+      axios
+        .get(`http://localhost:8080/user/check/userid/${id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            setIdCheck(true);
+            setIdState("사용 가능한 아이디입니다");
+          }
+        })
+        .catch((e) => swal(e.response.data));
+    }
   }
 
   function nameCheck() {
-    axios
-      .get(`http://localhost:8080/user/check/nickname/${nickname}`)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          setNameCheck(true);
-          setNameState("사용 가능한 닉네임입니다");
-        }
-      })
-      .catch((e) => alert(e.response.data));
+    if (nickname === "") {
+      swal("닉네임을 입력해주세요");
+    } else if (nickname.length > 8) {
+      swal("닉네임은 8자 이하로 입력해주세요.");
+    } else {
+      axios
+        .get(`http://localhost:8080/user/check/nickname/${nickname}`)
+        .then((res) => {
+          if (res.status === 200) {
+            setNameCheck(true);
+            setNameState("사용 가능한 닉네임입니다");
+          }
+        })
+        .catch((e) => swal(e.response.data));
+    }
   }
 
-  function onSubmit() {
-    if (!equal) {
-      swal("비밀번호가 서로 일치하지 않습니다");
-    } else if (!idcheck) {
-      alert("아이디 중복 확인을 해주세요");
-    } else if (!namecheck) {
-      alert("닉네임 중복 확인을 해주세요");
+  const [pwstate, setPwState] = useState("비밀번호를 확인해주세요");
+  function checkPW() {
+    let num = pw1.search(/[0-9]/g);
+    let eng = pw1.search(/[a-z]/gi);
+
+    if (pw1.length < 6 || pw1.length > 12) {
+      setPwState("6자리 ~ 12자리 이내로 입력해주세요.");
+      return false;
+    } else if (pw1.search(/\s/) != -1) {
+      setPwState("비밀번호는 공백 없이 입력해주세요.");
+      return false;
+    } else if (num < 0 || eng < 0) {
+      setPwState("영문과 숫자를 혼합하여 입력해주세요.");
+      return false;
     } else {
-      console.log(data);
+      return true;
+    }
+  }
+
+  // 회원가입 진짜 제출
+  function onSubmit() {
+    if (checkPW() === false) {
+      swal(pwstate);
+    } else {
+      if (!equal) {
+        swal("비밀번호가 서로 일치하지 않습니다");
+      } else if (!idcheck) {
+        swal("아이디 중복 확인을 해주세요");
+      } else if (!namecheck) {
+        swal("닉네임 중복 확인을 해주세요");
+      } else {
+        axios
+          .post("http://localhost:8080/user/signup", data)
+          .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              navigate("/login");
+            }
+          })
+          .catch((e) => swal(e.response.data));
+      }
     }
   }
 

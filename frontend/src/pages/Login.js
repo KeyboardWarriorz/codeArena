@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AuthDiv from "../components/organisms/AuthDiv";
 import MidButton from "../components/buttons/MidButton";
+import swal from "sweetalert";
 
 const Div = styled.div`
   display: flex;
@@ -89,7 +90,6 @@ export default function Login() {
   }, [id, pw]); // id와 pw값이 변경될때마다 제출용 object에 반영
 
   function onSubmit() {
-    console.log(loginData);
     axios
       .post("http://localhost:8080/user/login", loginData)
       .then((res) => {
@@ -100,7 +100,7 @@ export default function Login() {
           navigate("/");
         }
       })
-      .catch((e) => window.alert(e.response.data));
+      .catch((e) => swal(e.response.data));
   }
 
   return (

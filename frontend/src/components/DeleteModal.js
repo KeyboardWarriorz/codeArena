@@ -17,52 +17,48 @@ const ModalBox = styled.div`
 `;
 
 const ModalContent = styled.div`
-  // padding: 1.5rem 3rem;
+  font-weight: 400;
   height: 300px;
   width: 500px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #32333e;
+  background-color: white;
   > div:nth-of-type(1) {
+    // 엑스버튼
+    cursor: pointer;
     font-size: 1.3em;
-    font-family: "Press Start 2P";
-    margin-left: 550px;
-    :hover {
-      cursor: pointer;
-    }
+    margin-left: 450px;
   }
   > div:nth-of-type(2) {
+    // 삭제문구
     margin-top: 40px;
-    font-family: "Dunggeunmo";
-    font-size: 2em;
-  }
-  > div:nth-of-type(3) {
-    margin-top: 30px;
-    font-size: 1.7em;
-  }
-  > div:nth-of-type(4) {
-    margin-top: 10px;
-    font-size: 1em;
+    font-size: 1.8em;
+
+    > #red {
+      color: #c25450;
+      font-weight: bold;
+    }
   }
   > div {
     display: flex;
     justify-content: space-evenly;
     margin-top: 1.25rem;
     > button {
+      font-family: "NanumSquareNeo-Variable";
+      color: white;
       border: none;
-      width: 180px;
+      width: 400px;
+      height: 45px;
       margin-top: 20px;
       padding: 0.4rem 0.6rem;
-      font-size: 0.9rem;
-      margin-right: 10px;
       border-radius: 5px;
-      font-size: 1.5em;
-      background-color: #5bb8a1;
-      :hover {
-        cursor: pointer;
-      }
+      font-size: 1.3em;
+      font-weight: 600;
+      background-color: #c25450;
+      cursor: pointer;
+      box-shadow: 3px 2px 5px #c25450;
     }
   }
 `;
@@ -75,12 +71,12 @@ export default function DeleteModal(props) {
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <div onClick={props.clickModal}>X</div>
         <div>
-          <p>정말</p>
-          <p>삭제</p>
+          <p>정말&nbsp;</p>
+          <p id="red">삭제</p>
           <p>하시겠습니까?</p>
         </div>
         <div>
-          <button onClick={props.func}>계속하기</button>
+          <button onClick={props.func}>삭제하기</button>
         </div>
       </ModalContent>
     </ModalBox>
