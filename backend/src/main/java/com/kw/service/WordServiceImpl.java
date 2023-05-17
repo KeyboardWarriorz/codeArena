@@ -9,6 +9,7 @@ import java.net.URL;
 
 import javax.transaction.Transactional;
 
+import com.kw.repository.UserWordRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +26,34 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class WordServiceImpl implements WordService {
 	private final WordRepository wordRep;
-//	private final JPAQueryFactory queryFactory;
+	private final UserWordRepository userWordRep;
 
 	@Value("${openai.api.key}")
 	private String OPENAI_API_KEY;
 	private final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
-	
 	/**
 	 * 단어에 대한 설명 가져오기 
 	 * */
 	@Override
-	public Word selectByName(String name) {
+	public Word selectByWordName(String name) {
+		return wordRep.selectByWordName(name);
+	}
+
+	/**
+	 * 공용 Word DB에서 word_id 조회하기
+	 * */
+	@Override
+	public Word selectByName(String name){
 		return wordRep.selectByName(name);
+	}
+
+	/**
+	 * 사용자 단어 DB에 값이 있는 지 조회하기
+	 * */
+	@Override
+	public Long selectByName(String name, String userId){
+		return wordRep.selectByName(name, userId);
 	}
 
 	/**
@@ -45,8 +61,7 @@ public class WordServiceImpl implements WordService {
 	 * */
 	@Override
 	public void insert(UserWord userWord) {
-		// TODO Auto-generated method stub
-
+		userWordRep.save(userWord);
 	}
 
 	/**
@@ -112,6 +127,6 @@ public class WordServiceImpl implements WordService {
 		
 		return null; //조회에 실패했을 때 null을 반환 
 
-	}; //getWordDefinition end
+	} //getWordDefinition end
 
 }
