@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserServieImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRep;
@@ -89,5 +89,21 @@ public class UserServieImpl implements UserService {
     	System.out.println(user);
     	userRep.save(user);
     }
+    
+    @Override
+    @Transactional
+	public boolean checkPassword(String userId, String pw) {
+    	User user = userRep.findByUserId(userId);
+    	if (!user.getUserPw().equals(pw)) {
+    		return false;
+    	}
+    	return true;
+    }
 
+
+    @Override
+    public void ChangePw(String userId, String pw) {
+    	User user = userRep.findByUserId(userId);
+    	user.setUserPw(pw);
+    }
 }
