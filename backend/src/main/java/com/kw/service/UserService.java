@@ -15,5 +15,5 @@ public interface UserService {
 
     public void addUserPoint(String user_id, Integer point);
     
-//    public MypageDTO Mydata(String userId);
+    public UserDTO selectUser(String userId);
 }

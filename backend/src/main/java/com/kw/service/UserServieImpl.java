@@ -1,6 +1,8 @@
 package com.kw.service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -24,10 +26,10 @@ public class UserServieImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRep;
-
+	
 	@Autowired
 	private ArticleRepository articleRep;
-
+	
 
 	@Override
 	public User loginCheck(User user) {
@@ -45,9 +47,9 @@ public class UserServieImpl implements UserService {
 		// 일치하면 조회된 회원정보 리턴
 		return test;
 	}
-
-
-	@Transactional
+	
+	
+    @Transactional
     @Override
     public boolean checkNickname(String nickname) {
         return userRep.existsByNickname(nickname);
@@ -57,29 +59,35 @@ public class UserServieImpl implements UserService {
     @Transactional
     @Override
     public boolean checkId(String userId) {
-		return userRep.existsByuserId(userId);
+    	return userRep.existsByuserId(userId);
     };
     
     @Override
     public void signup(User user) {
-		userRep.save(user);
+    	List<String> myList = Arrays.asList("Junseo", "Seongwhan", "Sunyeong", "Eunhyo", "Jieun");
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(myList.size());
+        
+        user.setProfileImage(myList.get(randomIndex));
+    	userRep.save(user);
     }
     
-//    @Override 
-//    public MypageDTO Mydata(String userId) {
-//    	User user = userRep.findById(userId).orElse(null);
-//    	UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint());
-//    	
-//    	List<Article> art = articleRep.findAllByUser(user);
-//    	
-//    	MypageDTO mp = new MypageDTO(dto, art);
-//    	return mp;
-//    }
-@Override
-public void addUserPoint(String userId, Integer point){
-	User user = userRep.findByUserId(userId);
-	user.setPoint(user.getPoint()+point);
-	System.out.println(user);
-	userRep.save(user);
-}
+    @Override 
+    public UserDTO selectUser(String userId) {
+    	User user = userRep.findById(userId).orElse(null);
+    	
+    	UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint(),user.getProfileImage());
+
+    	return dto;
+    }
+    
+    @Override
+    public void addUserPoint(String userId, Integer point){
+    	User user = userRep.findByUserId(userId);
+    	user.setPoint(user.getPoint()+point);
+    	System.out.println(user);
+    	userRep.save(user);
+    }
+
 }
