@@ -1,5 +1,8 @@
 import React from "react";
+import { styled } from "styled-components";
+
+const Div = styled.div``;
 
 export default function BoardDetail() {
-  return <div>게시글 상세</div>;
+  return <Div></Div>;
 }
