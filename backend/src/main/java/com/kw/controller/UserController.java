@@ -1,5 +1,7 @@
 package com.kw.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kw.dto.MypageDTO;
+import com.kw.dto.SolvedDTO;
 import com.kw.dto.UserDTO;
 import com.kw.entity.User;
 import com.kw.response.responseApi;
+import com.kw.service.SolvedService;
 import com.kw.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
-	
+	private final SolvedService solvedService;
 	/**
 	 * 로그인하기
 	 * */
@@ -98,8 +102,12 @@ public class UserController {
 	
 	@GetMapping("/mypage/{userId}")
 	public ResponseEntity<?> getUserDate(@PathVariable("userId") String userId){
-//		MypageDTO dto = userService.Mydata(userId);
-		UserDTO dto = new UserDTO();
+		
+		UserDTO user = userService.selectUser(userId);
+		List<SolvedDTO> success_solved= solvedService.selectSolved_user(userId, 0);
+		List<SolvedDTO> failed_solved= solvedService.selectSolved_user(userId, 1);
+		
+		MypageDTO dto = new MypageDTO(user,success_solved,failed_solved);
 		
 		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}

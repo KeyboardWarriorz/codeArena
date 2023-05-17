@@ -1,6 +1,8 @@
 package com.kw.service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -62,18 +64,22 @@ public class UserServieImpl implements UserService {
     
     @Override
     public void signup(User user) {
+    	List<String> myList = Arrays.asList("Junseo", "Seongwhan", "Sunyeong", "Eunhyo", "Jieun");
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(myList.size());
+        
+        user.setProfileImage(myList.get(randomIndex));
     	userRep.save(user);
     }
     
-//    @Override 
-//    public MypageDTO Mydata(String userId) {
-//    	User user = userRep.findById(userId).orElse(null);
-//    	UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint());
-//    	
-//    	List<Article> art = articleRep.findAllByUser(user);
-//    	
-//    	MypageDTO mp = new MypageDTO(dto, art);
-//    	return mp;
-//    }
+    @Override 
+    public UserDTO selectUser(String userId) {
+    	User user = userRep.findById(userId).orElse(null);
+    	
+    	UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint(),user.getProfileImage());
+
+    	return dto;
+    }
 
 }

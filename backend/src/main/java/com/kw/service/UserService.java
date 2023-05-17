@@ -13,5 +13,5 @@ public interface UserService {
     
     public void signup(User user);
     
-//    public MypageDTO Mydata(String userId);
+    public UserDTO selectUser(String userId);
 }
