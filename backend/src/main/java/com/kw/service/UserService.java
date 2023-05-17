@@ -16,4 +16,8 @@ public interface UserService {
     public void addUserPoint(String user_id, Integer point);
     
     public UserDTO selectUser(String userId);
+    
+    boolean checkPassword(String userId, String pw);
+    
+    public void ChangePw(String userId, String pw);
 }
