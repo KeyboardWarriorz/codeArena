@@ -19,5 +19,6 @@ public class User {
     private String userId;
     private String userPw;
     private String nickname;
+    private String profileImage;
     private Integer point;
 }
