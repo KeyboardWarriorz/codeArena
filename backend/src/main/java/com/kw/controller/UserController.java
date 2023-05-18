@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kw.dto.ErrorDTO;
 import com.kw.dto.MypageDTO;
 import com.kw.dto.SolvedDTO;
 import com.kw.dto.UserDTO;
+import com.kw.dto.WordDTO;
 import com.kw.entity.User;
 import com.kw.response.responseApi;
 import com.kw.service.SolvedService;
 import com.kw.service.UserService;
+import com.kw.service.WordService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +36,7 @@ public class UserController {
 
 	private final UserService userService;
 	private final SolvedService solvedService;
+	private final WordService wordService;
 
 	/**
 	 * 로그인하기
@@ -104,13 +108,14 @@ public class UserController {
 	 */
 
 	@GetMapping("/mypage/{userId}")
-	public ResponseEntity<?> getUserDate(@PathVariable("userId") String userId) {
+	public ResponseEntity<?> getUserPage(@PathVariable("userId") String userId) {
 
 		UserDTO user = userService.selectUser(userId);
 		List<SolvedDTO> success_solved = solvedService.selectSolved_user(userId, 0);
 		List<SolvedDTO> failed_solved = solvedService.selectSolved_user(userId, 1);
-
-		MypageDTO dto = new MypageDTO(user, success_solved, failed_solved);
+		List<WordDTO> user_word = wordService.UserWordList(userId);
+		
+		MypageDTO dto = new MypageDTO(user, success_solved, failed_solved, user_word);
 
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
@@ -140,5 +145,18 @@ public class UserController {
 		}
 		userService.ChangePw(userId, map.get("change_pw"));
 		return ResponseEntity.status(HttpStatus.OK).body("비밀번호 변경을 성공했습니다.");
+	}
+	
+	/**
+	 * 단어목록 조회
+	 * */
+	@GetMapping("/word/{userId}")
+	public ResponseEntity<?> getUserWord(@PathVariable("userId") String userId) {
+
+		UserDTO user = userService.selectUser(userId);
+		List<WordDTO> user_word = wordService.UserWordList(userId);
+		
+		MypageDTO dto = new MypageDTO(user,user_word);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 }

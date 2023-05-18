@@ -6,9 +6,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.kw.dto.UserDTO;
+import com.kw.dto.WordDTO;
 import com.kw.entity.User;
 import com.kw.repository.UserRepository;
 import com.kw.repository.UserWordRepository;
@@ -135,5 +139,21 @@ public class WordServiceImpl implements WordService {
 		return null; //조회에 실패했을 때 null을 반환 
 
 	} //getWordDefinition end
+	
+	/**
+	 * 유저가 등록한 Word들의 List 받아오기
+	 * */
+	public List<WordDTO> UserWordList(String userId){
+		List<WordDTO> lst = new ArrayList<WordDTO>();
+		
+		User user = userRep.findByUserId(userId);
+		List<UserWord> userwords = userWordRep.findListByUser(user);
+		for (UserWord uw : userwords) {
+			WordDTO uwDTO = new WordDTO(uw.getUserWordId(),uw.getWord());
+			lst.add(uwDTO);
+		}
+		
+		return lst;
+	}
 
 }

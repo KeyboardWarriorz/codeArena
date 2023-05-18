@@ -1,6 +1,8 @@
 package com.kw.service;
 
-import com.kw.entity.UserWord;
+import java.util.List;
+
+import com.kw.dto.WordDTO;
 import com.kw.entity.Word;
 
 public interface WordService {
@@ -34,4 +36,10 @@ public interface WordService {
 	 * chatGPT로부터 단어에 해당하는 내용을 받아오기 
 	 * */
 	String getWordDefinition(String word);
+	
+	
+	/**
+	 * 유저가 등록한 Word들의 List 받아오기
+	 * */
+	List<WordDTO> UserWordList(String userId);
 }
