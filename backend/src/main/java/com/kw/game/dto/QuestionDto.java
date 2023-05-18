@@ -14,4 +14,5 @@ public class QuestionDto {
     private String question;
     private List<String> answer;
     private Integer answer_index;
+    private String description;
 }

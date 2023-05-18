@@ -3,6 +3,7 @@ let stompUserClient;
 let selectedRoom;
 let subscription=null;
 let timeoutId=false;
+let description = "";
 function connectToRoom(roomName) {
     console.log("connecting to chat...")
     const userName = document.getElementById("userName").value;
@@ -26,6 +27,7 @@ function connectToRoom(roomName) {
         }
         else if (data.type == "question") {
             showQuestion(data.question,data.answer,data.answer_index);
+            description = data.description;
             timeoutId=setTimeout(sendAnswer,10000,"0");
         }
         else if (data.type == "end") {
@@ -58,9 +60,9 @@ function sendAnswer(isCorrect) {
     const userName = document.getElementById("userName").value;
     const roomName = document.getElementById("roomName").value;
     if (isCorrect=="1") {
-        $("#answerList").html("정답입니다");
+        $("#answerList").html("정답입니다\n\n"+description);
     } else {
-        $("#answerList").html("오답입니다");
+        $("#answerList").html("오답입니다\n\n"+description);
     }
     clearTimeout(timeoutId);
     setTimeout(function () {

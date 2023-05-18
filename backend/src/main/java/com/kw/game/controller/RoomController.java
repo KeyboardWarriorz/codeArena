@@ -31,7 +31,7 @@ public class RoomController {
         if (request.getParameter("problem_category_id") == null) {
             gameScenarioDto = new GameScenarioDto();
         } else {
-            Integer problemCategoryId = Integer.parseInt(request.getParameter("problem_category_id"));
+            Long problemCategoryId = Long.parseLong(request.getParameter("problem_category_id"));
             Integer timeout = Integer.parseInt(request.getParameter("timeout"));
             Integer problem_cnt = Integer.parseInt(request.getParameter("problem_cnt"));
             gameScenarioDto = new GameScenarioDto(problemCategoryId, timeout, problem_cnt);

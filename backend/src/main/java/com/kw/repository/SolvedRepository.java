@@ -15,4 +15,7 @@ public interface SolvedRepository extends JpaRepository<Solved, Integer>, Queryd
 	
 	List<Solved> findListByUser(User user);
 	
+	@Query(value="select s from Solved s where s.user.userId=?1 order by s.solvedId DESC")
+	List<Solved> findListByUserOrderBysolvedIdDesc(String userId);
+	
 }

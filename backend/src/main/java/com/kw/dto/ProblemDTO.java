@@ -21,7 +21,7 @@ public class ProblemDTO {
     private String answer2;
     private String answer3;
     private String answer4;
-    
+    private String description;
     private int problem_type;
     
     private SubCategory subcategory;
