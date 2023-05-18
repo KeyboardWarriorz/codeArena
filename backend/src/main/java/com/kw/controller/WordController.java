@@ -1,21 +1,21 @@
 package com.kw.controller;
 
+import com.kw.entity.UserWord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.kw.entity.UserWord;
 import com.kw.entity.Word;
 import com.kw.response.responseApi;
 import com.kw.service.WordService;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 public class WordController {
 
 	private final WordService wordService;
-
-	private String searchingName; //사용자가 드래그한 단어
 	private String description; //드래그한 단어에 해당하는 설명
 
 	/**
@@ -24,19 +24,22 @@ public class WordController {
 	 * status 201 : "단어 등록 성공" / status 401 : "이미 등록된 단어" /  status 500 : "단어 등록 실패"
 	 */
 	@PostMapping("/word")
-	public ResponseEntity<responseApi<String>> insert(@RequestParam String userId) {
+	public ResponseEntity<responseApi<String>> insert(@RequestBody Map<String, String> request) {
 		responseApi<String> response = new responseApi<String>();
 
+		String name = request.get("name");
+		String userId = request.get("userId");
+
 		// 1. 사용자 User_Word DB에 같은 내용이 이미 존재하는 지 확인한다.
-		Long now = wordService.selectByName(searchingName, userId);
+		UserWord userWord = wordService.selectByName(name, userId);
 
 		// 2-1. 이미 있다면 "이미 등록된 단어" 메시지를 전달
-		if(now > 0){
+		if(userWord != null){
 			response.setStatusCode(401);
 			response.setMessage("이미 등록된 단어");
 		}else{ // 2-2. 없다면 공용 Word DB에서 정보(word_id) 가져와 User_Word DB에 값을 저장한다.
-			wordService.insert(searchingName, userId);
-			response.setStatusCode(200);
+			wordService.insert(name, userId);
+			response.setStatusCode(201);
 			response.setMessage("단어 등록 성공");
 		}
 		return ResponseEntity.ok(response); // 기존에 보고 있던 페이지에 그대로
@@ -50,7 +53,6 @@ public class WordController {
 	@GetMapping("/word")
 	public ResponseEntity<responseApi<String>> selectByName(String name) {
 		responseApi<String> response = new responseApi<String>();
-		searchingName = name; //드래그한 단어를 저장
 
 		// 1. 공용 Word DB에 해당하는 단어가 이미 있는 지 확인한다.
 		Word word = wordService.selectByWordName(name);

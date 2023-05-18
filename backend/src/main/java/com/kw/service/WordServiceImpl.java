@@ -39,7 +39,7 @@ public class WordServiceImpl implements WordService {
 	private String OPENAI_API_KEY;
 	private final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
-	
+
 	/**
 	 * 단어에 대한 설명 가져오기
 	 * */
@@ -60,7 +60,7 @@ public class WordServiceImpl implements WordService {
 	 * 사용자 단어 DB에 값이 있는 지 조회하기
 	 * */
 	@Override
-	public Long selectByName(String name, String userId){
+	public UserWord selectByName(String name, String userId){
 		return wordRep.selectByName(name, userId);
 	}
 
@@ -120,32 +120,32 @@ public class WordServiceImpl implements WordService {
 				while ((responseLine = bufferedReader.readLine()) != null) {
 					response.append(responseLine.trim());
 				}
-				
+
 				String content = null;
 				//chatGPT로부터 가져온 값이 비어있지 않을 때
 				if(response.toString() != null) {
 					ObjectMapper objectMapper = new ObjectMapper();
 					JsonNode rootNode = objectMapper.readTree(response.toString());
-					content = rootNode.get("choices").get(0).get("message").get("content").asText(); //content만 가져오기 
+					content = rootNode.get("choices").get(0).get("message").get("content").asText(); //content만 가져오기
 				}
-            
-				return content; //content 값을 반환 
+
+				return content; //content 값을 반환
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return null; //조회에 실패했을 때 null을 반환 
+
+		return null; //조회에 실패했을 때 null을 반환
 
 	} //getWordDefinition end
-	
+
 	/**
 	 * 유저가 등록한 Word들의 List 받아오기
 	 * */
 	public List<WordDTO> UserWordList(String userId){
 		List<WordDTO> lst = new ArrayList<WordDTO>();
-		
+
 //		User user = userRep.findByUserId(userId);
 		List<UserWord> userwords = userWordRep.findListOrderUser(userId);
 		for (UserWord uw : userwords) {
@@ -155,7 +155,7 @@ public class WordServiceImpl implements WordService {
 			WordDTO uwDTO = new WordDTO(uw.getUserWordId(),uw.getWord());
 			lst.add(uwDTO);
 		}
-		
+
 		return lst;
 	}
 
