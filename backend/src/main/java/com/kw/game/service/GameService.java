@@ -3,14 +3,14 @@ package com.kw.game.service;
 import com.kw.game.dto.QuestionDto;
 import com.kw.game.dto.ResultDto;
 import com.kw.game.dto.RoomDto;
-import com.kw.game.scenario.GameScenario;
+import com.kw.game.dto.GameScenarioDto;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.*;
 
 public class GameService {
     private SimpMessagingTemplate simpMessagingTemplate;
-    private GameScenario gameScenario;
+    private GameScenarioDto gameScenarioDto;
     private Map<String, Integer> user_score = new HashMap<>();
     private List<QuestionDto> question_list= new ArrayList<>();
     private Integer answer_cnt = 0;
@@ -25,11 +25,11 @@ public class GameService {
         }
         user_cnt = room.getUsers().size();
         getProblems();
-        setScenario(new GameScenario(1,4,10,4));
+        setScenario(room.getGameScenarioDto());
         sendQuestion();
     }
-    public void setScenario(GameScenario gameScenario) {
-        this.gameScenario = gameScenario;
+    public void setScenario(GameScenarioDto gameScenarioDto) {
+        this.gameScenarioDto = gameScenarioDto;
     }
 
     public void sendResult(String messageType) {
@@ -63,12 +63,13 @@ public class GameService {
             user_score.put(userId, user_score.get(userId) + 10);
             System.out.println(user_score.get(userId));
         }
-        if (answer_cnt == user_cnt) {  //변경 해야 함
+        if (answer_cnt == user_cnt) {
             this.answer_cnt=0;
             this.question_cnt+=1;
             sendResult("result");
-            if (question_cnt == gameScenario.getProblem_cnt()-1) {
+            if (question_cnt == gameScenarioDto.getProblem_cnt()) {
                 //종료
+                //db에 포인트 추가하게 하기
                 System.out.println("game over");
                 sendResult("end");
                 return;
@@ -77,8 +78,11 @@ public class GameService {
         }
 
     }
+
+    /**
+     * 게임 시나리오의 카테고리 아이디를 통해서 랜덤한 몇 개의 문제리스트를 가져온다.(미완성)
+     */
     public void getProblems() {
-        //게임 시나리오의 카테고리 아이디를 통해서 랜덤한 몇 개의 문제리스트를 가져온다.
         this.question_list.add(new QuestionDto("question","테스트1",new ArrayList<>(List.of("1","2","3","4")),1));
         this.question_list.add(new QuestionDto("question","테스트2",new ArrayList<>(List.of("1","2","3","4")),2));
         this.question_list.add(new QuestionDto("question","테스트3",new ArrayList<>(List.of("1","2","3","4")),3));

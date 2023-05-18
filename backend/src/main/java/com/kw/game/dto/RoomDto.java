@@ -14,4 +14,5 @@ public class RoomDto {
     private Integer category_id;
     public Set<String> users;
     private Integer capacity;
+    private GameScenarioDto gameScenarioDto;
 }
