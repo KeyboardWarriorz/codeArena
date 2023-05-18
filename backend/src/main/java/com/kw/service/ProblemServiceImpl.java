@@ -1,7 +1,6 @@
 package com.kw.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -48,7 +47,7 @@ public class ProblemServiceImpl implements ProblemService {
 			if(p.getAnswer3() == null) {
 				problem_type = 1;
 			}
-			ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),problem_type,p.getSubcategory()); 
+			ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),p.getSolution(),problem_type,p.getSubcategory());
 			lst.add(dto);
 		}
 		
@@ -70,7 +69,7 @@ public class ProblemServiceImpl implements ProblemService {
 			if(p.getAnswer3() == null) {
 				problem_type = 1;
 			}
-			ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),problem_type,p.getSubcategory()); 
+			ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),p.getSolution(),problem_type,p.getSubcategory());
 			lst.add(dto);
 		}
 		
@@ -95,11 +94,29 @@ public class ProblemServiceImpl implements ProblemService {
 				if(p.getAnswer3() == null) {
 					problem_type = 1;
 				}
-				ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),problem_type,s); 
+				ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),p.getSolution(),problem_type,s);
 				lst.add(dto);
 			}
 		}
 		
 		return lst;
+	}
+	@Override
+	public List<ProblemDTO> select_random_problem(Long category, Integer problem_cnt) {
+		List<ProblemDTO> list = select_pro_category(category);
+		Integer size = list.size();
+		if (size < problem_cnt) {
+			problem_cnt = list.size();
+			System.out.println("랜덤 문제 추출 중 원래 문제 수 부족");
+		}
+		Set<Integer> ProblemIndexSet = new HashSet<>();
+		while (ProblemIndexSet.size() < problem_cnt) {
+			ProblemIndexSet.add(new Random().nextInt(size));
+		}
+		List<ProblemDTO> ret = new ArrayList<>();
+		for (Integer idx : ProblemIndexSet) {
+			ret.add(list.get(idx));
+		}
+		return ret;
 	}
 }

@@ -50,7 +50,7 @@ public class SolvedServiceImpl implements SolvedService {
 						problem_type = 1;
 					}
 				}
-				P_dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),problem_type,p.getSubcategory());
+				P_dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),p.getSolution(),problem_type,p.getSubcategory());
 				SolvedDTO dto = new SolvedDTO(s.getSolvedId(), P_dto, s.getSuccess());
 				lst.add(dto);
 			}

@@ -1,14 +1,17 @@
 package com.kw.game.service;
 
+import com.kw.dto.ProblemDTO;
 import com.kw.game.dto.QuestionDto;
 import com.kw.game.dto.ResultDto;
 import com.kw.game.dto.RoomDto;
 import com.kw.game.dto.GameScenarioDto;
+import com.kw.service.ProblemService;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.*;
 
 public class GameService {
+    private ProblemService problemService;
     private SimpMessagingTemplate simpMessagingTemplate;
     private GameScenarioDto gameScenarioDto;
     private Map<String, Integer> user_score = new HashMap<>();
@@ -17,19 +20,17 @@ public class GameService {
     private Integer question_cnt = 0;
     private String roomName;
     private Integer user_cnt=0;
-    public GameService(SimpMessagingTemplate simpMessagingTemplate, RoomDto room) {
+    public GameService(SimpMessagingTemplate simpMessagingTemplate, RoomDto room,ProblemService problemService) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.roomName = room.getRoomName();
+        this.gameScenarioDto = room.getGameScenarioDto();
+        this.problemService = problemService;
         for (String user : room.getUsers()) {
             user_score.put(user, 0);
         }
         user_cnt = room.getUsers().size();
         getProblems();
-        setScenario(room.getGameScenarioDto());
         sendQuestion();
-    }
-    public void setScenario(GameScenarioDto gameScenarioDto) {
-        this.gameScenarioDto = gameScenarioDto;
     }
 
     public void sendResult(String messageType) {
@@ -83,9 +84,18 @@ public class GameService {
      * 게임 시나리오의 카테고리 아이디를 통해서 랜덤한 몇 개의 문제리스트를 가져온다.(미완성)
      */
     public void getProblems() {
-        this.question_list.add(new QuestionDto("question","테스트1",new ArrayList<>(List.of("1","2","3","4")),1));
-        this.question_list.add(new QuestionDto("question","테스트2",new ArrayList<>(List.of("1","2","3","4")),2));
-        this.question_list.add(new QuestionDto("question","테스트3",new ArrayList<>(List.of("1","2","3","4")),3));
+        List<ProblemDTO> list = problemService.select_random_problem(gameScenarioDto.getProblemCategoryId(), gameScenarioDto.getProblem_cnt());
+        for (ProblemDTO problemDTO : list) {
+            String question = problemDTO.getQuestion();
+            List<String> answer_list = new ArrayList<>();
+            answer_list.add(problemDTO.getAnswer1());
+            answer_list.add(problemDTO.getAnswer2());
+            answer_list.add(problemDTO.getAnswer3());
+            answer_list.add(problemDTO.getAnswer4());
+            Integer answer_index = problemDTO.getAnswerIndex();
+            String description = problemDTO.getDescription();
+            question_list.add(new QuestionDto("question", question, answer_list, answer_index,description));
+        }
     }
 
 
