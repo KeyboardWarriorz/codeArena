@@ -55,28 +55,6 @@ public class ProblemServiceImpl implements ProblemService {
 	}
 	
 	/**
-	 * 문제 아이디 체크
-	 * */
-	@Override
-	public List<ProblemDTO> select_pro_id(String problemId){
-		
-		List<Problem> pro_lst = proRep.findListByProblemId(problemId);
-		
-		List<ProblemDTO> lst = new ArrayList<ProblemDTO>();
-		for(Problem p : pro_lst) {
-			int problem_type = 0;
-			// OX 문제일 경우
-			if(p.getAnswer3() == null) {
-				problem_type = 1;
-			}
-			ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),p.getSolution(),problem_type,p.getSubcategory());
-			lst.add(dto);
-		}
-		
-		return lst;
-	}
-	
-	/**
 	 * 카테고리 체크
 	 * */
 	@Override
@@ -101,6 +79,26 @@ public class ProblemServiceImpl implements ProblemService {
 		
 		return lst;
 	}
+	
+	
+	/**
+	 * 문제 해설 가져오기
+	 * */
+	public ProblemDTO select_pro(String problemId) {
+		ProblemDTO dto = new ProblemDTO();
+		List<Problem> pro_lst = proRep.findListByProblemId(Long.parseLong(problemId));
+			for(Problem p : pro_lst) {
+				int problem_type = 0;
+				// OX 문제일 경우
+				if(p.getAnswer3() == null) {
+					problem_type = 1;
+				}
+				dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),p.getSolution(),problem_type,p.getSubcategory());
+			}
+			return dto;
+		}
+
+	
 	@Override
 	public List<ProblemDTO> select_random_problem(Long category, Integer problem_cnt) {
 		List<ProblemDTO> list = select_pro_category(category);

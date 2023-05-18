@@ -38,6 +38,20 @@ public class ProblemDTO {
 		this.answer4 = answer4;
 		this.problem_type = problem_type;
 	}
+	
+	public ProblemDTO(Long problemId, String title, String question, Integer answerIndex, String answer1,
+			String answer2, String answer3, String answer4, int problem_type, SubCategory subcategory) {
+		this.problemId = problemId;
+		this.title = title;
+		this.question = question;
+		this.answerIndex = answerIndex;
+		this.answer1 = answer1;
+		this.answer2 = answer2;
+		this.answer3 = answer3;
+		this.answer4 = answer4;
+		this.problem_type = problem_type;
+		this.subcategory = subcategory;
+	}
     
     
 }
