@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kw.dto.ProblemDTO;
+import com.kw.entity.Problem;
 import com.kw.service.ProblemService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,5 +39,11 @@ public class ProblemController {
 		return new ResponseEntity(data,HttpStatus.OK);
 	}
 	
+	@GetMapping("/Problem/{problemId}")
+	public ResponseEntity<?> OnePro(@PathVariable("problemId") String problemId) {
 
+		ProblemDTO pro = proservice.select_pro(problemId);
+		
+		return new ResponseEntity(pro, HttpStatus.OK);
+	}
 }

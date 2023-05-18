@@ -146,9 +146,12 @@ public class WordServiceImpl implements WordService {
 	public List<WordDTO> UserWordList(String userId){
 		List<WordDTO> lst = new ArrayList<WordDTO>();
 		
-		User user = userRep.findByUserId(userId);
-		List<UserWord> userwords = userWordRep.findListByUser(user);
+//		User user = userRep.findByUserId(userId);
+		List<UserWord> userwords = userWordRep.findListOrderUser(userId);
 		for (UserWord uw : userwords) {
+			if(lst.size() >= 3) {
+				return lst;
+			}
 			WordDTO uwDTO = new WordDTO(uw.getUserWordId(),uw.getWord());
 			lst.add(uwDTO);
 		}
