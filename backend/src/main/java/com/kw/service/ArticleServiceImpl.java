@@ -30,11 +30,13 @@ public class ArticleServiceImpl implements ArticleService{
 	private CommentRepository commentRep;
 	
 	
+	
 	@Override
 	public List<ArticleListDTO> selectArticle(Pageable pageable,Long boardId) {
 		Page<Article> articlePageList = articleRep.findByBoard_BoardIdWithPagingAndSum(boardId, pageable);
 		List<ArticleListDTO> articleDTOList = new ArrayList<>();
 		
+				
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
 			Long CommentTotal = articleRep.selectCommentCount(articleId);
@@ -52,6 +54,14 @@ public class ArticleServiceImpl implements ArticleService{
 		List<CommentDTO> comment = commentRep.selectComment(articleId);
 
 		return new ArticleDTO(articleOne,comment);
+	}
+
+
+
+	@Override
+	public Long totalArticleCount(Long boardId) {
+		Long totalArticle = articleRep.selectBoardTotalCount(boardId);
+		return totalArticle;
 	}
 	
 	

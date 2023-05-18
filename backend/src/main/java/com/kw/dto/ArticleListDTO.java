@@ -17,7 +17,7 @@ public class ArticleListDTO {
     private String boardName;
     private String content;
     private Long totalComment;
-    
+
     
     public ArticleListDTO(Article article) {
     	if(article != null) {
