@@ -18,5 +18,12 @@ public class MypageDTO {
 	private UserDTO user;
 	private List<SolvedDTO> success_solved;
 	private List<SolvedDTO> failed_solved;
-//	private List<Object> problem;
+	private List<WordDTO> user_word;
+	
+	public MypageDTO(UserDTO user, List<WordDTO> user_word) {
+		this.user = user;
+		this.user_word = user_word;
+	}
+	
+
 }
