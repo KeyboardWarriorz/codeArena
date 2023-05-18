@@ -7,13 +7,13 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 public class GameScenarioDto {
-    private Integer problemCategoryId;
+    private Long problemCategoryId;
     private Integer timeout;
     private Integer problem_cnt;
 
     public GameScenarioDto() {
         this.problem_cnt = 3;
         this.timeout = 10;
-        this.problemCategoryId = 2;
+        this.problemCategoryId = 1L;
     }
 }

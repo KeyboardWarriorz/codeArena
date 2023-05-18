@@ -6,8 +6,10 @@ import com.kw.dto.ProblemDTO;
 
 public interface ProblemService {
 	public List<ProblemDTO> select_pro();
-	
+
 	public List<ProblemDTO> select_pro_id(String problemId);
-	
+
 	public List<ProblemDTO> select_pro_category(Long category);
+
+	public List<ProblemDTO> select_random_problem(Long category, Integer problem_cnt);
 }

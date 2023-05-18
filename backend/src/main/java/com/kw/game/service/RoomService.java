@@ -2,6 +2,7 @@ package com.kw.game.service;
 import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import com.kw.game.storage.RoomStorage;
+import com.kw.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class RoomService {
     private MessageService messageService;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+    @Autowired
+    private ProblemService problemService;
     public Map<String, GameService> gameServiceMap=new HashMap<>();
     public void registerRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception{
         roomStorage.addRoom(roomName, gameScenarioDto);
@@ -23,7 +26,7 @@ public class RoomService {
         System.out.println("addRoom ended");
     }
     public void startGame(String roomName) {
-        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName)));
+        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService));
     }
     public Map<String, Object> joinRoom(String roomName, String userId) throws Exception{
         Map<String, Object> dataMap = new HashMap<>();
