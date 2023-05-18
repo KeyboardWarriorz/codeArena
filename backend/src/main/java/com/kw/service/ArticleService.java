@@ -14,4 +14,5 @@ public interface ArticleService {
 	
 	List<ArticleListDTO>  selectArticle(Pageable pageable,Long boardId);
 	ArticleDTO selectArticleOne(Long articleId);
+	Long totalArticleCount(Long boardId);
 }

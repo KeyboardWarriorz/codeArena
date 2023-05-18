@@ -23,8 +23,6 @@ public class ArticleController {
 	
 	@Autowired
 	private ArticleService articleService;
-	@Autowired
-	private CommentService commentService;
 	
 	//게시글 목록 조회
 	@RequestMapping("/articleList/{board-id}")
@@ -32,17 +30,19 @@ public class ArticleController {
 		
 		Map<String, Object> response = new HashMap<>();
 		List<ArticleListDTO> articleList = articleService.selectArticle(pageable,boardId );
-		
+		Long articleCnt = articleService.totalArticleCount(boardId);
+				
 		if(articleList.size() == 0) {	
-			response.put("message", "게시판 글 리스트 조회 성공 " );
+			response.put("message", "게시판 글 리스트 조회 실패 " );
 			response.put("statusCode", 500);
+			
 		}
 		else {
 			response.put("statusCode", 200);
-			response.put("message", "게시판 글 리스트 조회 실패" );
+			response.put("message", "게시판 글 리스트 조회 성공" );
 			Map<String, Object> data = new HashMap<>();
 	        data.put("articleList", articleList);
-	        data.put("totalArticle", articleList.size());
+	        data.put("totalArticle", articleCnt);
 	        response.put("data", data);
 	        
 		}
