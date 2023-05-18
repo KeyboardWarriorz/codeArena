@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-import com.kw.dto.ArticleListDTO;
+
 import com.kw.entity.Article;
+import com.kw.entity.User;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer>, QuerydslPredicateExecutor<Article> {
 
@@ -27,8 +28,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer>, Quer
     //게시글 총 개수
     @Query(value = "SELECT COUNT(a) FROM Article a WHERE a.board.boardId = ?1",nativeQuery = false)
     Long selectBoardTotalCount(Long boardId);
-  
+    
     @Query(value = "SELECT a FROM Article a WHERE a.articleId = ?1",nativeQuery = false)
     Article selectArticleOne(Long articleId);
-
+    
+    
 }
