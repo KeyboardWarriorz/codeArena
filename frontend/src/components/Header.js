@@ -134,7 +134,7 @@ function Header() {
 
       {login ? (
         <User>
-          <Link to={`user/${userId}`} onClick={() => console.log(userId)}>
+          <Link to={`user/${userId}`}>
             <p className="nickname">{nickname}</p>
           </Link>
 
