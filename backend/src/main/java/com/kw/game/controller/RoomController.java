@@ -4,6 +4,7 @@ import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import com.kw.game.service.MessageService;
 import com.kw.game.service.RoomService;
+import com.kw.game.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class RoomController {
     private MessageService messageService;
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private UserService userService;
     @PostMapping("/game/room")
     public ResponseEntity<Void> registerRoom(HttpServletRequest request) {
         String roomName = request.getParameter("room_name");
