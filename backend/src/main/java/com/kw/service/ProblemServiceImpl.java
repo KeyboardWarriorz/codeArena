@@ -66,6 +66,7 @@ public class ProblemServiceImpl implements ProblemService {
 		return lst;
 	}
 	
+	
 
 	/**
 	 * 카테고리 체크
@@ -164,5 +165,30 @@ public class ProblemServiceImpl implements ProblemService {
 			ret.add(list.get(idx));
 		}
 		return ret;
+	}
+	
+	@Override
+	public Integer count_Pro() {
+		List<Problem> pro_lst = proRep.findAll();
+		
+		return pro_lst.size();
+	}
+	
+	@Override
+	public Integer count_Pro_cate(Long category_id) {
+		List<Problem> lst = new ArrayList<Problem>();
+
+		// 카테고리에 해당되는 서브 카테고리 소환
+		Category cate = cateRep.findById(category_id).orElse(null);
+		List<SubCategory> sub = subRep.findListByCategory(cate);
+		// 반복문을 돌려서 서브 카테고리들에 해당 되는 문제들을 소환해서 리스트에 넣는다. 
+		for(SubCategory s : sub ) {
+			List<Problem> pro_lst = proRep.findListBySubcategory(s);
+			for(Problem pro : pro_lst) {
+				lst.add(pro);
+			}
+		}
+		
+		return lst.size();
 	}
 }

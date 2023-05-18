@@ -12,8 +12,11 @@ public interface ProblemService {
 
 	public List<ProblemDTO> select_pro_category( Long category);
 
-	
 	public List<ProblemDTO> select_random_problem(Long category, Integer problem_cnt);
 
 	public ProblemDTO select_pro(String problemId);
+
+	public Integer count_Pro();
+	
+	public Integer count_Pro_cate(Long category);
 }
