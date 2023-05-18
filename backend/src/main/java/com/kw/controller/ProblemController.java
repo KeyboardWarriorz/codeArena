@@ -1,7 +1,9 @@
 package com.kw.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,13 +30,21 @@ public class ProblemController {
 	public ResponseEntity<?> selectAllQ(HttpServletRequest req, @PathVariable("userId") String userId){
 //		int page = Integer.parseInt(req.getParameter("page"));
 		List<ProblemDTO> data = new ArrayList<ProblemDTO>();
+		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> dat = new HashMap<>();
+		int total = 0;
 		if (req.getParameter("category_id") == null){			
 			data = proservice.select_pro_All(userId);
+			total = proservice.count_Pro();
 		}else {
 			data = proservice.select_pro_category_user(userId, Long.parseLong(req.getParameter("category_id")));
+			total = proservice.count_Pro_cate(Long.parseLong(req.getParameter("category_id")));
 		}
+		dat.put("Problem",data);
+		dat.put("totalProblem",total);
+		response.put("data",dat);
 		
-		return new ResponseEntity(data,HttpStatus.OK);
+		return new ResponseEntity(response,HttpStatus.OK);
 	}
 	
 	@GetMapping("/Problem/{problemId}")
