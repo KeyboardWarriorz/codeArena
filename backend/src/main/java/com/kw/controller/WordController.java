@@ -39,7 +39,7 @@ public class WordController {
 			response.setMessage("이미 등록된 단어");
 		}else{ // 2-2. 없다면 공용 Word DB에서 정보(word_id) 가져와 User_Word DB에 값을 저장한다.
 			wordService.insert(name, userId);
-			response.setStatusCode(200);
+			response.setStatusCode(201);
 			response.setMessage("단어 등록 성공");
 		}
 		return ResponseEntity.ok(response); // 기존에 보고 있던 페이지에 그대로
