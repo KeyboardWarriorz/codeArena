@@ -1,6 +1,7 @@
 package com.kw.controller;
 
 import com.kw.entity.User;
+import com.kw.repository.UserWordRepository;
 import com.kw.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,14 +38,10 @@ public class WordController {
 			response.setStatusCode(401);
 			response.setMessage("이미 등록된 단어");
 		}else{ // 2-2. 없다면 공용 Word DB에서 정보(word_id) 가져와 User_Word DB에 값을 저장한다.
-			Word word = wordService.selectByName(searchingName); //검색한 단어에 해당하는 word 조회
-			UserWord userWord = new UserWord(null, new User(userId), word);
-			wordService.insert(userWord);
-
+			wordService.insert(searchingName, userId);
 			response.setStatusCode(200);
 			response.setMessage("단어 등록 성공");
 		}
-
 		return ResponseEntity.ok(response); // 기존에 보고 있던 페이지에 그대로
 	}
 

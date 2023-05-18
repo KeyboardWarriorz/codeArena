@@ -21,15 +21,15 @@ public interface WordService {
 	Long selectByName(String name, String userId);
 
 	/**
-	 * 사용자 단어 DB에 등록하기 
+	 * 사용자 단어 DB에 등록하기
 	 * */
-	void insert(UserWord userWord);
-	
+	void insert(String name, String userId);
+
 	/**
 	 * 공용 단어 DB에 저장하기 
 	 * */
 	void insert(Word word);
-	
+
 	/**
 	 * chatGPT로부터 단어에 해당하는 내용을 받아오기 
 	 * */
