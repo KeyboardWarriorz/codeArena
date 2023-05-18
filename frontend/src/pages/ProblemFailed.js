@@ -60,6 +60,10 @@ const Problem = styled.div`
   padding: 2px;
   margin: 5px 0;
 
+  #title {
+    color: #4a483f;
+  }
+
   > span:nth-of-type(1) {
     margin-left: 20px;
     width: 10%;
@@ -72,6 +76,7 @@ const Problem = styled.div`
 
   > span:nth-of-type(3) {
     width: 60%;
+    color: red;
   }
 
   > span:nth-of-type(4) {
@@ -125,7 +130,8 @@ const Paginate = styled(ReactPaginate)`
   }
 `;
 
-export default function ProblemList() {
+export default function ProblemSolved() {
+  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
   const navigate = useNavigate();
   const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
   const totalRecords = 400;
@@ -172,7 +178,7 @@ export default function ProblemList() {
 
   return (
     <Div>
-      <h3> 📝 분야별 문제 풀이</h3>
+      <h3> 🆘 {nickname} 님의 틀린 문제 </h3>
       <Select>
         {categories.map((c) => {
           if (selected === c) {
@@ -196,7 +202,7 @@ export default function ProblemList() {
         <Problem id="name">
           <span>상태</span>
           <span>분야</span>
-          <span>제목</span>
+          <span id="title">제목</span>
           <span>문제 유형</span>
         </Problem>
         <div id="hr"></div>
@@ -211,27 +217,10 @@ export default function ProblemList() {
               }}
             >
               <Problem>
-                {p.status === 1 ? (
-                  <span className="material-icons" style={{ color: "green" }}>
-                    check_circle_outline
-                  </span>
-                ) : (
-                  ""
-                )}
-                {p.status === 2 ? (
-                  <span className="material-icons" style={{ color: "red" }}>
-                    highlight_off
-                  </span>
-                ) : (
-                  ""
-                )}
-                {p.status === 0 ? (
-                  <span className="material-icons" style={{ color: "white" }}>
-                    highlight_off
-                  </span>
-                ) : (
-                  ""
-                )}
+                <span className="material-icons" style={{ color: "red" }}>
+                  highlight_off
+                </span>
+
                 <span>{p.category}</span>
                 <span>{p.title}</span>
                 <span>{typeArr[`${p.type}`]}</span>

@@ -14,9 +14,7 @@ import { useNavigate } from "react-router-dom";
 export default function MyPage() {
   const navigate = useNavigate();
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
-  );
+  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
   const [profile, setProfile] = useState("Eunhyo");
 
   const typeArr = ["객관식", "O / X"];
@@ -141,13 +139,7 @@ export default function MyPage() {
           </div>
           <div className="words">
             {words.map((w, idx) => {
-              return (
-                <WordCard
-                  key={idx}
-                  name={w.word.name}
-                  content={w.word.description}
-                />
-              );
+              return <WordCard key={idx} name={w.word.name} content={w.word.description} />;
             })}
           </div>
         </Words>
@@ -341,7 +333,7 @@ const Words = styled.div`
   
   .words {
     display: flex;
-    flex-flow: row wrap;/
+    flex-flow: row wrap;
   }
 
   .title {
