@@ -1,4 +1,5 @@
 package com.kw.game.service;
+import com.kw.service.UserService;
 import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import com.kw.game.storage.RoomStorage;
@@ -19,6 +20,8 @@ public class RoomService {
     private SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     private ProblemService problemService;
+    @Autowired
+    private UserService userService;
     public Map<String, GameService> gameServiceMap=new HashMap<>();
     public void registerRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception{
         roomStorage.addRoom(roomName, gameScenarioDto);
@@ -26,7 +29,7 @@ public class RoomService {
         System.out.println("addRoom ended");
     }
     public void startGame(String roomName) {
-        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService));
+        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService));
     }
     public Map<String, Object> joinRoom(String roomName, String userId) throws Exception{
         Map<String, Object> dataMap = new HashMap<>();

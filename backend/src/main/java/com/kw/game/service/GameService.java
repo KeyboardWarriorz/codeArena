@@ -1,5 +1,5 @@
 package com.kw.game.service;
-
+import com.kw.service.UserService;
 import com.kw.dto.ProblemDTO;
 import com.kw.game.dto.QuestionDto;
 import com.kw.game.dto.ResultDto;
@@ -12,6 +12,7 @@ import java.util.*;
 
 public class GameService {
     private ProblemService problemService;
+    private UserService userService;
     private SimpMessagingTemplate simpMessagingTemplate;
     private GameScenarioDto gameScenarioDto;
     private Map<String, Integer> user_score = new HashMap<>();
@@ -20,11 +21,12 @@ public class GameService {
     private Integer question_cnt = 0;
     private String roomName;
     private Integer user_cnt=0;
-    public GameService(SimpMessagingTemplate simpMessagingTemplate, RoomDto room,ProblemService problemService) {
+    public GameService(SimpMessagingTemplate simpMessagingTemplate, RoomDto room,ProblemService problemService, UserService userService) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.roomName = room.getRoomName();
         this.gameScenarioDto = room.getGameScenarioDto();
         this.problemService = problemService;
+        this.userService = userService;
         for (String user : room.getUsers()) {
             user_score.put(user, 0);
         }
@@ -52,6 +54,11 @@ public class GameService {
             score.add(userScore);
         }
         ResultDto result = new ResultDto(messageType, "", winner, user, score);
+        if (messageType.equals("end")) {
+            for (String win_user : winner) {
+                userService.addUserPoint(win_user, 100);
+            }
+        }
         simpMessagingTemplate.convertAndSend("/topic/messages/" + roomName,result);
     }
     public void sendQuestion() {
@@ -71,6 +78,7 @@ public class GameService {
             if (question_cnt == gameScenarioDto.getProblem_cnt()) {
                 //종료
                 //db에 포인트 추가하게 하기
+
                 System.out.println("game over");
                 sendResult("end");
                 return;
