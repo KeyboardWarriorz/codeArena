@@ -24,16 +24,14 @@ public class ProblemController {
 	private final ProblemService proservice;
 	
 	
-	@GetMapping("/ProblemSet")
-	public ResponseEntity<?> selectAllQ(HttpServletRequest req){
-		int page = Integer.parseInt(req.getParameter("page"));
+	@GetMapping("/ProblemSet/{userId}")
+	public ResponseEntity<?> selectAllQ(HttpServletRequest req, @PathVariable("userId") String userId){
+//		int page = Integer.parseInt(req.getParameter("page"));
 		List<ProblemDTO> data = new ArrayList<ProblemDTO>();
 		if (req.getParameter("category_id") == null){			
-			data = proservice.select_pro();
+			data = proservice.select_pro_All(userId);
 		}else {
-			System.out.println("cate = " +  req.getParameter("category_id"));
-			data = proservice.select_pro_category(Long.parseLong(req.getParameter("category_id")));
-
+			data = proservice.select_pro_category_user(userId, Long.parseLong(req.getParameter("category_id")));
 		}
 		
 		return new ResponseEntity(data,HttpStatus.OK);
