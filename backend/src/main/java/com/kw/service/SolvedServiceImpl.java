@@ -35,13 +35,16 @@ public class SolvedServiceImpl implements SolvedService {
 	@Override
 	public List<SolvedDTO> selectSolved_user(String userId, int success) {
 		
-		User user = userRep.findByUserId(userId);
+//		User user = userRep.findByUserId(userId);
 		
-		List<Solved> sol = solRep.findListByUser(user);
+		List<Solved> sol = solRep.findListByUserOrderBysolvedIdDesc(userId);
 		
 		List<SolvedDTO> lst = new ArrayList<SolvedDTO>();
 		ProblemDTO P_dto = new ProblemDTO();
 		for(Solved s : sol) {
+			if(lst.size() >= 6) {
+				return lst;
+			}
 			Problem p = s.getProblem();
 			int problem_type = 0;
 			if(s.getSuccess() == success) {	
@@ -49,10 +52,10 @@ public class SolvedServiceImpl implements SolvedService {
 					if(p.getAnswer3() == null) {
 						problem_type = 1;
 					}
+					P_dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),problem_type,p.getSubcategory());
+					SolvedDTO dto = new SolvedDTO(s.getSolvedId(), P_dto, s.getSuccess());
+					lst.add(dto);
 				}
-				P_dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),problem_type,p.getSubcategory());
-				SolvedDTO dto = new SolvedDTO(s.getSolvedId(), P_dto, s.getSuccess());
-				lst.add(dto);
 			}
 		return lst;
 		}
