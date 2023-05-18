@@ -33,6 +33,9 @@ public class ProblemServiceImpl implements ProblemService {
 	@Autowired
 	private CategoryRepository cateRep;
 	
+	/**
+	 * 문제 조회
+	 * */
 	@Override
 	public List<ProblemDTO> select_pro() {
 		
@@ -52,6 +55,9 @@ public class ProblemServiceImpl implements ProblemService {
 		return lst;
 	}
 	
+	/**
+	 * 문제 아이디 체크
+	 * */
 	@Override
 	public List<ProblemDTO> select_pro_id(String problemId){
 		
@@ -71,6 +77,9 @@ public class ProblemServiceImpl implements ProblemService {
 		return lst;
 	}
 	
+	/**
+	 * 카테고리 체크
+	 * */
 	@Override
 	public List<ProblemDTO> select_pro_category(Long category_id){
 		List<ProblemDTO> lst = new ArrayList<ProblemDTO>();

@@ -29,6 +29,9 @@ public class SolvedServiceImpl implements SolvedService {
 	@Autowired
 	private UserRepository userRep;
 	
+	/**
+	 * 푼 문제인지 아닌지 체크
+	 * */
 	@Override
 	public List<SolvedDTO> selectSolved_user(String userId, int success) {
 		
