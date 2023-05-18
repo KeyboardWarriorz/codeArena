@@ -167,6 +167,12 @@ export default function SignUp() {
     }
   }
 
+  function onEnter(e) {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  }
+
   // 회원가입 진짜 제출
   function onSubmit() {
     if (checkPW() === false) {
@@ -230,7 +236,7 @@ export default function SignUp() {
         <AuthDiv title="비밀번호 확인" es={true} type="password" />
       </div>
 
-      <div onChange={onChangeNickname}>
+      <div onChange={onChangeNickname} onKeyDown={onEnter}>
         <AuthDiv
           title="닉네임"
           es={true}

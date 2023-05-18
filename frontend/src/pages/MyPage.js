@@ -1,44 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import WordCard from "../components/organisms/WordCard";
 
-import Jieun from "../assets/images/Jieun.svg";
-import Seongwhan from "../assets/images/Seongwhan.svg";
-import Eunhyo from "../assets/images/Eunhyo.svg";
-import Junseo from "../assets/images/Junseo.svg";
-import Sunyeong from "../assets/images/Sunyeong.svg";
+// import Jieun from "../assets/images/Jieun.svg";
+// import Seongwhan from "../assets/images/Seongwhan.svg";
+// import Eunhyo from "../assets/images/Eunhyo.svg";
+// import Junseo from "../assets/images/Junseo.svg";
+// import Sunyeong from "../assets/images/Sunyeong.svg";
 import { useNavigate } from "react-router-dom";
 
 // CSS 코드 아래에 있음
 export default function MyPage() {
   const navigate = useNavigate();
-  const userId = "ss";
-  // const userId = window.localStorage.getItem(userId);
-  const typeArr = ["객관식", "O / X"];
-  const solved = [
-    { category: "Java", title: "Java Static", type: 1 },
-    { category: "Java", title: "Java Static", type: 0 },
-    { category: "Java", title: "Java Static", type: 0 },
-    { category: "Java", title: "Java Static", type: 1 },
-  ];
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [nickname, setNickname] = useState(
+    window.localStorage.getItem("nickname")
+  );
+  const [profile, setProfile] = useState("Eunhyo");
 
-  const words = [
-    {
-      name: "chatgpt",
-      content:
-        "ChatGPT는 인공지능 언어 모델로, OpenAI에서 개발된 GPT-3.5 아키텍처를 기반으로 한 대화형 AI입니다. ChatGPT는 다양한 주제에 대한 질문과 답변을 수행하며, 사용자의 입력에 대해 자연스러운 대화를 제공합니다. 최신 정보와 일반적인 지식을 활용하여 유연하고 창의적인 응답을 생성하며, 다양한 사용 사례에 적용될 수 있습니다.",
-    },
-    {
-      name: "JPA",
-      content:
-        "ChatGPT는 인공지능 언어 모델로, OpenAI에서 개발된 GPT-3.5 아키텍처를 기반으로 한 대화형 AI입니다. ChatGPT는 다양한 주제에 대한 질문과 답변을 수행하며, 사용자의 입력에 대해 자연스러운 대화를 제공합니다. 최신 정보와 일반적인 지식을 활용하여 유연하고 창의적인 응답을 생성하며, 다양한 사용 사례에 적용될 수 있습니다.",
-    },
-    {
-      name: "chatgpt",
-      content:
-        "AOP(Aspect-Oriented Programming)은 소프트웨어 개발 패러다임으로, 관점(Aspect)을 기준으로 프로그램을 모듈화하는 접근 방식입니다. 관점은 애플리케이션에서 공통적으로 적용되는 기능을 의미하며, 코드의 분리 및 재사용성을 향상시킵니다. AOP는 핵심 비즈니스 로직과 부가적인 관심사를 분리하여 코드의 가독성과 유지보수성을 높이며, 큰 규모의 프로젝트에서 특히 유용합니다. ",
-    },
-  ];
+  const typeArr = ["객관식", "O / X"];
+  const [solved, setSolved] = useState([]);
+  const [failed, setFailed] = useState([]);
+  const [words, setWords] = useState([]);
+
+  console.log(words);
 
   function goSolved() {
     navigate(`/user/${userId}/solved`);
@@ -59,18 +45,35 @@ export default function MyPage() {
   function changePW() {
     navigate(`/user/${userId}/changepw`);
   }
+
+  useEffect(() => {
+    setProfile(window.localStorage.getItem("profileImage"));
+    axios
+      .get(`http://localhost:8080/user/mypage/${userId}`)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setSolved(res.data.success_solved);
+          setFailed(res.data.failed_solved);
+          setWords(res.data.user_word);
+        }
+      })
+      .catch((e) => window.alert(e.response.data));
+  }, []);
+
   return (
     <MainContainer>
       <ProfileBox>
         <CharBox>
           <Profile>
-            <img src={Jieun} />
+            {/* <div>../assets/images/{profile}.svg</div> */}
+            <img src={require(`../assets/images/${profile}.svg`)} />
           </Profile>
         </CharBox>
         <NameBox>
-          <IdBox>아이디</IdBox>
+          <IdBox>{userId}</IdBox>
           <ProdataBox>
-            <span>성환조</span>
+            <span>{nickname}</span>
             <span>&nbsp;님</span>
             <span>GOLD</span>
             <span>380P</span>
@@ -96,9 +99,9 @@ export default function MyPage() {
               return (
                 <div key={idx}>
                   <Problem>
-                    <span>{p.category}</span>
-                    <span id="blue">{p.title}</span>
-                    <span>{typeArr[`${p.type}`]}</span>
+                    <span>{p.problem.subcategory.category.categoryName}</span>
+                    <span id="blue">{p.problem.title}</span>
+                    <span>{typeArr[`${p.problem.problem_type}`]}</span>
                   </Problem>
                   <div id="hr"></div>
                 </div>
@@ -114,13 +117,13 @@ export default function MyPage() {
               </div>
             </div>
             <br />
-            {solved.map((p, idx) => {
+            {failed.map((p, idx) => {
               return (
                 <div key={idx}>
                   <Problem>
-                    <span>{p.category}</span>
-                    <span id="red">{p.title}</span>
-                    <span>{typeArr[`${p.type}`]}</span>
+                    <span>{p.problem.subcategory.category.categoryName}</span>
+                    <span id="red">{p.problem.title}</span>
+                    <span>{typeArr[`${p.problem.problem_type}`]}</span>
                   </Problem>
                   <div id="hr"></div>
                 </div>
@@ -137,7 +140,13 @@ export default function MyPage() {
           </div>
           <div className="words">
             {words.map((w, idx) => {
-              return <WordCard key={idx} name={w.name} content={w.content} />;
+              return (
+                <WordCard
+                  key={idx}
+                  name={w.word.name}
+                  content={w.word.description}
+                />
+              );
             })}
           </div>
         </Words>
