@@ -1,5 +1,6 @@
 package com.kw.game.storage;
 
+import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import org.springframework.stereotype.Component;
 
@@ -30,11 +31,11 @@ public class RoomStorage {
         rooms.get(roomName).getUsers().add(userName);
     }
 
-    public void addRoom(String roomName) throws Exception {
+    public void addRoom(String roomName, GameScenarioDto gameScenarioDto) throws Exception {
         if (rooms.containsKey(roomName)) {
             throw new Exception("Room already exists with roomName: " + roomName);
         }
-        rooms.put(roomName,new RoomDto(roomName,1,new HashSet<>(),4)); //수정되어야 함
+        rooms.put(roomName,new RoomDto(roomName,1,new HashSet<>(),4, gameScenarioDto)); //수정되어야 함
         System.out.println("room "+roomName+" included");
     }
 

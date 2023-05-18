@@ -1,4 +1,5 @@
 package com.kw.game.service;
+import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import com.kw.game.storage.RoomStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class RoomService {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
     public Map<String, GameService> gameServiceMap=new HashMap<>();
-    public void registerRoom(String roomName, String userId) throws Exception{
-        roomStorage.addRoom(roomName);
+    public void registerRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception{
+        roomStorage.addRoom(roomName, gameScenarioDto);
         roomStorage.getRoomByRoomName(roomName).users.add(userId);
         System.out.println("addRoom ended");
     }

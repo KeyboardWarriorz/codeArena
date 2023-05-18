@@ -1,5 +1,6 @@
 package com.kw.game.controller;
 
+import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import com.kw.game.service.MessageService;
 import com.kw.game.service.RoomService;
@@ -26,9 +27,18 @@ public class RoomController {
     public ResponseEntity<Void> registerRoom(HttpServletRequest request) {
         String roomName = request.getParameter("room_name");
         String userId = request.getParameter("user_id");
+        GameScenarioDto gameScenarioDto;
+        if (request.getParameter("problem_category_id") == null) {
+            gameScenarioDto = new GameScenarioDto();
+        } else {
+            Integer problemCategoryId = Integer.parseInt(request.getParameter("problem_category_id"));
+            Integer timeout = Integer.parseInt(request.getParameter("timeout"));
+            Integer problem_cnt = Integer.parseInt(request.getParameter("problem_cnt"));
+            gameScenarioDto = new GameScenarioDto(problemCategoryId, timeout, problem_cnt);
+        }
         System.out.println("handling register room request: " + roomName);
         try {
-            roomService.registerRoom(roomName, userId);
+            roomService.registerRoom(roomName, userId,gameScenarioDto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
