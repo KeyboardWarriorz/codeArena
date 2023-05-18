@@ -1,7 +1,12 @@
 package com.kw.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -14,8 +19,12 @@ import com.kw.dto.ArticleDTO;
 import com.kw.dto.ArticleListDTO;
 import com.kw.dto.CommentDTO;
 import com.kw.entity.Article;
+import com.kw.entity.Board;
+import com.kw.entity.User;
 import com.kw.repository.ArticleRepository;
+import com.kw.repository.BoardRepository;
 import com.kw.repository.CommentRepository;
+import com.kw.repository.UserRepository;
 
 @Service
 @Transactional
@@ -25,9 +34,12 @@ public class ArticleServiceImpl implements ArticleService{
 	
 	@Autowired
 	private ArticleRepository articleRep;
-	
 	@Autowired
 	private CommentRepository commentRep;
+	@Autowired
+	private UserRepository userRep;
+	@Autowired
+	private BoardRepository boardRep;
 	
 	
 	
@@ -63,6 +75,52 @@ public class ArticleServiceImpl implements ArticleService{
 		Long totalArticle = articleRep.selectBoardTotalCount(boardId);
 		return totalArticle;
 	}
+	
+	@Override
+	public Integer insertArticle( Map<String, Object> param) {
+		Integer code = 1;
+		Board board = boardRep.findByBoardId(Long.valueOf(String.valueOf(param.get("board_id"))));
+		User user = userRep.findByUserId((String)param.get("user_id"));
+
+		Date currentDate = new Date();
+		currentDate.setSeconds(0);  // 초를 0으로 설정
+		currentDate.setTime((currentDate.getTime() / (60 * 1000)) * (60 * 1000));  // 밀리초를 0으로 설정
+
+		Article article =
+				new Article(null,
+						user, board, (String)param.get("title")
+				, (String)param.get("content"), 
+				currentDate);
+
+		if(article != null) {
+
+				articleRep.save(article);
+				return code;
+		}
+		else {
+			code = 0;
+			return code;
+		}
+
+	}
+
+
+
+	@Override
+	public Integer deleteArticle(Long articleId) {
+		Integer code = 1;
+		Article article = articleRep.selectArticleOne(articleId);
+		
+		if(article != null) {
+			articleRep.delete(article);
+		}
+		else {
+			code = 0;
+		}
+		return code;
+	}
+	
+	
 	
 	
 
