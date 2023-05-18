@@ -134,6 +134,6 @@ public class WordServiceImpl implements WordService {
 		
 		return null; //조회에 실패했을 때 null을 반환 
 
-	}; //getWordDefinition end
+	} //getWordDefinition end
 
 }
