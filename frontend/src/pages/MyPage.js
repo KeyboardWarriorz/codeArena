@@ -48,10 +48,11 @@ export default function MyPage() {
 
   useEffect(() => {
     setProfile(window.localStorage.getItem("profileImage"));
+
     axios
       .get(`http://localhost:8080/user/mypage/${userId}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         if (res.status === 200) {
           setSolved(res.data.success_solved);
           setFailed(res.data.failed_solved);
