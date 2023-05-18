@@ -89,6 +89,12 @@ export default function Login() {
     setLogin({ userId: id, userPw: pw });
   }, [id, pw]); // id와 pw값이 변경될때마다 제출용 object에 반영
 
+  function onEnter(e) {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  }
+
   function onSubmit() {
     axios
       .post("http://localhost:8080/user/login", loginData)
@@ -97,6 +103,7 @@ export default function Login() {
           window.localStorage.setItem("login", true);
           window.localStorage.setItem("userId", res.data.userId);
           window.localStorage.setItem("nickname", res.data.nickname);
+          window.localStorage.setItem("profileImage", res.data.profileImage);
           navigate("/");
         }
       })
@@ -122,7 +129,7 @@ export default function Login() {
       <div onChange={onChangeId} className="margin">
         <AuthDiv title="아이디" placeholder="ex. ca412@gmail.com" />
       </div>
-      <div onChange={onChangePW} className="margin">
+      <div onChange={onChangePW} className="margin" onKeyDown={onEnter}>
         <AuthDiv title="비밀번호" type="password" />
       </div>
 

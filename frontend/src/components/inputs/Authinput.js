@@ -19,9 +19,5 @@ const Input = styled.input`
 `;
 
 export default function AuthInput(props) {
-  return (
-    <div>
-      <Input type={props.type} placeholder={props.placeholder} />
-    </div>
-  );
+  return <Input type={props.type} placeholder={props.placeholder} />;
 }
