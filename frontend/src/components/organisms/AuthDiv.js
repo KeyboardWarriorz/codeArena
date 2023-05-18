@@ -47,7 +47,7 @@ export default function AuthDiv(props) {
           {props.added ? <p id="added">{props.added}</p> : ""}
         </div>
         {props.isbutton ? (
-          <MiniButton func={props.buttonfunc} text="중복 확인"></MiniButton>
+          <MiniButton func={props.buttonfunc} text="중복 확인" />
         ) : (
           ""
         )}
