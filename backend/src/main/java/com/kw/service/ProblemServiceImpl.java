@@ -57,9 +57,9 @@ public class ProblemServiceImpl implements ProblemService {
 			}
 			Solved sol = solvedRep.findProAndUser(userId,p.getProblemId());
 			if(sol != null) {				
-				if(sol.getSuccess() == 0) {
+				if(sol.getSuccess() == 1) {
 					check = 1;
-				}else if(sol.getSuccess() == 1) {
+				}else if(sol.getSuccess() == 2) {
 					check = 2;
 				}
 			}
@@ -93,9 +93,9 @@ public class ProblemServiceImpl implements ProblemService {
 				}
 				Solved sol = solvedRep.findProAndUser(userId,p.getProblemId());
 				if(sol != null) {				
-					if(sol.getSuccess() == 0) {
+					if(sol.getSuccess() == 1) {
 						check = 1;
-					}else if(sol.getSuccess() == 1) {
+					}else if(sol.getSuccess() == 2) {
 						check = 2;
 					}
 				}
