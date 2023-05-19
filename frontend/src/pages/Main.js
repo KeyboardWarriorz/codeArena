@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 // import "swiper/css/pagination";
 // import "swiper/css/navigation";
 
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper.min.css'
-import 'swiper/components/navigation/navigation.min.css'
-import 'swiper/components/pagination/pagination.min.css'
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+// import 'swiper/components/navigation/navigation.min.css'
+// import 'swiper/components/pagination/pagination.min.css'
 
 import { Autoplay, Pagination, Navigation } from "swiper";
 
