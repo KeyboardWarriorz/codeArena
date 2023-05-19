@@ -113,7 +113,7 @@ public class UserController {
 		UserDTO user = userService.selectUser(userId);
 		List<SolvedDTO> success_solved = solvedService.selectSolved_user(userId, 0);
 		List<SolvedDTO> failed_solved = solvedService.selectSolved_user(userId, 1);
-		List<WordDTO> user_word = wordService.UserWordList(userId);
+		List<WordDTO> user_word = wordService.UserWordList3(userId);
 		
 		MypageDTO dto = new MypageDTO(user, success_solved, failed_solved, user_word);
 
