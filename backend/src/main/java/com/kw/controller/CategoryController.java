@@ -22,8 +22,8 @@ public class CategoryController {
      * 카테고리에 해당하는 강의 목록 조회하기
      * status 201 : "강의 목록 조회 성공"
      * */
-    @GetMapping("/{categoryId}")
-    public ResponseEntity<?> selectById(@PathVariable("categoryId") Long categoryId){
+    @GetMapping("/{category_id}")
+    public ResponseEntity<?> selectById(@PathVariable("category_id") Long categoryId){
         Map<String, Object> response = new HashMap<>();
 
         // 1. 카테고리 아이디에 해당하는 카테고리 이름 조회
