@@ -1,12 +1,12 @@
 package com.kw.controller;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +35,8 @@ public class ArticleController {
 		Long articleCnt = articleService.totalArticleCount(boardId);
 				
 		if(articleList.size() == 0) {	
-			response.put("message", "게시판 글 리스트 조회 실패 " );
-			response.put("statusCode", 500);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시판 글 리스트 조회 실패");
+
 			
 		}
 		else {
@@ -67,8 +67,7 @@ public class ArticleController {
 
 		}
 		else {
-			response.put("message", "게시물 상세 조회 실패" );
-			response.put("statusCode", 500);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 상세 조회 실패");
 	        
 		}	
 		return ResponseEntity.ok(response);
@@ -87,15 +86,15 @@ public class ArticleController {
 			response.put("message", "게시물 생성 성공");
 		}
 		else {
-			response.put("statusCode", 500 );
-			response.put("message", "게시물 생성 실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 생성 실패");
+
 		}
 		return ResponseEntity.ok(response);
 
 	}
 	
 	
-	@DeleteMapping("/delete/{article-id}")
+	@PostMapping("/delete/{article-id}")
 	public ResponseEntity<?> deleteArticle(@PathVariable("article-id") Long articleId){
 		Map<String, Object> response = new HashMap<String, Object>();
 		Integer code = articleService.deleteArticle(articleId);
@@ -105,8 +104,8 @@ public class ArticleController {
 			response.put("message", "게시물 삭제 성공");
 		}
 		else {
-			response.put("statusCode", 500);
-			response.put("message", "게시물 삭제 실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 삭제 실패");
+
 		}
 		return ResponseEntity.ok(response);
 	}

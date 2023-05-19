@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,8 @@ public class CommentController{
 			response.put("message", "댓글 등록 성공");
 		}
 		else {
-			response.put("statusCode", 500);
-			response.put("message", "댓글 등록 실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 등록 실패");
+
 		}
 		
 		return ResponseEntity.ok(response);
@@ -41,7 +42,7 @@ public class CommentController{
 		
 	}
 	
-	@DeleteMapping("/delete/{comment-id}")
+	@PostMapping("/delete/{comment-id}")
 	public ResponseEntity<?> deleteComment(@PathVariable("comment-id") Long commentId){
 		Map<String, Object> response = new HashMap<String, Object>();
 		
@@ -52,8 +53,8 @@ public class CommentController{
 			response.put("message", "댓글 삭제 성공");
 		}
 		else {
-			response.put("statusCode", 500);
-			response.put("message", "댓글 삭제 실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 삭제 실패");
+
 		}
 		
 		return ResponseEntity.ok(response);
