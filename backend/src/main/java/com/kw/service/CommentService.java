@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kw.dto.CommentDTO;
 
-@Service
+
 public interface CommentService {
 
 	List<CommentDTO> selectComment(Long articleId);

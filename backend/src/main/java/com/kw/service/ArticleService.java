@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kw.dto.ArticleDTO;
 import com.kw.dto.ArticleListDTO;
 
-@Service
+
 public interface ArticleService {
 	
 	List<ArticleListDTO>  selectArticle(Pageable pageable,Long boardId);
