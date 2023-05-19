@@ -17,7 +17,6 @@ public class MessageService {
 
     public void sendMessage(MessageDto message, String roomName) {
         System.out.println(messageStorage);
-        messageStorage.addMessages(message, roomName);
         System.out.println("service send message");
         simpMessagingTemplate.convertAndSend("/topic/messages/" + roomName, message);
     }
