@@ -14,6 +14,10 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface ProblemRepository extends JpaRepository<Problem, Integer>, QuerydslPredicateExecutor<Problem> {
 	
+	int pageNumber = 1;  // 1부터 시작하는 페이지 번호
+	int pageSize = 1;   // 페이지 크기
+	Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
 	
 	@Query(value = "SELECT a FROM Problem a ",nativeQuery = false)
 	Page<Problem> findPageAll(Pageable pageable);
@@ -36,4 +40,5 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer>, Quer
 	
 	@Query(value = "SELECT COUNT(a) FROM Problem a",nativeQuery = false)
 	Integer countPro();
+
 }

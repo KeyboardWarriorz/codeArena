@@ -32,6 +32,7 @@ public class ProblemController {
 		Map<String, Object> response = new HashMap<>();
 		Map<String, Object> dat = new HashMap<>();
 		int total = 0;
+
 		if (req.getParameter("category_id").equals("0")){			
 			data = proservice.select_pro_All(userId, pageable);
 			total = proservice.count_Pro();
