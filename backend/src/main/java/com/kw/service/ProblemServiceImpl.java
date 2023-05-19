@@ -5,6 +5,8 @@ import java.util.*;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.kw.dto.ProblemDTO;
@@ -41,11 +43,12 @@ public class ProblemServiceImpl implements ProblemService {
 	 * 문제 조회
 	 * */
 	@Override
-	public List<ProblemDTO> select_pro_All(String userId) {
+	public List<ProblemDTO> select_pro_All(String userId, Pageable pageable) {
 		
-		List<Problem> pro_lst = proRep.findAll();
+		Page<Problem> pro_lst = proRep.findPageAll(pageable);
 		int check = 0;
 		List<ProblemDTO> lst = new ArrayList<ProblemDTO>();
+		
 		for(Problem p : pro_lst) {
 			int problem_type = 0;
 			// OX 문제일 경우
@@ -72,15 +75,16 @@ public class ProblemServiceImpl implements ProblemService {
 	 * 카테고리 체크
 	 * */
 	@Override
-	public List<ProblemDTO> select_pro_category_user(String userId, Long category_id){
+	public List<ProblemDTO> select_pro_category_user(String userId, Long category_id, Pageable pageable){
 		List<ProblemDTO> lst = new ArrayList<ProblemDTO>();
 		int check = 0;
 		// 카테고리에 해당되는 서브 카테고리 소환
-		Category cate = cateRep.findById(category_id).orElse(null);
-		List<SubCategory> sub = subRep.findListByCategory(cate);
+//		Category cate = cateRep.findById(category_id).orElse(null);
+//		List<SubCategory> sub = subRep.findListByCategory(cate);
 		// 반복문을 돌려서 서브 카테고리들에 해당 되는 문제들을 소환해서 리스트에 넣는다. 
-		for(SubCategory s : sub ) {
-			List<Problem> pro_lst = proRep.findListBySubcategory(s);
+//		for(SubCategory s : sub ) {
+			Page<Problem> pro_lst = proRep.findListByProByCate(category_id, pageable);
+//			Page<Problem> pro_lst = proRep.findListBySubcategory(s.getSubcategoryId(),pageable);
 			for(Problem p : pro_lst) {
 				int problem_type = 0;
 				// OX 문제일 경우
@@ -98,7 +102,7 @@ public class ProblemServiceImpl implements ProblemService {
 				ProblemDTO dto = new ProblemDTO(p.getProblemId(),p.getTitle(),p.getQuestion(),p.getAnswerIndex(),p.getAnswer1(),p.getAnswer2(),p.getAnswer3(),p.getAnswer4(),p.getSolution(),problem_type,p.getSubcategory(),check);
 				lst.add(dto);
 			}
-		}
+//		}
 		
 		return lst;
 	}

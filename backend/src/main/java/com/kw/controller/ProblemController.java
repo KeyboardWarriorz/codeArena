@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kw.dto.ProblemDTO;
-import com.kw.entity.Problem;
 import com.kw.service.ProblemService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,17 +27,16 @@ public class ProblemController {
 	
 	
 	@GetMapping("/ProblemSet/{userId}")
-	public ResponseEntity<?> selectAllQ(HttpServletRequest req, @PathVariable("userId") String userId){
-//		int page = Integer.parseInt(req.getParameter("page"));
+	public ResponseEntity<?> selectAllQ(HttpServletRequest req, @PathVariable("userId") String userId, Pageable pageable){
 		List<ProblemDTO> data = new ArrayList<ProblemDTO>();
 		Map<String, Object> response = new HashMap<>();
 		Map<String, Object> dat = new HashMap<>();
 		int total = 0;
 		if (req.getParameter("category_id") == null){			
-			data = proservice.select_pro_All(userId);
+			data = proservice.select_pro_All(userId, pageable);
 			total = proservice.count_Pro();
 		}else {
-			data = proservice.select_pro_category_user(userId, Long.parseLong(req.getParameter("category_id")));
+			data = proservice.select_pro_category_user(userId, Long.parseLong(req.getParameter("category_id")),pageable);
 			total = proservice.count_Pro_cate(Long.parseLong(req.getParameter("category_id")));
 		}
 		dat.put("Problem",data);
