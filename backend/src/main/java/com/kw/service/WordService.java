@@ -48,4 +48,9 @@ public interface WordService {
 	 * 유저가 등록한 Word들의 List 3개 받아오기
 	 * */
 	List<WordDTO> UserWordList3(String userId);
+
+	/**
+	 * 사용자 단어장에서 특정 단어 삭제
+	 * */
+	Integer deleteWord(String userId, Long wordId);
 }

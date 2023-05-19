@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import com.kw.dto.UserDTO;
 import com.kw.dto.WordDTO;
 import com.kw.entity.User;
 import com.kw.repository.UserRepository;
@@ -61,7 +60,7 @@ public class WordServiceImpl implements WordService {
 	 * */
 	@Override
 	public UserWord selectByName(String name, String userId){
-		return wordRep.selectByName(name, userId);
+		return userWordRep.selectByName(name, userId);
 	}
 
 	/**
@@ -178,5 +177,21 @@ public class WordServiceImpl implements WordService {
 
 		return lst;
 	}
+
+	/**
+	 * 사용자 단어장에서 특정 단어 삭제
+	 * */
+	@Override
+	public Integer deleteWord(String userId, Long wordId){
+		UserWord userWord = userWordRep.findByWordAndUser(userId, wordId);
+
+		if(userWord == null){ // userWord가 비어있을 때
+			return 0;
+		}
+		// 비어 있지 않다면 삭제
+		userWordRep.delete(userWord);
+		return 1;
+	}
+
 
 }
