@@ -149,6 +149,8 @@ export default function SignUp() {
   }
 
   const [pwstate, setPwState] = useState("비밀번호를 확인해주세요");
+
+  // 비밀번호 유효성 체크
   function checkPW() {
     let num = pw1.search(/[0-9]/g);
     let eng = pw1.search(/[a-z]/gi);

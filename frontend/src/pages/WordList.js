@@ -23,10 +23,16 @@ const Words = styled.div`
 export default function WordList() {
   // 삭제 모달 관리
   const [showModal, setShowModal] = useState(false);
-  const clickModal = () => setShowModal(!showModal);
+  const clickModal = () => {
+    setShowModal(!showModal);
+    console.log("modal");
+  };
   const pageUser = window.location.pathname;
 
-  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
+  const [nickname, setNickname] = useState(
+    window.localStorage.getItem("nickname")
+  );
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
 
   // const [words, setWords] = useState([]);
 
@@ -57,8 +63,16 @@ export default function WordList() {
       <h3>🗂️ {nickname}님의 단어장 </h3>
       <Words>
         {words.map((w, idx) => {
-          if (pageUser.includes(nickname)) {
-            return <WordCard key={idx} user="true" name={w.name} content={w.desc} />;
+          if (pageUser.includes(userId)) {
+            return (
+              <WordCard
+                key={idx}
+                user="true"
+                name={w.name}
+                content={w.desc}
+                modal={clickModal}
+              />
+            );
           } else {
             return <WordCard key={idx} name={w.name} content={w.desc} />;
           }

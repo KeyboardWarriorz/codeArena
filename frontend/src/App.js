@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Fragment } from "react";
 import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from "recoil";
+import React from "react";
 
 import Main from "./pages/Main";
 

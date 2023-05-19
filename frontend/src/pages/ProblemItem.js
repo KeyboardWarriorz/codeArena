@@ -76,7 +76,7 @@ const TFQ = styled.div`
   cursor: pointer;
 
   .O {
-    color: green;
+    color: #006e61;
   }
 
   .X {

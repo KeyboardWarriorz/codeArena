@@ -76,7 +76,7 @@ const Problem = styled.div`
 
   > span:nth-of-type(3) {
     width: 60%;
-    color: green;
+    color: #006e61;
   }
 
   > span:nth-of-type(4) {
@@ -130,9 +130,19 @@ const Paginate = styled(ReactPaginate)`
 `;
 
 export default function ProblemSolved() {
-  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
+  const [nickname, setNickname] = useState(
+    window.localStorage.getItem("nickname")
+  );
   const navigate = useNavigate();
-  const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
+  const categories = [
+    "ALL",
+    "JAVA",
+    "JSP&Servlet",
+    "Spring",
+    "DataBase",
+    "JavaScript",
+    "HTML/CSS",
+  ];
   const totalRecords = 400;
 
   const typeArr = ["객관식", "O / X"];
