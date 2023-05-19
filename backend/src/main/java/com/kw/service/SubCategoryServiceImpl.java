@@ -17,19 +17,22 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class CategoryServiceImpl implements CategoryService{
-    @Autowired
-    private CategoryRepository categoryRep;
-
+public class SubCategoryServiceImpl implements SubCategoryService{
     @Autowired
     private SubCategoryRepository subCategoryRep;
+
+    @Autowired
+    private CategoryRepository categoryRep;
 
     /**
      * 카테고리 아이디에 해당하는 카테고리 이름 조회하기
      * */
     @Override
-    public String selectNameById(Long categoryId){
+    public String selectCategoryName(Long categoryId){
         Category category = categoryRep.findByCategoryId(categoryId);
+        if(category == null){
+            return null;
+        }
         return category.getCategoryName();
     }
 
@@ -37,8 +40,8 @@ public class CategoryServiceImpl implements CategoryService{
      * 카테고리에 해당하는 강의 목록 조회하기
      * */
     @Override
-    public List<Map<String, Object>> selectById(Long categoryId) {
-        List<SubCategory> subCategory = subCategoryRep.selectById(categoryId); //카테고리ID에 해당하는 서브 카테고리 리스트
+    public List<Map<String, Object>> selectSubCategoryList(Long categoryId) {
+        List<SubCategory> subCategory = subCategoryRep.findListByCategoryId(categoryId); //카테고리ID에 해당하는 서브 카테고리 리스트
         List<Map<String, Object>> mapList = new ArrayList<>(); //id와 name만 저장하기 위해 Map 사용
 
         for (int i = 0; i < subCategory.size(); i++) {
@@ -50,8 +53,30 @@ public class CategoryServiceImpl implements CategoryService{
             map.put("subcategory_name", subCategoryName);
             mapList.add(map);
         }
-
         return mapList;
     }
 
+    /**
+     * 개별 강의 내용 조회하기
+     * */
+    @Override
+    public Map<String, String> selectBySubCategoryId(Long subcategoryId){
+        SubCategory subCategory = subCategoryRep.findBySubcategoryId(subcategoryId);
+
+        if(subCategory == null){
+            return null;
+        }
+        // 1. 카테고리 이름 조회하기
+        String categoryName = subCategory.getCategory().getCategoryName();
+        // 2. 서브 카테고리 이름, 콘텐츠 조회하기
+        String subcategoryName = subCategory.getSubcategoryName();
+        String content = subCategory.getContent();
+
+        Map<String, String> map = new HashMap<>();
+        map.put("subcategory_name", subcategoryName);
+        map.put("category_name", categoryName);
+        map.put("content", content);
+
+        return map;
+    }
 }
