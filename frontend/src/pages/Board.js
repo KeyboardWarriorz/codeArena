@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import ArticleCard from "../components/organisms/ArticleCard";
+import axios from "axios";
 
 import ReactPaginate from "react-paginate";
 
@@ -9,6 +10,7 @@ import Seongwhan from "../assets/images/Seongwhan.svg";
 import Eunhyo from "../assets/images/Eunhyo.svg";
 import Junseo from "../assets/images/Junseo.svg";
 import Sunyeong from "../assets/images/Sunyeong.svg";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
   display: flex;
@@ -154,58 +156,70 @@ const Paginate = styled(ReactPaginate)`
 `;
 
 export default function Board() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     console.log(page);
   });
-  const totalRecords = 400;
-  const categories = [
-    { id: 1, title: "자유게시판" },
-    { id: 2, title: "질문게시판" },
-    { id: 3, title: "오류 제보" },
-  ];
+  const boards = ["", "자유게시판", "질문게시판", "오류 제보"];
 
   const [curId, setCurId] = useState(1);
   const [curr, setCurr] = useState("자유게시판");
+  const [total, setTotal] = useState(1);
 
   const [page, setPage] = useState(1);
+  const [articles, setArticles] = useState([]);
 
-  function categoryChange(id, title) {
-    setCurId(id);
-    setCurr(title);
+  function categoryChange(c) {
+    setCurr(c);
   }
 
   function changePage(e) {
     setPage(e.selected + 1);
   }
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/article/articleList/${boards.indexOf(curr)}`)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          setArticles(res.data.data.articleList);
+          setTotal(res.data.data.totalArticle);
+        }
+      })
+      .catch((e) => window.alert(e.response.data));
+  }, []);
+
+  console.log(articles);
   return (
     <Div>
       <Sidebar>
         <h3>😍 커뮤니티</h3>
         <div>
-          {categories.map((c) => {
-            if (c.title === curr) {
+          {boards.map((b, idx) => {
+            if (b === curr) {
               return (
                 <div
                   id="curr"
-                  key={c.id}
+                  key={idx}
                   onClick={() => {
-                    categoryChange(c.id, c.title);
+                    categoryChange(b);
                   }}
                 >
-                  {c.title}
+                  {b}
                 </div>
               );
             } else {
               return (
                 <div
                   id="category"
-                  key={c.id}
+                  key={idx}
                   onClick={() => {
-                    categoryChange(c.id, c.title);
+                    categoryChange(b);
                   }}
                 >
-                  {c.title}
+                  {b}
                 </div>
               );
             }
@@ -215,29 +229,40 @@ export default function Board() {
       <Contents>
         <SearchBar>
           <Input type="text" placeholder="검색어를 입력해 주세요" />
-          <span className="material-symbols-outlined" style={{ color: "#00000080" }}>
+          <span
+            className="material-symbols-outlined"
+            style={{ color: "#00000080" }}
+          >
             search
           </span>
-          <button>작성하기</button>
+          <button
+            onClick={() => {
+              navigate("/board/regist");
+            }}
+          >
+            작성하기
+          </button>
         </SearchBar>
 
         <Cards>
-          <ArticleCard
-            title="행운의 편지..."
-            content="이 편지는 영국에서 최초로 시작되어 일년에 한바퀴 를 돌면서 받는 사람에게 행운을 ..."
-            profile={Junseo}
-            userId="아이디"
-            nickname="닉네임"
-            cnt="5"
-          ></ArticleCard>
-          <ArticleCard profile={Seongwhan}></ArticleCard>
-          <ArticleCard></ArticleCard>
-
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
+          {/* <div>?</div> */}
+          {/* <div>{articles[0].title}</div> */}
+          {articles.map((a, idx) => {
+            return (
+              <div>
+                <ArticleCard
+                  articleId={a.articleId}
+                  title={a.title}
+                  content={a.content}
+                  nickname={a.nickname}
+                  cnt={a.totalComment}
+                />
+              </div>
+            );
+          })}
         </Cards>
         <Paginate
-          pageCount={Math.ceil(totalRecords / 10)}
+          pageCount={Math.ceil(total / 10)}
           pageRangeDisplayed={5}
           marginPagesDisplayed={0}
           breakLabel={""}

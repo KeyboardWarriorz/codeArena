@@ -114,7 +114,10 @@ export default function ProblemItem() {
     setSelected(n);
   }
 
-  console.log(selected);
+  // useEffect(() => {
+  //   axios
+  // })
+
   return (
     <Div>
       <Tags>

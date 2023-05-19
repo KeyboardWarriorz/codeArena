@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Div = styled.div`
   cursor: default;
@@ -130,6 +131,7 @@ const Paginate = styled(ReactPaginate)`
 `;
 
 export default function ProblemSolved() {
+  const userId = window.localStorage.getItem("userId");
   const [nickname, setNickname] = useState(
     window.localStorage.getItem("nickname")
   );
@@ -143,38 +145,11 @@ export default function ProblemSolved() {
     "JavaScript",
     "HTML/CSS",
   ];
-  const totalRecords = 400;
 
   const typeArr = ["객관식", "O / X"];
   const [page, setPage] = useState(1);
-
-  // 0: 안풂, 1: 맞음, 2: 틀림
-  const problems = [
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 0,
-      problemId: 3,
-    },
-    { status: 1, category: "Spring", title: "Java", type: 0, problemId: 1 },
-    { status: 2, category: "Java", title: "Static", type: 1, problemId: 2 },
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 1,
-      problemId: 4,
-    },
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 0,
-      problemId: 3,
-    },
-  ];
-
+  const [problems, setProblems] = useState([]);
+  const [total, setTotal] = useState(1);
   const [selected, setSelected] = useState("ALL");
 
   function setCategory(e) {
@@ -184,6 +159,22 @@ export default function ProblemSolved() {
   function changePage(e) {
     setPage(e.selected + 1);
   }
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8080/ProblemSet/${userId}/1?size=10&page=${page}&category_id=${categories.indexOf(
+          selected
+        )}`
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          setTotal(res.data.data.totalProblem);
+          setProblems(res.data.data.Problem);
+        }
+      })
+      .catch((e) => window.alert(e.response.data));
+  }, [page, selected]);
 
   return (
     <Div>
@@ -222,7 +213,7 @@ export default function ProblemSolved() {
             <div
               key={idx}
               onClick={() => {
-                navigate(`/problem/${p.problemId}`);
+                navigate(`/problem/${p.problem.problemId}`);
               }}
             >
               <Problem>
@@ -230,9 +221,9 @@ export default function ProblemSolved() {
                   check_circle_outline
                 </span>
 
-                <span>{p.category}</span>
-                <span>{p.title}</span>
-                <span>{typeArr[`${p.type}`]}</span>
+                <span>{p.problem.subcategory.category.categoryName}</span>
+                <span>{p.problem.question}</span>
+                <span>{typeArr[`${p.problem.problem_type}`]}</span>
               </Problem>
               <div id="hr"></div>
             </div>
@@ -241,7 +232,7 @@ export default function ProblemSolved() {
       </Problems>
 
       <Paginate
-        pageCount={Math.ceil(totalRecords / 10)}
+        pageCount={Math.ceil(total / 10)}
         pageRangeDisplayed={5}
         marginPagesDisplayed={0}
         breakLabel={""}

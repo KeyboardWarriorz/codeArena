@@ -6,6 +6,7 @@ import Seongwhan from "../../assets/images/Seongwhan.svg";
 import Eunhyo from "../../assets/images/Eunhyo.svg";
 import Junseo from "../../assets/images/Junseo.svg";
 import Sunyeong from "../../assets/images/Sunyeong.svg";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
   border-radius: 10px;
@@ -20,6 +21,7 @@ const Div = styled.div`
   align-items: start;
   text-align: start;
   position: relative;
+  cursor: pointer;
 `;
 
 const Title = styled.div`
@@ -84,8 +86,13 @@ const User = styled.div`
 `;
 
 export default function ArticleCard(props) {
+  const navigate = useNavigate();
   return (
-    <Div>
+    <Div
+      onClick={() => {
+        navigate(`/board/detail/${props.articleId}`);
+      }}
+    >
       <Title>{props.title}</Title>
       <Content>{props.content}</Content>
       <Info>
