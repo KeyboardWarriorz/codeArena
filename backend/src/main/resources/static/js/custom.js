@@ -20,34 +20,28 @@ function cacheDOM() {
     $chatHistoryList = $chatHistory.find('ul');
 }
 
-function render(roomName) {
-    $chatHistoryList.empty();
-    $.get(url+"/chat/"+roomName,function(response){
-
-        console.log(response)
-        let messages = response;
-        for(let i = 0;i<messages.length;i++){
-            if(messages[i].fromLogin == $('#userName').val()){
-                var template = Handlebars.compile($("#message-template").html());
-                var context = {
-                    messageOutput: messages[i].message,
-                    time: 0,
-                    toUserName: messages[i].fromLogin
-                };
-                $chatHistoryList.append(template(context));
-            }
-            else{
-                var templateResponse = Handlebars.compile($("#message-response-template").html());
-                var contextResponse = {
-                    response: messages[i].message,
-                    time: 0,
-                    userName: messages[i].fromLogin
-                };
-                $chatHistoryList.append(templateResponse(contextResponse));
-            }
-        }
-    })
-    setTimeout(scrollToBottom,500);
+function render(message) {
+    if(message.fromLogin == $('#userName').val()){
+        console.log("same")
+        var template = Handlebars.compile($("#message-template").html());
+        var context = {
+            messageOutput: message.message,
+            time: 0,
+            toUserName: message.fromLogin
+        };
+        $chatHistoryList.append(template(context));
+    }
+    else{
+        console.log("not")
+        var templateResponse = Handlebars.compile($("#message-response-template").html());
+        var contextResponse = {
+            response: message.message,
+            time: 0,
+            userName: message.fromLogin
+        };
+        $chatHistoryList.append(templateResponse(contextResponse));
+    }
+    setTimeout(scrollToBottom,10);
     // responses
 
     //

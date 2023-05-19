@@ -31,9 +31,12 @@ public class RoomService {
     public void startGame(String roomName) {
         gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService));
     }
-    public Map<String, Object> joinRoom(String roomName, String userId) throws Exception{
+    public Map<String, Object> joinRoom(String roomName, String userId, String prev_room) throws Exception{
         Map<String, Object> dataMap = new HashMap<>();
         roomStorage.addUserToRoom(roomName, userId);
+        if (!prev_room.equals(roomName)&&prev_room != null) {
+            leaveRoom(prev_room, userId);
+        }
         RoomDto room = roomStorage.getRoomByRoomName(roomName);
         dataMap.put("category_id", room.getCategory_id());
         List<String> userList = new ArrayList<>();
@@ -41,7 +44,6 @@ public class RoomService {
             userList.add(user);
         }
         dataMap.put("userList", userList);
-        dataMap.put("chatList", messageService.getMessages(roomName));
         return dataMap;
     }
     public Set<RoomDto> getRoomList() {
