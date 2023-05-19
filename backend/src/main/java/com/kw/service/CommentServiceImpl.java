@@ -64,16 +64,20 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public Integer deleteComment(Long commentId) {
+		
 		Integer code = 1;
-		Comment comment = commentRep.findByCommentId(commentId);
-		System.out.println(comment.toString());
-		if(comment != null) {
+		
+		
+			Comment comment = commentRep.findByCommentId(commentId);
+		if(comment != null) {	
 			commentRep.delete(comment);
+		
 			return code;
 		}
 		else {
 			code = 0;
 			return code;
 		}
+
 	}
 }
