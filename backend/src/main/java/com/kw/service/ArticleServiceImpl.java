@@ -1,9 +1,7 @@
 package com.kw.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +51,7 @@ public class ArticleServiceImpl implements ArticleService{
 			Long articleId = article.getArticleId();
 			Long CommentTotal = articleRep.selectCommentCount(articleId);
 			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal);
+			System.out.println(articleDTO.toString());
 			articleDTOList.add(articleDTO);
 		}
 		return articleDTOList;
@@ -82,15 +81,17 @@ public class ArticleServiceImpl implements ArticleService{
 		Board board = boardRep.findByBoardId(Long.valueOf(String.valueOf(param.get("board_id"))));
 		User user = userRep.findByUserId((String)param.get("user_id"));
 
-		Date currentDate = new Date();
-		currentDate.setSeconds(0);  // 초를 0으로 설정
-		currentDate.setTime((currentDate.getTime() / (60 * 1000)) * (60 * 1000));  // 밀리초를 0으로 설정
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 
+		Date truncatedDate = calendar.getTime();
+				
 		Article article =
 				new Article(null,
 						user, board, (String)param.get("title")
 				, (String)param.get("content"), 
-				currentDate);
+				truncatedDate);
 
 		if(article != null) {
 
@@ -103,7 +104,6 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 
 	}
-
 
 
 	@Override
@@ -120,8 +120,4 @@ public class ArticleServiceImpl implements ArticleService{
 		return code;
 	}
 	
-	
-	
-	
-
 }
