@@ -143,7 +143,27 @@ public class WordServiceImpl implements WordService {
 	/**
 	 * 유저가 등록한 Word들의 List 받아오기
 	 * */
+	
+	@Override
 	public List<WordDTO> UserWordList(String userId){
+		List<WordDTO> lst = new ArrayList<WordDTO>();
+
+//		User user = userRep.findByUserId(userId);
+		List<UserWord> userwords = userWordRep.findListOrderUser(userId);
+		for (UserWord uw : userwords) {
+			WordDTO uwDTO = new WordDTO(uw.getUserWordId(),uw.getWord());
+			lst.add(uwDTO);
+		}
+
+		return lst;
+	}
+	
+	
+	/**
+	 * 유저가 등록한 Word들의 List 3개만 받아오기
+	 * */
+	@Override
+	public List<WordDTO> UserWordList3(String userId){
 		List<WordDTO> lst = new ArrayList<WordDTO>();
 
 //		User user = userRep.findByUserId(userId);

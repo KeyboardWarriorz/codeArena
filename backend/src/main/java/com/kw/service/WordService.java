@@ -43,4 +43,9 @@ public interface WordService {
 	 * 유저가 등록한 Word들의 List 받아오기
 	 * */
 	List<WordDTO> UserWordList(String userId);
+	
+	/**
+	 * 유저가 등록한 Word들의 List 3개 받아오기
+	 * */
+	List<WordDTO> UserWordList3(String userId);
 }
