@@ -2,6 +2,7 @@ package com.kw.controller;
 
 import com.kw.entity.UserWord;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +10,12 @@ import com.kw.entity.Word;
 import com.kw.response.responseApi;
 import com.kw.service.WordService;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/word")
 public class WordController {
 
 	private final WordService wordService;
@@ -23,12 +26,12 @@ public class WordController {
 	 * request: user_id, word, content
 	 * status 201 : "단어 등록 성공" / status 401 : "이미 등록된 단어" /  status 500 : "단어 등록 실패"
 	 */
-	@PostMapping("/word")
+	@PostMapping()
 	public ResponseEntity<responseApi<String>> insert(@RequestBody Map<String, String> request) {
 		responseApi<String> response = new responseApi<String>();
 
 		String name = request.get("name");
-		String userId = request.get("userId");
+		String userId = request.get("user_id");
 
 		// 1. 사용자 User_Word DB에 같은 내용이 이미 존재하는 지 확인한다.
 		UserWord userWord = wordService.selectByName(name, userId);
@@ -50,7 +53,7 @@ public class WordController {
 	 * request: name
 	 * status 200 : "단어 조회 성공" / status 500 : "단어 검색 실패"
 	 */
-	@GetMapping("/word")
+	@GetMapping()
 	public ResponseEntity<responseApi<String>> selectByName(String name) {
 		responseApi<String> response = new responseApi<String>();
 
@@ -77,6 +80,29 @@ public class WordController {
 			response.setMessage("단어 조회 성공");
 			response.setData(word.getDescription()); // 단어 전송
 		}
+		return ResponseEntity.ok(response);
+	}
+
+	/**
+	 * 단어장 삭제
+	 * request: user_id, word_id
+	 * status 201: "단어 삭제 성공" / status 500 : "단어 삭제 실패"
+	 * */
+	@PostMapping("/delete")
+	public ResponseEntity<?> deleteWord(@RequestBody Map<String, String> request){
+		Map<String, Object> response = new HashMap<>();
+
+		// 1. Json에서 사용자 아이디와 단어 아이디 조회
+		String userId = request.get("user_id");
+		Long wordId = Long.parseLong(request.get("word_id"));
+
+		Integer code =  wordService.deleteWord(userId, wordId);
+		if(code == 0){ //삭제에 실패했을 때
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("단어 삭제 실패");
+		}
+		response.put("statusCode", 201);
+		response.put("message", "단어 삭제 성공");
+
 		return ResponseEntity.ok(response);
 	}
 
