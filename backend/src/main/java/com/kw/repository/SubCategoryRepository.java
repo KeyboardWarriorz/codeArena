@@ -17,5 +17,10 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory, Intege
 	 * 카테고리에 해당하는 강의 목록 조회하기
 	 */
 	@Query(value = "select s from SubCategory s where s.category.categoryId =?1")
-	List<SubCategory> selectById(Long categoryId);
+	List<SubCategory> findListByCategoryId(Long categoryId);
+
+	/**
+	 * 개별 강의 내용 조회하기
+	 * */
+	SubCategory findBySubcategoryId(Long subcategoryId);
 }
