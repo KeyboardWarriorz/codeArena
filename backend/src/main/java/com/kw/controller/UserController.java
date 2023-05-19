@@ -141,7 +141,7 @@ public class UserController {
 	@PostMapping("/password/{userId}")
 	public ResponseEntity<?> ChangePw(@PathVariable("userId") String userId, @RequestBody Map<String, String> map) {
 		if (!userService.checkPassword(userId,map.get("now_pw"))) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map+"비밀번호가 맞지 않습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호가 맞지 않습니다.");
 		}
 		userService.ChangePw(userId, map.get("change_pw"));
 		return ResponseEntity.status(HttpStatus.OK).body("비밀번호 변경을 성공했습니다.");
