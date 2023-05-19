@@ -53,9 +53,11 @@ public class RoomController {
         System.out.println("joining room");
         String roomName = request.getParameter("room_name");
         String userId = request.getParameter("user_id");
+        String prev_room = request.getParameter("prev_room");
+        System.out.println(roomName + userId + prev_room);
         Map<String, Object> dataMap;
         try {
-            dataMap = roomService.joinRoom(roomName, userId);
+            dataMap = roomService.joinRoom(roomName, userId, prev_room);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

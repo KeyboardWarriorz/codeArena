@@ -1,4 +1,4 @@
-const url = "http://localhost:8080";
+const url = "http://3.36.247.81:8080";
 let stompUserClient;
 let selectedRoom;
 let subscription=null;
@@ -8,7 +8,7 @@ function connectToRoom(roomName) {
     console.log("connecting to chat...")
     const userName = document.getElementById("userName").value;
     document.getElementById("roomName").value = roomName;
-    $.post(url+'/game/room/join', { "room_name": roomName, "user_id": userName })
+    $.post(url+'/game/room/join', { "room_name": roomName, "user_id": userName,"prev_room":selectedRoom })
         .done(function(response) {
             // 성공적으로 응답을 받았을 때 실행될 콜백 함수
             console.log(response);
@@ -23,7 +23,7 @@ function connectToRoom(roomName) {
     subscription = stompUserClient.subscribe("/topic/messages/" + roomName, function (response) {
         let data = JSON.parse(response.body);
         if (data.type == "message") {
-            render(roomName);
+            render(data);
         }
         else if (data.type == "question") {
             showQuestion(data.question,data.answer,data.answer_index);
@@ -117,7 +117,7 @@ function sendBroadcast(message){
     stompUserClient.send("/app/room",{},JSON.stringify({
         fromLogin: username,
         message: message,
-        type: "message"
+        type: "broadcast"
     }));
 }
 
@@ -163,10 +163,13 @@ function addRoom() {
 
 function selectRoom(roomName) {
     console.log("selecting room: " + roomName);
+    if (selectedRoom == roomName) {
+        return
+    }
     selectedRoom = roomName;
-    render(roomName);
     $('#selectedUserId').html('');
     $('#selectedUserId').append('Chat with ' + roomName);
+    $chatHistoryList.empty();
     connectToRoom(roomName);
 }
 
