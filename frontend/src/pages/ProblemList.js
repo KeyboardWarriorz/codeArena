@@ -109,6 +109,7 @@ const Paginate = styled(ReactPaginate)`
     text-align: center;
     cursor: pointer;
   }
+
   .active {
     border: solid 1px #808e9b;
     border-radius: 40px;
@@ -127,7 +128,7 @@ const Paginate = styled(ReactPaginate)`
 
 export default function ProblemList() {
   const navigate = useNavigate();
-  console.log();
+
   const categories = [
     "ALL",
     "JAVA",
@@ -147,7 +148,9 @@ export default function ProblemList() {
   const [selected, setSelected] = useState("ALL");
 
   function setCategory(e) {
+    setPage(1);
     setSelected(e.target.innerText);
+    setProblems([...problems]);
   }
 
   function changePage(e) {
@@ -156,7 +159,11 @@ export default function ProblemList() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/ProblemSet/${userId}?page=${page}`)
+      .get(
+        `http://localhost:8080/ProblemSet/${userId}?page=${page}&size=10&category_id=${categories.indexOf(
+          selected
+        )}`
+      )
       .then((res) => {
         console.log(res.data);
         if (res.status === 200) {
@@ -165,7 +172,7 @@ export default function ProblemList() {
         }
       })
       .catch((e) => console.log(e));
-  }, [page]);
+  }, [page, selected]);
 
   return (
     <Div>
@@ -239,19 +246,36 @@ export default function ProblemList() {
         })}
       </Problems>
 
-      <Paginate
-        pageCount={Math.ceil(total / 10)}
-        pageRangeDisplayed={5}
-        marginPagesDisplayed={0}
-        breakLabel={""}
-        previousLabel={"<"}
-        nextLabel={">"}
-        onPageChange={changePage}
-        containerClassName={"pagination-ul"}
-        activeClassName={"currentPage"}
-        previousClassName={"pageLabel-btn"}
-        nextClassName={"pageLabel-btn"}
-      />
+      {page === 1 ? (
+        <Paginate
+          pageCount={Math.ceil(total / 10)}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={0}
+          breakLabel={""}
+          previousLabel={"<"}
+          nextLabel={">"}
+          forcePage={0}
+          onPageChange={changePage}
+          containerClassName={"pagination-ul"}
+          activeClassName={"currentPage"}
+          previousClassName={"pageLabel-btn"}
+          nextClassName={"pageLabel-btn"}
+        />
+      ) : (
+        <Paginate
+          pageCount={Math.ceil(total / 10)}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={0}
+          breakLabel={""}
+          previousLabel={"<"}
+          nextLabel={">"}
+          onPageChange={changePage}
+          containerClassName={"pagination-ul"}
+          activeClassName={"currentPage"}
+          previousClassName={"pageLabel-btn"}
+          nextClassName={"pageLabel-btn"}
+        />
+      )}
     </Div>
   );
 }

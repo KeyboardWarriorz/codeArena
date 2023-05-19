@@ -1,7 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
 import { useState } from "react";
-import DeleteModal from "../../components/DeleteModal";
 
 const Div = styled.div`
   width: 24%;
