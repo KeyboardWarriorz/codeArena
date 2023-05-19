@@ -1,6 +1,5 @@
 package com.kw.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kw.dto.ErrorDTO;
 import com.kw.dto.MypageDTO;
 import com.kw.dto.SolvedDTO;
 import com.kw.dto.UserDTO;
 import com.kw.dto.WordDTO;
 import com.kw.entity.User;
-import com.kw.response.responseApi;
 import com.kw.service.SolvedService;
 import com.kw.service.UserService;
 import com.kw.service.WordService;
