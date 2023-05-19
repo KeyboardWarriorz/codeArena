@@ -14,7 +14,9 @@ import { useNavigate } from "react-router-dom";
 export default function MyPage() {
   const navigate = useNavigate();
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
+  const [nickname, setNickname] = useState(
+    window.localStorage.getItem("nickname")
+  );
   const [profile, setProfile] = useState("Eunhyo");
 
   const typeArr = ["객관식", "O / X"];
@@ -50,7 +52,6 @@ export default function MyPage() {
     axios
       .get(`http://localhost:8080/user/mypage/${userId}`)
       .then((res) => {
-        console.log(res.data);
         if (res.status === 200) {
           setSolved(res.data.success_solved);
           setFailed(res.data.failed_solved);
@@ -65,7 +66,6 @@ export default function MyPage() {
       <ProfileBox>
         <CharBox>
           <Profile>
-            {/* <div>../assets/images/{profile}.svg</div> */}
             <img src={require(`../assets/images/${profile}.svg`)} />
           </Profile>
         </CharBox>
@@ -139,7 +139,13 @@ export default function MyPage() {
           </div>
           <div className="words">
             {words.map((w, idx) => {
-              return <WordCard key={idx} name={w.word.name} content={w.word.description} />;
+              return (
+                <WordCard
+                  key={idx}
+                  name={w.word.name}
+                  content={w.word.description}
+                />
+              );
             })}
           </div>
         </Words>

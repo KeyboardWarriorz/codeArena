@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Div = styled.div`
   cursor: default;
@@ -81,7 +82,6 @@ const Problem = styled.div`
 `;
 
 const Paginate = styled(ReactPaginate)`
-  // background-color: yellow;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,38 +127,22 @@ const Paginate = styled(ReactPaginate)`
 
 export default function ProblemList() {
   const navigate = useNavigate();
-  const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
-  const totalRecords = 400;
+  console.log();
+  const categories = [
+    "ALL",
+    "JAVA",
+    "JSP&Servlet",
+    "Spring",
+    "DataBase",
+    "JavaScript",
+    "HTML/CSS",
+  ];
 
   const typeArr = ["객관식", "O / X"];
   const [page, setPage] = useState(1);
-
-  // 0: 안풂, 1: 맞음, 2: 틀림
-  const problems = [
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 0,
-      problemId: 3,
-    },
-    { status: 1, category: "Spring", title: "Java", type: 0, problemId: 1 },
-    { status: 2, category: "Java", title: "Static", type: 1, problemId: 2 },
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 1,
-      problemId: 4,
-    },
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 0,
-      problemId: 3,
-    },
-  ];
+  const [total, setTotal] = useState(1);
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [problems, setProblems] = useState([]);
 
   const [selected, setSelected] = useState("ALL");
 
@@ -169,6 +153,19 @@ export default function ProblemList() {
   function changePage(e) {
     setPage(e.selected + 1);
   }
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/ProblemSet/${userId}?page=${page}`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.status === 200) {
+          setTotal(res.data.data.totalProblem);
+          setProblems(res.data.data.Problem);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, [page]);
 
   return (
     <Div>
@@ -211,30 +208,30 @@ export default function ProblemList() {
               }}
             >
               <Problem>
-                {p.status === 1 ? (
+                {p.check === 1 ? (
                   <span className="material-icons" style={{ color: "green" }}>
                     check_circle_outline
                   </span>
                 ) : (
                   ""
                 )}
-                {p.status === 2 ? (
+                {p.check === 2 ? (
                   <span className="material-icons" style={{ color: "red" }}>
                     highlight_off
                   </span>
                 ) : (
                   ""
                 )}
-                {p.status === 0 ? (
+                {p.check === 0 ? (
                   <span className="material-icons" style={{ color: "white" }}>
                     highlight_off
                   </span>
                 ) : (
                   ""
                 )}
-                <span>{p.category}</span>
+                <span>{p.subcategory.category.categoryName}</span>
                 <span>{p.title}</span>
-                <span>{typeArr[`${p.type}`]}</span>
+                <span>{typeArr[`${p.problem_type}`]}</span>
               </Problem>
               <div id="hr"></div>
             </div>
@@ -243,7 +240,7 @@ export default function ProblemList() {
       </Problems>
 
       <Paginate
-        pageCount={Math.ceil(totalRecords / 10)}
+        pageCount={Math.ceil(total / 10)}
         pageRangeDisplayed={5}
         marginPagesDisplayed={0}
         breakLabel={""}
