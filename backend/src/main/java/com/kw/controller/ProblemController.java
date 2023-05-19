@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kw.dto.ProblemDTO;
+import com.kw.dto.SolvedDTO;
 import com.kw.service.ProblemService;
+import com.kw.service.SolvedService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class ProblemController {
 	
 	private final ProblemService proservice;
-	
+	private final SolvedService solveservice;
 	
 	@GetMapping("/ProblemSet/{userId}")
 	public ResponseEntity<?> selectAllQ(HttpServletRequest req, @PathVariable("userId") String userId, Pageable pageable){
@@ -32,7 +34,6 @@ public class ProblemController {
 		Map<String, Object> response = new HashMap<>();
 		Map<String, Object> dat = new HashMap<>();
 		int total = 0;
-
 		if (req.getParameter("category_id").equals("0")){			
 			data = proservice.select_pro_All(userId, pageable);
 			total = proservice.count_Pro();
@@ -53,5 +54,29 @@ public class ProblemController {
 		ProblemDTO pro = proservice.select_pro(problemId);
 		
 		return new ResponseEntity(pro, HttpStatus.OK);
+	}
+	
+	@GetMapping("/ProblemSet/{userId}/{success}")
+	public ResponseEntity<?> selectSuccess(HttpServletRequest req, @PathVariable("userId") String userId,@PathVariable("success") int success, Pageable pageable){
+		List<SolvedDTO> data = new ArrayList<>();
+		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> dat = new HashMap<>();
+		int total = 0;
+		String Cate = req.getParameter("category_id");
+		// 전체 조회
+		if (Cate.equals("0")){		
+			data = solveservice.selectSolved_user_all(userId, success,pageable);
+			total = solveservice.countSol(userId, success);
+		}
+		// 그 외 카테고리 지정
+		else {
+			data = solveservice.selectSolved_user_all_cate(userId, success,Cate,pageable);
+			total = solveservice.countSolCate(userId,Cate, success);
+			}
+		dat.put("Problem",data);
+		dat.put("totalProblem",total);
+		response.put("data",dat);
+		
+		return new ResponseEntity(response,HttpStatus.OK);
 	}
 }
