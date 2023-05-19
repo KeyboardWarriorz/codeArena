@@ -27,8 +27,7 @@ public class CommentServiceImpl implements CommentService {
 	private ArticleRepository articleRep;
 	@Autowired
 	private UserRepository userRep;
-	@Autowired
-	private BoardRepository boardRep;
+
 	
 	@Override
 	public List<CommentDTO> selectComment(Long articleId) {
@@ -61,5 +60,20 @@ public class CommentServiceImpl implements CommentService {
 			return code;
 		}
 
+	}
+
+	@Override
+	public Integer deleteComment(Long commentId) {
+		Integer code = 1;
+		Comment comment = commentRep.findByCommentId(commentId);
+		System.out.println(comment.toString());
+		if(comment != null) {
+			commentRep.delete(comment);
+			return code;
+		}
+		else {
+			code = 0;
+			return code;
+		}
 	}
 }

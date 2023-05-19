@@ -52,7 +52,7 @@ public class ArticleController {
 	}
 	
 	//게시글 상세조회 
-	@RequestMapping("/{article-id}")
+	@RequestMapping("/detail/{article-id}")
 	public ResponseEntity<?> selectArticleOne(@PathVariable("article-id") Long articleId){
 		
 		Map<String, Object> response = new HashMap<>();

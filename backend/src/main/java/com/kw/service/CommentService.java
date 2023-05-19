@@ -12,4 +12,5 @@ public interface CommentService {
 
 	List<CommentDTO> selectComment(Long articleId);
 	Integer insertComment( Map<String, Object> param);
+	Integer deleteComment(Long commentId);
 }
