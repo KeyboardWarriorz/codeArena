@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface UserWordRepository extends JpaRepository<UserWord, Integer>, QuerydslPredicateExecutor<UserWord> {
-	
+
 	@Query(value="select u from UserWord u where u.user.userId=?1 order by u.userWordId DESC")
 	List<UserWord> findListOrderUser(String userId);
 

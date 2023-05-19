@@ -59,7 +59,7 @@ public class WordServiceImpl implements WordService {
 	 * 사용자 단어 DB에 값이 있는 지 조회하기
 	 * */
 	@Override
-	public UserWord selectByName(String name, String userId){
+	public UserWord checkNameByUserId(String name, String userId){
 		return userWordRep.selectByName(name, userId);
 	}
 
@@ -67,7 +67,7 @@ public class WordServiceImpl implements WordService {
 	 * 사용자 단어 DB에 등록하기
 	 * */
 	@Override
-	public void insert(String name, String userId) {
+	public void insertUserWord(String name, String userId) {
 		Word word = selectByName(name); //검색한 단어에 해당하는 word 조회
 		User user = userRep.findByUserId(userId);
 		UserWord userWord = new UserWord(null, user, word);
@@ -78,7 +78,7 @@ public class WordServiceImpl implements WordService {
 	 * 공용 단어 DB에 저장하기
 	 * */
 	@Override
-	public void insert(Word word) {
+	public void insertWord(Word word) {
 		wordRep.save(word);
 	}
 

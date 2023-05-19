@@ -21,17 +21,17 @@ public interface WordService {
 	/**
 	 * 사용자 단어 DB에 값이 있는 지 조회하기
 	 * */
-	UserWord selectByName(String name, String userId);
+	UserWord checkNameByUserId(String name, String userId);
 
 	/**
 	 * 사용자 단어 DB에 등록하기
 	 * */
-	void insert(String name, String userId);
+	void insertUserWord(String name, String userId);
 
 	/**
 	 * 공용 단어 DB에 저장하기
 	 * */
-	void insert(Word word);
+	void insertWord(Word word);
 
 	/**
 	 * chatGPT로부터 단어에 해당하는 내용을 받아오기
