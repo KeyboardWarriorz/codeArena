@@ -17,4 +17,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>, Quer
     @Query(value = "SELECT a FROM Comment a WHERE a.article.articleId = ?1", nativeQuery = false)
     List<CommentDTO> selectComment(Long articleId);
  
+    Comment findByCommentId(Long commentId);
 }

@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Comments")
+@ToString
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "comment_id")
