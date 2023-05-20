@@ -2,6 +2,7 @@ package com.kw.controller;
 
 import com.kw.service.SubCategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ public class SubCategoryController {
             response.put("message", "강의 조회 성공");
             response.put("data", data);
         } else{  // 2-2. 해당 내용이 없을 때
-            response.put("status", 500);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("강의 조회 실패");
         }
         return ResponseEntity.ok(response);
     }
