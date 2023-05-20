@@ -1,6 +1,5 @@
 package com.kw.service;
 
-import com.kw.dto.MypageDTO;
 import com.kw.dto.UserDTO;
 import com.kw.entity.User;
 
@@ -20,4 +19,6 @@ public interface UserService {
     boolean checkPassword(String userId, String pw);
     
     public void ChangePw(String userId, String pw);
+
+    void changeProfile(String userId, String profileImage);
 }

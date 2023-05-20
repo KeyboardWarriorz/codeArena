@@ -9,9 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kw.dto.MypageDTO;
 import com.kw.dto.UserDTO;
-import com.kw.entity.Article;
 import com.kw.entity.User;
 import com.kw.repository.ArticleRepository;
 import com.kw.repository.UserRepository;
@@ -68,7 +66,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkId(String userId) {
     	return userRep.existsByuserId(userId);
-    };
+    }
     
 	/**
 	 * 회원가입
@@ -131,5 +129,14 @@ public class UserServiceImpl implements UserService {
     	User user = userRep.findByUserId(userId);
     	user.setUserPw(pw);
     }
-    
+
+	/**
+	 * 프로필 변경
+	 * */
+	@Override
+	public void changeProfile(String userId, String profileImage){
+		User user = userRep.findByUserId(userId);
+		user.setProfileImage(profileImage);
+		userRep.save(user);
+	}
 }
