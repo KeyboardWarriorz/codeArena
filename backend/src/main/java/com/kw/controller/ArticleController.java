@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kw.dto.ArticleDTO;
@@ -20,14 +21,14 @@ import com.kw.dto.ArticleListDTO;
 import com.kw.service.ArticleService;
 
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/board")
 public class ArticleController {
 	
 	@Autowired
 	private ArticleService articleService;
 	
 	//게시글 목록 조회
-	@RequestMapping("/articleList/{board-id}")
+	@RequestMapping("/boardList/{board-id}")
 	public ResponseEntity<?> selectArticleAll(@PathVariable("board-id") Long boardId, Pageable pageable){
 		
 		Map<String, Object> response = new HashMap<>();
@@ -52,8 +53,8 @@ public class ArticleController {
 	}
 	
 	//게시글 상세조회 
-	@RequestMapping("/detail/{article-id}")
-	public ResponseEntity<?> selectArticleOne(@PathVariable("article-id") Long articleId){
+	@RequestMapping("/detail/{board-id}")
+	public ResponseEntity<?> selectArticleOne(@PathVariable("board-id") Long articleId){
 		
 		Map<String, Object> response = new HashMap<>();
 		ArticleDTO article = articleService.selectArticleOne(articleId);
@@ -94,8 +95,8 @@ public class ArticleController {
 	}
 	
 	
-	@PostMapping("/delete/{article-id}")
-	public ResponseEntity<?> deleteArticle(@PathVariable("article-id") Long articleId){
+	@PostMapping("/delete/{board-id}")
+	public ResponseEntity<?> deleteArticle(@PathVariable("board-id") Long articleId){
 		Map<String, Object> response = new HashMap<String, Object>();
 		Integer code = articleService.deleteArticle(articleId);
 		
@@ -110,6 +111,26 @@ public class ArticleController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
+	//게시글 검색
+	@RequestMapping("/search")
+	public ResponseEntity<?> searchArticle(@RequestParam String keyword, Pageable pageable){
+		
+		Map<String, Object> response = new HashMap<>();
+		List<ArticleListDTO> articleList = articleService.searchArticle(pageable, keyword);
+				
+		if(articleList.size() == 0) {	
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 검색 실패");
+		}
+		else {
+			response.put("statusCode", 200);
+			response.put("message", "게시글 검색 성공" );
+			Map<String, Object> data = new HashMap<>();
+	        data.put("articleList", articleList);
+	        //data.put("totalArticle", articleCnt);
+	        response.put("data", data);
+	        
+		}
+		return ResponseEntity.ok(response);
+	}
 	
 }

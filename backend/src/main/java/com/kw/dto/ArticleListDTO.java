@@ -18,6 +18,8 @@ public class ArticleListDTO {
     private String boardName;
     private String content;
     private Long totalComment;
+    private String profileImage;
+    private String userId;
 
     
     public ArticleListDTO(Article article) {
@@ -28,6 +30,8 @@ public class ArticleListDTO {
         	this.createdTime = article.getCreatedTime();
         	this.boardName = article.getBoard().getBoardName();
         	this.content = article.getContent();
+        	this.profileImage = article.getUser().getProfileImage();
+        	this.userId = article.getUser().getUserId();
     	}
     }
 

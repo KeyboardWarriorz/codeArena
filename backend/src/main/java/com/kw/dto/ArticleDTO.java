@@ -21,6 +21,8 @@ public class ArticleDTO {
     private Date createdTime;
     private String boardName;
     private String content;
+    private String userId;
+    private String profileImage;
     private List<CommentDTO> comment;
 
  
@@ -33,6 +35,8 @@ public class ArticleDTO {
         	this.createdTime = article.getCreatedTime();
         	this.boardName = article.getBoard().getBoardName();
         	this.content = article.getContent();
+        	this.profileImage = article.getUser().getProfileImage();
+        	this.userId = article.getUser().getUserId();
         	this.comment = comment;
     	}
     }
