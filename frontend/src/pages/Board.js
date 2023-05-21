@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import ArticleCard from "../components/organisms/ArticleCard";
 import axios from "axios";
 
@@ -188,8 +188,8 @@ export default function Board() {
           setTotal(res.data.data.totalArticle);
         }
       })
-      .catch((e) => window.alert(e.response.data));
-  }, []);
+      .catch((e) => window.alert(e));
+  }, [curr]);
 
   console.log(articles);
   return (
@@ -229,10 +229,7 @@ export default function Board() {
       <Contents>
         <SearchBar>
           <Input type="text" placeholder="검색어를 입력해 주세요" />
-          <span
-            className="material-symbols-outlined"
-            style={{ color: "#00000080" }}
-          >
+          <span className="material-symbols-outlined" style={{ color: "#00000080" }}>
             search
           </span>
           <button
@@ -256,6 +253,7 @@ export default function Board() {
                   content={a.content}
                   nickname={a.nickname}
                   cnt={a.totalComment}
+                  // profile={a.}
                 />
               </div>
             );

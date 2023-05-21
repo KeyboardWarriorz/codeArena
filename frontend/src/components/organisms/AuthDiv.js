@@ -43,14 +43,10 @@ export default function AuthDiv(props) {
       <div id="row1">
         <div id="row2">
           <p id="title">{props.title}</p>
-          {props.es ? <p id="red">&nbsp;*</p> : ""}
-          {props.added ? <p id="added">{props.added}</p> : ""}
+          {props.es && <p id="red">&nbsp;*</p>}
+          {props.added && <p id="added">{props.added}</p>}
         </div>
-        {props.isbutton ? (
-          <MiniButton func={props.buttonfunc} text="중복 확인" />
-        ) : (
-          ""
-        )}
+        {props.isbutton && <MiniButton func={props.buttonfunc} text="중복 확인" />}
       </div>
 
       <AuthInput type={props.type} placeholder={props.placeholder} />
