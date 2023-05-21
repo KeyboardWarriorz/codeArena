@@ -45,7 +45,7 @@ public class ArticleServiceImpl implements ArticleService{
 	public List<ArticleListDTO> selectArticle(Pageable pageable,Long boardId) {
 		Page<Article> articlePageList = articleRep.findByBoard_BoardIdWithPagingAndSum(boardId, pageable);
 		List<ArticleListDTO> articleDTOList = new ArrayList<>();
-		
+
 				
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
@@ -118,6 +118,21 @@ public class ArticleServiceImpl implements ArticleService{
 			code = 0;
 		}
 		return code;
+	}
+	
+	@Override
+	public List<ArticleListDTO> searchArticle(Pageable pageable,String keyword) {
+		Page<Article> articlePageList = articleRep.searchArticle(keyword, pageable);
+		List<ArticleListDTO> articleDTOList = new ArrayList<>();
+		
+				
+		for(Article article : articlePageList) {
+			Long articleId = article.getArticleId();
+			Long CommentTotal = articleRep.selectCommentCount(articleId);
+			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal);
+			articleDTOList.add(articleDTO);
+		}
+		return articleDTOList;
 	}
 	
 }
