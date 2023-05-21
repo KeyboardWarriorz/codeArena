@@ -111,7 +111,7 @@ public class UserController {
 		List<SolvedDTO> success_solved = solvedService.selectSolved_user(userId, 0);
 		List<SolvedDTO> failed_solved = solvedService.selectSolved_user(userId, 1);
 		List<WordDTO> user_word = wordService.UserWordList3(userId);
-		
+
 		MypageDTO dto = new MypageDTO(user, success_solved, failed_solved, user_word);
 
 		return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -131,7 +131,7 @@ public class UserController {
 		}
 		return new ResponseEntity(HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 비밀번호 변경
 	 * */
@@ -143,7 +143,7 @@ public class UserController {
 		userService.ChangePw(userId, map.get("change_pw"));
 		return ResponseEntity.status(HttpStatus.OK).body("비밀번호 변경을 성공했습니다.");
 	}
-	
+
 	/**
 	 * 단어목록 조회
 	 * */
@@ -152,8 +152,24 @@ public class UserController {
 
 		UserDTO user = userService.selectUser(userId);
 		List<WordDTO> user_word = wordService.UserWordList(userId);
-		
+
 		MypageDTO dto = new MypageDTO(user,user_word);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
+
+	/**
+	 * 프로필 변경
+	 * */
+	@GetMapping("/profile")
+	public ResponseEntity<?> ChangeProfile(@RequestBody Map<String, String> request){
+		String profileImage = request.get("profileImage");
+		String userId = request.get("user_id");
+		try {
+			userService.changeProfile(userId, profileImage);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("프로필 변경 실패");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body("프로필 변경 성공");
+	}
+
 }
