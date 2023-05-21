@@ -48,7 +48,7 @@ public class ProblemController {
 		return new ResponseEntity(response,HttpStatus.OK);
 	}
 	
-	@GetMapping("/Problem/{problemId}")
+	@GetMapping("/problem/{problemId}")
 	public ResponseEntity<?> OnePro(@PathVariable("problemId") String problemId) {
 
 		ProblemDTO pro = proservice.select_pro(problemId);
