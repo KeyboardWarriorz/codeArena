@@ -14,6 +14,7 @@ public class CommentDTO {
 	private String profile_image;
 
 
+	
 	public CommentDTO(Comment comment) {
 		this.commentId = comment.getCommentId();
 		this.content = comment.getContent();
