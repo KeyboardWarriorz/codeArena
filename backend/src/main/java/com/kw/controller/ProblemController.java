@@ -103,7 +103,7 @@ public class ProblemController {
 
 			if(solved == null){ // 2-1. 없으면 solved DB에 생성
 				solveservice.insertSolved(userId, problemId, success);
-				result = true;
+				if(success == 2) result = true; //맞췄을 때
 			} else{ // 2-2. 있으면 solved DB success 값 업데이트
 				result = solveservice.updateSuccess(solved, success);
 			}
@@ -113,7 +113,6 @@ public class ProblemController {
 			}
 			// 4. 리턴 할 누적 값
 			Integer point = userService.selectPoint(userId);
-			System.out.println("point: " + point +" , result: " +result);
 			data.put("point", point);
 			data.put("result", result);
 			response.put("message", "점수 조회 성공");
