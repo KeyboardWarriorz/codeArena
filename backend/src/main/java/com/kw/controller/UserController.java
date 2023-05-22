@@ -108,8 +108,8 @@ public class UserController {
 	public ResponseEntity<?> getUserPage(@PathVariable("userId") String userId) {
 
 		UserDTO user = userService.selectUser(userId);
-		List<SolvedDTO> success_solved = solvedService.selectSolved_user(userId, 0);
-		List<SolvedDTO> failed_solved = solvedService.selectSolved_user(userId, 1);
+		List<SolvedDTO> success_solved = solvedService.selectSolved_user(userId, 1);
+		List<SolvedDTO> failed_solved = solvedService.selectSolved_user(userId, 2);
 		List<WordDTO> user_word = wordService.UserWordList3(userId);
 
 		MypageDTO dto = new MypageDTO(user, success_solved, failed_solved, user_word);
