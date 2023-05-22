@@ -8,6 +8,7 @@ const Div = styled.div`
   cursor: default;
   padding: 30px;
   position: relative;
+  // background-color: red;
 `;
 
 const Tags = styled.div`
@@ -68,28 +69,38 @@ const Option = styled.button`
 const TFQ = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  // justify-content: space-between;
   font-size: 5rem;
-  width: 50%;
-  height: 50%;
-  margin-left: 25%;
-  margin-top: 20vh;
+  width: 100%;
+  padding-top: 150px;
+  height: 300px;
+  // margin-top: 20vh;
   cursor: pointer;
+  // background-color: yellow;
 
   .O {
     color: #006e61;
+    width: 50%;
+    height: 100%;
   }
 
   .X {
     color: red;
+    width: 50%;
+    height: 100%;
   }
 
   .none {
     color: #e0e0e0;
+    // background-color: pink;
+    width: 50%;
+    height: 100%;
   }
 
   #s {
     cursor: default;
+    // background-color: blue;
+    height: 100%;
   }
 `;
 
@@ -126,7 +137,6 @@ export default function ProblemItem() {
     <Div>
       <Tags>
         <MiniTag text={category} />
-        {/* <MiniTag text={problem.subcategory.category.categoryName} /> */}
         <MiniTag text={typeArr[problem.problem_type]} green="true" />
       </Tags>
       <Box>
@@ -166,23 +176,23 @@ export default function ProblemItem() {
         </MCQ>
       ) : (
         <TFQ>
-          <span
+          <div
             className={selected === 1 ? "O" : "none"}
             onClick={() => {
               setAnswer(1);
             }}
           >
             O
-          </span>
-          <span id="s">/</span>
-          <span
+          </div>
+          <div id="s">/</div>
+          <div
             className={selected === 2 ? "X" : "none"}
             onClick={() => {
               setAnswer(2);
             }}
           >
             X
-          </span>
+          </div>
         </TFQ>
       )}
 
