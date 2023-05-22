@@ -11,12 +11,15 @@ public class CommentDTO {
 	private Long commentId;
 	private String content;
 	private String nickName;
+	private String profile_image;
 
 
+	
 	public CommentDTO(Comment comment) {
 		this.commentId = comment.getCommentId();
 		this.content = comment.getContent();
 		this.nickName = comment.getUser().getNickname();
+		this.profile_image = comment.getUser().getProfileImage();
 
 	}
 	
