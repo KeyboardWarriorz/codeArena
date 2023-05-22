@@ -6,6 +6,8 @@ import java.util.Random;
 
 import javax.transaction.Transactional;
 
+import com.kw.entity.Tier;
+import com.kw.repository.TierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private ArticleRepository articleRep;
+
+	@Autowired
+	private TierRepository tierRep;
 	
 
 	/**
@@ -90,9 +95,17 @@ public class UserServiceImpl implements UserService {
     @Override 
     public UserDTO selectUser(String userId) {
     	User user = userRep.findById(userId).orElse(null);
-    	
-    	UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint(),user.getProfileImage());
-
+		List<Tier> list = tierRep.findAll(); //Tier의 정보를 가져온다
+		System.out.println(list);
+		Integer point = user.getPoint(); //사용자의 현재 포인트
+		String tier = "";
+		for(Tier t : list){
+			if( point >= t.getTierLow() && point < t.getTierHigh()){
+				tier = t.getTierName(); //범위에 해당하는 티어
+				break;
+			}
+		}
+		UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint(),user.getProfileImage(), tier);
     	return dto;
     }
     
