@@ -18,7 +18,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         System.out.println("Interceptors added");
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/**");
-//                .excludePathPatterns("/user/login"); // 필터를 적용할 URL 패턴을 지정합니다.
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {

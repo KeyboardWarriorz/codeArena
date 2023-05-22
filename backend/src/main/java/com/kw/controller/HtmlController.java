@@ -21,11 +21,12 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequiredArgsConstructor
 public class HtmlController {
-	
-	private final SubCategoryService subService;
+
+    private final SubCategoryService subService;
 
     @GetMapping("/lecture/{subcategory_id}")
     public ResponseEntity<?> getHtmlContent(@PathVariable("subcategory_id") Long subcategory_id) throws IOException {
+        System.out.println("getHtml called");
         Resource resource = new ClassPathResource(subService.selectSubcategoryPath(subcategory_id));
         String sub_name = subService.selectSubcategoryName(subcategory_id);
         String category_name = subService.selectCategoryName(subService.selectSubcategoryNum(subcategory_id));

@@ -25,8 +25,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         System.out.println("prehandle called");
         System.out.println(request.getMethod());
-        System.out.println(request.getHeader("message"));
-        if (request.getMethod().equals("OPTIONS")||request.getHeader("Authorization")!=null) {
+        if ((request.getMethod().equals("OPTIONS")&&request.getHeader("Access-Control-Request-Method")!=null)||request.getHeader("Authorization")!=null) {
             System.out.println("preflight");
             System.out.println(request.getParameter("Authorization"));
             response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -41,14 +40,15 @@ public class JwtInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Max-Age", "3600");
         String accessToken = request.getHeader("access_token");
         System.out.println("accessToken = "+accessToken);
-        if (accessToken != null && !jwtUtil.validateToken(accessToken)) {
+
+        if (accessToken != null && jwtUtil.validateToken(accessToken)) {
             System.out.println("if1");
             // 토큰이 유효한 경우 요청을 진행합니다.
             return true;
         } else {
             // 토큰이 유효하지 않은 경우 요청을 거부하거나 다른 처리를 수행할 수 있습니다.
             System.out.println("else1");
-            String refreshToken = request.getParameter("refresh_token");
+            String refreshToken = request.getHeader("refresh_token");
             System.out.println("refreshToken = "+refreshToken);
 
             if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
