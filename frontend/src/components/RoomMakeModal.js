@@ -157,7 +157,7 @@ const Hr = styled.div`
 export default function RoomMakeModal(props) {
   // 모달 뒤 스크롤 방지
   return (
-    <ModalBox onClick={props.clickModal}>
+    <ModalBox>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <div>
           <Title>방 생성하기</Title>
@@ -190,7 +190,7 @@ export default function RoomMakeModal(props) {
         </div>
         <div>
           <button onClick={props.func}>방 만들기</button>
-          <button onClick={props.func}>취소</button>
+          <button onClick={props.clickModal}>취소</button>
         </div>
       </ModalContent>
     </ModalBox>

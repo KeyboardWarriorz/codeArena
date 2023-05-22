@@ -2,6 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
+import an1 from "../assets/images/Jieun.svg";
+import an2 from "../assets/images/Seongwhan.svg";
+import an3 from "../assets/images/Eunhyo.svg";
+import an4 from "../assets/images/Junseo.svg";
+import an5 from "../assets/images/Sunyeong.svg";
+
 const RoomTitle = styled.div`
   display: flex;
   direction: row;
@@ -10,11 +16,18 @@ const RoomTitle = styled.div`
 `;
 
 const RoomData = styled.div`
+  width: 30%;
   display: flex;
   direction: row;
+  justify-content: space-between;
+  width: 300px;
 
-  > h3 {
-    margin: 0 2;
+  > div {
+    font-weight: bold;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 `;
 
@@ -32,6 +45,20 @@ const Qbox = styled.div`
 
 const UserBox = styled.div`
   width: 30%;
+`;
+
+const Remain = styled.div`
+  font-size: 20px;
+  display: flex;
+  align-items: end;
+
+  > div:nth-of-type(1) {
+  }
+
+  > div:nth-of-type(2) {
+    font-weight: bold;
+    color: #6c79f0;
+  }
 `;
 
 const Box = styled.div`
@@ -128,11 +155,66 @@ const UDBG = styled.div`
   margin-bottom: 1rem;
 `;
 
-const UDB = styled.div`
+const UDB1 = styled.div`
   width: 40%;
   height: 150px;
-  border: red 1px solid;
+  border: none;
   border-radius: 10px;
+  background-color: #f5f1ca;
+  > div img {
+    max-height: 110px;
+    height: 50%;
+  }
+`;
+const UDB2 = styled.div`
+  width: 40%;
+  height: 150px;
+  border: none;
+  border-radius: 10px;
+  background-color: #e6ebff;
+  > div img {
+    max-height: 110px;
+    height: 50%;
+  }
+`;
+const UDB3 = styled.div`
+  width: 40%;
+  height: 150px;
+  border: none;
+  border-radius: 10px;
+  background-color: #aed3b1;
+  > div img {
+    max-height: 110px;
+    height: 50%;
+  }
+`;
+const UDB4 = styled.div`
+  width: 40%;
+  height: 150px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f4c7c7;
+  > div img {
+    max-height: 110px;
+    height: 50%;
+  }
+`;
+const UserName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  font-size: 20px;
+  > div:nth-of-type(1) {
+    margin-right: 10px;
+    padding: 0 0.5rem;
+    background-color: #006e61;
+    border-radius: 8px;
+    color: #ffffff;
+  }
+
+  > div:nth-of-type(2) {
+    font-weight: bold;
+  }
 `;
 
 const ChatBox = styled.div`
@@ -146,6 +228,9 @@ const TimerBox = styled.div`
 `;
 
 const Timer = styled.div`
+  height: 40px;
+  align-items: end;
+  display: flex;
   font-size: 20px;
   color: red;
 `;
@@ -164,6 +249,13 @@ const RankBox = styled.div`
 
 const ExitBtn = styled.button`
   background-color: #c25450;
+  color: #ffffff;
+  height: 40px;
+  width: 130px;
+  font-size: 25px;
+  border-radius: 10px;
+  border: 0px;
+  cursor: pointer;
 `;
 
 export default function QuizRoom() {
@@ -202,7 +294,10 @@ export default function QuizRoom() {
           <div>인원수</div>
         </RoomData>
         <RoomData>
-          <div>남은 문제</div>
+          <Remain>
+            <div>남은 문제 </div>
+            <div>0개</div>
+          </Remain>
           <ExitBtn>나가기</ExitBtn>
         </RoomData>
       </RoomTitle>
@@ -265,7 +360,10 @@ export default function QuizRoom() {
             </TFQ>
           )}
           <TimerBox>
-            <Timer>시간초</Timer>
+            <Timer>
+              <div>시간</div>
+              <div>초</div>
+            </Timer>
             <RankBox>
               현재 1위
               <div>이름</div>
@@ -274,28 +372,44 @@ export default function QuizRoom() {
         </Qbox>
         <UserBox>
           <UDBG>
-            <UDB>
-              <div>유저 프로필</div>
-              <div>유저 이름</div>
-              <div>유저 포인트</div>
-            </UDB>
-            <UDB>
-              <div>유저 프로필</div>
-              <div>유저 이름</div>
-              <div>유저 포인트</div>
-            </UDB>
+            <UDB1>
+              <div>
+                <img src={an1} />
+              </div>
+              <UserName>
+                <div>유저 이름</div>
+                <div>100</div>
+              </UserName>
+            </UDB1>
+            <UDB2>
+              <div>
+                <img src={an2} />
+              </div>
+              <UserName>
+                <div>유저 이름</div>
+                <div>100</div>
+              </UserName>
+            </UDB2>
           </UDBG>
           <UDBG>
-            <UDB>
-              <div>유저 프로필</div>
-              <div>유저 이름</div>
-              <div>유저 포인트</div>
-            </UDB>
-            <UDB>
-              <div>유저 프로필</div>
-              <div>유저 이름</div>
-              <div>유저 포인트</div>
-            </UDB>
+            <UDB3>
+              <div>
+                <img src={an3} />
+              </div>
+              <UserName>
+                <div>유저 이름</div>
+                <div>100</div>
+              </UserName>
+            </UDB3>
+            <UDB4>
+              <div>
+                <img src={an4} />
+              </div>
+              <UserName>
+                <div>유저 이름</div>
+                <div>100</div>
+              </UserName>
+            </UDB4>
           </UDBG>
           <ChatBox>
             <div>채팅창</div>
