@@ -18,7 +18,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer>, Quer
 	@Query(value = "SELECT a FROM Problem a ",nativeQuery = false)
 	Page<Problem> findPageAll(Pageable pageable);
 	
-	List<Problem> findListByProblemId(Long problemId);
+	Problem findListByProblemId(Long problemId);
 	
 	@Query(value="SELECT p FROM Problem p JOIN SubCategory sc ON p.subcategory.subcategoryId = sc.subcategoryId JOIN Category c ON sc.category.categoryId = c.categoryId WHERE c.categoryId = ?1",nativeQuery = false)
 	Page<Problem> findListByProByCate(Long categoryId, Pageable pageable);
