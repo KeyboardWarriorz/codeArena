@@ -39,4 +39,7 @@ public interface SolvedRepository extends JpaRepository<Solved, Integer>, Queryd
 	
 	@Query(value="select s from Solved s where s.user.userId=?1 and s.problem.problemId=?2")
 	Solved findProAndUser(String userId, Long problemId);
+
+	@Query(value="select s from Solved s where s.user.userId=?1 and s.problem.problemId=?2")
+	Solved findByUserAndProblem(String userId, Long problemId);
 }

@@ -21,4 +21,6 @@ public interface UserService {
     public void ChangePw(String userId, String pw);
 
     void changeProfile(String userId, String profileImage);
+
+    Integer selectPoint(String userId);
 }

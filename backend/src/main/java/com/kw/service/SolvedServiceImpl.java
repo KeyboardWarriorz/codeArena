@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.kw.repository.ProblemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class SolvedServiceImpl implements SolvedService {
 
 	@Autowired
 	private UserRepository userRep;
+
+	@Autowired
+	private ProblemRepository proRep;
 
 	/**
 	 * 푼 문제인지 아닌지 체크
@@ -90,13 +94,13 @@ public class SolvedServiceImpl implements SolvedService {
 		}
 		return lst;
 	}
-	
+
 	/**
 	 * 카테고리별 맞은 문제 가져오기
 	 */
 	@Override
 	public List<SolvedDTO> selectSolved_user_all_cate(String userId, int success, String category_id, Pageable pageable) {
-		
+
 		List<Solved> sol = solRep.findListByUserOrderBysolvedIdDescWhereCate(userId, Long.parseLong(category_id),pageable);
 
 		List<SolvedDTO> lst = new ArrayList<SolvedDTO>();
@@ -118,15 +122,47 @@ public class SolvedServiceImpl implements SolvedService {
 		}
 		return lst;
 	}
-	
+
 	@Override
 	public int countSol(String userId, int success) {
 		return solRep.countSolve(userId, success);
 	}
-	
+
 	@Override
 	public int countSolCate(String userId, String cateId, int success) {
 		return solRep.CountSolCate(userId,Long.parseLong(cateId), success);
+	}
+
+	/**
+	 * Solved DB에 userId와 problemId에 해당하는 튜플이 존재하는 지 확인
+	 * */
+	@Override
+	public Solved checkSolved(String userId, Long problemId){
+		return solRep.findByUserAndProblem(userId, problemId);
+	}
+
+	/**
+	 * Solved DB에 등록하기
+	 * */
+	@Override
+	public void insertSolved(String userId, Long problemId, Integer success){
+		User user = userRep.findByUserId(userId);
+		Problem problem = proRep.findByProblemId(problemId);
+		Solved solved = new Solved(null, user, problem, success);
+		solRep.save(solved);
+	}
+
+	/**
+	 * Success 값 업데이트
+	 * */
+	@Override
+	public boolean updateSuccess(Solved solved, Integer success){
+		if(solved.getSuccess() == 1 && success == 2){ //getSuccess()가 fail일 때, 정답을 맞췄다면
+			solved.setSuccess(success); //값 변경
+			solRep.save(solved);
+			return true;
+		}
+		return false;
 	}
 
 }

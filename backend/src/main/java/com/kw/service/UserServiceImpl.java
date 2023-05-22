@@ -139,4 +139,13 @@ public class UserServiceImpl implements UserService {
 		user.setProfileImage(profileImage);
 		userRep.save(user);
 	}
+
+	/**
+	 * 회원 포인트 조회
+	 * */
+	@Override
+	public Integer selectPoint(String userId){
+		User user = userRep.findByUserId(userId);
+		return user.getPoint();
+	}
 }

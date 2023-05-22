@@ -36,4 +36,6 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer>, Quer
 	
 	@Query(value = "SELECT COUNT(a) FROM Problem a",nativeQuery = false)
 	Integer countPro();
+
+	Problem findByProblemId(Long problemId);
 }
