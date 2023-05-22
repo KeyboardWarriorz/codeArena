@@ -12,7 +12,7 @@ public class CommentDTO {
 	private String content;
 	private String nickName;
 	private String profile_image;
-
+	private String user_id;
 
 	
 	public CommentDTO(Comment comment) {
@@ -20,6 +20,7 @@ public class CommentDTO {
 		this.content = comment.getContent();
 		this.nickName = comment.getUser().getNickname();
 		this.profile_image = comment.getUser().getProfileImage();
+		this.user_id = comment.getUser().getUserId();
 
 	}
 	
