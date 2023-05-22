@@ -13,8 +13,8 @@ public class JwtUtil {
     private static final String SECRET_KEY = "your-secret-key";
 
     // 토큰 유효 기간 (60분)
-    private static final long ACCESS_EXPIRATION_TIME = 60 * 60 * 1000;
-    private static final long REFRESH_EXPIRATION_TIME = 24 * 60 * 60 * 1000;
+    private static final long ACCESS_EXPIRATION_TIME = 60 *60 * 1000;
+    private static final long REFRESH_EXPIRATION_TIME = 3*60*60 * 1000;
 
     // JWT 토큰 생성
     public static String generateToken(String type) {
@@ -44,7 +44,7 @@ public class JwtUtil {
             Date now = new Date();
             System.out.println(expiration);
             System.out.println(now);
-            if (expiration.compareTo(now) > 0) {
+            if (expiration.compareTo(now) <= 0) {
                 throw new Exception();
             }
             return true;

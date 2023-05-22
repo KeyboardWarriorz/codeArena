@@ -17,9 +17,10 @@ export default function LectureItem() {
 
   useEffect(() => {
     api
-      .get(`http://localhost:8080${lecturePath}`)
+      .get(lecturePath)
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data);
           setData(res.data);
         }
       })

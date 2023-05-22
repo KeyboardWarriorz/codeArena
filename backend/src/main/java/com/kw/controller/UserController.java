@@ -9,12 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.kw.config.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kw.dto.MypageDTO;
 import com.kw.dto.SolvedDTO;
@@ -62,6 +57,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public ResponseEntity<?> logout(HttpSession session) {
 		// 모든 세션의 정보를 삭제한다.
+		System.out.println("logout called");
 		session.invalidate();
 		return new ResponseEntity(HttpStatus.OK);
 	}
