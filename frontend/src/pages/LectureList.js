@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import LectureCard from "../components/organisms/LectureCard";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
   padding: 30px;
@@ -44,7 +45,15 @@ const Lectures = styled.div`
 `;
 
 export default function LectureList() {
-  const categories = ["JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
+  const navigate = useNavigate();
+  const categories = [
+    "JAVA",
+    "JSP&Servlet",
+    "Spring",
+    "DataBase",
+    "JavaScript",
+    "HTML/CSS",
+  ];
   const [selected, setSelected] = useState("JAVA");
   const [id, setId] = useState(1);
   const [lectures, setLectures] = useState([]);
@@ -90,7 +99,14 @@ export default function LectureList() {
       </Select>
       <Lectures>
         {lectures.map((l, idx) => {
-          return <LectureCard key={idx} title={l.subcategory_name} />;
+          return (
+            <div
+              key={idx}
+              onClick={() => navigate(`/lecture/${l.subcategory_id}`)}
+            >
+              <LectureCard title={l.subcategory_name} />
+            </div>
+          );
         })}
       </Lectures>
     </Div>
