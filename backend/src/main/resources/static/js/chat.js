@@ -1,4 +1,4 @@
-const url = "http://3.36.247.81:8080";
+const url = "http://localhost:8080";
 let stompUserClient;
 let selectedRoom;
 let subscription=null;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../interceptor";
 
 const Div = styled.div`
   cursor: default;
@@ -158,7 +158,7 @@ export default function ProblemList() {
   }
 
   useEffect(() => {
-    axios
+    api
       .get(
         `http://localhost:8080/ProblemSet/${userId}?page=${page}&size=10&category_id=${categories.indexOf(
           selected

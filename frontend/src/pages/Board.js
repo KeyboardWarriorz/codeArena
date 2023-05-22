@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ArticleCard from "../components/organisms/ArticleCard";
-import axios from "axios";
+import api from "../interceptor";
 
 import ReactPaginate from "react-paginate";
 
@@ -183,7 +183,7 @@ export default function Board() {
   }
 
   useEffect(() => {
-    axios
+    api
       .get(
         `http://localhost:8080/board/boardList/${boards.indexOf(
           curr

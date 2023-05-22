@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../interceptor";
 import styled, { css } from "styled-components";
 import MiniTag from "../components/buttons/MiniTag";
 import Switch from "react-switch";
@@ -16,7 +16,7 @@ export default function LectureItem() {
   };
 
   useEffect(() => {
-    axios
+    api
       .get(`http://localhost:8080${lecturePath}`)
       .then((res) => {
         if (res.status === 200) {

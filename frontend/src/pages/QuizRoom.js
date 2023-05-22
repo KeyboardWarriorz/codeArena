@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../interceptor";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
@@ -271,7 +271,7 @@ export default function QuizRoom() {
   }
 
   useEffect(() => {
-    axios
+    api
       .get(`http://localhost:8080${problemId}`)
       .then((res) => {
         if (res.status === 200) {

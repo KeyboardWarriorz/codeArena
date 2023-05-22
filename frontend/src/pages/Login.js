@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import api from "../interceptor";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -97,15 +97,23 @@ export default function Login() {
   }
 
   function onSubmit() {
-    axios
-      .post("http://localhost:8080/user/login", loginData)
+    api
+      .post("http://localhost:8080/user/login",loginData,{
+          headers:{
+              Authorization: "login"
+          }
+      })
       .then((res) => {
         if (res.status === 200) {
           window.localStorage.setItem("login", true);
           window.localStorage.setItem("userId", res.data.userId);
           window.localStorage.setItem("nickname", res.data.nickname);
-          window.localStorage.setItem("profileImage", res.data.profileImage);
-          navigate("/");
+          window.localStorage.setItem("profileImage", res.data.profile_image);
+          window.localStorage.setItem("accessToken", res.data.access_token);
+          window.localStorage.setItem("refreshToken", res.data.refresh_token);
+            console.log(res.data.access_token);
+            console.log(res.data.refresh_token);
+            navigate("/");
         }
       })
       .catch((e) => swal(e.response.data));

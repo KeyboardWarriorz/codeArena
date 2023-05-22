@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import DeleteModal from "../components/modals/DeleteModal";
 import WordCard from "../components/organisms/WordCard";
-import axios from "axios";
+import api from "../interceptor";
 import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
@@ -43,7 +43,7 @@ export default function WordList() {
 
   function onDelete() {
     console.log(data);
-    axios
+    api
       .post(`http://localhost:8080/word/delete`, data)
       .then((res) => {
         if (res.status === 201) {
@@ -54,7 +54,7 @@ export default function WordList() {
   }
 
   useEffect(() => {
-    axios
+    api
       .get(`http://localhost:8080/user/word/${userId}`)
       .then((res) => {
         if (res.status === 200) {

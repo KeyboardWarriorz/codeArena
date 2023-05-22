@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import api from "../interceptor";
 import WordCard from "../components/organisms/WordCard";
 
 // import Jieun from "../assets/images/Jieun.svg";
@@ -49,7 +49,7 @@ export default function MyPage() {
   useEffect(() => {
     setProfile(window.localStorage.getItem("profileImage"));
 
-    axios
+    api
       .get(`http://localhost:8080/user/mypage/${userId}`)
       .then((res) => {
         if (res.status === 200) {

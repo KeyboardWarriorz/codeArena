@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Builder
 @Table(name = "Users")
+@ToString
 public class User {
     @Id
     private String userId;

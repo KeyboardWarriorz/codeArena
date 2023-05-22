@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../interceptor";
 import { styled } from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
@@ -163,7 +163,7 @@ export default function ProblemSolved() {
   }
 
   useEffect(() => {
-    axios
+    api
       .get(
         `http://localhost:8080/ProblemSet/${userId}/2?size=10&page=${page}&category_id=${categories.indexOf(
           selected

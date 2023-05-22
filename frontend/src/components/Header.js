@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
+import api from "../interceptor";
 import { Link } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -82,16 +82,17 @@ function Header() {
   const [nickname, setNickname] = useState(window.localStorage.nickname);
 
   function logout() {
-    axios
+    api
       .get("http://localhost:8080/user/logout")
       .then((res) => {
         if (res.status === 200) {
+
           window.localStorage.clear();
           navigate("/");
           window.location.reload();
         }
       })
-      .catch((e) => window.alert(e.response.data));
+      .catch((e) => window.alert(e.response));
   }
 
   return (
