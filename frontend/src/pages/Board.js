@@ -178,9 +178,17 @@ export default function Board() {
     setPage(e.selected + 1);
   }
 
+  function truncate(str, n) {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  }
+
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/article/articleList/${boards.indexOf(curr)}`)
+      .get(
+        `http://localhost:8080/board/boardList/${boards.indexOf(
+          curr
+        )}?page=${page}&size=6`
+      )
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
@@ -229,7 +237,10 @@ export default function Board() {
       <Contents>
         <SearchBar>
           <Input type="text" placeholder="검색어를 입력해 주세요" />
-          <span className="material-symbols-outlined" style={{ color: "#00000080" }}>
+          <span
+            className="material-symbols-outlined"
+            style={{ color: "#00000080" }}
+          >
             search
           </span>
           <button
@@ -242,18 +253,16 @@ export default function Board() {
         </SearchBar>
 
         <Cards>
-          {/* <div>?</div> */}
-          {/* <div>{articles[0].title}</div> */}
           {articles.map((a, idx) => {
             return (
-              <div>
+              <div key={idx}>
                 <ArticleCard
                   articleId={a.articleId}
-                  title={a.title}
-                  content={a.content}
+                  title={truncate(a.title, 10)}
+                  content={truncate(a.content, 50)}
                   nickname={a.nickname}
                   cnt={a.totalComment}
-                  // profile={a.}
+                  profile={a.profile_image}
                 />
               </div>
             );

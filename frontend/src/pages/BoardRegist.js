@@ -1,6 +1,101 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+
+export default function BoardRegist() {
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const userId = window.localStorage.getItem("userId");
+  const [boardId, setBoardId] = useState("");
+
+  const [data, setData] = useState({
+    title: title,
+    content: content,
+    user_id: userId,
+    board_id: boardId,
+  });
+
+  function boardChange(e) {
+    setBoardId(e.target.value);
+  }
+
+  function titleChange(e) {
+    setTitle(e.target.value);
+  }
+
+  function contentChange(e) {
+    setContent(e.target.value);
+  }
+
+  useEffect(() => {
+    setData({
+      title: title,
+      content: content,
+      user_id: userId,
+      board_id: boardId,
+    });
+  }, [title, content]);
+
+  console.log(data);
+
+  function submit() {
+    axios
+      .post("http://localhost:8080/board/insert", data)
+      .then((res) => {
+        if (res.status === 200) {
+          navigate("/board");
+        }
+      })
+      .catch((e) => console.log(e));
+  }
+
+  return (
+    <Div>
+      <h3>✏️ 게시글 작성</h3>
+      <div id="hr" />
+      <Category>
+        <h4>
+          카테고리<span id="red">&nbsp;*</span>
+        </h4>
+        <select required id="holder" defaultValue="" onChange={boardChange}>
+          <option value="" disabled hidden>
+            게시판을 선택해 주세요
+          </option>
+          <option value="1">자유게시판</option>
+          <option value="2">질문게시판</option>
+          <option value="3">오류 제보</option>
+        </select>
+      </Category>
+      <div>
+        <h4>
+          제목<span id="red">&nbsp;*</span>
+        </h4>
+        <input onChange={titleChange} placeholder="제목을 입력해 주세요." />
+      </div>
+      <div>
+        <h4>
+          내용<span id="red">&nbsp;*</span>
+        </h4>
+        <textarea
+          onChange={contentChange}
+          placeholder="내용을 입력해 주세요."
+        />
+      </div>
+      <Submit>
+        <button
+          onClick={() => {
+            navigate("/board");
+          }}
+        >
+          취소
+        </button>
+        <button onClick={submit}>등록</button>
+      </Submit>
+    </Div>
+  );
+}
 
 const Div = styled.div`
   padding: 30px;
@@ -118,49 +213,3 @@ const Submit = styled.div`
     }
   }
 `;
-export default function BoardRegist() {
-  const navigate = useNavigate();
-  function submit() {}
-
-  return (
-    <Div>
-      <h3>✏️ 게시글 작성</h3>
-      <div id="hr" />
-      <Category>
-        <h4>
-          카테고리<span id="red">&nbsp;*</span>
-        </h4>
-        <select required id="holder">
-          <option value="" selected data-default disabled hidden>
-            게시판을 선택해 주세요
-          </option>
-          <option>자유게시판</option>
-          <option>질문게시판</option>
-          <option>오류 제보</option>
-        </select>
-      </Category>
-      <div>
-        <h4>
-          제목<span id="red">&nbsp;*</span>
-        </h4>
-        <input placeholder="제목을 입력해 주세요."></input>
-      </div>
-      <div>
-        <h4>
-          내용<span id="red">&nbsp;*</span>
-        </h4>
-        <textarea placeholder="내용을 입력해 주세요."></textarea>
-      </div>
-      <Submit>
-        <button
-          onClick={() => {
-            navigate("/board");
-          }}
-        >
-          취소
-        </button>
-        <button onClick={submit}>등록</button>
-      </Submit>
-    </Div>
-  );
-}
