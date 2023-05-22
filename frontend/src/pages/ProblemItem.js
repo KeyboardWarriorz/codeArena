@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import MiniTag from "../components/buttons/MiniTag";
 import LargeButton from "../components/buttons/LargeButton";
@@ -49,7 +50,7 @@ const Option = styled.button`
   width: 100%;
   cursor: pointer;
   text-align: start;
-  padding: 10px 20px 0 20px;
+  padding: 10px 20px 4px 20px;
   display: flex;
   align-items: center;
   background-color: #f8f8f8;
@@ -83,6 +84,10 @@ const TFQ = styled.div`
     color: red;
   }
 
+  .none {
+    color: #e0e0e0;
+  }
+
   #s {
     cursor: default;
   }
@@ -96,87 +101,91 @@ export default function ProblemItem() {
 
   const typeArr = ["객관식", "O / X"];
   const [selected, setSelected] = useState(0);
-
-  const problem = [
-    {
-      category: "JavaScript",
-      type: 0,
-      question: "다음은 static에 대한 설명이다. 틀린 것은?",
-      answer1: "1. static 메서드 안에서는 this 나 super 를 사용할 수 없다.",
-      answer2: "2. static 영역이 고정된다.",
-      answer3:
-        "3. static 메서드 안에 선언되는 변수들은 모두 static 변수가 된다.",
-      answer4: "4. static 메서드 안에서는 this 나 super 를 사용할 수 없다.",
-    },
-  ];
+  const problemId = window.location.pathname;
+  const [problem, setProblem] = useState([]);
+  const [category, setCategory] = useState("");
 
   function setAnswer(n) {
     setSelected(n);
   }
 
-  // useEffect(() => {
-  //   axios
-  // })
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080${problemId}`)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          setProblem(res.data);
+          setCategory(res.data.subcategory.category.categoryName);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   return (
     <Div>
       <Tags>
-        <MiniTag text={problem[0].category} />
-        <MiniTag text={typeArr[problem[0].type]} green="true" />
+        <MiniTag text={category} />
+        {/* <MiniTag text={problem.subcategory.category.categoryName} /> */}
+        <MiniTag text={typeArr[problem.problem_type]} green="true" />
       </Tags>
       <Box>
         <span>Q.</span>
-        <span>{problem[0].question}</span>
+        <span>{problem.question}</span>
       </Box>
-      <MCQ>
-        <Option
-          onClick={() => {
-            setAnswer(1);
-          }}
-        >
-          {problem[0].answer1}
-        </Option>
-        <Option
-          onClick={() => {
-            setAnswer(2);
-          }}
-        >
-          {problem[0].answer2}
-        </Option>
-        <Option
-          onClick={() => {
-            setAnswer(3);
-          }}
-        >
-          {problem[0].answer3}
-        </Option>
-        <Option
-          onClick={() => {
-            setAnswer(4);
-          }}
-        >
-          {problem[0].answer4}
-        </Option>
-      </MCQ>
-      {/* <TFQ>
-        <span
-          className={selected === 1 ? "O" : null}
-          onClick={() => {
-            setAnswer(1);
-          }}
-        >
-          O
-        </span>
-        <span id="s">/</span>
-        <span
-          className={selected === 2 ? "X" : null}
-          onClick={() => {
-            setAnswer(2);
-          }}
-        >
-          X
-        </span>
-      </TFQ> */}
+      {problem.problem_type === 0 ? (
+        <MCQ>
+          <Option
+            onClick={() => {
+              setAnswer(1);
+            }}
+          >
+            1. {problem.answer1}
+          </Option>
+          <Option
+            onClick={() => {
+              setAnswer(2);
+            }}
+          >
+            2. {problem.answer2}
+          </Option>
+          <Option
+            onClick={() => {
+              setAnswer(3);
+            }}
+          >
+            3. {problem.answer3}
+          </Option>
+          <Option
+            onClick={() => {
+              setAnswer(4);
+            }}
+          >
+            4. {problem.answer4}
+          </Option>
+        </MCQ>
+      ) : (
+        <TFQ>
+          <span
+            className={selected === 1 ? "O" : "none"}
+            onClick={() => {
+              setAnswer(1);
+            }}
+          >
+            O
+          </span>
+          <span id="s">/</span>
+          <span
+            className={selected === 2 ? "X" : "none"}
+            onClick={() => {
+              setAnswer(2);
+            }}
+          >
+            X
+          </span>
+        </TFQ>
+      )}
+
       <div>
         <LargeButton text="제출하기" />
       </div>
