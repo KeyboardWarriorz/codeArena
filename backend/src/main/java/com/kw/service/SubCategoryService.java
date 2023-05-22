@@ -3,6 +3,8 @@ package com.kw.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kw.entity.SubCategory;
+
 public interface SubCategoryService {
     /**
      * 카테고리 아이디에 해당하는 카테고리 이름 조회하기
@@ -19,5 +21,19 @@ public interface SubCategoryService {
      * */
     Map<String, String> selectBySubCategoryId(Long subcategoryId);
 
-
+    
+    /**
+     * 강의 내용 Path 
+     * */
+    String selectSubcategoryPath(Long subcategoryId);
+    
+    /**
+     * SubCategory 이름 
+     * */
+    String selectSubcategoryName(Long subcategoryId);
+    
+    /**
+     * SubCategory의 Category_Id
+     * */
+    Long selectSubcategoryNum(Long subcategoryId);
 }
