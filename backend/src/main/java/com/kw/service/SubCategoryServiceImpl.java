@@ -79,4 +79,34 @@ public class SubCategoryServiceImpl implements SubCategoryService{
 
         return map;
     }
+    
+    /**
+     * 강의 내용 Path 
+     * */
+    @Override
+    public String selectSubcategoryPath(Long subcategoryId) {
+    	SubCategory subCategory = subCategoryRep.findBySubcategoryId(subcategoryId);
+    	String subPath = subCategory.getContent();
+    	return subPath;
+    }
+    
+    /**
+     * SubCategory 이름 
+     * */
+    @Override
+    public String selectSubcategoryName(Long subcategoryId) {
+    	SubCategory subCategory = subCategoryRep.findBySubcategoryId(subcategoryId);
+    	String subName = subCategory.getSubcategoryName();
+    	return subName;
+    }
+    
+    /**
+     * SubCategory의 Category_Id
+     * */
+    @Override
+    public Long selectSubcategoryNum(Long subcategoryId) {
+    	SubCategory subCategory = subCategoryRep.findBySubcategoryId(subcategoryId);
+    	Long categoryId = subCategory.getCategory().getCategoryId();
+    	return categoryId;
+    }
 }
