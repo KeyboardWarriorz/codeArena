@@ -12,10 +12,7 @@ import com.kw.service.UserService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kw.dto.ProblemDTO;
 import com.kw.dto.SolvedDTO;
@@ -86,13 +83,11 @@ public class ProblemController {
 	/**
 	 * 사용자가 푼 문제 결과와 점수를 저장하고, 누적 점수를 리턴
 	 * */
-	@GetMapping("/problem/result")
-	public ResponseEntity<?> updatePoint(@RequestBody Map<String, Object> request){
-		String userId = (String) request.get("user_id");
+	@PostMapping("/problemAnswer/{user_id}")
+	public ResponseEntity<?> updatePoint(@PathVariable("user_id") String userId, @RequestBody Map<String, Object> request){
 		Integer success = Integer.valueOf(request.get("success").toString());
 		Long problemId = Long.valueOf(request.get("problem_id").toString());
 
-		System.out.println("접근");
 		Map<String, Object> response = new HashMap<>();
 		Map<String, Object> data = new HashMap<>();
 		boolean result = false;
