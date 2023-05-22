@@ -49,7 +49,7 @@ public class ArticleServiceImpl implements ArticleService{
 				
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
-			Long CommentTotal = articleRep.selectCommentCount(articleId);
+			Long CommentTotal = commentRep.selectCommentCount(articleId);
 			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal);
 			System.out.println(articleDTO.toString());
 			articleDTOList.add(articleDTO);
@@ -58,13 +58,14 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	
-
+	//게시글 상세조회 
 	@Override
 	public ArticleDTO selectArticleOne(Long articleId) {
 		Article articleOne = articleRep.selectArticleOne(articleId);
 		List<CommentDTO> comment = commentRep.selectComment(articleId);
-
-		return new ArticleDTO(articleOne,comment);
+		Long CommentCnt = commentRep.selectCommentCount(articleId);
+		
+		return new ArticleDTO(articleOne,comment,CommentCnt);
 	}
 
 
@@ -112,6 +113,7 @@ public class ArticleServiceImpl implements ArticleService{
 		Article article = articleRep.selectArticleOne(articleId);
 		
 		if(article != null) {
+			commentRep.deleteByArticleArticleId(articleId);
 			articleRep.delete(article);
 		}
 		else {
@@ -121,18 +123,24 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 	
 	@Override
-	public List<ArticleListDTO> searchArticle(Pageable pageable,String keyword) {
-		Page<Article> articlePageList = articleRep.searchArticle(keyword, pageable);
-		List<ArticleListDTO> articleDTOList = new ArrayList<>();
+	public List<ArticleListDTO> searchArticle(String keyword, Pageable pageable) {
 		
+		Page<Article> articlePageList = articleRep.findByContentContainingOrTitleContaining(keyword,keyword, pageable);
+		List<ArticleListDTO> articleDTOList = new ArrayList<>();
 				
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
-			Long CommentTotal = articleRep.selectCommentCount(articleId);
+			Long CommentTotal = commentRep.selectCommentCount(articleId);
 			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal);
 			articleDTOList.add(articleDTO);
 		}
 		return articleDTOList;
+	}
+	
+	@Override
+	public Long searchArticleCnt(String keyword) {
+		Long count = articleRep.searchArticleCnt(keyword);
+		return count;
 	}
 	
 }

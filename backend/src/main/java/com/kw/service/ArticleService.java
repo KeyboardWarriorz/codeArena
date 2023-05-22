@@ -18,5 +18,6 @@ public interface ArticleService {
 	Long totalArticleCount(Long boardId);
 	Integer insertArticle(Map<String, Object> param);
 	Integer deleteArticle(Long articleId);
-	List<ArticleListDTO> searchArticle(Pageable pageable, String keyword); 
+	List<ArticleListDTO> searchArticle(String keyword, Pageable pageable); 
+	Long searchArticleCnt(String keyword);
 }

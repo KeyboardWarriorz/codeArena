@@ -18,11 +18,11 @@ public class ArticleListDTO {
     private String boardName;
     private String content;
     private Long totalComment;
-    private String profileImage;
+    private String profile_image;
     private String userId;
 
     
-    public ArticleListDTO(Article article) {
+    public ArticleListDTO(Article article, Long totalComment) {
     	if(article != null) {
         	this.articleId = article.getArticleId();
         	this.title = article.getTitle();
@@ -30,17 +30,12 @@ public class ArticleListDTO {
         	this.createdTime = article.getCreatedTime();
         	this.boardName = article.getBoard().getBoardName();
         	this.content = article.getContent();
-        	this.profileImage = article.getUser().getProfileImage();
+        	this.profile_image = article.getUser().getProfileImage();
         	this.userId = article.getUser().getUserId();
+        	this.totalComment = totalComment;
     	}
     }
 
-    public ArticleListDTO(Article article,Long totalComment) {
-    	this(article);
-    	this.totalComment = totalComment;
-    }
-
-	
 
 	public static ArticleListDTO convertToDTO(Article article, Long totalComment) {
         return new ArticleListDTO(article, totalComment);

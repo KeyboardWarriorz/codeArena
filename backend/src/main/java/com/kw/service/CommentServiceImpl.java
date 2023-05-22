@@ -46,7 +46,6 @@ public class CommentServiceImpl implements CommentService {
 		String userId = String.valueOf(param.get("user_id"));
 		Article article = articleRep.selectArticleOne(articleId);
 		User user = userRep.findByUserId(userId);
-		System.out.println("user = "+ user.toString());
 		
 		Comment comment = new Comment(null, article, user, String.valueOf(param.get("content")), currentDate);
 		

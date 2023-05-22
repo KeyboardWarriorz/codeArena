@@ -17,19 +17,20 @@ public interface ArticleRepository extends JpaRepository<Article, Integer>, Quer
 
 	int pageNumber = 1;  // 1부터 시작하는 페이지 번호
 	int pageSize = 1;   // 페이지 크기
-	Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");  // 정렬 기준 설정 (예시로 작성한 createdAt 필드에 따라 내림차순 정렬)
+	Sort sort = Sort.by(Sort.Direction.DESC,"createdDate");  // 정렬 기준 설정 
 	Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
 	//게시글 리스트 
     @Query(value = "SELECT a FROM Article a WHERE a.board.boardId = ?1",nativeQuery = false)
      Page<Article> findByBoard_BoardIdWithPagingAndSum(Long boardId, Pageable pageable);
     
-    //게시글 검색 리스트 
-    @Query(value = "SELECT a FROM Article a WHERE a.title like %:keyword% or a.content like %:keyword%",nativeQuery = false)
-     Page<Article> searchArticle(String keyword, Pageable pageable);
+
+    Page<Article> findByContentContainingOrTitleContaining(String contentkeyword, String titlekeyword,Pageable pageable);
     
-    //댓글 총 개수 
-    @Query(value = "SELECT COUNT(a) FROM Comment a WHERE a.article.articleId = ?1", nativeQuery = false)
-    Long selectCommentCount(Long articleId);
+    
+    @Query(value = "SELECT COUNT(a) FROM Article a WHERE a.title LIKE %:keyword% OR a.content LIKE %:keyword%", nativeQuery = false)
+    Long searchArticleCnt(@Param("keyword") String keyword);
+
+
     
     //게시글 총 개수
     @Query(value = "SELECT COUNT(a) FROM Article a WHERE a.board.boardId = ?1",nativeQuery = false)
