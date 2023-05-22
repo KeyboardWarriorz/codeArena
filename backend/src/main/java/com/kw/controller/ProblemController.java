@@ -110,10 +110,10 @@ public class ProblemController {
 			Integer point = userService.selectPoint(userId);
 			data.put("point", point);
 			data.put("result", result);
-			response.put("message", "점수 조회 성공");
+			response.put("message", "답안 제출 성공");
 			response.put("data", data);
 		} catch (Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수 조회 실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("답안 제출 실패");
 		}
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
