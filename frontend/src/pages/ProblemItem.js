@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../interceptor";
 import styled from "styled-components";
 import MiniTag from "../components/buttons/MiniTag";
 import LargeButton from "../components/buttons/LargeButton";
@@ -121,7 +121,7 @@ export default function ProblemItem() {
   }
 
   useEffect(() => {
-    axios
+    api
       .get(`http://localhost:8080${problemId}`)
       .then((res) => {
         if (res.status === 200) {

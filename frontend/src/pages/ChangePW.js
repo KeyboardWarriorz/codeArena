@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AuthDiv from "../components/organisms/AuthDiv";
 import MidButton from "../components/buttons/MidButton";
-import axios from "axios";
+import api from "../interceptor";
 import { useState, useEffect } from "react";
 
 import swal from "sweetalert";
@@ -110,13 +110,13 @@ export default function ChangePW() {
       if (!equal) {
         swal("비밀번호가 서로 일치하지 않습니다");
       } else {
-        axios
+        api
           .post(`http://localhost:8080/user/password/${userId}`, data)
           .then((res) => {
             console.log(res);
             if (res.status === 200) {
               navigate("/login");
-              axios
+              api
                 .get("http://localhost:8080/user/logout")
                 .then((res) => {
                   if (res.status === 200) {

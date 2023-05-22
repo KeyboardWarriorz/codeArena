@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import MiniTag from "../components/buttons/MiniTag";
 import DeleteModal from "../components/modals/DeleteModal";
-import axios from "axios";
+import api from "../interceptor";
 import { useNavigate } from "react-router-dom";
 
 export default function BoardDetail() {
@@ -40,7 +40,7 @@ export default function BoardDetail() {
   // 게시물 및 댓글 삭제 API
   function onDelete(w) {
     if (w === "article") {
-      axios
+      api
         .post(`http://localhost:8080/board/delete/${article.article_id}`)
         .then((res) => {
           if (res.status === 200) {
@@ -48,7 +48,7 @@ export default function BoardDetail() {
           }
         });
     } else if (w === "comment") {
-      axios
+      api
         .post(`http://localhost:8080/comment/delete/${commentId}`)
         .then((res) => {
           if (res.status === 200) {
@@ -61,7 +61,7 @@ export default function BoardDetail() {
 
   // 댓글 등록
   function submitComment() {
-    axios
+    api
       .post("http://localhost:8080/comment", commentData)
       .then((res) => {
         if (res.status === 200) {
@@ -93,7 +93,7 @@ export default function BoardDetail() {
   }, [content]);
 
   useEffect(() => {
-    axios
+    api
       .get(`http://localhost:8080${articlePath}`)
       .then((res) => {
         if (res.status === 200) {

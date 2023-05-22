@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import api from "../interceptor";
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
 
@@ -118,7 +118,7 @@ export default function SignUp() {
     if (id === "") {
       swal("아이디를 입력해주세요");
     } else {
-      axios
+      api
         .get(`http://localhost:8080/user/check/userid/${id}`)
         .then((res) => {
           if (res.status === 200) {
@@ -136,7 +136,7 @@ export default function SignUp() {
     } else if (nickname.length > 8) {
       swal("닉네임은 8자 이하로 입력해주세요.");
     } else {
-      axios
+      api
         .get(`http://localhost:8080/user/check/nickname/${nickname}`)
         .then((res) => {
           if (res.status === 200) {
@@ -187,7 +187,7 @@ export default function SignUp() {
       } else if (!namecheck) {
         swal("닉네임 중복 확인을 해주세요");
       } else {
-        axios
+        api
           .post("http://localhost:8080/user/signup", data)
           .then((res) => {
             console.log(res);

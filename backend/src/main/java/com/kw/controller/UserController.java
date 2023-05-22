@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.kw.config.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-
+	private final JwtUtil jwtUtil;
 	private final UserService userService;
 	private final SolvedService solvedService;
 	private final WordService wordService;
@@ -41,13 +42,16 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<?> loginCheck(@RequestBody User user, HttpSession session) {
 		// 서비스호출 하고 성공하면 리턴한 User를 받아서
+		System.out.println("chekcing login");
 		User dbuser = userService.loginCheck(user);
-
+		System.out.println(dbuser);
+		UserDTO userDTO = new UserDTO(dbuser.getUserId(), dbuser.getNickname(), dbuser.getPoint(), dbuser.getProfileImage(),jwtUtil.generateToken("access"),jwtUtil.generateToken("refresh"));
+		System.out.println(userDTO);
 		if (dbuser != null) {
 			// HttpSession에 정보를 저장한다. - 뷰에서 사용하고 있음 ${loginUser}- 아이디 / ${loginName} - 이름
 			session.setAttribute("loginUser", dbuser.getUserId());
 			session.setAttribute("loginName", dbuser.getNickname());
-			return new ResponseEntity(dbuser, HttpStatus.OK);
+			return new ResponseEntity(userDTO, HttpStatus.OK);
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 혹은 비밀번호를 다시 입력해주세요.");
 	}

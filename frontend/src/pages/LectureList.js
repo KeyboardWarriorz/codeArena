@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../interceptor";
 import styled from "styled-components";
 import LectureCard from "../components/organisms/LectureCard";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +65,7 @@ export default function LectureList() {
   }
 
   useEffect(() => {
-    axios
+    api
       .get(`http://localhost:8080/category/${id}`)
       .then((res) => {
         if (res.status === 200) {
