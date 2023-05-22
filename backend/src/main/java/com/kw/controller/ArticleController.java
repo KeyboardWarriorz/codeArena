@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +38,6 @@ public class ArticleController {
 				
 		if(articleList.size() == 0) {	
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시판 글 리스트 조회 실패");
-
-			
 		}
 		else {
 			response.put("statusCode", 200);
@@ -47,36 +46,31 @@ public class ArticleController {
 	        data.put("articleList", articleList);
 	        data.put("totalArticle", articleCnt);
 	        response.put("data", data);
-	        
 		}
 		return ResponseEntity.ok(response);
 	}
 	
 	//게시글 상세조회 
-	@RequestMapping("/detail/{board-id}")
-	public ResponseEntity<?> selectArticleOne(@PathVariable("board-id") Long articleId){
+	@RequestMapping("/detail/{article-id}")
+	public ResponseEntity<?> selectArticleOne(@PathVariable("article-id") Long articleId){
 		
 		Map<String, Object> response = new HashMap<>();
 		ArticleDTO article = articleService.selectArticleOne(articleId);
-	
-		System.out.println(article.toString());
 		
-		if(article.getArticleId() != null) {	
+		if(article.getArticle_id() != null) {	
 			response.put("statusCode", 200);
 			response.put("message", "게시물 상세 조회 성공" );
 	        response.put("data", article);
-
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 상세 조회 실패");
-	        
 		}	
 		return ResponseEntity.ok(response);
 
 	}
 	
 	
-	@PostMapping()
+	@PostMapping("/insert")
 	public ResponseEntity<?> insertArticle(@RequestBody Map<String, Object> param){
 		
 		Integer code = articleService.insertArticle(param);
@@ -95,8 +89,8 @@ public class ArticleController {
 	}
 	
 	
-	@PostMapping("/delete/{board-id}")
-	public ResponseEntity<?> deleteArticle(@PathVariable("board-id") Long articleId){
+	@PostMapping("/delete/{article-id}")
+	public ResponseEntity<?> deleteArticle(@PathVariable("article-id") Long articleId){
 		Map<String, Object> response = new HashMap<String, Object>();
 		Integer code = articleService.deleteArticle(articleId);
 		
@@ -113,11 +107,13 @@ public class ArticleController {
 	
 	//게시글 검색
 	@RequestMapping("/search")
-	public ResponseEntity<?> searchArticle(@RequestParam String keyword, Pageable pageable){
+	public ResponseEntity<?> searchArticle(@RequestParam("keyword") String keyword, Pageable pageable){
 		
+		System.out.println("keyword ===== "+ keyword);
 		Map<String, Object> response = new HashMap<>();
-		List<ArticleListDTO> articleList = articleService.searchArticle(pageable, keyword);
-				
+		List<ArticleListDTO> articleList = articleService.searchArticle(keyword, pageable);
+		Long articleCnt = articleService.searchArticleCnt(keyword);
+		
 		if(articleList.size() == 0) {	
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 검색 실패");
 		}
@@ -126,7 +122,7 @@ public class ArticleController {
 			response.put("message", "게시글 검색 성공" );
 			Map<String, Object> data = new HashMap<>();
 	        data.put("articleList", articleList);
-	        //data.put("totalArticle", articleCnt);
+	        data.put("totalArticle", articleCnt);
 	        response.put("data", data);
 	        
 		}

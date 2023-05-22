@@ -12,11 +12,15 @@ public class CommentDTO {
 	private String content;
 	private String nickName;
 
+
 	public CommentDTO(Comment comment) {
 		this.commentId = comment.getCommentId();
 		this.content = comment.getContent();
 		this.nickName = comment.getUser().getNickname();
+
 	}
+	
+
 	
 	
 	

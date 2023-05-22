@@ -15,29 +15,31 @@ import lombok.ToString;
 @Getter
 @Setter
 public class ArticleDTO {
-    private Long articleId;
+    private Long article_id;
     private String title;
     private String nickname;
     private Date createdTime;
     private String boardName;
     private String content;
-    private String userId;
-    private String profileImage;
+    private String user_id;
+    private String profile_image;
+    private Long commentTotal;
     private List<CommentDTO> comment;
 
  
     
-    public ArticleDTO(Article article, List<CommentDTO> comment) {
+    public ArticleDTO(Article article, List<CommentDTO> comment, Long commentTotal) {
     	if(article != null) {
-        	this.articleId = article.getArticleId();
+        	this.article_id = article.getArticleId();
         	this.title = article.getTitle();
         	this.nickname = article.getUser().getNickname();
         	this.createdTime = article.getCreatedTime();
         	this.boardName = article.getBoard().getBoardName();
         	this.content = article.getContent();
-        	this.profileImage = article.getUser().getProfileImage();
-        	this.userId = article.getUser().getUserId();
+        	this.profile_image = article.getUser().getProfileImage();
+        	this.user_id = article.getUser().getUserId();
         	this.comment = comment;
+        	this.commentTotal = commentTotal;
     	}
     }
     
