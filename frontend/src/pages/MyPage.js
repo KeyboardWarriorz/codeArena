@@ -53,9 +53,12 @@ export default function MyPage() {
       .get(`http://localhost:8080/user/mypage/${userId}`)
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data);
           setSolved(res.data.success_solved);
           setFailed(res.data.failed_solved);
           setWords(res.data.user_word);
+          // 포인트 받을것!!!
+          // 티어 정보도 주세요..
         }
       })
       .catch((e) => window.alert(e.response.data));

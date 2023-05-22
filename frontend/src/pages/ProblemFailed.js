@@ -171,6 +171,7 @@ export default function ProblemSolved() {
       )
       .then((res) => {
         if (res.status === 200) {
+          console.log(res);
           setTotal(res.data.data.totalProblem);
           setProblems(res.data.data.Problem);
         }

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import DeleteModal from "../components/DeleteModal";
-
+import DeleteModal from "../components/modals/DeleteModal";
 import WordCard from "../components/organisms/WordCard";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
   cursor: default;
@@ -21,6 +22,7 @@ const Words = styled.div`
 `;
 
 export default function WordList() {
+  const navigate = useNavigate();
   // 삭제 모달 관리
   const [showModal, setShowModal] = useState(false);
   const clickModal = () => {
@@ -32,32 +34,40 @@ export default function WordList() {
   const [nickname, setNickname] = useState(
     window.localStorage.getItem("nickname")
   );
-  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
 
-  // const [words, setWords] = useState([]);
+  const userId = window.localStorage.getItem("userId");
 
-  const words = [
-    {
-      id: 1,
-      name: "chatgpt",
-      desc: "ChatGPT는 인공지능 언어 모델로, OpenAI에서 개발된 GPT-3.5 아키텍처를 기반으로 한 대화형 AI입니다. ChatGPT는 다양한 주제에 대한 질문과 답변을 수행하며, 사용자의 입력에 대해 자연스러운 대화를 제공합니다. 최신 정보와 일반적인 지식을 활용하여 유연하고 창의적인 응답을 생성하며, 다양한 사용 사례에 적용될 수 있습니다.",
-    },
-    {
-      id: 1,
-      name: "sdfsdf",
-      desc: " GPT-3.5 아키텍처를 기반으로 한 대화형 AI입니다. ChatGPT는 다양한 주제에 대한 질문과 답변을 수행하며, 사용자의 입력에 대해 자연스러운 대화를 제공합니다. 최신 정보와 일반적인 지식을 활용하여 유연하고 창의적인 응답을 생성하며, 다양한 사용 사례에 적용될 수 있습니다.",
-    },
-    {
-      id: 1,
-      name: "cqwrre",
-      desc: "ChatGPT는 인공지능텍처를 기반으로 한 대화형 AI입니다. ChatGPT는 다양한 주제에 대한 질문과 답변을 수행하며, 사용자의 입력에 대해 자연스러운 대화를 제공합니다. 최신 정보와 일반적인 지식을 활용하여 유연하고 창의적인 응답을 생성하며, 다양한 사용 사례에 적용될 수 있습니다.",
-    },
-  ];
+  const [words, setWords] = useState([]);
+  const [deleteId, setDeleteId] = useState(0);
+  const [data, setData] = useState({ user_id: userId, word_id: deleteId });
 
-  function submit() {
-    console.log("submit");
+  function onDelete() {
+    console.log(data);
+    axios
+      .post(`http://localhost:8080/word/delete`, data)
+      .then((res) => {
+        if (res.status === 201) {
+          navigate(`/user/${userId}`);
+        }
+      })
+      .catch((e) => console.log(e));
   }
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/user/word/${userId}`)
+      .then((res) => {
+        if (res.status === 200) {
+          setWords(res.data.user_word);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  useEffect(() => {
+    setData({ user_id: userId, word_id: deleteId });
+  }, [deleteId]);
+  console.log(deleteId);
   return (
     <Div>
       <h3>🗂️ {nickname}님의 단어장 </h3>
@@ -65,20 +75,26 @@ export default function WordList() {
         {words.map((w, idx) => {
           if (pageUser.includes(userId)) {
             return (
-              <WordCard
+              <div
                 key={idx}
-                user="true"
-                name={w.name}
-                content={w.desc}
-                modal={clickModal}
-              />
+                onClick={() => {
+                  setDeleteId(w.word.wordId);
+                }}
+              >
+                <WordCard
+                  user="true"
+                  name={w.word.name}
+                  content={w.word.description}
+                  modal={clickModal}
+                />
+              </div>
             );
           } else {
             return <WordCard key={idx} name={w.name} content={w.desc} />;
           }
         })}
       </Words>
-      {showModal && <DeleteModal clickModal={clickModal} func={submit} />}
+      {showModal && <DeleteModal clickModal={clickModal} func={onDelete} />}
     </Div>
   );
 }

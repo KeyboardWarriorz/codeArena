@@ -96,7 +96,9 @@ export default function ArticleCard(props) {
       <Title>{props.title}</Title>
       <Content>{props.content}</Content>
       <Info>
-        <Profile>{/* <img src={require(`../../assets/images/${props.profile}.svg`)} /> */}</Profile>
+        <Profile>
+          <img src={require(`../../assets/images/${props.profile}.svg`)} />
+        </Profile>
         <User>
           <div className="user">
             <p>{props.userId}</p>
