@@ -57,7 +57,6 @@ public class ArticleController {
 			response.put("statusCode", 200);
 			response.put("message", "게시물 상세 조회 성공" );
 	        response.put("data", article);
-
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 상세 조회 실패");

@@ -98,7 +98,7 @@ public class ProblemController {
 
 			if(solved == null){ // 2-1. 없으면 solved DB에 생성
 				solveservice.insertSolved(userId, problemId, success);
-				if(success == 2) result = true; //맞췄을 때
+				if(success == 1) result = true; //맞췄을 때
 			} else{ // 2-2. 있으면 solved DB success 값 업데이트
 				result = solveservice.updateSuccess(solved, success);
 			}
