@@ -32,10 +32,61 @@ export default function LectureItem() {
   function clickModal() {
     setShowModal(!showModal);
   }
+  const [selectedText, setSelectedText] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+
+  const [searchData, setSearchData] = useState("");
 
   function handleSelect(event) {
-    const selectedText = window.getSelection().toString();
-    console.log("Selected text:", selectedText);
+    const text = window.getSelection().toString().trim();
+
+    if (checked) {
+      const selectedText = window.getSelection().toString();
+      if (text) {
+        setSelectedText(text);
+        getWord();
+        setShowTooltip(true);
+        // 위치 관련
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+
+        setSelectedText(text);
+        setShowTooltip(true);
+
+        const { top, left, width, height } = rect;
+        const tooltipTop = top + height;
+        const tooltipLeft = left + width;
+
+        setTooltipPosition({ top: tooltipTop, left: tooltipLeft });
+      }
+      console.log("Selected text:", selectedText);
+    }
+  }
+
+  useEffect(() => {
+    setSearchData(selectedText);
+  }, [selectedText]);
+
+  const [loading, setLoading] = useState(false);
+
+  async function getWord() {
+    console.log("ㄱㄱ");
+    try {
+      setSearchData({ name: selectedText });
+      setLoading(true); // 로딩 상태 시작
+      console.log(searchData);
+      console.log("url", `http://localhost:8080/word/${searchData}`);
+      const response = await api.get(
+        `http://localhost:8080/word/${searchData}`
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false); // 로딩 상태 종료
+    }
   }
 
   return (
@@ -63,11 +114,19 @@ export default function LectureItem() {
       </Title>
       <div id="hr" />
 
-      <Content
-        onMouseUp={handleSelect}
-        dangerouslySetInnerHTML={{ __html: data.content }}
-      />
-
+      <div style={{ height: "50vh" }}>
+        <Content
+          onMouseUp={handleSelect}
+          dangerouslySetInnerHTML={{ __html: data.content }}
+        />
+        {showTooltip && (
+          <Tooltip top={tooltipPosition.top} left={tooltipPosition.left}>
+            <p>{selectedText}</p>
+            {/* Additional content for the tooltip */}
+          </Tooltip>
+        )}
+      </div>
+      {loading && <div>Loading...</div>}
       {showModal && <GPTModal clickModal={clickModal} />}
     </Div>
   );
@@ -112,13 +171,20 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  display: flex;
+  // display: flex;
   flex-direction: row;
-  background-color: #f8f8f8;
+  background-color: #f8f8f800;
   border-radius: 5px;
   box-shadow: 4px 3px 3px #49494930;
   min-height: 90px;                                                                                                                                                                              0
   margin-bottom: 10px;
   padding: 10px;
   line-height: 1.6rem;
+`;
+
+const Tooltip = styled.div`
+  position: absolute;
+  top: ${({ top }) => top}px;
+  left: ${({ left }) => left}px;
+  background-color: yellow;
 `;
