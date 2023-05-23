@@ -170,4 +170,5 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body("프로필 변경 성공");
 	}
 
+
 }

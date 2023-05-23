@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import api from "../interceptor";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -82,7 +82,7 @@ function Header() {
   const [nickname, setNickname] = useState(window.localStorage.nickname);
 
   function logout() {
-    api
+    axios
       .get("http://localhost:8080/user/logout")
       .then((res) => {
         if (res.status === 200) {
