@@ -166,7 +166,7 @@ export default function Main() {
       </StyledSwiper>
       <MainContainer>
         <SubContainer>
-          <H2Title>&gt; Join Arena!</H2Title>
+          <H2Title></H2Title>
           <ListBox>
             <Box>
               <LectureBox>
