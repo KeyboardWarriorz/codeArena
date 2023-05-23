@@ -109,4 +109,15 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     	Long categoryId = subCategory.getCategory().getCategoryId();
     	return categoryId;
     }
+    
+    /**
+     * 강의가 있는지 없는지 확인
+     * */
+    public boolean CheckSubCate (Long subcategoryId) {
+    	SubCategory subCategory = subCategoryRep.findBySubcategoryId(subcategoryId);
+    	if (subCategory == null) {
+    		return false;
+    	}
+    	return true;
+    }
 }
