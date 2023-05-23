@@ -28,7 +28,6 @@ public class HtmlController {
     public ResponseEntity<?> getHtmlContent(@PathVariable("subcategory_id") Long subcategory_id) throws IOException {
 
         if(!subService.CheckSubCate(subcategory_id)) {
-        	System.out.println("asdasdsa");
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("강의 조회 실패");
         }
         Resource resource = new ClassPathResource(subService.selectSubcategoryPath(subcategory_id));
@@ -36,7 +35,6 @@ public class HtmlController {
         String category_name = subService.selectCategoryName(subService.selectSubcategoryNum(subcategory_id));
         String path = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
         LectureDTO dto = new LectureDTO(sub_name,category_name,path);
-        System.out.println("asdasda");
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 }
