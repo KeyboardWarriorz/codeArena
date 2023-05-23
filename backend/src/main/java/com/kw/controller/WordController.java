@@ -55,10 +55,8 @@ public class WordController {
     @GetMapping("/{name}")
     public ResponseEntity<?> selectByName(@PathVariable("name") String name) {
         Map<String, Object> response = new HashMap<>();
-        System.out.println("name : "+ name);
         // 1. 공용 Word DB에 해당하는 단어가 이미 있는 지 확인한다.
         Word word = wordService.selectByWordName(name);
-        System.out.println("word : " +word);
         // 2-1. 만약 없다면 ChatGPT를 통해 값을 가져온다.
         if (word == null) {
             description = wordService.getWordDefinition(name);
