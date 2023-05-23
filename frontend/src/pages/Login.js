@@ -98,10 +98,10 @@ export default function Login() {
 
   function onSubmit() {
     axios
-      .post("http://localhost:8080/user/login",loginData,{
-          headers:{
-              Authorization: "login"
-          }
+      .post("http://localhost:8080/user/login", loginData, {
+        headers: {
+          Authorization: "login",
+        },
       })
       .then((res) => {
         if (res.status === 200) {
@@ -111,12 +111,15 @@ export default function Login() {
           window.localStorage.setItem("profileImage", res.data.profile_image);
           window.localStorage.setItem("accessToken", res.data.access_token);
           window.localStorage.setItem("refreshToken", res.data.refresh_token);
-            console.log(res.data.access_token);
-            console.log(res.data.refresh_token);
-            navigate("/");
+          console.log(res.data.access_token);
+          console.log(res.data.refresh_token);
+          navigate("/");
         }
       })
-      .catch((e) => swal(e.response.data));
+      .catch((e) => {
+        // console.log(e.response.data);
+        swal(e.response.data);
+      });
   }
 
   return (

@@ -20,17 +20,22 @@ export default function LectureItem() {
       .get(lecturePath)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
+          // console.log(res.data);
           setData(res.data);
         }
       })
-      .catch((e) => console.log(e));
-  });
+      .catch((e) => console.log(""));
+  }, []);
 
   // 모달 온오프
   const [showModal, setShowModal] = useState(false);
   function clickModal() {
     setShowModal(!showModal);
+  }
+
+  function handleSelect(event) {
+    const selectedText = window.getSelection().toString();
+    console.log("Selected text:", selectedText);
   }
 
   return (
@@ -57,7 +62,11 @@ export default function LectureItem() {
         </div>
       </Title>
       <div id="hr" />
-      <Content dangerouslySetInnerHTML={{ __html: data.content }} />
+
+      <Content
+        onMouseUp={handleSelect}
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      />
 
       {showModal && <GPTModal clickModal={clickModal} />}
     </Div>
