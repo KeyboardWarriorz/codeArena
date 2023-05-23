@@ -157,7 +157,7 @@ public class SolvedServiceImpl implements SolvedService {
 	 * */
 	@Override
 	public boolean updateSuccess(Solved solved, Integer success){
-		if(solved.getSuccess() == 1 && success == 2){ //getSuccess()가 fail일 때, 정답을 맞췄다면
+		if(solved.getSuccess() == 2 && success == 1){ //getSuccess()가 fail일 때, 정답을 맞췄다면
 			solved.setSuccess(success); //값 변경
 			solRep.save(solved);
 			return true;
