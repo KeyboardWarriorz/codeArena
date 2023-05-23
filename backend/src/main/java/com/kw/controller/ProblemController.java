@@ -29,23 +29,23 @@ public class ProblemController {
 	private final SolvedService solveservice;
 
 	@GetMapping("/ProblemSet/{userId}")
-	public ResponseEntity<?> selectAllQ(HttpServletRequest req, @PathVariable("userId") String userId, Pageable pageable){
+	public ResponseEntity<?> selectAllQ(HttpServletRequest req, @PathVariable("userId") String userId, Pageable pageable) {
 		List<ProblemDTO> data = new ArrayList<ProblemDTO>();
 		Map<String, Object> response = new HashMap<>();
 		Map<String, Object> dat = new HashMap<>();
 		int total = 0;
-		if (req.getParameter("category_id").equals("0")){
+		if (req.getParameter("category_id").equals("0")) {
 			data = proservice.select_pro_All(userId, pageable);
 			total = proservice.count_Pro();
-		}else {
-			data = proservice.select_pro_category_user(userId, Long.parseLong(req.getParameter("category_id")),pageable);
+		} else {
+			data = proservice.select_pro_category_user(userId, Long.parseLong(req.getParameter("category_id")), pageable);
 			total = proservice.count_Pro_cate(Long.parseLong(req.getParameter("category_id")));
 		}
-		dat.put("Problem",data);
-		dat.put("totalProblem",total);
-		response.put("data",dat);
+		dat.put("Problem", data);
+		dat.put("totalProblem", total);
+		response.put("data", dat);
 
-		return new ResponseEntity(response,HttpStatus.OK);
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/problem/{problemId}")
@@ -57,34 +57,34 @@ public class ProblemController {
 	}
 
 	@GetMapping("/ProblemSet/{userId}/{success}")
-	public ResponseEntity<?> selectSuccess(HttpServletRequest req, @PathVariable("userId") String userId,@PathVariable("success") int success, Pageable pageable){
+	public ResponseEntity<?> selectSuccess(HttpServletRequest req, @PathVariable("userId") String userId, @PathVariable("success") int success, Pageable pageable) {
 		List<SolvedDTO> data = new ArrayList<>();
 		Map<String, Object> response = new HashMap<>();
 		Map<String, Object> dat = new HashMap<>();
 		int total = 0;
 		String Cate = req.getParameter("category_id");
 		// 전체 조회
-		if (Cate.equals("0")){
-			data = solveservice.selectSolved_user_all(userId, success,pageable);
+		if (Cate.equals("0")) {
+			data = solveservice.selectSolved_user_all(userId, success, pageable);
 			total = solveservice.countSol(userId, success);
 		}
 		// 그 외 카테고리 지정
 		else {
-			data = solveservice.selectSolved_user_all_cate(userId, success,Cate,pageable);
-			total = solveservice.countSolCate(userId,Cate, success);
+			data = solveservice.selectSolved_user_all_cate(userId, success, Cate, pageable);
+			total = solveservice.countSolCate(userId, Cate, success);
 		}
-		dat.put("Problem",data);
-		dat.put("totalProblem",total);
-		response.put("data",dat);
+		dat.put("Problem", data);
+		dat.put("totalProblem", total);
+		response.put("data", dat);
 
 		return ResponseEntity.ok(response);
 	}
 
 	/**
 	 * 사용자가 푼 문제 결과와 점수를 저장하고, 누적 점수를 리턴
-	 * */
+	 */
 	@PostMapping("/problemAnswer/{user_id}")
-	public ResponseEntity<?> updatePoint(@PathVariable("user_id") String userId, @RequestBody Map<String, Object> request){
+	public ResponseEntity<?> updatePoint(@PathVariable("user_id") String userId, @RequestBody Map<String, Object> request) {
 		Integer success = Integer.valueOf(request.get("success").toString());
 		Long problemId = Long.valueOf(request.get("problem_id").toString());
 
@@ -96,14 +96,14 @@ public class ProblemController {
 			// 1. Solved DB에 userId와 problemId에 해당하는 튜플 존재하는 지 확인
 			Solved solved = solveservice.checkSolved(userId, problemId);
 
-			if(solved == null){ // 2-1. 없으면 solved DB에 생성
+			if (solved == null) { // 2-1. 없으면 solved DB에 생성
 				solveservice.insertSolved(userId, problemId, success);
-				if(success == 1) result = true; //맞췄을 때
-			} else{ // 2-2. 있으면 solved DB success 값 업데이트
+				if (success == 1) result = true; //맞췄을 때
+			} else { // 2-2. 있으면 solved DB success 값 업데이트
 				result = solveservice.updateSuccess(solved, success);
 			}
 			// 3. Users DB에서 userId에 해당하는 포인트에 추가 포인트를 더함
-			if(result) {  // 포인트가 누적될 때
+			if (result) {  // 포인트가 누적될 때
 				userService.addUserPoint(userId, 10);
 			}
 			// 4. 리턴 할 누적 값
@@ -112,8 +112,24 @@ public class ProblemController {
 			data.put("result", result);
 			response.put("message", "답안 제출 성공");
 			response.put("data", data);
-		} catch (Exception e){
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("답안 제출 실패");
+		}
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 서브 카테고리에 해당하는 문제번호 랜덤 전송
+	 * */
+	@GetMapping("/problemRan/{subcategory_id}")
+	public ResponseEntity<?> getProblemId(@PathVariable("subcategory_id") Long subcategoryId) {
+		Map<String, Object> response = new HashMap<>();
+		try{
+			Long problemId = proservice.getProblemId(subcategoryId);
+			response.put("message", "문제 전송 성공");
+			response.put("data", problemId);
+		} catch (Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문제 전송 실패");
 		}
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
