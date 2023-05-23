@@ -52,7 +52,7 @@ public class WordController {
      * request: name
      * status 200 : "단어 조회 성공" / status 500 : "단어 검색 실패"
      */
-    @GetMapping("/{name}")
+    @GetMapping("{name}")
     public ResponseEntity<?> selectByName(@PathVariable("name") String name) {
         Map<String, Object> response = new HashMap<>();
         // 1. 공용 Word DB에 해당하는 단어가 이미 있는 지 확인한다.
