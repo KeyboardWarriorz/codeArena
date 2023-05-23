@@ -1,5 +1,5 @@
 import React from "react";
-import api from "../interceptor";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -97,7 +97,7 @@ export default function Login() {
   }
 
   function onSubmit() {
-    api
+    axios
       .post("http://localhost:8080/user/login",loginData,{
           headers:{
               Authorization: "login"
