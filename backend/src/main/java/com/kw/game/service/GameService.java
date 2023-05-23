@@ -101,7 +101,7 @@ public class GameService {
             answer_list.add(problemDTO.getAnswer3());
             answer_list.add(problemDTO.getAnswer4());
             Integer answer_index = problemDTO.getAnswerIndex();
-            String description = problemDTO.getDescription();
+            String description = problemDTO.getSolution();
             question_list.add(new QuestionDto("question", question, answer_list, answer_index,description));
         }
     }
