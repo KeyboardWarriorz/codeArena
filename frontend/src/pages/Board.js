@@ -55,6 +55,11 @@ const Contents = styled.div`
   padding: 20px;
   width: 80vw;
   height: 500px;
+
+  #none {
+    margin-top: 50px;
+    font-size: 1.5rem;
+  }
 `;
 
 const SearchBar = styled.div`
@@ -252,35 +257,41 @@ export default function Board() {
           </button>
         </SearchBar>
 
-        <Cards>
-          {articles.map((a, idx) => {
-            return (
-              <div key={idx}>
-                <ArticleCard
-                  articleId={a.articleId}
-                  title={truncate(a.title, 10)}
-                  content={truncate(a.content, 50)}
-                  nickname={a.nickname}
-                  cnt={a.totalComment}
-                  profile={a.profile_image}
-                />
-              </div>
-            );
-          })}
-        </Cards>
-        <Paginate
-          pageCount={Math.ceil(total / 10)}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={0}
-          breakLabel={""}
-          previousLabel={"<"}
-          nextLabel={">"}
-          onPageChange={changePage}
-          containerClassName={"pagination-ul"}
-          activeClassName={"currentPage"}
-          previousClassName={"pageLabel-btn"}
-          nextClassName={"pageLabel-btn"}
-        />
+        {articles.length > 0 ? (
+          <>
+            <Cards>
+              {articles.map((a, idx) => {
+                return (
+                  <div key={idx}>
+                    <ArticleCard
+                      articleId={a.articleId}
+                      title={truncate(a.title, 10)}
+                      content={truncate(a.content, 50)}
+                      nickname={a.nickname}
+                      cnt={a.totalComment}
+                      profile={a.profile_image}
+                    />
+                  </div>
+                );
+              })}
+            </Cards>
+            <Paginate
+              pageCount={Math.ceil(total / 10)}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={0}
+              breakLabel={""}
+              previousLabel={"<"}
+              nextLabel={">"}
+              onPageChange={changePage}
+              containerClassName={"pagination-ul"}
+              activeClassName={"currentPage"}
+              previousClassName={"pageLabel-btn"}
+              nextClassName={"pageLabel-btn"}
+            />
+          </>
+        ) : (
+          <div id="none">아직 등록된 게시물이 없어요! 😥</div>
+        )}
       </Contents>
     </Div>
   );

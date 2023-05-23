@@ -3,7 +3,7 @@ import api from "../interceptor";
 import styled from "styled-components";
 import MiniTag from "../components/buttons/MiniTag";
 import LargeButton from "../components/buttons/LargeButton";
-import resultState from "../recoil/result.ts";
+import resultState from "../recoil/result.js";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 

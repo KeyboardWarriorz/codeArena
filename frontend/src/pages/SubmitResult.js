@@ -3,11 +3,13 @@ import api from "../interceptor";
 import styled from "styled-components";
 import MiniTag from "../components/buttons/MiniTag";
 import LargeButton from "../components/buttons/LargeButton";
-import resultState from "../recoil/result.ts";
+import resultState from "../recoil/result.js";
 import { useRecoilState } from "recoil";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 export default function SubmitResult() {
+  const navigate = useNavigate();
   // recoil state 이용하여 결과 받고, axios 요청 전송
   const [result, setResult] = useRecoilState(resultState);
   const typeArr = ["객관식", "O / X"];
@@ -36,8 +38,10 @@ export default function SubmitResult() {
       .then((res) => {
         if (res.status === 200) {
           console.log(res.data);
-          if (res.data.result === true) {
-            swal("맞았습니다!");
+          if (result.success == 1) {
+            swal("정답입니다! 😎", "", "success");
+          } else if (result.success == 2) {
+            swal("오답입니다 😥", "", "error", { buttonColor: "red" });
           }
         }
       })
@@ -45,8 +49,12 @@ export default function SubmitResult() {
   }
 
   useEffect(() => {
-    getProblem();
-    getResult();
+    if (result.problem_id !== 0) {
+      getResult();
+      getProblem();
+    } else {
+      navigate("/problem");
+    }
     console.log(result);
   }, []);
 
@@ -67,23 +75,8 @@ export default function SubmitResult() {
       </Box>
       {problem.problem_type === 1 ? (
         <TFQ>
-          <div
-          // className={selected === 1 ? "O" : "none"}
-          // onClick={() => {
-          //   setAnswer(1);
-          // }}
-          >
-            O
-          </div>
-          <div id="s">/</div>
-          <div
-          // className={selected === 2 ? "X" : "none"}
-          // onClick={() => {
-          //   setAnswer(2);
-          // }}
-          >
-            X
-          </div>
+          {problem.answerIndex === 1 ? <p>정답: O</p> : <p>정답: X</p>}
+          <div>{problem.description}</div>
         </TFQ>
       ) : (
         <MCQ>
@@ -124,7 +117,23 @@ export default function SubmitResult() {
       )}
 
       <div>
-        <LargeButton text="해설 확인" />
+        {problem.problem_type === 1 ? (
+          <div
+            onClick={() => {
+              navigate("/problem");
+            }}
+          >
+            <LargeButton text="다른 문제 풀러 가기" />
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              navigate(`/problem/desc/${problem.problemId}`);
+            }}
+          >
+            <LargeButton text="해설 확인" />
+          </div>
+        )}
       </div>
     </Div>
   );
@@ -168,6 +177,7 @@ const Box = styled.div`
     padding-top: 0.8rem;
     text-align: start;
     line-height: 2rem;
+
   }
 
   p {
@@ -215,50 +225,30 @@ const Option = styled.button`
   margin: 10px 0;
   min-height: 60px;
   line-height: 1.5rem;
-
-  &:focus {
-    background-color: #e9d6ed;
-  }
-
-  .right {
-    background-color: red;
-  }
 `;
 
 const TFQ = styled.div`
-  display: flex;
-  align-items: center;
-  // justify-content: space-between;
+  padding: 20px;
+  text-align: start;
   font-size: 5rem;
   width: 100%;
-  padding-top: 150px;
-  height: 300px;
-  // margin-top: 20vh;
   cursor: pointer;
-  // background-color: yellow;
 
-  .O {
+  p {
+    margin-top: 30px;
+    margin-left: 15px;
     color: #006e61;
-    width: 50%;
-    height: 100%;
+    margin-bottom: 0;
+    font-size: 2rem;
+    font-weight: bold;
   }
 
-  .X {
-    color: red;
-    width: 50%;
-    height: 100%;
-  }
-
-  .none {
-    color: #e0e0e0;
-    // background-color: pink;
-    width: 50%;
-    height: 100%;
-  }
-
-  #s {
-    cursor: default;
-    // background-color: blue;
-    height: 100%;
+  div {
+    margin-top: 20px;
+    margin-left: 20px;
+    // padding-right: 50px;
+    font-size: 1.2rem;
+    line-height: 2;
+    width: 95%;
   }
 `;

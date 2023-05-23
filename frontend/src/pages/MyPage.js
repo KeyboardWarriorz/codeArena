@@ -9,6 +9,7 @@ import WordCard from "../components/organisms/WordCard";
 // import Junseo from "../assets/images/Junseo.svg";
 // import Sunyeong from "../assets/images/Sunyeong.svg";
 import { useNavigate } from "react-router-dom";
+import ProfileModal from "../components/modals/ProfileModal";
 
 // CSS 코드 아래에 있음
 export default function MyPage() {
@@ -23,6 +24,8 @@ export default function MyPage() {
   const [solved, setSolved] = useState([]);
   const [failed, setFailed] = useState([]);
   const [words, setWords] = useState([]);
+  const [tier, setTier] = useState("");
+  const [point, setPoint] = useState(0);
 
   console.log(words);
 
@@ -39,7 +42,7 @@ export default function MyPage() {
   }
 
   function changeProfile() {
-    console.log("프로필을 바꿔욤");
+    clickModal();
   }
 
   function changePW() {
@@ -58,6 +61,10 @@ export default function MyPage() {
           setSolved(res.data.success_solved);
           setFailed(res.data.failed_solved);
           setWords(res.data.user_word);
+          setTier(res.data.user.tier);
+          window.localStorage.setItem("tier", res.data.tier);
+          setPoint(res.data.user.point);
+
           // 포인트 받을것!!!
           // 티어 정보도 주세요..
         }
@@ -65,6 +72,15 @@ export default function MyPage() {
       .catch((e) => window.alert(e));
   }, []);
 
+  console.log(point);
+
+  // 프로필 변경 모달 관리
+  const [showModal, setShowModal] = useState(false);
+  const clickModal = () => {
+    setShowModal(!showModal);
+  };
+
+  function onDelete() {}
   return (
     <MainContainer>
       <ProfileBox>
@@ -78,9 +94,9 @@ export default function MyPage() {
           <ProdataBox>
             <span>{nickname}</span>
             <span>&nbsp;님</span>
-            <span>GOLD</span>
-            <span>380P</span>
-            <span>다음 레벨까지 20349P</span>
+            <span id={tier}>{tier}</span>
+            <span>{point}P</span>
+            {/* <span>다음 레벨까지 20349P</span> */}
           </ProdataBox>
         </NameBox>
         <ChangeBox>
@@ -154,6 +170,7 @@ export default function MyPage() {
           </div>
         </Words>
       </ContentBox>
+      {showModal && <ProfileModal clickModal={clickModal} func={onDelete} />}
     </MainContainer>
   );
 }
@@ -227,6 +244,30 @@ const ProdataBox = styled.div`
     margin-right: 30px;
     color: #9b9b9b;
     font-size: 15px;
+  }
+
+  #BRONZE {
+    color: #ad5600;
+  }
+
+  #SILVER {
+    color: #435f7a;
+  }
+
+  #GOLD {
+    color: #ec9a00;
+  }
+
+  #PLATINUM {
+    color: #27e2a4;
+  }
+
+  #DIAMOND {
+    color: #00b4fc;
+  }
+
+  #RUBY {
+    color: #ff0062aa;
   }
 `;
 
