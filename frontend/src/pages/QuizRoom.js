@@ -1,4 +1,3 @@
-import api from "../interceptor";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
@@ -7,6 +6,9 @@ import an2 from "../assets/images/Seongwhan.svg";
 import an3 from "../assets/images/Eunhyo.svg";
 import an4 from "../assets/images/Junseo.svg";
 import an5 from "../assets/images/Sunyeong.svg";
+import { useParams } from "react-router-dom";
+import api from "../interceptor";
+import axios from "axios";
 
 const RoomTitle = styled.div`
   display: flex;
@@ -258,7 +260,14 @@ const ExitBtn = styled.button`
   cursor: pointer;
 `;
 
-export default function QuizRoom() {
+export default function QuizRoom({ match }) {
+  const url = "http://localhost:8080";
+  let stompUserClient;
+  let selectedRoom;
+  let subscription = null;
+  let timeoutId = false;
+  let description = "";
+
   // const typeArr = ["객관식", "O / X"];
   const [selected, setSelected] = useState(0);
   const [problemType, setProblemType] = useState(0);
@@ -266,18 +275,26 @@ export default function QuizRoom() {
   const [problem, setProblem] = useState([]);
   // const [category, setCategory] = useState("");
 
+  let roomName = useParams();
+  // const [title, setTitle] = useState("123");
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+
   function setAnswer(n) {
     setSelected(n);
   }
 
+  const [data, setData] = useState({
+    room_name: roomName.room_id,
+    user_id: userId,
+  });
+
   useEffect(() => {
-    api
-      .get(`http://localhost:8080${problemId}`)
+    console.log(roomName);
+    axios
+      .post(url + "/game/room/join", data)
       .then((res) => {
         if (res.status === 200) {
           console.log(res);
-          setProblem(res.data);
-          // setCategory(res.data.subcategory.category.categoryName);
         }
       })
       .catch((e) => console.log(e));

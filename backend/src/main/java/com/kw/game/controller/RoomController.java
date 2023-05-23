@@ -11,9 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,17 +30,19 @@ public class RoomController {
     @Autowired
     private UserService userService;
     @PostMapping("/game/room")
-    public ResponseEntity<Void> registerRoom(HttpServletRequest request) {
-        String roomName = request.getParameter("room_name");
-        String userId = request.getParameter("user_id");
+    public ResponseEntity<Void> registerRoom(HttpServletRequest request,@RequestBody HashMap<String, String> map) {
+        String roomName = map.get("room_name");
+        String userId = map.get("user_id");
+        System.out.println(roomName+userId);
         GameScenarioDto gameScenarioDto;
-        if (request.getParameter("problem_category_id") == null) {
+        if (map.get("problem_category_id") == null) {
+        	System.out.println("if");
             gameScenarioDto = new GameScenarioDto();
         } else {
-            Long problemCategoryId = Long.parseLong(request.getParameter("problem_category_id"));
-            Integer timeout = Integer.parseInt(request.getParameter("timeout"));
-            Integer problem_cnt = Integer.parseInt(request.getParameter("problem_cnt"));
-            gameScenarioDto = new GameScenarioDto(problemCategoryId, timeout, problem_cnt);
+        	System.out.println("else");
+            Long problemCategoryId = Long.parseLong(map.get("problem_category_id"));
+            Integer problem_cnt = Integer.parseInt(map.get("problem_cnt"));
+            gameScenarioDto = new GameScenarioDto(problemCategoryId, 15, problem_cnt);
         }
         System.out.println("handling register room request: " + roomName);
         try {
@@ -49,15 +54,14 @@ public class RoomController {
     }
 
     @PostMapping("/game/room/join")
-    public ResponseEntity<?> joinRoom(HttpServletRequest request) {
+    public ResponseEntity<?> joinRoom(HttpServletRequest request,@RequestBody HashMap<String, String> map) {
         System.out.println("joining room");
-        String roomName = request.getParameter("room_name");
-        String userId = request.getParameter("user_id");
-        String prev_room = request.getParameter("prev_room");
-        System.out.println(roomName + userId + prev_room);
+        
+        String roomName = map.get("room_name");
+        String userId = map.get("user_id");
         Map<String, Object> dataMap;
         try {
-            dataMap = roomService.joinRoom(roomName, userId, prev_room);
+            dataMap = roomService.joinRoom(roomName, userId);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

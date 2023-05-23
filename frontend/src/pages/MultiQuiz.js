@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
-import MiniButton from "../components/buttons/MiniButton";
 import RoomMakeModal from "../components/RoomMakeModal";
+import axios from "axios";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 
 const Div = styled.div`
   cursor: default;
@@ -15,61 +17,84 @@ const Div = styled.div`
   }
 `;
 
-const Select = styled.div`
+const RoomDiv = styled.div`
   display: flex;
-  padding-top: 10px;
-  margin-left: 10px;
-  padding-bottom: 10px;
-  // background-color: pink;
-
-  .line {
-    >span: nth-of-type(1) {
-      cursor: pointer;
-    }
-    > span:nth-of-type(2) {
-      margin: 0 15px;
-      color: #bcbfc1;
-    }
-  }
-
-  #selected {
-    >span: nth-of-type(1) {
-      cursor: pointer;
-      color: #006e61;
-      font-weight: bold;
-    }
-  }
-`;
-
-const MakeRoom = styled.div`
-  display: flex;
-  justify-content: space-between;
+  gap: 5rem;
 `;
 
 const Problems = styled.div`
-  margin: 20px 0 0 20px;
-
+  margin: 20px 20px 0 0px;
+  padding-bottom: 7px;
+  height: 50px;
+  border-bottom: 1px #bcbfc180 solid;
   #name {
     color: #6b6b6b;
   }
+`;
 
-  #hr {
-    border-top: 1px solid #bcbfc180;
-    height: 8px;
-    margin-top: 7px;
+const ProblemScroll = styled.div`
+  margin: 0 0 0 0px;
+  height: 500px;
+  overflow: auto;
+  #name {
+    color: #6b6b6b;
+  }
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #816843;
+  }
+`;
+
+const ProblemHover = styled.div`
+  cursor: pointer;
+  height: 70px;
+  border-bottom: 1px #bcbfc180 solid;
+  display: flex;
+  align-items: center;
+  > div:nth-of-type(1) {
+    margin-left: 20px;
+    backgrond-color: red;
+    width: 10%;
+  }
+
+  > div:nth-of-type(2) {
+    // text-align: center;
+    width: 15%;
+  }
+
+  > div:nth-of-type(3) {
+    width: 60%;
+  }
+
+  > div:nth-of-type(4) {
+    width: 15%;
+    text-align: center;
+  }
+
+  &:hover {
+    background-color: #d9d9d950;
+    color: black;
+    #hr {
+      background-color: #d9d9d930;
+      color: black;
+      border-top: 1px solid #bcbfc180;
+      height: 8px;
+      margin-top: 7px;
+    }
   }
 `;
 
 const Problem = styled.div`
-  cursor: pointer;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 2px;
-  margin: 20px 0;
-
-  #title {
-    color: #4a483f;
-  }
+  height: 50px;
+  margin: 5px 0;
+  margin-right: 20px;
 
   > span:nth-of-type(1) {
     margin-left: 20px;
@@ -83,7 +108,6 @@ const Problem = styled.div`
 
   > span:nth-of-type(3) {
     width: 60%;
-    // color: red;
   }
 
   > span:nth-of-type(4) {
@@ -91,62 +115,278 @@ const Problem = styled.div`
     text-align: center;
   }
 `;
-
-const Paginate = styled(ReactPaginate)`
-  // background-color: yellow;
+const Select = styled.div`
+  background-color: #f8f8f8;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px 2px #dddddd;
+  padding: 20px 10px 10px 10px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-  margin-bottom: 500px;
+  flex-direction: column;
+  margin: 30px 0px 30px 10px;
 
-  li {
-    margin: 1.25rem;
-    backgrond-color: yellow;
-    font-weight: bold;
-    border-radius: 5px;
-    width: 35px;
-    height: 29px;
-    padding-top: 8px;
-    text-align: center;
-    cursor: pointer;
-  }
-
-  .currentPage {
-    background-color: #fab80950;
-    border-radius: 5px;
-    width: 35px;
-    height: 29px;
-    padding-top: 8px;
-    text-align: center;
-    cursor: pointer;
-  }
-  .active {
-    border: solid 1px #808e9b;
-    border-radius: 40px;
-    color: red;
-  }
-
-  .previous {
-    border-right: solid 1px #808e9b;
-    font-size: 4px;
-    height: 60px;
-    left: 0;
-    position: absolute;
+  .line {
+    padding-left: 10px;
     width: 150px;
+    height: 45px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-radius: 10px;
+    &:hover {
+      font-weight: bold;
+    }
+    >span: nth-of-type(1) {
+      font-size: 17px;
+      cursor: pointer;
+    }
+  }
+
+  #selected {
+    background-color: #fab809;
+    width: 92%;
+
+    border-radius: 10px;
+
+    box-shadow: 2px 2px 2px 2px #f8a70c;
+
+    >span: nth-of-type(1) {
+      cursor: pointer;
+      color: #006e61;
+      font-weight: bold;
+    }
   }
 `;
 
+const MakeRoom = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const RoomMakeBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MiniButton = styled.button`
+  width: 180px;
+  height: 40px;
+
+  background-color: #fab809;
+  border: none;
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: bold;
+  font-family: "NanumSquareNeo-Variable";
+  box-shadow: 2px 2px 2px 2px #f8a70c;
+  color: #006e61;
+  cursor: pointer;
+  margin: 10px 0 0 10px;
+
+  &: hover {
+    background-color: #f8a70c;
+  }
+`;
+
+const ProblemBox = styled.div`
+  overflow: auto;
+  width: 80%;
+  background-color: #f8f8f8;
+  border-radius: 20px;
+  box-shadow: 2px 2px 2px 2px #dddddd;
+`;
+
+// 모달 창 뒷배경
+const ModalBox = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Title = styled.div`
+  font-weight: bold;
+  font-size: 25px;
+`;
+
+const InputDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 20px;
+
+  > div:nth-of-type(1) {
+    padding-left: 20px;
+    width: 100px;
+    margin-right: 10px;
+    font-size: 20px;
+  }
+
+  > select {
+    font-family: "NanumSquareNeo-Variable";
+    width: 450px;
+    height: 45px;
+    outline: none;
+    border: solid 2px #aeaeae;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 50px;
+
+    > option {
+    }
+  }
+
+  > input {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: "NanumSquareNeo-Variable";
+    width: 450px;
+    height: 40px;
+    outline: none;
+    border: solid 2px #aeaeae;
+    border-radius: 8px;
+  }
+`;
+
+const ModalContent = styled.div`
+  font-weight: 400;
+  height: 470px;
+  width: 700px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+
+  > div:nth-of-type(1) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    // 엑스버튼
+    width: 600px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.3em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // margin-left: 450px;
+
+    > div:nth-of-type(1) {
+      margin-top: 40px;
+    }
+
+    > div:nth-of-type(2) {
+      color: #aeaeae;
+      font-size: 15px;
+    }
+  }
+
+  > div:nth-of-type(3) {
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    width: 600px;
+  }
+
+  > div:nth-of-type(4) {
+    margin-top: 10px;
+  }
+
+  > div {
+    display: flex;
+    // justify-content: space-evenly;
+    justify-content: space-around;
+
+    width: 600px;
+    margin-top: 1.25rem;
+    > button:nth-of-type(1) {
+      font-family: "NanumSquareNeo-Variable";
+      color: white;
+      border: none;
+      width: 265px;
+      height: 45px;
+      margin-top: 20px;
+      padding: 0.4rem 0.6rem;
+      border-radius: 5px;
+      font-size: 1.3em;
+      font-weight: 600;
+      background-color: #fab809;
+      cursor: pointer;
+      box-shadow: 3px 2px 5px #fab809;
+    }
+
+    > button:nth-of-type(2) {
+      font-family: "NanumSquareNeo-Variable";
+      color: white;
+      border: none;
+      width: 265px;
+      height: 45px;
+      margin-top: 20px;
+      padding: 0.4rem 0.6rem;
+      border-radius: 5px;
+      font-size: 1.3em;
+      font-weight: 600;
+      background-color: #aeaeae;
+      cursor: pointer;
+      box-shadow: 3px 2px 5px #aeaeae;
+    }
+  }
+`;
+
+const Hr = styled.div`
+  border-top: 1px solid #bcbfc180;
+  height: 8px;
+  margin-top: 20px;
+`;
+
 export default function ProblemSolved() {
+  const url = "http://localhost:8080";
+  let stompUserClient;
+  let selectedRoom;
+  let subscription = null;
+  let timeoutId = false;
+  let description = "";
+
   const [showModal, setShowModal] = useState(false);
   const clickModal = () => {
     setShowModal(!showModal);
     console.log("modal");
   };
+  // const [stompUserClient, setStompUserClient] = useState("");
+  const [title, setTitle] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [Cnt, setCnt] = useState("");
+  // const [stompUserClient, setStompUserClient] = useState(
+  //   window.localStorage.getItem("stompUserClient")
+  // );
+
+  function titleChange(e) {
+    setTitle(e.target.value);
+  }
+  function CateChange(e) {
+    setCategoryId(e.target.value);
+  }
+  function CntChange(e) {
+    setCnt(e.target.value);
+  }
 
   const [nickname, setNickname] = useState(
     window.localStorage.getItem("nickname")
   );
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [data, setData] = useState({
+    room_name: title,
+    user_id: userId,
+    problem_category_id: categoryId,
+    problem_cnt: Cnt,
+  });
+
   const navigate = useNavigate();
   const categories = [
     "ALL",
@@ -162,32 +402,68 @@ export default function ProblemSolved() {
   const typeArr = ["객관식", "O / X"];
   const [page, setPage] = useState(1);
 
-  // 0: 안풂, 1: 맞음, 2: 틀림
-  const problems = [
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 0,
-      problemId: 3,
-    },
-    { status: 1, category: "Spring", title: "Java", type: 0, problemId: 1 },
-    { status: 2, category: "Java", title: "Static", type: 1, problemId: 2 },
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 1,
-      problemId: 4,
-    },
-    {
-      status: 0,
-      category: "Java",
-      title: "Java Static",
-      type: 0,
-      problemId: 3,
-    },
-  ];
+  function fetchAll() {
+    axios
+      .get(`http://localhost:8080/game/roomList`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.status === 200) {
+        }
+      })
+      .catch((e) => console.log(e));
+  }
+
+  function sendBroadcast(message) {
+    let username = nickname;
+    stompUserClient.send(
+      "/app/room",
+      {},
+      JSON.stringify({
+        fromLogin: username,
+        message: message,
+        type: "broadcast",
+      })
+    );
+  }
+
+  useEffect(() => {
+    setData({
+      room_name: title,
+      user_id: userId,
+      problem_category_id: categoryId,
+      problem_cnt: Cnt,
+    });
+  }, [title, categoryId, Cnt]);
+
+  function addRoom() {
+    // let roomName = document.getElementById("roomName").value;
+    console.log(data);
+    axios
+      .post(url + "/game/room", data)
+      .then(function (data) {
+        console.log(data);
+      })
+      .catch(function (jqXHR) {
+        console.log(jqXHR);
+      });
+  }
+
+  useEffect(() => {
+    console.log("connecting to server...");
+    let socket = new SockJS(url + "/room");
+    stompUserClient = Stomp.over(socket);
+    window.localStorage.setItem("stompUserClient", stompUserClient);
+    stompUserClient.connect({}, function (frame) {
+      console.log("connected to: " + frame);
+      // sendBroadcast(userName + " logined");
+      stompUserClient.subscribe("/topic/room", function (response) {
+        let data = JSON.parse(response.body);
+        console.log(data.message);
+        fetchAll();
+      });
+    });
+    fetchAll();
+  });
 
   const [selected, setSelected] = useState("ALL");
 
@@ -206,81 +482,300 @@ export default function ProblemSolved() {
   return (
     <Div>
       <h3> 🎯 게임 방 목록 </h3>
-      <MakeRoom>
-        <Select>
-          {categories.map((c) => {
-            if (selected === c) {
-              return (
-                <div
-                  key={c}
-                  className="line"
-                  id="selected"
-                  onClick={setCategory}
-                >
-                  <span>{c}</span>
-                  <span>|</span>
-                </div>
-              );
-            } else {
-              return (
-                <div key={c} className="line" onClick={setCategory}>
-                  <span>{c}</span>
-                  <span>|</span>
-                </div>
-              );
-            }
-          })}
-        </Select>
-        <MiniButton text="방 생성" func={clickModal} />
-      </MakeRoom>
-      <Problems>
-        <Problem id="name">
-          <span>인원</span>
-          <span>문제 유형</span>
-          <span id="title">제목</span>
-          <span>상태</span>
-        </Problem>
-        <div id="hr"></div>
-      </Problems>
-      <Problems>
-        {problems.map((p, idx) => {
-          return (
-            <div
-              key={idx}
-              onClick={() => {
-                navigate(`/problem/${p.problemId}`);
-              }}
-            >
-              <Problem>
-                {/* 인원수 체크 */}
-                <span>1/4</span>
-                {/* 주제 */}
-                <span>{p.category}</span>
-                {/* 제목 */}
-                <span>{p.title}</span>
-                {/* 상태 */}
-                <span>{typeArr[`${p.type}`]}</span>
-              </Problem>
-              <div id="hr"></div>
+      <RoomDiv>
+        <MakeRoom>
+          <RoomMakeBox>
+            <Select>
+              {categories.map((c) => {
+                if (selected === c) {
+                  return (
+                    <div
+                      key={c}
+                      className="line"
+                      id="selected"
+                      onClick={setCategory}
+                    >
+                      <span>{c}</span>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={c} className="line" onClick={setCategory}>
+                      <span>{c}</span>
+                    </div>
+                  );
+                }
+              })}
+            </Select>
+            <MiniButton onClick={clickModal}>방 생성</MiniButton>
+          </RoomMakeBox>
+        </MakeRoom>
+        <ProblemBox>
+          <Problems>
+            <Problem id="name">
+              <span>상태</span>
+              <span>분야</span>
+              <span>제목</span>
+              <span>문제 유형</span>
+            </Problem>
+            <div id="hr"></div>
+          </Problems>
+          <ProblemScroll id="style-2">
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>{" "}
+            <ProblemHover>
+              <div>qwdwqd</div>
+              <div>1</div>
+              <div>1</div>
+              <div>1</div>
+            </ProblemHover>
+          </ProblemScroll>
+        </ProblemBox>
+      </RoomDiv>
+      {showModal && (
+        <ModalBox>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <div>
+              <Title>방 생성하기</Title>
+              <div onClick={clickModal}>X</div>
             </div>
-          );
-        })}
-      </Problems>
-
-      <Paginate
-        pageCount={Math.ceil(totalRecords / 10)}
-        pageRangeDisplayed={5}
-        marginPagesDisplayed={0}
-        breakLabel={""}
-        previousLabel={"<"}
-        nextLabel={">"}
-        onPageChange={changePage}
-        containerClassName={"pagination-ul"}
-        activeClassName={"currentPage"}
-        previousClassName={"pageLabel-btn"}
-        nextClassName={"pageLabel-btn"}
-      />
-      {showModal && <RoomMakeModal clickModal={clickModal} func={submit} />}
+            <Hr />
+            <div>
+              <InputDiv>
+                <div>방 제목</div>
+                <input
+                  onChange={titleChange}
+                  placeholder="방 제목을 입력해 주세요."
+                ></input>
+              </InputDiv>
+              <InputDiv>
+                <div>카테고리</div>
+                <select
+                  name="Category"
+                  form="CateForm"
+                  required
+                  defaultValue=""
+                  onChange={CateChange}
+                >
+                  <option value="" disabled hidden>
+                    카테고리를 설정해주세요.
+                  </option>
+                  <option value="1">cate1</option>
+                  <option value="2">cate2</option>
+                  <option value="3">cate3</option>
+                  <option value="4">cate4</option>
+                </select>
+              </InputDiv>
+              <InputDiv>
+                <div>문제 수</div>
+                <select
+                  name="order"
+                  form="num"
+                  required
+                  defaultValue=""
+                  onChange={CntChange}
+                >
+                  <option value="" disabled hidden>
+                    문제 수를 설정해주세요.
+                  </option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                </select>
+              </InputDiv>
+            </div>
+            <div>
+              <button onClick={addRoom}>방 만들기</button>
+              <button onClick={clickModal}>취소</button>
+            </div>
+          </ModalContent>
+        </ModalBox>
+      )}
     </Div>
   );
 }
