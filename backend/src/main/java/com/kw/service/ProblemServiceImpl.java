@@ -184,4 +184,22 @@ public class ProblemServiceImpl implements ProblemService {
 
 		return proRep.countPro_cat(category_id);
 	}
+
+	/**
+	 * 랜덤으로 문제 번호를 조회
+	 * */
+	@Override
+	public Long getProblemId(Long subcategoryId){
+		List<Problem> list = proRep.findBySubcategoryId(subcategoryId);
+		Random random = new Random();
+		//리스트 크기만큼의 랜덤 인덱스
+		int randomIdx = random.nextInt(list.size());
+		//랜덤 인덱스에 해당하는 문제 번호 리턴
+		Long problemId = list.get(randomIdx).getProblemId();
+		if(problemId != null){
+			return  null;
+		}
+		return problemId;
+	}
+
 }

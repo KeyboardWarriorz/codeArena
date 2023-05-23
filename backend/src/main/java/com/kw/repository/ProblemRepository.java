@@ -38,4 +38,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer>, Quer
 	Integer countPro();
 
 	Problem findByProblemId(Long problemId);
+
+	@Query(value = "select p from Problem p where p.subcategory.subcategoryId=?1")
+	List<Problem> findBySubcategoryId(Long subcategoryId);
 }
