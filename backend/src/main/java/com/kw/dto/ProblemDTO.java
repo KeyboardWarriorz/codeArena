@@ -21,7 +21,7 @@ public class ProblemDTO {
     private String answer2;
     private String answer3;
     private String answer4;
-    private String description;
+    private String solution;
     private int problem_type;
     
     private SubCategory subcategory;
@@ -56,7 +56,7 @@ public class ProblemDTO {
 	}
 
 	public ProblemDTO(Long problemId, String title, String question, Integer answerIndex, String answer1,
-			String answer2, String answer3, String answer4, String description, int problem_type,
+			String answer2, String answer3, String answer4, String solution, int problem_type,
 			SubCategory subcategory) {
 		this.problemId = problemId;
 		this.title = title;
@@ -66,7 +66,7 @@ public class ProblemDTO {
 		this.answer2 = answer2;
 		this.answer3 = answer3;
 		this.answer4 = answer4;
-		this.description = description;
+		this.solution = solution;
 		this.problem_type = problem_type;
 		this.subcategory = subcategory;
 	}
