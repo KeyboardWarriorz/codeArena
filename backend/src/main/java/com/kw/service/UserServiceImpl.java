@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import com.kw.entity.Tier;
 import com.kw.repository.TierRepository;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,13 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRep;
-	
+
 	@Autowired
 	private ArticleRepository articleRep;
 
 	@Autowired
 	private TierRepository tierRep;
-	
+
 
 	/**
 	 * 로그인 가능 체크
@@ -46,14 +47,15 @@ public class UserServiceImpl implements UserService {
 			return null;
 		} else {
 			// 조회된결과가 있으면 비밀번호 일치확인 후 틀리면 로그인 불가;
-			if (!login.getUserPw().equals(user.getUserPw())) {
+			String pw = hashSHA256(user.getUserPw());
+			if (!login.getUserPw().equals(pw)) {
 				return null;
 			}
 		}
 		// 일치하면 조회된 회원정보 리턴
 		return login;
 	}
-	
+
 	/**
 	 * 닉네임 중복 체크
 	 * */
@@ -62,39 +64,39 @@ public class UserServiceImpl implements UserService {
     public boolean checkNickname(String nickname) {
         return userRep.existsByNickname(nickname);
     }
-    
-    
+
+
 	/**
 	 * 아이디 중복 체크
 	 * */
     @Transactional
     @Override
     public boolean checkId(String userId) {
-    	return userRep.existsByuserId(userId);
+		return userRep.existsByuserId(userId);
     }
-    
+
 	/**
 	 * 회원가입
 	 * */
     @Override
     public void signup(User user) {
-    	// 프로필 이미지 랜덤 지정
-    	List<String> myList = Arrays.asList("Junseo", "Seongwhan", "Sunyeong", "Eunhyo", "Jieun");
+		// 프로필 이미지 랜덤 지정
+		List<String> myList = Arrays.asList("Junseo", "Seongwhan", "Sunyeong", "Eunhyo", "Jieun");
 
         Random random = new Random();
         int randomIndex = random.nextInt(myList.size());
         
         user.setProfileImage(myList.get(randomIndex));
-    	userRep.save(user);
+		userRep.save(user);
     }
-    
-    
+
+
 	/**
 	 * 유저DTO 생성
 	 * */
     @Override 
     public UserDTO selectUser(String userId) {
-    	User user = userRep.findById(userId).orElse(null);
+		User user = userRep.findById(userId).orElse(null);
 		List<Tier> list = tierRep.findAll(); //Tier의 정보를 가져온다
 		System.out.println(list);
 		Integer point = user.getPoint(); //사용자의 현재 포인트
@@ -106,32 +108,34 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint(),user.getProfileImage(), tier);
-    	return dto;
+		return dto;
     }
-    
+
 	/**
 	 * 유저 포인트 증가
 	 * */
     @Override
     public void addUserPoint(String userId, Integer point){
-    	User user = userRep.findByUserId(userId);
-    	user.setPoint(user.getPoint()+point);
-    	System.out.println(user);
-    	userRep.save(user);
+		User user = userRep.findByUserId(userId);
+		user.setPoint(user.getPoint()+point);
+		System.out.println(user);
+		userRep.save(user);
     }
-    
-    
+
+
 	/**
 	 * 비밀번호 체크
 	 * */
     @Override
     @Transactional
 	public boolean checkPassword(String userId, String pw) {
-    	User user = userRep.findByUserId(userId);
-    	if (!user.getUserPw().equals(pw)) {
-    		return false;
-    	}
-    	return true;
+		User user = userRep.findByUserId(userId);
+		pw = hashSHA256(pw);
+		System.out.println(pw);
+		if (!user.getUserPw().equals(pw)) {
+			return false;
+		}
+		return true;
     }
 
 	/**
@@ -139,8 +143,9 @@ public class UserServiceImpl implements UserService {
 	 * */
     @Override
     public void ChangePw(String userId, String pw) {
-    	User user = userRep.findByUserId(userId);
-    	user.setUserPw(pw);
+		User user = userRep.findByUserId(userId);
+		pw = hashSHA256(pw);
+		user.setUserPw(pw);
     }
 
 	/**
@@ -160,5 +165,9 @@ public class UserServiceImpl implements UserService {
 	public Integer selectPoint(String userId){
 		User user = userRep.findByUserId(userId);
 		return user.getPoint();
+	}
+
+	public static String hashSHA256(String input) {
+		return DigestUtils.sha256Hex(input);
 	}
 }
