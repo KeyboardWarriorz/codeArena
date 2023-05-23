@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
+import api from "../interceptor";
 
 export default function BoardRegist() {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export default function BoardRegist() {
   console.log(data);
 
   function submit() {
-    axios
+    api
       .post("http://localhost:8080/board/insert", data)
       .then((res) => {
         if (res.status === 200) {

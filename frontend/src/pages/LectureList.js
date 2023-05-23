@@ -57,7 +57,7 @@ export default function LectureList() {
   const [selected, setSelected] = useState("JAVA");
   const [id, setId] = useState(1);
   const [lectures, setLectures] = useState([]);
-  console.log(lectures);
+  // console.log(lectures);
 
   function setCategory(e) {
     setId(categories.indexOf(e.target.innerText) + 1);

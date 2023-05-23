@@ -4,6 +4,160 @@ import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import api from "../interceptor";
 
+export default function ProblemList() {
+  const navigate = useNavigate();
+
+  const categories = [
+    "ALL",
+    "JAVA",
+    "JSP&Servlet",
+    "Spring",
+    "DataBase",
+    "JavaScript",
+    "HTML/CSS",
+  ];
+
+  const typeArr = ["객관식", "O / X"];
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(1);
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [problems, setProblems] = useState([]);
+
+  const [selected, setSelected] = useState("ALL");
+
+  function setCategory(e) {
+    setPage(1);
+    setSelected(e.target.innerText);
+    setProblems([...problems]);
+  }
+
+  function changePage(e) {
+    setPage(e.selected + 1);
+  }
+
+  useEffect(() => {
+    api
+      .get(
+        `http://localhost:8080/ProblemSet/${userId}?page=${page}&size=10&category_id=${categories.indexOf(
+          selected
+        )}`
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setTotal(res.data.data.totalProblem);
+          setProblems(res.data.data.Problem);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, [page, selected]);
+
+  return (
+    <Div>
+      <h3> 📝 분야별 문제 풀이</h3>
+      <Select>
+        {categories.map((c) => {
+          if (selected === c) {
+            return (
+              <div key={c} className="line" id="selected" onClick={setCategory}>
+                <span>{c}</span>
+                <span>|</span>
+              </div>
+            );
+          } else {
+            return (
+              <div key={c} className="line" onClick={setCategory}>
+                <span>{c}</span>
+                <span>|</span>
+              </div>
+            );
+          }
+        })}
+      </Select>
+      <Problems>
+        <Problem id="name">
+          <span>상태</span>
+          <span>분야</span>
+          <span>제목</span>
+          <span>문제 유형</span>
+        </Problem>
+        <div id="hr"></div>
+      </Problems>
+      <Problems>
+        {problems.map((p, idx) => {
+          return (
+            <div
+              key={idx}
+              onClick={() => {
+                navigate(`/problem/${p.problemId}`);
+              }}
+            >
+              <Problem>
+                {p.check === 1 ? (
+                  <span className="material-icons" style={{ color: "green" }}>
+                    check_circle_outline
+                  </span>
+                ) : (
+                  ""
+                )}
+                {p.check === 2 ? (
+                  <span className="material-icons" style={{ color: "red" }}>
+                    highlight_off
+                  </span>
+                ) : (
+                  ""
+                )}
+                {p.check === 0 ? (
+                  <span className="material-icons" style={{ color: "white" }}>
+                    highlight_off
+                  </span>
+                ) : (
+                  ""
+                )}
+                <span>{p.subcategory.category.categoryName}</span>
+                <span>{p.title}</span>
+                <span>{typeArr[`${p.problem_type}`]}</span>
+              </Problem>
+              <div id="hr"></div>
+            </div>
+          );
+        })}
+      </Problems>
+
+      {page === 1 ? (
+        <Paginate
+          pageCount={Math.ceil(total / 10)}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={0}
+          breakLabel={""}
+          previousLabel={"<"}
+          nextLabel={">"}
+          forcePage={0}
+          onPageChange={changePage}
+          containerClassName={"pagination-ul"}
+          activeClassName={"currentPage"}
+          previousClassName={"pageLabel-btn"}
+          nextClassName={"pageLabel-btn"}
+        />
+      ) : (
+        <Paginate
+          pageCount={Math.ceil(total / 10)}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={0}
+          breakLabel={""}
+          previousLabel={"<"}
+          nextLabel={">"}
+          onPageChange={changePage}
+          containerClassName={"pagination-ul"}
+          activeClassName={"currentPage"}
+          previousClassName={"pageLabel-btn"}
+          nextClassName={"pageLabel-btn"}
+        />
+      )}
+    </Div>
+  );
+}
+
 const Div = styled.div`
   cursor: default;
   text-align: left;
@@ -125,157 +279,3 @@ const Paginate = styled(ReactPaginate)`
     width: 150px;
   }
 `;
-
-export default function ProblemList() {
-  const navigate = useNavigate();
-
-  const categories = [
-    "ALL",
-    "JAVA",
-    "JSP&Servlet",
-    "Spring",
-    "DataBase",
-    "JavaScript",
-    "HTML/CSS",
-  ];
-
-  const typeArr = ["객관식", "O / X"];
-  const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(1);
-  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [problems, setProblems] = useState([]);
-
-  const [selected, setSelected] = useState("ALL");
-
-  function setCategory(e) {
-    setPage(1);
-    setSelected(e.target.innerText);
-    setProblems([...problems]);
-  }
-
-  function changePage(e) {
-    setPage(e.selected + 1);
-  }
-
-  useEffect(() => {
-    api
-      .get(
-        `http://localhost:8080/ProblemSet/${userId}?page=${page}&size=10&category_id=${categories.indexOf(
-          selected
-        )}`
-      )
-      .then((res) => {
-        console.log(res.data);
-        if (res.status === 200) {
-          setTotal(res.data.data.totalProblem);
-          setProblems(res.data.data.Problem);
-        }
-      })
-      .catch((e) => console.log(e));
-  }, [page, selected]);
-
-  return (
-    <Div>
-      <h3> 📝 분야별 문제 풀이</h3>
-      <Select>
-        {categories.map((c) => {
-          if (selected === c) {
-            return (
-              <div key={c} className="line" id="selected" onClick={setCategory}>
-                <span>{c}</span>
-                <span>|</span>
-              </div>
-            );
-          } else {
-            return (
-              <div key={c} className="line" onClick={setCategory}>
-                <span>{c}</span>
-                <span>|</span>
-              </div>
-            );
-          }
-        })}
-      </Select>
-      <Problems>
-        <Problem id="name">
-          <span>상태</span>
-          <span>분야</span>
-          <span>제목</span>
-          <span>문제 유형</span>
-        </Problem>
-        <div id="hr"></div>
-      </Problems>
-      <Problems>
-        {problems.map((p, idx) => {
-          return (
-            <div
-              key={idx}
-              onClick={() => {
-                navigate(`/problem/${p.problemId}`);
-              }}
-            >
-              <Problem>
-                {p.check === 1 ? (
-                  <span className="material-icons" style={{ color: "green" }}>
-                    check_circle_outline
-                  </span>
-                ) : (
-                  ""
-                )}
-                {p.check === 2 ? (
-                  <span className="material-icons" style={{ color: "red" }}>
-                    highlight_off
-                  </span>
-                ) : (
-                  ""
-                )}
-                {p.check === 0 ? (
-                  <span className="material-icons" style={{ color: "white" }}>
-                    highlight_off
-                  </span>
-                ) : (
-                  ""
-                )}
-                <span>{p.subcategory.category.categoryName}</span>
-                <span>{p.title}</span>
-                <span>{typeArr[`${p.problem_type}`]}</span>
-              </Problem>
-              <div id="hr"></div>
-            </div>
-          );
-        })}
-      </Problems>
-
-      {page === 1 ? (
-        <Paginate
-          pageCount={Math.ceil(total / 10)}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={0}
-          breakLabel={""}
-          previousLabel={"<"}
-          nextLabel={">"}
-          forcePage={0}
-          onPageChange={changePage}
-          containerClassName={"pagination-ul"}
-          activeClassName={"currentPage"}
-          previousClassName={"pageLabel-btn"}
-          nextClassName={"pageLabel-btn"}
-        />
-      ) : (
-        <Paginate
-          pageCount={Math.ceil(total / 10)}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={0}
-          breakLabel={""}
-          previousLabel={"<"}
-          nextLabel={">"}
-          onPageChange={changePage}
-          containerClassName={"pagination-ul"}
-          activeClassName={"currentPage"}
-          previousClassName={"pageLabel-btn"}
-          nextClassName={"pageLabel-btn"}
-        />
-      )}
-    </Div>
-  );
-}

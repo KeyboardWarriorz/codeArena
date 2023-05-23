@@ -196,7 +196,7 @@ export default function Board() {
           setTotal(res.data.data.totalArticle);
         }
       })
-      .catch((e) => window.alert(e));
+      .catch((e) => console.log(""));
   }, [curr]);
 
   console.log(articles);

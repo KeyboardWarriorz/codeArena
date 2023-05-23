@@ -20,12 +20,12 @@ export default function LectureItem() {
       .get(lecturePath)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
+          // console.log(res.data);
           setData(res.data);
         }
       })
-      .catch((e) => console.log(e));
-  });
+      .catch((e) => console.log(""));
+  }, []);
 
   // 모달 온오프
   const [showModal, setShowModal] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import api from "../interceptor";
+import axios from "axios";
 import WordCard from "../components/organisms/WordCard";
 
 // import Jieun from "../assets/images/Jieun.svg";
@@ -49,11 +49,12 @@ export default function MyPage() {
   useEffect(() => {
     setProfile(window.localStorage.getItem("profileImage"));
 
-    api
+    axios
       .get(`http://localhost:8080/user/mypage/${userId}`)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
+          // console.log(res.data);
+          console.log(res);
           setSolved(res.data.success_solved);
           setFailed(res.data.failed_solved);
           setWords(res.data.user_word);
@@ -61,7 +62,7 @@ export default function MyPage() {
           // 티어 정보도 주세요..
         }
       })
-      .catch((e) => window.alert(e.response.data));
+      .catch((e) => window.alert(e));
   }, []);
 
   return (

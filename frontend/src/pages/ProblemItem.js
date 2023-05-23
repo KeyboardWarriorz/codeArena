@@ -3,6 +3,132 @@ import api from "../interceptor";
 import styled from "styled-components";
 import MiniTag from "../components/buttons/MiniTag";
 import LargeButton from "../components/buttons/LargeButton";
+import resultState from "../recoil/result.ts";
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+
+export default function ProblemItem() {
+  const navigate = useNavigate();
+  /*
+     문제 제출하고 201이 오면 
+     맞는지 틀린지 정답인덱스와 비교해서 각각의 페이지로 이동
+  */
+
+  const typeArr = ["객관식", "O / X"];
+  const [selected, setSelected] = useState(0);
+  const problemId = window.location.pathname;
+  const [problem, setProblem] = useState([]);
+  const [category, setCategory] = useState("");
+
+  const [result, setResult] = useRecoilState(resultState);
+  console.log("result", result);
+
+  const [right, setRight] = useState(2);
+
+  function setAnswer(n) {
+    setSelected(n);
+  }
+
+  console.log(selected);
+  useEffect(() => {
+    api
+      .get(`http://localhost:8080${problemId}`)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res.data);
+          setProblem(res.data);
+          setCategory(res.data.subcategory.category.categoryName);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  // 1. 사용자가 선택한 답과 answerIndex 비교
+  useEffect(() => {
+    if (selected === problem.answerIndex) {
+      setRight(1);
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    setResult({ success: right, problem_id: problem.problemId });
+  }, [right]);
+
+  // 2. 정답 결과에 따라 result 페이지 다르게 호출
+  function onSubmit() {
+    setResult({ success: right, problem_id: problem.problemId });
+    navigate(`/problem/result/${problem.problemId}`);
+  }
+
+  return (
+    <Div>
+      <Tags>
+        <MiniTag text={category} />
+        <MiniTag text={typeArr[problem.problem_type]} green="true" />
+      </Tags>
+      <Box>
+        <span>Q.</span>
+        <span>{problem.question}</span>
+      </Box>
+      {problem.problem_type === 1 ? (
+        <TFQ>
+          <div
+            className={selected === 1 ? "O" : "none"}
+            onClick={() => {
+              setAnswer(1);
+            }}
+          >
+            O
+          </div>
+          <div id="s">/</div>
+          <div
+            className={selected === 2 ? "X" : "none"}
+            onClick={() => {
+              setAnswer(2);
+            }}
+          >
+            X
+          </div>
+        </TFQ>
+      ) : (
+        <MCQ>
+          <Option
+            onClick={() => {
+              setAnswer(1);
+            }}
+          >
+            1. {problem.answer1}
+          </Option>
+          <Option
+            onClick={() => {
+              setAnswer(2);
+            }}
+          >
+            2. {problem.answer2}
+          </Option>
+          <Option
+            onClick={() => {
+              setAnswer(3);
+            }}
+          >
+            3. {problem.answer3}
+          </Option>
+          <Option
+            onClick={() => {
+              setAnswer(4);
+            }}
+          >
+            4. {problem.answer4}
+          </Option>
+        </MCQ>
+      )}
+
+      <div onClick={onSubmit}>
+        <LargeButton text="제출하기" />
+      </div>
+    </Div>
+  );
+}
 
 const Div = styled.div`
   cursor: default;
@@ -103,102 +229,3 @@ const TFQ = styled.div`
     height: 100%;
   }
 `;
-
-export default function ProblemItem() {
-  /*
-     문제 제출하고 201이 오면 
-     맞는지 틀린지 정답인덱스와 비교해서 각각의 페이지로 이동
-  */
-
-  const typeArr = ["객관식", "O / X"];
-  const [selected, setSelected] = useState(0);
-  const problemId = window.location.pathname;
-  const [problem, setProblem] = useState([]);
-  const [category, setCategory] = useState("");
-
-  function setAnswer(n) {
-    setSelected(n);
-  }
-
-  useEffect(() => {
-    api
-      .get(`http://localhost:8080${problemId}`)
-      .then((res) => {
-        if (res.status === 200) {
-          console.log(res);
-          setProblem(res.data);
-          setCategory(res.data.subcategory.category.categoryName);
-        }
-      })
-      .catch((e) => console.log(e));
-  }, []);
-
-  return (
-    <Div>
-      <Tags>
-        <MiniTag text={category} />
-        <MiniTag text={typeArr[problem.problem_type]} green="true" />
-      </Tags>
-      <Box>
-        <span>Q.</span>
-        <span>{problem.question}</span>
-      </Box>
-      {problem.problem_type === 0 ? (
-        <MCQ>
-          <Option
-            onClick={() => {
-              setAnswer(1);
-            }}
-          >
-            1. {problem.answer1}
-          </Option>
-          <Option
-            onClick={() => {
-              setAnswer(2);
-            }}
-          >
-            2. {problem.answer2}
-          </Option>
-          <Option
-            onClick={() => {
-              setAnswer(3);
-            }}
-          >
-            3. {problem.answer3}
-          </Option>
-          <Option
-            onClick={() => {
-              setAnswer(4);
-            }}
-          >
-            4. {problem.answer4}
-          </Option>
-        </MCQ>
-      ) : (
-        <TFQ>
-          <div
-            className={selected === 1 ? "O" : "none"}
-            onClick={() => {
-              setAnswer(1);
-            }}
-          >
-            O
-          </div>
-          <div id="s">/</div>
-          <div
-            className={selected === 2 ? "X" : "none"}
-            onClick={() => {
-              setAnswer(2);
-            }}
-          >
-            X
-          </div>
-        </TFQ>
-      )}
-
-      <div>
-        <LargeButton text="제출하기" />
-      </div>
-    </Div>
-  );
-}
