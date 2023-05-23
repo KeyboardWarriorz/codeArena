@@ -36,7 +36,7 @@ public interface SubCategoryService {
      * SubCategory의 Category_Id
      * */
     Long selectSubcategoryNum(Long subcategoryId);
-    
+
     /**
      * 강의가 있는지 없는지 확인
      * */
