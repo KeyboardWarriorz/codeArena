@@ -33,6 +33,11 @@ export default function LectureItem() {
     setShowModal(!showModal);
   }
 
+  function handleSelect(event) {
+    const selectedText = window.getSelection().toString();
+    console.log("Selected text:", selectedText);
+  }
+
   return (
     <Div>
       <Title>
@@ -57,7 +62,11 @@ export default function LectureItem() {
         </div>
       </Title>
       <div id="hr" />
-      <Content dangerouslySetInnerHTML={{ __html: data.content }} />
+
+      <Content
+        onMouseUp={handleSelect}
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      />
 
       {showModal && <GPTModal clickModal={clickModal} />}
     </Div>
