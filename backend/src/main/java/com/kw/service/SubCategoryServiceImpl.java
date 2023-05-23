@@ -109,7 +109,7 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     	Long categoryId = subCategory.getCategory().getCategoryId();
     	return categoryId;
     }
-    
+
     /**
      * 강의가 있는지 없는지 확인
      * */
