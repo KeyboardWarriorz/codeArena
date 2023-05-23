@@ -158,7 +158,7 @@ public class UserController {
 	/**
 	 * 프로필 변경
 	 * */
-	@GetMapping("/profile")
+	@PostMapping("/profile")
 	public ResponseEntity<?> ChangeProfile(@RequestBody Map<String, String> request){
 		String profileImage = request.get("profileImage");
 		String userId = request.get("user_id");
@@ -169,6 +169,5 @@ public class UserController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body("프로필 변경 성공");
 	}
-
 
 }
