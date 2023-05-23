@@ -42,7 +42,7 @@ export default function ProblemDesc() {
       {problem.answerIndex === 2 && <Option>2. {problem.answer2}</Option>}
       {problem.answerIndex === 3 && <Option>3. {problem.answer3}</Option>}
       {problem.answerIndex === 4 && <Option>4. {problem.answer4}</Option>}
-      <div id="desc">{problem.description}</div>
+      <div id="desc">{problem.solution}</div>
       <div
         onClick={() => {
           navigate("/problem");
