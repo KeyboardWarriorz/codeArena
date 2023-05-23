@@ -21,7 +21,6 @@ public class CommentDTO {
 		this.nickName = comment.getUser().getNickname();
 		this.profile_image = comment.getUser().getProfileImage();
 		this.user_id = comment.getUser().getUserId();
-
 	}
 	
 

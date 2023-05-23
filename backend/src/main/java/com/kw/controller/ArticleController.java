@@ -36,17 +36,13 @@ public class ArticleController {
 		List<ArticleListDTO> articleList = articleService.selectArticle(pageable,boardId );
 		Long articleCnt = articleService.totalArticleCount(boardId);
 				
-		if(articleList.size() == 0) {	
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시판 글 리스트 조회 실패");
-		}
-		else {
-			response.put("statusCode", 200);
-			response.put("message", "게시판 글 리스트 조회 성공" );
-			Map<String, Object> data = new HashMap<>();
-	        data.put("articleList", articleList);
-	        data.put("totalArticle", articleCnt);
-	        response.put("data", data);
-		}
+		response.put("statusCode", 200);
+		response.put("message", "게시판 글 리스트 조회 성공");
+		Map<String, Object> data = new HashMap<>();
+		data.put("articleList", articleList);
+		data.put("totalArticle", articleCnt);
+		response.put("data", data);
+
 		return ResponseEntity.ok(response);
 	}
 	
@@ -114,18 +110,14 @@ public class ArticleController {
 		List<ArticleListDTO> articleList = articleService.searchArticle(keyword, pageable);
 		Long articleCnt = articleService.searchArticleCnt(keyword);
 		
-		if(articleList.size() == 0) {	
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 검색 실패");
-		}
-		else {
-			response.put("statusCode", 200);
-			response.put("message", "게시글 검색 성공" );
-			Map<String, Object> data = new HashMap<>();
-	        data.put("articleList", articleList);
-	        data.put("totalArticle", articleCnt);
-	        response.put("data", data);
-	        
-		}
+
+		response.put("statusCode", 200);
+		response.put("message", "게시글 검색 성공" );
+		Map<String, Object> data = new HashMap<>();
+		data.put("articleList", articleList);
+		data.put("totalArticle", articleCnt);
+		response.put("data", data);
+
 		return ResponseEntity.ok(response);
 	}
 	
