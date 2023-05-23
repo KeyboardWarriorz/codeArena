@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.kw.dto.ProblemDTO;
-import com.kw.entity.Problem;
 
 public interface ProblemService {
 	public List<ProblemDTO> select_pro_All(String userId, Pageable pageable);
@@ -21,4 +20,6 @@ public interface ProblemService {
 	public Integer count_Pro();
 	
 	public Integer count_Pro_cate(Long category);
+
+	Long getProblemId(Long subcategoryId);
 }
