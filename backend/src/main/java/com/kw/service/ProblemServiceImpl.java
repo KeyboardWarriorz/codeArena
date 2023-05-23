@@ -46,10 +46,10 @@ public class ProblemServiceImpl implements ProblemService {
 	public List<ProblemDTO> select_pro_All(String userId, Pageable pageable) {
 
 		Page<Problem> pro_lst = proRep.findPageAll(pageable);
-		int check = 0;
 		List<ProblemDTO> lst = new ArrayList<ProblemDTO>();
 
 		for (Problem p : pro_lst) {
+			int check = 0;
 			int problem_type = 0;
 			// OX 문제일 경우
 			if (p.getAnswer3() == null) {
