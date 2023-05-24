@@ -93,7 +93,9 @@ export default function ArticleCard(props) {
         navigate(`/board/detail/${props.articleId}`);
       }}
     >
-      <Title>{props.title}</Title>
+      <Title>
+        [{props.board}]&nbsp;{props.title}
+      </Title>
       <Content>{props.content}</Content>
       <Info>
         <Profile>

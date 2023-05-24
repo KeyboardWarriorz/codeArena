@@ -5,12 +5,185 @@ import api from "../interceptor";
 
 import ReactPaginate from "react-paginate";
 
-import Jieun from "../assets/images/Jieun.svg";
-import Seongwhan from "../assets/images/Seongwhan.svg";
-import Eunhyo from "../assets/images/Eunhyo.svg";
-import Junseo from "../assets/images/Junseo.svg";
-import Sunyeong from "../assets/images/Sunyeong.svg";
 import { useNavigate } from "react-router-dom";
+
+export default function Board() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(page);
+  });
+  const boards = ["", "자유게시판", "질문게시판", "오류 제보"];
+
+  const [curId, setCurId] = useState(1);
+  const [curr, setCurr] = useState("자유게시판");
+  const [total, setTotal] = useState(1);
+
+  const [page, setPage] = useState(1);
+  const [articles, setArticles] = useState([]);
+
+  function categoryChange(c) {
+    setCurr(c);
+  }
+
+  function changePage(e) {
+    setPage(e.selected + 1);
+  }
+
+  function truncate(str, n) {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  }
+
+  useEffect(() => {
+    api
+      .get(
+        `http://localhost:8080/board/boardList/${boards.indexOf(
+          curr
+        )}?page=${page}&size=6`
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          setIsSearching(false);
+          console.log(res);
+          setArticles(res.data.data.articleList);
+          setTotal(res.data.data.totalArticle);
+        }
+      })
+      .catch((e) => console.log(""));
+  }, [curr]);
+
+  const [searchText, setSearchText] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
+  function changeText(e) {
+    setSearchText(e.target.value);
+  }
+
+  function search() {
+    console.log(`/board/search?keyword=${searchText}`);
+    api
+      .get(`/board/search?keyword=${searchText}`)
+      .then((res) => {
+        setIsSearching(true);
+        setArticles(res.data.data.articleList);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      search();
+    }
+  };
+
+  console.log(articles);
+  return (
+    <Div>
+      <Sidebar>
+        <h3>😍 커뮤니티</h3>
+        <div>
+          {boards.map((b, idx) => {
+            if (b === curr) {
+              return (
+                <div
+                  id="curr"
+                  key={idx}
+                  onClick={() => {
+                    categoryChange(b);
+                  }}
+                >
+                  {b}
+                </div>
+              );
+            } else {
+              return (
+                <div
+                  id="category"
+                  key={idx}
+                  onClick={() => {
+                    categoryChange(b);
+                  }}
+                >
+                  {b}
+                </div>
+              );
+            }
+          })}
+        </div>
+      </Sidebar>
+      <Contents>
+        <SearchBar>
+          <Input
+            onChange={changeText}
+            type="text"
+            placeholder="검색어를 입력해 주세요"
+            onKeyPress={handleKeyPress}
+          />
+          <span
+            className="material-symbols-outlined"
+            style={{ color: "#00000080", cursor: "pointer" }}
+            onClick={search}
+          >
+            search
+          </span>
+          <button
+            onClick={() => {
+              navigate("/board/regist");
+            }}
+          >
+            작성하기
+          </button>
+        </SearchBar>
+
+        {articles.length > 0 ? (
+          <>
+            {isSearching && <div id="info">😎&nbsp;검색 결과</div>}
+            <Cards>
+              {articles.map((a, idx) => {
+                return (
+                  <div key={idx}>
+                    <ArticleCard
+                      articleId={a.articleId}
+                      title={truncate(a.title, 10)}
+                      content={truncate(a.content, 50)}
+                      nickname={a.nickname}
+                      cnt={a.totalComment}
+                      profile={a.profile_image}
+                      board={a.boardName.slice(0, 2)}
+                    />
+                  </div>
+                );
+              })}
+            </Cards>
+            <Paginate
+              pageCount={Math.ceil(total / 10)}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={0}
+              breakLabel={""}
+              previousLabel={"<"}
+              nextLabel={">"}
+              onPageChange={changePage}
+              containerClassName={"pagination-ul"}
+              activeClassName={"currentPage"}
+              previousClassName={"pageLabel-btn"}
+              nextClassName={"pageLabel-btn"}
+            />
+          </>
+        ) : (
+          <>
+            {isSearching ? (
+              <div id="none">검색 결과에 해당하는 게시물이 없어요! 😥</div>
+            ) : (
+              <div id="none">아직 등록된 게시물이 없어요! 😥</div>
+            )}
+          </>
+        )}
+      </Contents>
+    </Div>
+  );
+}
 
 const Div = styled.div`
   display: flex;
@@ -59,6 +232,14 @@ const Contents = styled.div`
   #none {
     margin-top: 50px;
     font-size: 1.5rem;
+  }
+
+  #info {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin: 20px 0 10px 10px;
+    font-size: 1.5rem;
+    // text-align: start;
   }
 `;
 
@@ -159,140 +340,3 @@ const Paginate = styled(ReactPaginate)`
     width: 150px;
   }
 `;
-
-export default function Board() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(page);
-  });
-  const boards = ["", "자유게시판", "질문게시판", "오류 제보"];
-
-  const [curId, setCurId] = useState(1);
-  const [curr, setCurr] = useState("자유게시판");
-  const [total, setTotal] = useState(1);
-
-  const [page, setPage] = useState(1);
-  const [articles, setArticles] = useState([]);
-
-  function categoryChange(c) {
-    setCurr(c);
-  }
-
-  function changePage(e) {
-    setPage(e.selected + 1);
-  }
-
-  function truncate(str, n) {
-    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
-  }
-
-  useEffect(() => {
-    api
-      .get(
-        `http://localhost:8080/board/boardList/${boards.indexOf(
-          curr
-        )}?page=${page}&size=6`
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          console.log(res);
-          setArticles(res.data.data.articleList);
-          setTotal(res.data.data.totalArticle);
-        }
-      })
-      .catch((e) => console.log(""));
-  }, [curr]);
-
-  console.log(articles);
-  return (
-    <Div>
-      <Sidebar>
-        <h3>😍 커뮤니티</h3>
-        <div>
-          {boards.map((b, idx) => {
-            if (b === curr) {
-              return (
-                <div
-                  id="curr"
-                  key={idx}
-                  onClick={() => {
-                    categoryChange(b);
-                  }}
-                >
-                  {b}
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  id="category"
-                  key={idx}
-                  onClick={() => {
-                    categoryChange(b);
-                  }}
-                >
-                  {b}
-                </div>
-              );
-            }
-          })}
-        </div>
-      </Sidebar>
-      <Contents>
-        <SearchBar>
-          <Input type="text" placeholder="검색어를 입력해 주세요" />
-          <span
-            className="material-symbols-outlined"
-            style={{ color: "#00000080" }}
-          >
-            search
-          </span>
-          <button
-            onClick={() => {
-              navigate("/board/regist");
-            }}
-          >
-            작성하기
-          </button>
-        </SearchBar>
-
-        {articles.length > 0 ? (
-          <>
-            <Cards>
-              {articles.map((a, idx) => {
-                return (
-                  <div key={idx}>
-                    <ArticleCard
-                      articleId={a.articleId}
-                      title={truncate(a.title, 10)}
-                      content={truncate(a.content, 50)}
-                      nickname={a.nickname}
-                      cnt={a.totalComment}
-                      profile={a.profile_image}
-                    />
-                  </div>
-                );
-              })}
-            </Cards>
-            <Paginate
-              pageCount={Math.ceil(total / 10)}
-              pageRangeDisplayed={5}
-              marginPagesDisplayed={0}
-              breakLabel={""}
-              previousLabel={"<"}
-              nextLabel={">"}
-              onPageChange={changePage}
-              containerClassName={"pagination-ul"}
-              activeClassName={"currentPage"}
-              previousClassName={"pageLabel-btn"}
-              nextClassName={"pageLabel-btn"}
-            />
-          </>
-        ) : (
-          <div id="none">아직 등록된 게시물이 없어요! 😥</div>
-        )}
-      </Contents>
-    </Div>
-  );
-}
