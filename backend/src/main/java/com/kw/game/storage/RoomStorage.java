@@ -25,17 +25,19 @@ public class RoomStorage {
     }
     public void addUserToRoom(String roomName, String userName) throws Exception{
         RoomDto room = rooms.get(roomName);
-        if (room.getUsers().size() >= room.getCapacity()) {
+        System.out.println("joining room isplaying is"+room.isPlaying());
+        if (room.isPlaying()||room.getUsers().size() >= room.getCapacity()) {
             throw new Exception("Room is full!");
         }
+        System.out.println("room isplay == true : " + (room.isPlaying()==true));
         rooms.get(roomName).getUsers().add(userName);
     }
 
-    public void addRoom(String roomName, GameScenarioDto gameScenarioDto) throws Exception {
+    public void addRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception {
         if (rooms.containsKey(roomName)) {
             throw new Exception("Room already exists with roomName: " + roomName);
         }
-        rooms.put(roomName,new RoomDto(roomName,1,new HashSet<>(),4, gameScenarioDto)); //수정되어야 함
+        rooms.put(roomName,new RoomDto(roomName,1,new HashSet<>(),userId,4, gameScenarioDto,false)); //수정되어야 함
         System.out.println("room "+roomName+" included");
     }
 

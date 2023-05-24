@@ -61,6 +61,9 @@ public class GameService {
             for (String win_user : winner) {
                 userService.addUserPoint(win_user, 100);
             }
+            roomStorage.getRoomByRoomName(roomName).setPlaying(false);
+            System.out.println("message sended");
+            simpMessagingTemplate.convertAndSend("/topic/room",result);
         }
         simpMessagingTemplate.convertAndSend("/topic/messages/" + roomName,result);
     }
