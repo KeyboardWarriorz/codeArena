@@ -442,6 +442,7 @@ export default function ProblemSolved() {
       .post(url + "/game/room", data)
       .then(function (data) {
         console.log(data);
+        navigate("/multiquiz/" + title);
       })
       .catch(function (jqXHR) {
         console.log(jqXHR);
