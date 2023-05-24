@@ -15,6 +15,33 @@ const Div = styled.div`
   > h3 {
     margin-top: 0;
   }
+
+  #none {
+    position: fixed;
+    top: 40%;
+    left: calc(50vw - 350px);
+    font-size: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button {
+    background-color: #006e61;
+    font-family: "NanumSquareNeo-Variable";
+    border: none;
+    color: white;
+    width: 150px;
+    height: 30px;
+    font-size: 1rem;
+    border-radius: 5px;
+    box-shadow: 4px 3px 3px #006e6130;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
 `;
 
 const Words = styled.div`
@@ -49,7 +76,7 @@ export default function WordList() {
       .post(`http://localhost:8080/word/delete`, data)
       .then((res) => {
         if (res.status === 201) {
-          navigate(`/user/word/${userId}`);
+          window.location.href = `/user/${userId}/word`;
         }
       })
       .catch((e) => console.log(e));
@@ -73,29 +100,51 @@ export default function WordList() {
   return (
     <Div>
       <h3>🗂️ {nickname}님의 단어장 </h3>
-      <Words>
-        {words.map((w, idx) => {
-          if (pageUser.includes(userId)) {
-            return (
-              <div
-                key={idx}
-                onClick={() => {
-                  setDeleteId(w.word.wordId);
-                }}
-              >
-                <WordCard
-                  user="true"
-                  name={w.word.name}
-                  content={w.word.description}
-                  modal={clickModal}
-                />
-              </div>
-            );
-          } else {
-            return <WordCard key={idx} name={w.name} content={w.desc} />;
-          }
-        })}
-      </Words>
+      {words.length > 0 ? (
+        <>
+          <Words>
+            {words.map((w, idx) => {
+              if (pageUser.includes(userId)) {
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      setDeleteId(w.word.wordId);
+                    }}
+                  >
+                    <WordCard
+                      user="true"
+                      name={w.word.name}
+                      content={w.word.description}
+                      modal={clickModal}
+                    />
+                  </div>
+                );
+              } else {
+                return <WordCard key={idx} name={w.name} content={w.desc} />;
+              }
+            })}
+          </Words>
+        </>
+      ) : (
+        <>
+          <div id="none">
+            <p>
+              아직 저장한 단어가 없어요! 😥 개념을 공부하고 궁금한 단어를
+              저장해보세요!
+            </p>
+
+            <button
+              onClick={() => {
+                navigate("/lecture");
+              }}
+            >
+              공부하러 가기 &nbsp;<span class="material-icons">ads_click</span>
+            </button>
+          </div>
+        </>
+      )}
+
       {showModal && <DeleteModal clickModal={clickModal} func={onDelete} />}
     </Div>
   );
