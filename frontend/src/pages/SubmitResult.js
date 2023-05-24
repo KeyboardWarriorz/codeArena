@@ -37,9 +37,18 @@ export default function SubmitResult() {
       .post(`http://localhost:8080/problemAnswer/${userId}`, result)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
-          if (result.success == 1) {
+          console.log(res.data.data);
+          if (result.success == 1 && res.data.data.result === false) {
             swal("정답입니다! 😎", "", "success");
+          } else if (result.success == 1 && res.data.data.result === true) {
+            // 처음 맞은 문제인 경우
+            window.localStorage.setItem("point", res.data.data.point);
+
+            swal(
+              `정답입니다! 😎`,
+              `점수 획득! 현재 점수:  ${res.data.data.point} (+10)`,
+              "success"
+            );
           } else if (result.success == 2) {
             swal("오답입니다 😥", "", "error", { buttonColor: "red" });
           }
