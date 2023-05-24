@@ -16,9 +16,14 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 
 import styled from "styled-components";
 
-import iu1 from "../assets/images/아이유1.jpg";
-import iu2 from "../assets/images/아이유2.jpg";
-import iu3 from "../assets/images/아이유3.jpg";
+// import iu1 from "../assets/images/아이유1.jpg";
+// import iu2 from "../assets/images/아이유2.jpg";
+// import iu3 from "../assets/images/아이유3.jpg";
+
+import banner1 from "../assets/images/banner1.png";
+import banner2 from "../assets/images/banner2.png";
+import banner3 from "../assets/images/banner3.png";
+import banner4 from "../assets/images/banner4.png";
 
 import an1 from "../assets/images/Jieun.svg";
 import an2 from "../assets/images/Seongwhan.svg";
@@ -27,8 +32,9 @@ import an4 from "../assets/images/Junseo.svg";
 import an5 from "../assets/images/Sunyeong.svg";
 
 const ImgBanner = styled.img`
-  width: 50%;
-  height: 50%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
   max-height: initial;
   overflow: hidden;
 `;
@@ -130,7 +136,7 @@ const SmallImg = styled.img`
 export default function Main() {
   const navigate = useNavigate();
 
-  const imagelist = [iu1, iu2, iu3];
+  const imagelist = [banner1, banner2, banner3, banner4];
 
   const imageCarousel = imagelist.map((image, idx) => {
     return (

@@ -283,10 +283,6 @@ export default function QuizRoom({ match }) {
   const problemId = window.location.pathname;
   const [problem, setProblem] = useState([]);
   // const [category, setCategory] = useState("");
-  const [content, setContent] = useState("");
-  function MsgChange(e) {
-    setContent(e.target.value);
-  }
 
   let roomName = useParams();
   // const [title, setTitle] = useState("123");
@@ -318,7 +314,6 @@ export default function QuizRoom({ match }) {
   const [isCorrect, SetIsCorrect] = useState("0");
   const [Chatting, setChatting] = useState([]);
   useEffect(() => {
-    console.log(roomName);
     axios
       .post(url + "/game/room/join", data)
       .then((res) => {
@@ -341,10 +336,12 @@ export default function QuizRoom({ match }) {
         "/topic/messages/" + roomName.room_id,
         function (response) {
           let data = JSON.parse(response.body);
-          console.log(data);
           if (data.type == "message") {
-            Chatting.push(data);
-            console.log(Chatting);
+            // 이전 리스트의 상태를 가져와 새로운 아이템을 추가한 새로운 배열 생성
+            const MsgData = [...Chatting, data];
+            // 리스트 상태 업데이트
+            setChatting((Chatting) => [...Chatting, data]);
+
             // render(data);
           } else if (data.type == "question") {
             timeoutId = setTimeout(sendAnswer, 10000, isCorrect);
@@ -427,6 +424,10 @@ export default function QuizRoom({ match }) {
     message: "",
     type: "message",
   });
+  const [content, setContent] = useState("");
+  function MsgChange(e) {
+    setContent(e.target.value);
+  }
 
   useEffect(() => {
     setMsg({
@@ -436,13 +437,20 @@ export default function QuizRoom({ match }) {
     });
   }, [content]);
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMsg();
+    }
+  };
+
   function sendMsg() {
-    console.log(stompUserClient);
+    // console.log(stompUserClient);
     stompUserClient.current.send(
       "/app/chat/" + roomName.room_id,
       {},
       JSON.stringify(Msg)
     );
+    setContent("");
   }
   function leaveRoom() {
     console.log(data);
@@ -594,15 +602,22 @@ export default function QuizRoom({ match }) {
                 <h1>Messages</h1>
                 <ul>
                   {Chatting.map((chat, idx) => {
-                    return <li key={idx}>chat</li>;
+                    return <li key={idx}>{chat.message}</li>;
                   })}
                 </ul>
               </div>
 
               <div>
                 <h1>Chat Box</h1>
-                <input placeholder="메세지를 입력하세요" onChange={MsgChange} />
-                <button onClick={sendMsg}>Send Message</button>
+                <input
+                  placeholder="메세지를 입력하세요"
+                  value={content}
+                  onChange={MsgChange}
+                  onKeyPress={handleKeyPress}
+                />
+                <button onClick={sendMsg} disabled={!content}>
+                  Send Message
+                </button>
               </div>
             </div>
           </ChatBox>
