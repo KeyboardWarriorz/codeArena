@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.kw.entity.Solved;
 import com.kw.service.UserService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -94,13 +93,12 @@ public class ProblemController {
 
 		try {
 			// 1. Solved DB에 userId와 problemId에 해당하는 튜플 존재하는 지 확인
-			Solved solved = solveservice.checkSolved(userId, problemId);
-
-			if (solved == null) { // 2-1. 없으면 solved DB에 생성
+			boolean checkSolved = solveservice.checkSolved(userId, problemId);
+			if (!checkSolved) { // 2-1. 없으면 solved DB에 생성
 				solveservice.insertSolved(userId, problemId, success);
 				if (success == 1) result = true; //맞췄을 때
 			} else { // 2-2. 있으면 solved DB success 값 업데이트
-				result = solveservice.updateSuccess(solved, success);
+				result = solveservice.updateSuccess(userId, problemId, success);
 			}
 			// 3. Users DB에서 userId에 해당하는 포인트에 추가 포인트를 더함
 			if (result) {  // 포인트가 누적될 때

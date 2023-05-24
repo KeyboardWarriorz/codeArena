@@ -2,7 +2,6 @@ package com.kw.service;
 
 import java.util.List;
 
-import com.kw.entity.Solved;
 import org.springframework.data.domain.Pageable;
 
 import com.kw.dto.SolvedDTO;
@@ -18,9 +17,9 @@ public interface SolvedService {
 
 	public int countSolCate(String userId, String cateId, int success);
 
-	Solved checkSolved(String userId, Long problemId);
+	boolean checkSolved(String userId, Long problemId);
 
 	void insertSolved(String userId, Long problemId, Integer success);
 
-	boolean updateSuccess(Solved solved, Integer success);
+	boolean updateSuccess(String userId, Long problemId, Integer success);
 }
