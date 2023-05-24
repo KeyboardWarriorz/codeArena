@@ -196,7 +196,7 @@ public class ProblemServiceImpl implements ProblemService {
 		int randomIdx = random.nextInt(list.size());
 		//랜덤 인덱스에 해당하는 문제 번호 리턴
 		Long problemId = list.get(randomIdx).getProblemId();
-		if(problemId != null){
+		if(problemId == null){
 			return  null;
 		}
 		return problemId;
