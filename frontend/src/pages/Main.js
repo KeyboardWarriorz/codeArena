@@ -41,31 +41,40 @@ const ImgBanner = styled.img`
 
 const StyledSwiper = styled(Swiper)`
   .swiper-pagination-bullet {
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    font-size: 12px;
-    color: #000;
-    opacity: 1;
+    // width: 20px;
+    // height: 20px;
+    // text-align: center;
+    // line-height: 20px;
+    // font-size: 12px;
+    // color: red;
+    // opacity: 1;
     background: white;
-    -webkit-touch-callout: none;
-    user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-user-select: none;
+    // -webkit-touch-callout: none;
+    // user-select: none;
+    // -moz-user-select: none;
+    // -ms-user-select: none;
+    // -webkit-user-select: none;
   }
 
-  .swiper-pagination-bullet:hover {
-    background: #b1b2ff;
-  }
+  // .swiper-pagination-bullet:hover {
+  //   background: #b1b2ff;
+  // }
 
   .swiper-pagination-bullet-active {
-    color: #fff;
-    background: #7f5feb;
-    width: 50px;
-    height: 20px;
+    color: #fab809;
+    background: #fab809;
+
     border-radius: 10px;
+  }
+
+  .swiper-button-prev {
+    // background-color: #fab809;
+    color: #fab809;
+  }
+
+  .swiper-button-next {
+    // background-color: #fab809;
+    color: #fab809;
   }
 `;
 
