@@ -50,6 +50,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/*" element={<Notfound />} />
             <Route path="/user/:user_id/changepw" element={<ChangePW />} />
+            <Route path="/multiquiz/:room_id" element={<QuizRoom />} />
             <Route element={<MainLayout />}>
               <Route path="/user/:user_id" element={<Mypage />} />
 
@@ -81,7 +82,7 @@ function App() {
               <Route path="/user/:user_id/failed" element={<ProblemFailed />} />
 
               <Route path="/multiquiz" element={<MultiQuiz />} />
-              <Route path="/multiquiz/:room_id" element={<QuizRoom />} />
+              
             </Route>
           </Routes>
         </Router>
