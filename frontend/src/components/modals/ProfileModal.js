@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import GPT from "../../assets/images/GPT.png";
+import axios from "axios";
 
 import Jieun from "../../assets/images/Jieun.svg";
 import Seongwhan from "../../assets/images/Seongwhan.svg";
@@ -27,6 +25,24 @@ export default function GPTModal(props) {
   //     };
   //   }, []);
 
+  const [selected, setSelected] = useState(
+    window.localStorage.getItem("profileImage")
+  );
+  const userId = window.localStorage.getItem("userId");
+
+  function changeProflie() {
+    axios
+      .post("http://localhost:8080/user/profile", {
+        profileImage: selected,
+        user_id: userId,
+      })
+      .then((res) => {
+        window.localStorage.setItem("profileImage", selected);
+        window.location.href = `/user/${userId}`;
+      })
+      .catch((e) => console.log(""));
+  }
+
   return (
     <ModalBox onClick={props.clickModal}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
@@ -39,13 +55,43 @@ export default function GPTModal(props) {
         </div>
         <div id="hr" />
         <div id="images">
-          <img src={Jieun} />
-          <img src={Junseo} />
-          <img src={Seongwhan} />
-          <img src={Eunhyo} />
-          <img src={Sunyeong} />
+          <img
+            onClick={() => {
+              setSelected("Jieun");
+            }}
+            className={selected === "Jieun" ? "selected" : ""}
+            src={Jieun}
+          />
+          <img
+            onClick={() => {
+              setSelected("Junseo");
+            }}
+            className={selected === "Junseo" ? "selected" : ""}
+            src={Junseo}
+          />
+          <img
+            onClick={() => {
+              setSelected("Seongwhan");
+            }}
+            className={selected === "Seongwhan" ? "selected" : ""}
+            src={Seongwhan}
+          />
+          <img
+            onClick={() => {
+              setSelected("Eunhyo");
+            }}
+            className={selected === "Eunhyo" ? "selected" : ""}
+            src={Eunhyo}
+          />
+          <img
+            onClick={() => {
+              setSelected("Sunyeong");
+            }}
+            className={selected === "Sunyeong" ? "selected" : ""}
+            src={Sunyeong}
+          />
         </div>
-        <div id="submit">
+        <div id="submit" onClick={changeProflie}>
           <MiniButton text="선택하기" />
         </div>
       </ModalContent>
@@ -77,6 +123,11 @@ const ModalContent = styled.div`
   background-color: white;
   position: relative;
 
+  img.selected {
+    border-radius: 50%;
+    border: 5px solid pink;
+  }
+
   #submit {
     position: absolute;
     top: 88%;
@@ -86,13 +137,14 @@ const ModalContent = styled.div`
   #images {
     justify-content: space-between;
     margin-top: 50px;
-    width: 70%;
+    width: 80%;
   }
 
   img {
     width: 60px;
     height: 60px;
-    // margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   #close {
