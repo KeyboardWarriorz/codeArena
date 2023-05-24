@@ -69,10 +69,12 @@ public class WordController {
                 response.put("statusCode", 200);
                 response.put("message", "단어 조회 성공");
                 response.put("data", description); // 단어 전송
+                response.put("name", name);
             }
         } else { // 2-2. 이미 있다면 공용 Word DB에서 가져온 값을 가져온다.
             response.put("statusCode", 200);
             response.put("message", "단어 조회 성공");
+            response.put("name", name);
             response.put("data", word.getDescription()); // 단어 전송
         }
         return ResponseEntity.ok(response);
