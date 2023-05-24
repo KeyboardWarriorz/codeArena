@@ -137,10 +137,13 @@ public class SolvedServiceImpl implements SolvedService {
 	 * Solved DB에 userId와 problemId에 해당하는 튜플이 존재하는 지 확인
 	 * */
 	@Override
-	public Solved checkSolved(String userId, Long problemId){
-		return solRep.findByUserAndProblem(userId, problemId);
+	public boolean checkSolved(String userId, Long problemId){
+		Solved solved = solRep.findByUserAndProblem(userId, problemId);
+		if (solved == null) {
+			return false;
+		}
+		return true;
 	}
-
 	/**
 	 * Solved DB에 등록하기
 	 * */
@@ -156,7 +159,8 @@ public class SolvedServiceImpl implements SolvedService {
 	 * Success 값 업데이트
 	 * */
 	@Override
-	public boolean updateSuccess(Solved solved, Integer success){
+	public boolean updateSuccess(String userId, Long problemId, Integer success){
+		Solved solved = solRep.findByUserAndProblem(userId, problemId);
 		if(solved.getSuccess() == 2 && success == 1){ //getSuccess()가 fail일 때, 정답을 맞췄다면
 			solved.setSuccess(success); //값 변경
 			solRep.save(solved);
