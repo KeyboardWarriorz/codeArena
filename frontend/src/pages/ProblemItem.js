@@ -93,6 +93,7 @@ export default function ProblemItem() {
       ) : (
         <MCQ>
           <Option
+            className={selected === 1 ? "selected" : ""}
             onClick={() => {
               setAnswer(1);
             }}
@@ -100,6 +101,7 @@ export default function ProblemItem() {
             1. {problem.answer1}
           </Option>
           <Option
+            className={selected === 2 ? "selected" : ""}
             onClick={() => {
               setAnswer(2);
             }}
@@ -107,6 +109,7 @@ export default function ProblemItem() {
             2. {problem.answer2}
           </Option>
           <Option
+            className={selected === 3 ? "selected" : ""}
             onClick={() => {
               setAnswer(3);
             }}
@@ -114,6 +117,7 @@ export default function ProblemItem() {
             3. {problem.answer3}
           </Option>
           <Option
+            className={selected === 4 ? "selected" : ""}
             onClick={() => {
               setAnswer(4);
             }}
@@ -167,7 +171,11 @@ const Box = styled.div`
   }
 `;
 
-const MCQ = styled.div``;
+const MCQ = styled.div`
+  .selected {
+    background-color: #e9d6ed;
+  }
+`;
 
 const Option = styled.button`
   border: none;
