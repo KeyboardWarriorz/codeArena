@@ -99,6 +99,16 @@ public class SubCategoryServiceImpl implements SubCategoryService{
     	String subName = subCategory.getSubcategoryName();
     	return subName;
     }
+
+    /**
+     * SubCategory 아이다
+     * */
+    @Override
+    public Long selectSubcategoryId(Long subcategoryId) {
+        SubCategory subCategory = subCategoryRep.findBySubcategoryId(subcategoryId);
+        Long subId = subCategory.getSubcategoryId();
+        return subId;
+    }
     
     /**
      * SubCategory의 Category_Id

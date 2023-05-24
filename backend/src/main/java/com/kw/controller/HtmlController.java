@@ -32,10 +32,11 @@ public class HtmlController {
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("강의 조회 실패");
         }
         Resource resource = new ClassPathResource(subService.selectSubcategoryPath(subcategory_id));
+        Long sub_id = subService.selectSubcategoryId(subcategory_id);
         String sub_name = subService.selectSubcategoryName(subcategory_id);
         String category_name = subService.selectCategoryName(subService.selectSubcategoryNum(subcategory_id));
         String path = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-        LectureDTO dto = new LectureDTO(sub_name,category_name,path);
+        LectureDTO dto = new LectureDTO(sub_id, sub_name,category_name,path);
 
         return new ResponseEntity(dto, HttpStatus.OK);
     }
