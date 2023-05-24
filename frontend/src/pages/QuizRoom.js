@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import an1 from "../assets/images/Jieun.svg";
@@ -6,9 +6,11 @@ import an2 from "../assets/images/Seongwhan.svg";
 import an3 from "../assets/images/Eunhyo.svg";
 import an4 from "../assets/images/Junseo.svg";
 import an5 from "../assets/images/Sunyeong.svg";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import api from "../interceptor";
 import axios from "axios";
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 const RoomTitle = styled.div`
   display: flex;
@@ -262,11 +264,18 @@ const ExitBtn = styled.button`
 
 export default function QuizRoom({ match }) {
   const url = "http://localhost:8080";
-  let stompUserClient;
-  let selectedRoom;
-  let subscription = null;
+  const stompUserClient = useRef();
+  let subscription = useRef();
   let timeoutId = false;
   let description = "";
+
+  const [chatList, setChatList] = useState([]);
+  const [chat, setChat] = useState("");
+
+  const { apply_id } = useParams();
+  // const [stompUserClient, setStompUserClient] = useState();
+
+  const navigate = useNavigate();
 
   // const typeArr = ["객관식", "O / X"];
   const [selected, setSelected] = useState(0);
@@ -288,8 +297,23 @@ export default function QuizRoom({ match }) {
     user_id: userId,
   });
 
+  function startGame() {
+    axios
+      .post(url + "/game/start", { room_name: roomName.room_id })
+      .then(function (response) {
+        // 성공적으로 응답을 받았을 때 실행될 콜백 함수
+        console.log(response);
+      })
+      .catch(function (error) {
+        // 요청이 실패했을 때 실행될 콜백 함수
+        console.error(error);
+        alert("서버 요청에 실패하였습니다.");
+      });
+  }
+
+  const [isCorrect, SetIsCorrect] = useState("0");
+  const [Chatting, setChatting] = useState([]);
   useEffect(() => {
-    console.log(roomName);
     axios
       .post(url + "/game/room/join", data)
       .then((res) => {
@@ -298,11 +322,155 @@ export default function QuizRoom({ match }) {
         }
       })
       .catch((e) => console.log(e));
+
+    console.log("connecting to server...");
+    let socket = new SockJS(url + "/room");
+    stompUserClient.current = Stomp.over(socket);
+    // setStompUserClient(stompClient);
+    console.log(stompUserClient.current);
+    stompUserClient.current.connect({}, function (frame) {
+      console.log("connected to: " + frame);
+      sendBroadcast(" logined");
+
+      subscription.current = stompUserClient.current.subscribe(
+        "/topic/messages/" + roomName.room_id,
+        function (response) {
+          let data = JSON.parse(response.body);
+          if (data.type == "message") {
+            // 이전 리스트의 상태를 가져와 새로운 아이템을 추가한 새로운 배열 생성
+            const MsgData = [...Chatting, data];
+            // 리스트 상태 업데이트
+            setChatting((Chatting) => [...Chatting, data]);
+
+            // render(data);
+          } else if (data.type == "question") {
+            timeoutId = setTimeout(sendAnswer, 10000, isCorrect);
+          }
+          // else if (data.type == "end") {
+          //     showQuestion("winner is "+data.winner, data.userScore,"0")
+          //     $("#startGameBtn").show();
+
+          // }
+        }
+      );
+      sendBroadcast("message");
+    });
   }, []);
+
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location);
+    const handleBeforeUnload = () => {};
+
+    const handleUnload = () => {
+      console.log("페이지 새로고침 이벤트 발생");
+      leaveRoom();
+    };
+
+    const handlePageLeave = () => {
+      console.log("페이지 탈주 이벤트 발생");
+      leaveRoom();
+    };
+
+    // 페이지 이탈 및 새로고침 이벤트에 대한 리스너 등록
+    window.addEventListener("beforeunload", handlePageLeave);
+    window.addEventListener("unload", handleUnload);
+
+    // 이동 시 페이지 이탈 이벤트 리스너 제거
+    return () => {};
+  }, [location]);
+
+  function sendAnswer() {
+    if (isCorrect == "1") {
+      // $("#answerList").html("정답입니다\n\n"+description);
+    } else {
+      // $("#answerList").html("오답입니다\n\n"+description);
+    }
+    clearTimeout(timeoutId);
+    setTimeout(function () {
+      axios
+        .post(url + "/game/answer", {
+          room_name: roomName.room_id,
+          user_name: userId,
+          isCorrect: isCorrect,
+        })
+        .then(function (response) {
+          // 성공적으로 응답을 받았을 때 실행될 콜백 함수
+          console.log(response);
+        })
+        .catch(function (error) {
+          // 요청이 실패했을 때 실행될 콜백 함수
+          console.error(error);
+          alert("서버 요청에 실패하였습니다.");
+        });
+    }, 3000);
+  }
+
+  function sendBroadcast(message) {
+    let username = window.localStorage.getItem("userId");
+    stompUserClient.current.send(
+      "/app/room",
+      {},
+      JSON.stringify({
+        fromLogin: username,
+        message: message,
+        type: "broadcast",
+      })
+    );
+  }
+
+  const [Msg, setMsg] = useState({
+    fromLogin: window.localStorage.getItem("nickname"),
+    message: "",
+    type: "message",
+  });
+  const [content, setContent] = useState("");
+  function MsgChange(e) {
+    setContent(e.target.value);
+  }
+
+  useEffect(() => {
+    setMsg({
+      fromLogin: window.localStorage.getItem("nickname"),
+      message: content,
+      type: "message",
+    });
+  }, [content]);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMsg();
+    }
+  };
+
+  function sendMsg() {
+    // console.log(stompUserClient);
+    stompUserClient.current.send(
+      "/app/chat/" + roomName.room_id,
+      {},
+      JSON.stringify(Msg)
+    );
+    setContent("");
+  }
+  function leaveRoom() {
+    console.log(data);
+    sendBroadcast(" leaved the room");
+    subscription.current.unsubscribe();
+    axios
+      .post(url + "/game/room/leave", data)
+      .then(function (data) {
+        console.log(data);
+        navigate("/multiquiz/");
+      })
+      .catch(function (jqXHR) {
+        console.log(jqXHR);
+      });
+  }
 
   return (
     <div>
       <RoomTitle>
+        <button onClick={startGame}>startgame</button>
         <RoomData>
           <div>자바 고수 방</div>
           <div>|</div>
@@ -315,7 +483,7 @@ export default function QuizRoom({ match }) {
             <div>남은 문제 </div>
             <div>0개</div>
           </Remain>
-          <ExitBtn>나가기</ExitBtn>
+          <ExitBtn onClick={leaveRoom}>나가기</ExitBtn>
         </RoomData>
       </RoomTitle>
       <ContentBox>
@@ -429,9 +597,29 @@ export default function QuizRoom({ match }) {
             </UDB4>
           </UDBG>
           <ChatBox>
-            <div>채팅창</div>
-            <div>채팅 내용 박스</div>
-            <div>입력</div>
+            <div className="App">
+              <div>
+                <h1>Messages</h1>
+                <ul>
+                  {Chatting.map((chat, idx) => {
+                    return <li key={idx}>{chat.message}</li>;
+                  })}
+                </ul>
+              </div>
+
+              <div>
+                <h1>Chat Box</h1>
+                <input
+                  placeholder="메세지를 입력하세요"
+                  value={content}
+                  onChange={MsgChange}
+                  onKeyPress={handleKeyPress}
+                />
+                <button onClick={sendMsg} disabled={!content}>
+                  Send Message
+                </button>
+              </div>
+            </div>
           </ChatBox>
         </UserBox>
       </ContentBox>

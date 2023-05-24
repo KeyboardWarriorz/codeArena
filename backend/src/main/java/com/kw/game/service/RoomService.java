@@ -24,12 +24,15 @@ public class RoomService {
     private UserService userService;
     public Map<String, GameService> gameServiceMap=new HashMap<>();
     public void registerRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception{
-        roomStorage.addRoom(roomName, gameScenarioDto);
+        roomStorage.addRoom(roomName, userId,gameScenarioDto);
         roomStorage.getRoomByRoomName(roomName).users.add(userId);
         System.out.println("addRoom ended");
     }
     public void startGame(String roomName) {
-        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService));
+        System.out.println("game started");
+        roomStorage.getRoomByRoomName(roomName).setPlaying(true);
+        System.out.println(roomStorage.getRoomByRoomName(roomName).isPlaying());
+        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService, this.roomStorage));
     }
     public Map<String, Object> joinRoom(String roomName, String userId) throws Exception{
         Map<String, Object> dataMap = new HashMap<>();
@@ -47,6 +50,7 @@ public class RoomService {
         return roomStorage.getRooms();
     }
     public void leaveRoom(String roomName, String userId) throws Exception{
+        System.out.println("roomservice leaveRoom");
         RoomDto room = roomStorage.getRoomByRoomName(roomName);
         room.getUsers().remove(userId);
         if (room.getUsers().size() == 0) {

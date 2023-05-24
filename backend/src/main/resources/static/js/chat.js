@@ -8,7 +8,8 @@ function connectToRoom(roomName) {
     console.log("connecting to chat...")
     const userName = document.getElementById("userName").value;
     document.getElementById("roomName").value = roomName;
-    $.post(url+'/game/room/join', { "room_name": roomName, "user_id": userName,"prev_room":selectedRoom })
+    $.post(url+'/game/room/join',
+        { "room_name": roomName, "user_id": userName,"prev_room":selectedRoom })
         .done(function(response) {
             // 성공적으로 응답을 받았을 때 실행될 콜백 함수
             console.log(response);
@@ -152,7 +153,6 @@ function addRoom() {
     // })
     $.post(url + "/game/room", {
         "room_name": roomName,
-        "user_id": userName
     }).done(function (data) {
         console.log(data)
         selectRoom(roomName)

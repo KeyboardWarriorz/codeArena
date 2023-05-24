@@ -345,7 +345,7 @@ const Hr = styled.div`
   margin-top: 20px;
 `;
 
-export default function ProblemSolved() {
+export default function MultiQuiz() {
   const url = "http://localhost:8080";
   let stompUserClient;
   let selectedRoom;
@@ -353,6 +353,7 @@ export default function ProblemSolved() {
   let timeoutId = false;
   let description = "";
 
+  const [room, setRoom] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const clickModal = () => {
     setShowModal(!showModal);
@@ -408,6 +409,8 @@ export default function ProblemSolved() {
       .then((res) => {
         console.log(res.data);
         if (res.status === 200) {
+          console.log(res.data);
+          setRoom(res.data);
         }
       })
       .catch((e) => console.log(e));
@@ -464,7 +467,7 @@ export default function ProblemSolved() {
       });
     });
     fetchAll();
-  });
+  }, []);
 
   const [selected, setSelected] = useState("ALL");
 
@@ -514,206 +517,29 @@ export default function ProblemSolved() {
         <ProblemBox>
           <Problems>
             <Problem id="name">
-              <span>상태</span>
+              <span>번호</span>
               <span>분야</span>
               <span>제목</span>
-              <span>문제 유형</span>
+              <span>인원</span>
             </Problem>
             <div id="hr"></div>
           </Problems>
           <ProblemScroll id="style-2">
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>{" "}
-            <ProblemHover>
-              <div>qwdwqd</div>
-              <div>1</div>
-              <div>1</div>
-              <div>1</div>
-            </ProblemHover>
+            {room.map((r, idx) => {
+              return (
+                <ProblemHover
+                  key={idx}
+                  onClick={() => {
+                    navigate(`/multiquiz/${r.roomName}`);
+                  }}
+                >
+                  <div>{idx + 1}</div>
+                  <div>{r.category_id}</div>
+                  <div>{r.roomName}</div>
+                  <div>{r.users}</div>
+                </ProblemHover>
+              );
+            })}
           </ProblemScroll>
         </ProblemBox>
       </RoomDiv>

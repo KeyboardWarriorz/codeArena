@@ -36,10 +36,10 @@ public class RoomController {
         System.out.println(roomName+userId);
         GameScenarioDto gameScenarioDto;
         if (map.get("problem_category_id") == null) {
-        	System.out.println("if");
+            System.out.println("if");
             gameScenarioDto = new GameScenarioDto();
         } else {
-        	System.out.println("else");
+            System.out.println("else");
             Long problemCategoryId = Long.parseLong(map.get("problem_category_id"));
             Integer problem_cnt = Integer.parseInt(map.get("problem_cnt"));
             gameScenarioDto = new GameScenarioDto(problemCategoryId, 15, problem_cnt);
@@ -63,6 +63,8 @@ public class RoomController {
         try {
             dataMap = roomService.joinRoom(roomName, userId);
         } catch (Exception e) {
+            //방이 다 찼거나 게임이 플레이 중입니다.
+            System.out.println("방이 다 참 ");
             return ResponseEntity.badRequest().build();
         }
         return new ResponseEntity<>(dataMap, HttpStatus.OK);
@@ -75,9 +77,10 @@ public class RoomController {
     }
 
     @PostMapping("/game/room/leave")
-    public ResponseEntity<?> leaveRoom(HttpServletRequest request) {
-        String roomName = request.getParameter("room_name");
-        String userId = request.getParameter("user_id");
+    public ResponseEntity<?> leaveRoom(HttpServletRequest request,@RequestBody HashMap<String, String> map) {
+        System.out.printf("leave Room called");
+        String roomName = map.get("room_name");
+        String userId = map.get("user_id");
         try {
             roomService.leaveRoom(roomName, userId);
         } catch (Exception e) {

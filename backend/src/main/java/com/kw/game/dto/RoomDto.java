@@ -13,6 +13,8 @@ public class RoomDto {
     private String roomName;
     private Integer category_id;
     public Set<String> users;
+    public String master;
     private Integer capacity;
     private GameScenarioDto gameScenarioDto;
+    private boolean isPlaying;
 }
