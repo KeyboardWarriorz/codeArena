@@ -4,6 +4,7 @@ import styled from "styled-components";
 import DeleteModal from "../components/modals/DeleteModal";
 import WordCard from "../components/organisms/WordCard";
 import api from "../interceptor";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
@@ -40,6 +41,7 @@ export default function WordList() {
   const [words, setWords] = useState([]);
   const [deleteId, setDeleteId] = useState(0);
   const [data, setData] = useState({ user_id: userId, word_id: deleteId });
+  console.log(data);
 
   function onDelete() {
     console.log(data);
@@ -47,14 +49,14 @@ export default function WordList() {
       .post(`http://localhost:8080/word/delete`, data)
       .then((res) => {
         if (res.status === 201) {
-          navigate(`/user/${userId}`);
+          navigate(`/user/word/${userId}`);
         }
       })
       .catch((e) => console.log(e));
   }
 
   useEffect(() => {
-    api
+    axios
       .get(`http://localhost:8080/user/word/${userId}`)
       .then((res) => {
         if (res.status === 200) {
