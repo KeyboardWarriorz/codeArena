@@ -7,8 +7,11 @@ import GPTModal from "../components/modals/GPTModal";
 import Loader from "../components/Loader";
 import swal from "sweetalert";
 import GPT from "../assets/images/GPT.png";
+import LargeButton from "../components/buttons/LargeButton";
+import { useNavigate } from "react-router";
 
 export default function LectureItem() {
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
   const [data, setData] = useState([]);
   const userId = window.localStorage.getItem("userId");
@@ -26,6 +29,7 @@ export default function LectureItem() {
         if (res.status === 200) {
           // console.log(res.data);
           setData(res.data);
+          console.log(res.data);
         }
       })
       .catch((e) => console.log(""));
@@ -124,6 +128,22 @@ export default function LectureItem() {
       });
   }
 
+  function moveTo() {
+    console.log(`http://localhost:8080/problemRan/${data.subcategory_id}`);
+    api
+      .get(`http://localhost:8080/problemRan/${data.subcategory_id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          navigate(`/problem/${res.data.data}`);
+        }
+      })
+      .catch((e) => {
+        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error", {
+          buttonColor: "red",
+        });
+      });
+  }
+
   return (
     <Div>
       <Title>
@@ -185,6 +205,8 @@ export default function LectureItem() {
           </Tooltip>
         )}
       </div>
+      <Button onClick={moveTo}>관련 문제 풀어보기</Button>
+
       {loading && <Loader />}
       {showModal && <GPTModal clickModal={clickModal} />}
     </Div>
@@ -230,7 +252,6 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  // display: flex;
   flex-direction: row;
   background-color: #f8f8f8;
   border-radius: 5px;
@@ -238,7 +259,9 @@ const Content = styled.div`
   min-height: 90px;                                                                                                                                                                              0
   margin-bottom: 10px;
   padding: 10px;
+  overflow-y: scroll;
   line-height: 2.2rem;
+  height: calc(70vh - 60px);
 
   ::selection {
     background: #FFD360
@@ -300,5 +323,29 @@ const Tooltip = styled.div`
 
   #b2 {
     background-color: #aeaeae;
+  }
+`;
+
+const Button = styled.button`
+  color: white;
+  font-family: "NanumSquareNeo-Variable";
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: calc(100vw - 100px);
+  border: none;
+  background-color: #fab809;
+  border-radius: 5px;
+  box-shadow: 4px 3px 3px #fab809;                                                                                                                                                                           0
+  margin-bottom: 10px;
+  padding: 10px;
+  height: 60px;
+  cursor: pointer;
+
+  position: fixed;
+  left: 50px;
+  bottom: 20px;
+
+  &: hover {
+    background-color: #f8a70c;
   }
 `;
