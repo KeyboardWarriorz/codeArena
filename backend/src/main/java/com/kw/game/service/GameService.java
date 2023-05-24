@@ -1,4 +1,5 @@
 package com.kw.game.service;
+import com.kw.game.storage.RoomStorage;
 import com.kw.service.UserService;
 import com.kw.dto.ProblemDTO;
 import com.kw.game.dto.QuestionDto;
@@ -13,6 +14,7 @@ import java.util.*;
 public class GameService {
     private ProblemService problemService;
     private UserService userService;
+    private RoomStorage roomStorage;
     private SimpMessagingTemplate simpMessagingTemplate;
     private GameScenarioDto gameScenarioDto;
     private Map<String, Integer> user_score = new HashMap<>();
@@ -21,12 +23,13 @@ public class GameService {
     private Integer question_cnt = 0;
     private String roomName;
     private Integer user_cnt=0;
-    public GameService(SimpMessagingTemplate simpMessagingTemplate, RoomDto room,ProblemService problemService, UserService userService) {
+    public GameService(SimpMessagingTemplate simpMessagingTemplate, RoomDto room,ProblemService problemService, UserService userService, RoomStorage roomStorage) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.roomName = room.getRoomName();
         this.gameScenarioDto = room.getGameScenarioDto();
         this.problemService = problemService;
         this.userService = userService;
+        this.roomStorage = roomStorage;
         for (String user : room.getUsers()) {
             user_score.put(user, 0);
         }
@@ -71,7 +74,7 @@ public class GameService {
             user_score.put(userId, user_score.get(userId) + 10);
             System.out.println(user_score.get(userId));
         }
-        if (answer_cnt == user_cnt) {
+        if (answer_cnt == roomStorage.getRoomByRoomName(roomName).getUsers().size()) {
             this.answer_cnt=0;
             this.question_cnt+=1;
             sendResult("result");

@@ -29,7 +29,7 @@ public class RoomService {
         System.out.println("addRoom ended");
     }
     public void startGame(String roomName) {
-        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService));
+        gameServiceMap.put(roomName,new GameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService, this.roomStorage));
     }
     public Map<String, Object> joinRoom(String roomName, String userId) throws Exception{
         Map<String, Object> dataMap = new HashMap<>();
@@ -47,6 +47,7 @@ public class RoomService {
         return roomStorage.getRooms();
     }
     public void leaveRoom(String roomName, String userId) throws Exception{
+        System.out.println("roomservice leaveRoom");
         RoomDto room = roomStorage.getRoomByRoomName(roomName);
         room.getUsers().remove(userId);
         if (room.getUsers().size() == 0) {

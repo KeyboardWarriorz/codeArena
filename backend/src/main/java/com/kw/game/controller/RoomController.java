@@ -75,9 +75,10 @@ public class RoomController {
     }
 
     @PostMapping("/game/room/leave")
-    public ResponseEntity<?> leaveRoom(HttpServletRequest request) {
-        String roomName = request.getParameter("room_name");
-        String userId = request.getParameter("user_id");
+    public ResponseEntity<?> leaveRoom(HttpServletRequest request,@RequestBody HashMap<String, String> map) {
+        System.out.printf("leave Room called");
+        String roomName = map.get("room_name");
+        String userId = map.get("user_id");
         try {
             roomService.leaveRoom(roomName, userId);
         } catch (Exception e) {
