@@ -263,6 +263,8 @@ const ExitBtn = styled.button`
 `;
 
 export default function QuizRoom({ match }) {
+  const [roomState, setRoomState] = useState(false);
+
   const url = "http://localhost:8080";
   const stompUserClient = useRef();
   let subscription = useRef();
@@ -313,12 +315,15 @@ export default function QuizRoom({ match }) {
 
   const [isCorrect, SetIsCorrect] = useState("0");
   const [Chatting, setChatting] = useState([]);
+  const [question, setQuestion] = useState();
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     axios
       .post(url + "/game/room/join", data)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res);
+          console.log("test");
+          setUsers(res.data.userList);
         }
       })
       .catch((e) => console.log(e));
@@ -344,19 +349,20 @@ export default function QuizRoom({ match }) {
 
             // render(data);
           } else if (data.type == "question") {
-            timeoutId = setTimeout(sendAnswer, 10000, isCorrect);
-          }
-          // else if (data.type == "end") {
-          //     showQuestion("winner is "+data.winner, data.userScore,"0")
-          //     $("#startGameBtn").show();
+            setRoomState(true);
 
-          // }
+            setQuestion(() => data);
+            // console.log(data);
+            // console.log(question);
+            timeoutId = setTimeout(sendAnswer, 10000, isCorrect);
+          } else if (data.type == "end") {
+            setRoomState(false);
+          }
         }
       );
       sendBroadcast("message");
     });
   }, []);
-
   const location = useLocation();
   useEffect(() => {
     console.log(location);
@@ -386,6 +392,7 @@ export default function QuizRoom({ match }) {
     } else {
       // $("#answerList").html("오답입니다\n\n"+description);
     }
+    console.log(isCorrect);
     clearTimeout(timeoutId);
     setTimeout(function () {
       axios
@@ -470,7 +477,6 @@ export default function QuizRoom({ match }) {
   return (
     <div>
       <RoomTitle>
-        <button onClick={startGame}>startgame</button>
         <RoomData>
           <div>자바 고수 방</div>
           <div>|</div>
@@ -487,74 +493,77 @@ export default function QuizRoom({ match }) {
         </RoomData>
       </RoomTitle>
       <ContentBox>
-        <Qbox>
-          <Box>
-            <span>Q.</span>
-            <span>{problem.question}</span>
-          </Box>
-          {problemType === 1 ? (
-            <MCQ>
-              <Option
-                onClick={() => {
-                  setAnswer(1);
-                }}
-              >
-                1. {problem.answer1}
-              </Option>
-              <Option
-                onClick={() => {
-                  setAnswer(2);
-                }}
-              >
-                2. {problem.answer2}
-              </Option>
-              <Option
-                onClick={() => {
-                  setAnswer(3);
-                }}
-              >
-                3. {problem.answer3}
-              </Option>
-              <Option
-                onClick={() => {
-                  setAnswer(4);
-                }}
-              >
-                4. {problem.answer4}
-              </Option>
-            </MCQ>
-          ) : (
-            <TFQ>
-              <span
-                className={selected === 1 ? "O" : "none"}
-                onClick={() => {
-                  setAnswer(1);
-                }}
-              >
-                O
-              </span>
-              <span id="s">/</span>
-              <span
-                className={selected === 2 ? "X" : "none"}
-                onClick={() => {
-                  setAnswer(2);
-                }}
-              >
-                X
-              </span>
-            </TFQ>
-          )}
-          <TimerBox>
-            <Timer>
-              <div>시간</div>
-              <div>초</div>
-            </Timer>
-            <RankBox>
-              현재 1위
-              <div>이름</div>
-            </RankBox>
-          </TimerBox>
-        </Qbox>
+        {!roomState && <button onClick={startGame}>startgame</button>}
+        {roomState && (
+          <Qbox>
+            <Box>
+              <span>Q.</span>
+              <span>{problem.question}</span>
+            </Box>
+            {problemType === 1 ? (
+              <MCQ>
+                <Option
+                  onClick={() => {
+                    setAnswer(1);
+                  }}
+                >
+                  1. {problem.answer1}
+                </Option>
+                <Option
+                  onClick={() => {
+                    setAnswer(2);
+                  }}
+                >
+                  2. {problem.answer2}
+                </Option>
+                <Option
+                  onClick={() => {
+                    setAnswer(3);
+                  }}
+                >
+                  3. {problem.answer3}
+                </Option>
+                <Option
+                  onClick={() => {
+                    setAnswer(4);
+                  }}
+                >
+                  4. {problem.answer4}
+                </Option>
+              </MCQ>
+            ) : (
+              <TFQ>
+                <span
+                  className={selected === 1 ? "O" : "none"}
+                  onClick={() => {
+                    setAnswer(1);
+                  }}
+                >
+                  O
+                </span>
+                <span id="s">/</span>
+                <span
+                  className={selected === 2 ? "X" : "none"}
+                  onClick={() => {
+                    setAnswer(2);
+                  }}
+                >
+                  X
+                </span>
+              </TFQ>
+            )}
+            <TimerBox>
+              <Timer>
+                <div>시간</div>
+                <div>초</div>
+              </Timer>
+              <RankBox>
+                현재 1위
+                <div>이름</div>
+              </RankBox>
+            </TimerBox>
+          </Qbox>
+        )}
         <UserBox>
           <UDBG>
             <UDB1>
