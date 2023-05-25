@@ -35,7 +35,7 @@ public class WordController {
 
         // 2-1. 이미 있다면 "이미 등록된 단어" 메시지를 전달
         if (userWord != null) {
-            return ResponseEntity.status(401).body("이미 등록된 단어");
+            return ResponseEntity.status(409).body("이미 등록된 단어");
         }
 
         // 2-2. 없다면 공용 Word DB에서 정보(word_id) 가져와 User_Word DB에 값을 저장한다.
