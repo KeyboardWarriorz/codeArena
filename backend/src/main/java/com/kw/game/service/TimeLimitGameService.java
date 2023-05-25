@@ -1,11 +1,9 @@
 package com.kw.game.service;
+import com.kw.dto.UserDTO;
+import com.kw.game.dto.*;
 import com.kw.game.storage.RoomStorage;
 import com.kw.service.UserService;
 import com.kw.dto.ProblemDTO;
-import com.kw.game.dto.QuestionDto;
-import com.kw.game.dto.ResultDto;
-import com.kw.game.dto.RoomDto;
-import com.kw.game.dto.GameScenarioDto;
 import com.kw.service.ProblemService;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
@@ -29,9 +27,10 @@ public class TimeLimitGameService implements GameService{
         this.problemService = problemService;
         this.userService = userService;
         this.roomStorage = roomStorage;
-        for (String user : room.getUsers()) {
-            user_score.put(user, 0);
+        for (UserDTO user : room.getUsers()) {
+            user_score.put(user.getUserId(), 0);
         }
+        simpMessagingTemplate.convertAndSend("/topic/room",new MessageDto());
         getProblems();
         sendQuestion();
     }
@@ -87,6 +86,7 @@ public class TimeLimitGameService implements GameService{
 
                 System.out.println("game over");
                 sendResult("end");
+                simpMessagingTemplate.convertAndSend("/topic/room",new MessageDto());
                 return;
             }
             sendQuestion();

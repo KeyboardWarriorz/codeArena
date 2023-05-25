@@ -289,7 +289,12 @@ export default function QuizRoom({ match }) {
   let roomName = useParams();
   // const [title, setTitle] = useState("123");
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-
+  const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
+  const [point, setPoint] = useState(window.localStorage.getItem("point"));
+  const [tier, setTier] = useState(window.localStorage.getItem("tier"));
+  const [nickname, setNickname] = useState(
+    window.localStorage.getItem("nickname")
+  );
   function setAnswer(n) {
     setSelected(n);
   }
@@ -297,6 +302,10 @@ export default function QuizRoom({ match }) {
   const [data, setData] = useState({
     room_name: roomName.room_id,
     user_id: userId,
+    nickname: nickname,
+    profile_image: profileImage,
+    tier: tier,
+    point: point
   });
 
   function startGame() {

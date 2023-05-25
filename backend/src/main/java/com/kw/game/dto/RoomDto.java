@@ -1,5 +1,6 @@
 package com.kw.game.dto;
 
+import com.kw.dto.UserDTO;
 import lombok.*;
 
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
 public class RoomDto {
     private String roomName;
     private Integer category_id;
-    public Set<String> users;
+    public Set<UserDTO> users;
     public String master;
     private Integer capacity;
     private GameScenarioDto gameScenarioDto;
