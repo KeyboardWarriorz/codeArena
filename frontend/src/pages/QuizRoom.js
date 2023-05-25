@@ -332,6 +332,7 @@ export default function QuizRoom({ match }) {
       .then((res) => {
         if (res.status === 200) {
           console.log("test");
+          console.log(res.data)
           setUsers(res.data.userList);
         }
       })
@@ -350,6 +351,10 @@ export default function QuizRoom({ match }) {
         "/topic/messages/" + roomName.room_id,
         function (response) {
           let data = JSON.parse(response.body);
+          if (data.master){
+            console.log("someone joined")
+            console.log(data)
+          }
           if (data.type == "message") {
             // 이전 리스트의 상태를 가져와 새로운 아이템을 추가한 새로운 배열 생성
             const MsgData = [...Chatting, data];

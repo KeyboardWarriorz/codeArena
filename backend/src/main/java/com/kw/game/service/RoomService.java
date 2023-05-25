@@ -36,18 +36,12 @@ public class RoomService {
         simpMessagingTemplate.convertAndSend("/topic/room","started");
         gameServiceMap.put(roomName,new TimeLimitGameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService, this.roomStorage));
     }
-    public Map<String, Object> joinRoom(String roomName, UserDTO userDTO) throws Exception{
-        Map<String, Object> dataMap = new HashMap<>();
+    public RoomDto joinRoom(String roomName, UserDTO userDTO) throws Exception{
         roomStorage.addUserToRoom(roomName, userDTO);
         RoomDto room = roomStorage.getRoomByRoomName(roomName);
-        dataMap.put("category_id", room.getCategory_id());
-        List<UserDTO> userList = new ArrayList<>();
-        for (UserDTO user : room.getUsers()) {
-            userList.add(user);
-        }
-        dataMap.put("userList", userList);
-        simpMessagingTemplate.convertAndSend("/topic/room","joined");
-        return dataMap;
+        simpMessagingTemplate.convertAndSend("/topic/room",roomStorage.getRoomByRoomName(roomName));
+        simpMessagingTemplate.convertAndSend("/topic/messages/"+roomName,roomStorage.getRoomByRoomName(roomName));
+        return room;
     }
     public Set<RoomDto> getRoomList() {
         return roomStorage.getRooms();
