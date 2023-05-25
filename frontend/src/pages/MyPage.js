@@ -10,6 +10,7 @@ import WordCard from "../components/organisms/WordCard";
 // import Sunyeong from "../assets/images/Sunyeong.svg";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "../components/modals/ProfileModal";
+import TierModal from "../components/modals/TierModal";
 
 // CSS 코드 아래에 있음
 export default function MyPage() {
@@ -80,6 +81,12 @@ export default function MyPage() {
     setShowModal(!showModal);
   };
 
+  // 티어 모달 관리
+  const [showTierModal, setTierShowModal] = useState(false);
+  const clickTierModal = () => {
+    setTierShowModal(!showTierModal);
+  };
+
   function onDelete() {}
   return (
     <MainContainer>
@@ -94,7 +101,9 @@ export default function MyPage() {
           <ProdataBox>
             <span>{nickname}</span>
             <span>&nbsp;님</span>
-            <span id={tier}>{tier}</span>
+            <span id={tier} onClick={clickTierModal}>
+              {tier}
+            </span>
             <span>{point}P</span>
             {/* <span>다음 레벨까지 20349P</span> */}
           </ProdataBox>
@@ -171,6 +180,7 @@ export default function MyPage() {
         </Words>
       </ContentBox>
       {showModal && <ProfileModal clickModal={clickModal} func={onDelete} />}
+      {showTierModal && <TierModal clickModal={clickTierModal} />}
     </MainContainer>
   );
 }
