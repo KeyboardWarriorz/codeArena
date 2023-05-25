@@ -103,19 +103,23 @@ const ListBox = styled.div`
   display: flex;
   justify-content: space-around;
   flex-flow: row wrap;
-  column-gap: 4.3rem;
-  row-gap: 3.5 rem;
+  // column-gap: 4.3rem;
+  // row-gap: 3 rem;
 `;
 
 const Box = styled.a`
   display: flex;
   flex-direction: column;
+  align-items: Center;
   align-center: center;
-  gap: 1.6rem;
+  cursor: pointer;
+
+  p {
+    color: #858585;
+  }
 `;
 
 const LectureBox = styled.div`
-  // border: 2px green solid;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,10 +130,9 @@ const LectureBox = styled.div`
   border-radius: 10px;
 
   &:hover {
-    background: #5cdbc7;
+    background: #f9f5d7;
     color: red;
     transition: 0.5s;
-    cursor: pointer;
   }
 `;
 
@@ -183,35 +186,33 @@ export default function Main() {
         <SubContainer>
           <H2Title></H2Title>
           <ListBox>
-            <Box>
+            <Box onClick={() => navigate("/lecture")}>
               <LectureBox>
                 <SmallImg src={an1} />
               </LectureBox>
-              <BoxTitle>브로콜리</BoxTitle>
+              <p>기초 지식부터 시작하고 싶을 때</p>
+              <BoxTitle>📚 기초 개념</BoxTitle>
             </Box>
-            <Box>
+            <Box onClick={() => navigate("/problem")}>
               <LectureBox>
                 <SmallImg src={an2} />
               </LectureBox>
-              <BoxTitle>악어</BoxTitle>
+              <p>문제풀이로 실력을 다지고 싶을 때</p>
+              <BoxTitle>📝 문제 풀이</BoxTitle>
             </Box>
-            <Box>
+            <Box onClick={() => navigate("/board")}>
               <LectureBox>
                 <SmallImg src={an3} />
               </LectureBox>
-              <BoxTitle>고라니</BoxTitle>
+              <p>자유롭게 얘기하고 질문도 해보자</p>
+              <BoxTitle>😍 커뮤니티</BoxTitle>
             </Box>
-            <Box>
+            <Box onClick={() => navigate("/multiquiz")}>
               <LectureBox>
                 <SmallImg src={an4} />
               </LectureBox>
-              <BoxTitle>곰.</BoxTitle>
-            </Box>
-            <Box>
-              <LectureBox>
-                <SmallImg src={an5} />
-              </LectureBox>
-              <BoxTitle>토끼</BoxTitle>
+              <p>다른 사람들도 이겨봐용</p>
+              <BoxTitle>🎮 단체 퀴즈</BoxTitle>
             </Box>
           </ListBox>
         </SubContainer>
