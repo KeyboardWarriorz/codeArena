@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
-import RoomMakeModal from "../components/RoomMakeModal";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
