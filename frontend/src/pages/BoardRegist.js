@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../interceptor";
+import swal from "sweetalert";
 
 export default function BoardRegist() {
   const navigate = useNavigate();
@@ -38,8 +39,6 @@ export default function BoardRegist() {
     });
   }, [title, content]);
 
-  console.log(data);
-
   function submit() {
     api
       .post("http://localhost:8080/board/insert", data)
@@ -48,7 +47,9 @@ export default function BoardRegist() {
           navigate("/board");
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
+      );
   }
 
   return (

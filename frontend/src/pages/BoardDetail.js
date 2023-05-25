@@ -4,6 +4,7 @@ import MiniTag from "../components/buttons/MiniTag";
 import DeleteModal from "../components/modals/DeleteModal";
 import api from "../interceptor";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 export default function BoardDetail() {
   const navigate = useNavigate();
@@ -55,7 +56,9 @@ export default function BoardDetail() {
             window.location.reload();
           }
         })
-        .catch((e) => console.log(e));
+        .catch((e) =>
+          swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
+        );
     }
   }
 
@@ -73,16 +76,14 @@ export default function BoardDetail() {
           setContent("");
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
+      );
   }
 
   function changeComment(e) {
     setContent(e.target.value);
   }
-  console.log(content);
-  // console.log(commentData);
-  console.log(article);
-  // console.log(comments);
 
   useEffect(() => {
     setCommentData({

@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ArticleCard from "../components/organisms/ArticleCard";
 import api from "../interceptor";
-
+import swal from "sweetalert";
 import ReactPaginate from "react-paginate";
 
 import { useNavigate } from "react-router-dom";
 
 export default function Board() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(page);
-  });
   const boards = ["", "자유게시판", "질문게시판", "오류 제보"];
 
   const [curId, setCurId] = useState(1);
@@ -44,7 +40,6 @@ export default function Board() {
       .then((res) => {
         if (res.status === 200) {
           setIsSearching(false);
-          console.log(res);
           setArticles(res.data.data.articleList);
           setTotal(res.data.data.totalArticle);
         }
@@ -68,7 +63,9 @@ export default function Board() {
         setArticles(res.data.data.articleList);
       })
       .catch((e) => {
-        console.log(e);
+        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error", {
+          buttonColor: "red",
+        });
       });
   }
 
@@ -78,7 +75,6 @@ export default function Board() {
     }
   };
 
-  console.log(articles);
   return (
     <Div>
       <Sidebar>

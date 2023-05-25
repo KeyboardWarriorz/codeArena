@@ -3,11 +3,6 @@ import styled from "styled-components";
 import axios from "axios";
 import WordCard from "../components/organisms/WordCard";
 
-// import Jieun from "../assets/images/Jieun.svg";
-// import Seongwhan from "../assets/images/Seongwhan.svg";
-// import Eunhyo from "../assets/images/Eunhyo.svg";
-// import Junseo from "../assets/images/Junseo.svg";
-// import Sunyeong from "../assets/images/Sunyeong.svg";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "../components/modals/ProfileModal";
 
@@ -26,8 +21,6 @@ export default function MyPage() {
   const [words, setWords] = useState([]);
   const [tier, setTier] = useState("");
   const [point, setPoint] = useState(0);
-
-  console.log(words);
 
   function goSolved() {
     navigate(`/user/${userId}/solved`);
@@ -56,23 +49,16 @@ export default function MyPage() {
       .get(`http://localhost:8080/user/mypage/${userId}`)
       .then((res) => {
         if (res.status === 200) {
-          // console.log(res.data);
-          console.log(res);
           setSolved(res.data.success_solved);
           setFailed(res.data.failed_solved);
           setWords(res.data.user_word);
           setTier(res.data.user.tier);
           window.localStorage.setItem("tier", res.data.tier);
           setPoint(res.data.user.point);
-
-          // 포인트 받을것!!!
-          // 티어 정보도 주세요..
         }
       })
       .catch((e) => window.alert(e));
   }, []);
-
-  console.log(point);
 
   // 프로필 변경 모달 관리
   const [showModal, setShowModal] = useState(false);
@@ -160,11 +146,9 @@ export default function MyPage() {
           <div className="words">
             {words.map((w, idx) => {
               return (
-                <WordCard
-                  key={idx}
-                  name={w.word.name}
-                  content={w.word.description}
-                />
+                <div id="card" key={idx}>
+                  <WordCard name={w.word.name} content={w.word.description} />
+                </div>
               );
             })}
           </div>
@@ -385,6 +369,11 @@ const Words = styled.div`
   .words {
     display: flex;
     flex-flow: row wrap;
+    
+    #card {
+      width: 30%;
+      margin: 1rem 0.5rem 0 0.5rem;
+    }
   }
 
   .title {

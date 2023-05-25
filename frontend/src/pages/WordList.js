@@ -46,7 +46,11 @@ const Div = styled.div`
 
 const Words = styled.div`
   display: flex;
-  flex-flow: row wrap;
+
+  #words {
+    width: 33%;
+    margin: 1rem 0.5rem 0 0.5rem;
+  }
 `;
 
 export default function WordList() {
@@ -55,23 +59,18 @@ export default function WordList() {
   const [showModal, setShowModal] = useState(false);
   const clickModal = () => {
     setShowModal(!showModal);
-    console.log("modal");
   };
+
   const pageUser = window.location.pathname;
-
-  const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
-  );
-
+  // 현재 이 단어장이 누구의 것인지
+  const nickname = pageUser.split("/")[2];
   const userId = window.localStorage.getItem("userId");
 
   const [words, setWords] = useState([]);
   const [deleteId, setDeleteId] = useState(0);
   const [data, setData] = useState({ user_id: userId, word_id: deleteId });
-  console.log(data);
 
   function onDelete() {
-    console.log(data);
     api
       .post(`http://localhost:8080/word/delete`, data)
       .then((res) => {
@@ -96,36 +95,39 @@ export default function WordList() {
   useEffect(() => {
     setData({ user_id: userId, word_id: deleteId });
   }, [deleteId]);
-  console.log(deleteId);
+
   return (
     <Div>
       <h3>🗂️ {nickname}님의 단어장 </h3>
       {words.length > 0 ? (
-        <>
-          <Words>
-            {words.map((w, idx) => {
-              if (pageUser.includes(userId)) {
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      setDeleteId(w.word.wordId);
-                    }}
-                  >
-                    <WordCard
-                      user="true"
-                      name={w.word.name}
-                      content={w.word.description}
-                      modal={clickModal}
-                    />
-                  </div>
-                );
-              } else {
-                return <WordCard key={idx} name={w.name} content={w.desc} />;
-              }
-            })}
-          </Words>
-        </>
+        <Words>
+          {words.map((w, idx) => {
+            if (pageUser.includes(userId)) {
+              return (
+                <div
+                  id="words"
+                  key={idx}
+                  onClick={() => {
+                    setDeleteId(w.word.wordId);
+                  }}
+                >
+                  <WordCard
+                    user="true"
+                    name={w.word.name}
+                    content={w.word.description}
+                    modal={clickModal}
+                  />
+                </div>
+              );
+            } else {
+              return (
+                <div id="words" key={idx}>
+                  <WordCard name={w.name} content={w.desc} />
+                </div>
+              );
+            }
+          })}
+        </Words>
       ) : (
         <>
           <div id="none">
@@ -139,7 +141,8 @@ export default function WordList() {
                 navigate("/lecture");
               }}
             >
-              공부하러 가기 &nbsp;<span class="material-icons">ads_click</span>
+              공부하러 가기 &nbsp;
+              <span className="material-icons">ads_click</span>
             </button>
           </div>
         </>
