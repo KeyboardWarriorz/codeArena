@@ -15,6 +15,7 @@ export default function MyPage() {
     window.localStorage.getItem("nickname")
   );
   const [profile, setProfile] = useState("Eunhyo");
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const typeArr = ["객관식", "O / X"];
   const [solved, setSolved] = useState([]);
@@ -47,14 +48,14 @@ export default function MyPage() {
     setProfile(window.localStorage.getItem("profileImage"));
 
     axios
-      .get(`http://localhost:8080/user/mypage/${userId}`)
+      .get(`${baseURL}/user/mypage/${userId}`)
       .then((res) => {
         if (res.status === 200) {
           setSolved(res.data.success_solved);
           setFailed(res.data.failed_solved);
           setWords(res.data.user_word);
           setTier(res.data.user.tier);
-          window.localStorage.setItem("tier", res.data.tier);
+          window.localStorage.setItem("tier", res.data.user.tier);
           setPoint(res.data.user.point);
         }
       })

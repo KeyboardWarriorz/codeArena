@@ -96,9 +96,11 @@ export default function Login() {
     }
   }
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   function onSubmit() {
     axios
-      .post("http://localhost:8080/user/login", loginData, {
+      .post(`${baseURL}/user/login`, loginData, {
         headers: {
           Authorization: "login",
         },
