@@ -17,6 +17,7 @@ export default function LectureItem() {
   const userId = window.localStorage.getItem("userId");
 
   const lecturePath = window.location.pathname;
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const handleChange = (checked) => {
     setChecked(checked);
@@ -93,7 +94,7 @@ export default function LectureItem() {
     setDesc("");
     setLoading(true);
     api
-      .get(`http://localhost:8080/word/${t}`)
+      .get(`${baseURL}/word/${t}`)
       .then((res) => {
         // console.log(res.data);
         setLoading(false);
@@ -110,7 +111,7 @@ export default function LectureItem() {
 
   function addWord(n) {
     api
-      .post(`http://localhost:8080/word`, { user_id: userId, name: n })
+      .post(`${baseURL}/word`, { user_id: userId, name: n })
       .then((res) => {
         if (res.status === 201) {
           swal(
@@ -127,7 +128,7 @@ export default function LectureItem() {
 
   function moveTo() {
     api
-      .get(`http://localhost:8080/problemRan/${data.subcategory_id}`)
+      .get(`${baseURL}/${data.subcategory_id}`)
       .then((res) => {
         if (res.status === 200) {
           navigate(`/problem/${res.data.data}`);

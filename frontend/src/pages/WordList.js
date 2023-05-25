@@ -69,10 +69,11 @@ export default function WordList() {
   const [words, setWords] = useState([]);
   const [deleteId, setDeleteId] = useState(0);
   const [data, setData] = useState({ user_id: userId, word_id: deleteId });
+  const baseURL = process.env.REACT_APP_API_URL;
 
   function onDelete() {
     api
-      .post(`http://localhost:8080/word/delete`, data)
+      .post(`${baseURL}/word/delete`, data)
       .then((res) => {
         if (res.status === 201) {
           window.location.href = `/user/${userId}/word`;
@@ -83,7 +84,7 @@ export default function WordList() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/user/word/${userId}`)
+      .get(`${baseURL}/user/word/${userId}`)
       .then((res) => {
         if (res.status === 200) {
           setWords(res.data.user_word);

@@ -17,10 +17,11 @@ export default function SubmitResult() {
 
   const [problem, setProblem] = useState([]);
   const [category, setCategory] = useState("");
+  const baseURL = process.env.REACT_APP_API_URL;
 
   function getProblem() {
     api
-      .get(`http://localhost:8080/problem/${result.problem_id}`)
+      .get(`${baseURL}/problem/${result.problem_id}`)
       .then((res) => {
         if (res.status === 200) {
           setProblem(res.data);
@@ -32,7 +33,7 @@ export default function SubmitResult() {
 
   function getResult() {
     api
-      .post(`http://localhost:8080/problemAnswer/${userId}`, result)
+      .post(`${baseURL}/problemAnswer/${userId}`, result)
       .then((res) => {
         if (res.status === 200) {
           if (result.success == 1 && res.data.data.result === false) {

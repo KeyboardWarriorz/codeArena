@@ -162,10 +162,12 @@ export default function ProblemSolved() {
     setPage(e.selected + 1);
   }
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     api
       .get(
-        `http://localhost:8080/ProblemSet/${userId}/2?size=10&page=${page}&category_id=${categories.indexOf(
+        `${baseURL}/ProblemSet/${userId}/2?size=10&page=${page}&category_id=${categories.indexOf(
           selected
         )}`
       )

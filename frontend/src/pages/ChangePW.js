@@ -102,6 +102,7 @@ export default function ChangePW() {
       return true;
     }
   }
+  const baseURL = process.env.REACT_APP_API_URL;
 
   function onSubmit() {
     if (checkPW() === false) {
@@ -111,12 +112,12 @@ export default function ChangePW() {
         swal("비밀번호가 서로 일치하지 않습니다");
       } else {
         api
-          .post(`http://localhost:8080/user/password/${userId}`, data)
+          .post(`${baseURL}/user/password/${userId}`, data)
           .then((res) => {
             if (res.status === 200) {
               navigate("/login");
               api
-                .get("http://localhost:8080/user/logout")
+                .get(`${baseURL}/user/logout`)
                 .then((res) => {
                   if (res.status === 200) {
                     window.localStorage.clear();

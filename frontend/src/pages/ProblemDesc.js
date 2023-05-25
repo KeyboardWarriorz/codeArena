@@ -16,9 +16,11 @@ export default function ProblemDesc() {
   const [problem, setProblem] = useState([]);
   const [category, setCategory] = useState("");
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     api
-      .get(`http://localhost:8080/problem/${problemId}`)
+      .get(`${baseURL}/problem/${problemId}`)
       .then((res) => {
         if (res.status === 200) {
           setProblem(res.data);

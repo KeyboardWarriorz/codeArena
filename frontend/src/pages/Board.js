@@ -29,13 +29,12 @@ export default function Board() {
   function truncate(str, n) {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   }
+  const baseURL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     api
       .get(
-        `http://localhost:8080/board/boardList/${boards.indexOf(
-          curr
-        )}?page=${page}&size=6`
+        `${baseURL}/board/boardList/${boards.indexOf(curr)}?page=${page}&size=6`
       )
       .then((res) => {
         if (res.status === 200) {

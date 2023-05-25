@@ -24,6 +24,7 @@ export default function ProblemItem() {
   console.log("result", result);
 
   const [right, setRight] = useState(2);
+  const baseURL = process.env.REACT_APP_API_URL;
 
   function setAnswer(n) {
     setSelected(n);
@@ -32,7 +33,7 @@ export default function ProblemItem() {
   console.log(selected);
   useEffect(() => {
     api
-      .get(`http://localhost:8080${problemId}`)
+      .get(`${baseURL}${problemId}`)
       .then((res) => {
         if (res.status === 200) {
           console.log(res.data);

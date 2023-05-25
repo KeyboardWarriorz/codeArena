@@ -10,13 +10,14 @@ function Header() {
   const [login, setLogin] = useState(window.localStorage.login); // 로그인시 set
   const [userId, setUserId] = useState(window.localStorage.userId);
   const [nickname, setNickname] = useState(window.localStorage.nickname);
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const curPage = window.location.pathname;
   console.log(curPage);
 
   function logout() {
     axios
-      .get("http://localhost:8080/user/logout")
+      .get(`${baseURL}/user/logout`)
       .then((res) => {
         if (res.status === 200) {
           window.localStorage.clear();

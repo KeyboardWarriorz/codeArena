@@ -114,12 +114,14 @@ export default function SignUp() {
     setData({ userId: id, userPw: SHA256(pw1).toString(), nickname: nickname });
   }, [id, pw1, pw2, nickname]);
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   function idCheck() {
     if (id === "") {
       swal("아이디를 입력해주세요");
     } else {
       axios
-        .get(`http://localhost:8080/user/check/userid/${id}`)
+        .get(`${baseURL}/user/check/userid/${id}`)
         .then((res) => {
           if (res.status === 200) {
             setIdCheck(true);
@@ -137,7 +139,7 @@ export default function SignUp() {
       swal("닉네임은 8자 이하로 입력해주세요.");
     } else {
       axios
-        .get(`http://localhost:8080/user/check/nickname/${nickname}`)
+        .get(`${baseURL}/user/check/nickname/${nickname}`)
         .then((res) => {
           if (res.status === 200) {
             setNameCheck(true);
@@ -188,7 +190,7 @@ export default function SignUp() {
         swal("닉네임 중복 확인을 해주세요");
       } else {
         axios
-          .post("http://localhost:8080/user/signup", data)
+          .post(`${baseURL}/user/signup`, data)
           .then((res) => {
             if (res.status === 200) {
               navigate("/login");

@@ -43,6 +43,7 @@ const Lectures = styled.div`
   display: flex;
   flex-flow: row wrap;
 `;
+const baseURL = process.env.REACT_APP_API_URL;
 
 export default function LectureList() {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export default function LectureList() {
 
   useEffect(() => {
     api
-      .get(`http://localhost:8080/category/${id}`)
+      .get(`${baseURL}/category/${id}`)
       .then((res) => {
         if (res.status === 200) {
           setLectures(res.data.data.subcategory);

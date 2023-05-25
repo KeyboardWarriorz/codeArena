@@ -38,19 +38,19 @@ export default function BoardDetail() {
     setShowModal(!showModal);
   }
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   // 게시물 및 댓글 삭제 API
   function onDelete(w) {
     if (w === "article") {
-      api
-        .post(`http://localhost:8080/board/delete/${article.article_id}`)
-        .then((res) => {
-          if (res.status === 200) {
-            navigate("/board");
-          }
-        });
+      api.post(`${baseURL}/delete/${article.article_id}`).then((res) => {
+        if (res.status === 200) {
+          navigate("/board");
+        }
+      });
     } else if (w === "comment") {
       api
-        .post(`http://localhost:8080/comment/delete/${commentId}`)
+        .post(`${baseURL}/comment/delete/${commentId}`)
         .then((res) => {
           if (res.status === 200) {
             window.location.reload();
@@ -65,7 +65,7 @@ export default function BoardDetail() {
   // 댓글 등록
   function submitComment() {
     api
-      .post("http://localhost:8080/comment", commentData)
+      .post(`${baseURL}/comment`, commentData)
       .then((res) => {
         if (res.status === 200) {
           setCommentData({
@@ -95,7 +95,7 @@ export default function BoardDetail() {
 
   useEffect(() => {
     api
-      .get(`http://localhost:8080${articlePath}`)
+      .get(`${baseURL}${articlePath}`)
       .then((res) => {
         if (res.status === 200) {
           setArticle(res.data.data);
@@ -106,10 +106,12 @@ export default function BoardDetail() {
       .catch((e) => window.alert(e.response.data));
   }, [content]);
 
+  console.log(article);
+
   return (
     <Div>
       <div>
-        <MiniTag text={board} />
+        <MiniTag text={article.boardName} />
       </div>
       <Info>
         <div>

@@ -24,6 +24,7 @@ export default function GPTModal(props) {
   //       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   //     };
   //   }, []);
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const [selected, setSelected] = useState(
     window.localStorage.getItem("profileImage")
@@ -32,7 +33,7 @@ export default function GPTModal(props) {
 
   function changeProflie() {
     axios
-      .post("http://localhost:8080/user/profile", {
+      .post(`${baseURL}/user/profile`, {
         profileImage: selected,
         user_id: userId,
       })

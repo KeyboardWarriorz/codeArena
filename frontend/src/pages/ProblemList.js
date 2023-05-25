@@ -35,11 +35,12 @@ export default function ProblemList() {
   function changePage(e) {
     setPage(e.selected + 1);
   }
+  const baseURL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     api
       .get(
-        `http://localhost:8080/ProblemSet/${userId}?page=${page}&size=10&category_id=${categories.indexOf(
+        `${baseURL}/ProblemSet/${userId}?page=${page}&size=10&category_id=${categories.indexOf(
           selected
         )}`
       )

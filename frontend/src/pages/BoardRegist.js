@@ -10,6 +10,7 @@ export default function BoardRegist() {
   const [content, setContent] = useState("");
   const userId = window.localStorage.getItem("userId");
   const [boardId, setBoardId] = useState("");
+  const baseURL = process.env.REACT_APP_API_URL;
 
   const [data, setData] = useState({
     title: title,
@@ -41,7 +42,7 @@ export default function BoardRegist() {
 
   function submit() {
     api
-      .post("http://localhost:8080/board/insert", data)
+      .post(`${baseURL}/board/insert`, data)
       .then((res) => {
         if (res.status === 200) {
           navigate("/board");
