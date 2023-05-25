@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
-import RoomMakeModal from "../components/RoomMakeModal";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
@@ -518,7 +516,7 @@ export default function MultiQuiz() {
           <Problems>
             <Problem id="name">
               <span>번호</span>
-              <span>분야</span>
+              <span>상태</span>
               <span>제목</span>
               <span>인원</span>
             </Problem>
@@ -526,19 +524,30 @@ export default function MultiQuiz() {
           </Problems>
           <ProblemScroll id="style-2">
             {room.map((r, idx) => {
-              return (
-                <ProblemHover
-                  key={idx}
-                  onClick={() => {
-                    navigate(`/multiquiz/${r.roomName}`);
-                  }}
-                >
-                  <div>{idx + 1}</div>
-                  <div>{r.category_id}</div>
-                  <div>{r.roomName}</div>
-                  <div>{r.users}</div>
-                </ProblemHover>
-              );
+              if (!r.playing) {
+                return (
+                  <ProblemHover
+                    key={idx}
+                    onClick={() => {
+                      navigate(`/multiquiz/${r.roomName}`);
+                    }}
+                  >
+                    <div>{idx + 1}</div>
+                    <div>대기</div>
+                    <div>{r.roomName}</div>
+                    <div>{r.users}</div>
+                  </ProblemHover>
+                );
+              } else {
+                return (
+                  <ProblemHover key={idx}>
+                    <div>{idx + 1}</div>
+                    <div>플레이중</div>
+                    <div>{r.roomName}</div>
+                    <div>{r.users}</div>
+                  </ProblemHover>
+                );
+              }
             })}
           </ProblemScroll>
         </ProblemBox>
