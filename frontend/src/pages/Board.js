@@ -56,7 +56,7 @@ export default function Board() {
   function search() {
     console.log(`/board/search?keyword=${searchText}`);
     api
-      .get(`/board/search?keyword=${searchText}`)
+      .get(`/board/search?keyword=${searchText}`,{withCredentials: true})
       .then((res) => {
         setIsSearching(true);
         setArticles(res.data.data.articleList);
