@@ -56,15 +56,15 @@ public class RoomController {
     public ResponseEntity<?> joinRoom(HttpServletRequest request,@RequestBody HashMap<String, String> map) {
         System.out.println("joining room");
         String roomName = map.get("room_name");
-        Map<String, Object> dataMap;
+        RoomDto roomDto;
         try {
-            dataMap = roomService.joinRoom(roomName, getUser(map));
+            roomDto = roomService.joinRoom(roomName, getUser(map));
         } catch (Exception e) {
             //방이 다 찼거나 게임이 플레이 중입니다.
             System.out.println("방이 다 참 ");
             return ResponseEntity.badRequest().build();
         }
-        return new ResponseEntity<>(dataMap, HttpStatus.OK);
+        return new ResponseEntity<>(roomDto, HttpStatus.OK);
     }
 
     @GetMapping("/game/roomList")
