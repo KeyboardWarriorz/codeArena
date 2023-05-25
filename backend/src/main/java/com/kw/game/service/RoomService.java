@@ -1,4 +1,5 @@
 package com.kw.game.service;
+import com.kw.dto.UserDTO;
 import com.kw.service.UserService;
 import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
@@ -23,9 +24,9 @@ public class RoomService {
     @Autowired
     private UserService userService;
     public Map<String, GameService> gameServiceMap=new HashMap<>();
-    public void registerRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception{
-        roomStorage.addRoom(roomName, userId,gameScenarioDto);
-        roomStorage.getRoomByRoomName(roomName).users.add(userId);
+    public void registerRoom(String roomName, UserDTO userDto, GameScenarioDto gameScenarioDto) throws Exception{
+        roomStorage.addRoom(roomName, userDto.getUserId(),gameScenarioDto);
+        roomStorage.getRoomByRoomName(roomName).users.add(userDto);
         System.out.println("addRoom ended");
     }
     public void startGame(String roomName) {
@@ -35,13 +36,13 @@ public class RoomService {
         simpMessagingTemplate.convertAndSend("/topic/room","started");
         gameServiceMap.put(roomName,new TimeLimitGameService(simpMessagingTemplate,roomStorage.getRoomByRoomName(roomName), problemService, userService, this.roomStorage));
     }
-    public Map<String, Object> joinRoom(String roomName, String userId) throws Exception{
+    public Map<String, Object> joinRoom(String roomName, UserDTO userDTO) throws Exception{
         Map<String, Object> dataMap = new HashMap<>();
-        roomStorage.addUserToRoom(roomName, userId);
+        roomStorage.addUserToRoom(roomName, userDTO);
         RoomDto room = roomStorage.getRoomByRoomName(roomName);
         dataMap.put("category_id", room.getCategory_id());
-        List<String> userList = new ArrayList<>();
-        for (String user : room.getUsers()) {
+        List<UserDTO> userList = new ArrayList<>();
+        for (UserDTO user : room.getUsers()) {
             userList.add(user);
         }
         dataMap.put("userList", userList);
@@ -54,7 +55,7 @@ public class RoomService {
     public void leaveRoom(String roomName, String userId) throws Exception{
         System.out.println("roomservice leaveRoom");
         RoomDto room = roomStorage.getRoomByRoomName(roomName);
-        room.getUsers().remove(userId);
+        roomStorage.leaveRoom(roomName,userId);
         if (room.getUsers().size() == 0) {
             roomStorage.removeRoom(roomName);
             gameServiceMap.remove(roomName);

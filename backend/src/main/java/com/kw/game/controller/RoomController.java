@@ -1,5 +1,6 @@
 package com.kw.game.controller;
 
+import com.kw.dto.UserDTO;
 import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import com.kw.game.service.MessageService;
@@ -32,8 +33,6 @@ public class RoomController {
     @PostMapping("/game/room")
     public ResponseEntity<Void> registerRoom(HttpServletRequest request,@RequestBody HashMap<String, String> map) {
         String roomName = map.get("room_name");
-        String userId = map.get("user_id");
-        System.out.println(roomName+userId);
         GameScenarioDto gameScenarioDto;
         if (map.get("problem_category_id") == null) {
             System.out.println("if");
@@ -46,7 +45,7 @@ public class RoomController {
         }
         System.out.println("handling register room request: " + roomName);
         try {
-            roomService.registerRoom(roomName, userId,gameScenarioDto);
+            roomService.registerRoom(roomName, getUser(map),gameScenarioDto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -56,12 +55,10 @@ public class RoomController {
     @PostMapping("/game/room/join")
     public ResponseEntity<?> joinRoom(HttpServletRequest request,@RequestBody HashMap<String, String> map) {
         System.out.println("joining room");
-        
         String roomName = map.get("room_name");
-        String userId = map.get("user_id");
         Map<String, Object> dataMap;
         try {
-            dataMap = roomService.joinRoom(roomName, userId);
+            dataMap = roomService.joinRoom(roomName, getUser(map));
         } catch (Exception e) {
             //방이 다 찼거나 게임이 플레이 중입니다.
             System.out.println("방이 다 참 ");
@@ -87,5 +84,14 @@ public class RoomController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    public UserDTO getUser(HashMap<String, String> map) {
+        String userId = map.get("user_id");
+        String nickname = map.get("nickname");
+        String profile_image = map.get("profile_image");
+        int point = Integer.parseInt(map.get("point"));
+        String tier = map.get("tier");
+        return new UserDTO(userId, nickname, point, profile_image, tier);
     }
 }

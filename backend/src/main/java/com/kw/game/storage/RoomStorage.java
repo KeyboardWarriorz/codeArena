@@ -1,5 +1,6 @@
 package com.kw.game.storage;
 
+import com.kw.dto.UserDTO;
 import com.kw.game.dto.GameScenarioDto;
 import com.kw.game.dto.RoomDto;
 import org.springframework.stereotype.Component;
@@ -23,14 +24,14 @@ public class RoomStorage {
     public RoomDto getRoomByRoomName(String roomName) {
         return rooms.get(roomName);
     }
-    public void addUserToRoom(String roomName, String userName) throws Exception{
+    public void addUserToRoom(String roomName, UserDTO userDTO) throws Exception{
         RoomDto room = rooms.get(roomName);
         System.out.println("joining room isplaying is"+room.isPlaying());
         if (room.isPlaying()||room.getUsers().size() >= room.getCapacity()) {
             throw new Exception("Room is full!");
         }
         System.out.println("room isplay == true : " + (room.isPlaying()==true));
-        rooms.get(roomName).getUsers().add(userName);
+        rooms.get(roomName).getUsers().add(userDTO);
     }
 
     public void addRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception {
@@ -41,6 +42,13 @@ public class RoomStorage {
         System.out.println("room "+roomName+" included");
     }
 
+    public void leaveRoom(String roomName, String userId) {
+        for (UserDTO userDTO : rooms.get(roomName).getUsers()) {
+            if (userDTO.getUserId().equals(userId)) {
+                rooms.get(roomName).getUsers().remove(userDTO);
+            }
+        }
+    }
     public void removeRoom(String roomName) throws Exception {
         if (rooms.containsKey(roomName)) {
             rooms.remove(roomName);
