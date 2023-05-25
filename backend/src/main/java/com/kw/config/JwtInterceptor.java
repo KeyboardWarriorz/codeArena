@@ -33,7 +33,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         // 토큰 검사 로직 예시:
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Origin", "http://3.36.247.81:3000");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
         response.setHeader("Access-Control-Allow-Credentials", "true");
