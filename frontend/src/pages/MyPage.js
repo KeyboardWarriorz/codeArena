@@ -227,6 +227,7 @@ const ProdataBox = styled.div`
   }
 
   > span:nth-of-type(3) {
+    cursor: pointer;
     margin-right: 30px;
   }
 

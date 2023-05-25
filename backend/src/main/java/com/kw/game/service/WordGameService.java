@@ -1,5 +1,6 @@
 package com.kw.game.service;
 
+import com.kw.dto.UserDTO;
 import com.kw.game.dto.*;
 import com.kw.game.storage.RoomStorage;
 import com.kw.service.ProblemService;
@@ -29,8 +30,8 @@ public class WordGameService implements GameService{
         this.userService = userService;
         this.roomStorage = roomStorage;
         this.wordService = wordService;
-        for (String user : room.getUsers()) {
-            user_score.put(user, 0);
+        for (UserDTO userDTO : room.getUsers()) {
+            user_score.put(userDTO.getUserId(), 0);
         }
         getProblems();
         sendQuestion();

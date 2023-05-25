@@ -379,11 +379,19 @@ export default function MultiQuiz() {
     window.localStorage.getItem("nickname")
   );
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
+  const [point, setPoint] = useState(window.localStorage.getItem("point"));
+  const [tier, setTier] = useState(window.localStorage.getItem("tier"));
+
   const [data, setData] = useState({
     room_name: title,
     user_id: userId,
     problem_category_id: categoryId,
     problem_cnt: Cnt,
+    nickname: nickname,
+    tier: tier,
+    profile_image : profileImage,
+    point: point
   });
 
   const navigate = useNavigate();
@@ -433,6 +441,10 @@ export default function MultiQuiz() {
       user_id: userId,
       problem_category_id: categoryId,
       problem_cnt: Cnt,
+      nickname: nickname,
+      tier: tier,
+      profile_image : profileImage,
+      point: point
     });
   }, [title, categoryId, Cnt]);
 
@@ -535,7 +547,7 @@ export default function MultiQuiz() {
                     <div>{idx + 1}</div>
                     <div>대기</div>
                     <div>{r.roomName}</div>
-                    <div>{r.users}</div>
+                    <div>{r.users.length}</div>
                   </ProblemHover>
                 );
               } else {
@@ -544,7 +556,7 @@ export default function MultiQuiz() {
                     <div>{idx + 1}</div>
                     <div>플레이중</div>
                     <div>{r.roomName}</div>
-                    <div>{r.users}</div>
+                    <div>{r.users.length}</div>
                   </ProblemHover>
                 );
               }

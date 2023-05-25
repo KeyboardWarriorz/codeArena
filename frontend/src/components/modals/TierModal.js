@@ -171,27 +171,27 @@ export default function RoomMakeModal(props) {
         <Hr />
         <TierBox>
           <Tier>
-            <div>· 똥</div>
+            <div>· BRONZE</div>
             <div>1</div>
           </Tier>
           <Tier>
-            <div>· 먼지</div>
+            <div>· SILVER</div>
             <div>500</div>
           </Tier>
           <Tier>
-            <div>· 짐승</div>
+            <div>· GOLD</div>
             <div>1000</div>
           </Tier>
           <Tier>
-            <div>· 갓난 아기</div>
+            <div>· PLATINUM</div>
             <div>2000</div>
           </Tier>
           <Tier>
-            <div>· 돌고래</div>
+            <div>· DIAMOND</div>
             <div>5000</div>
           </Tier>
           <Tier>
-            <div>· 사람</div>
+            <div>· RUBY</div>
             <div>10000</div>
           </Tier>
         </TierBox>

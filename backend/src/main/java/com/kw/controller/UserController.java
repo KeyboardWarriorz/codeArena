@@ -44,7 +44,8 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 혹은 비밀번호를 다시 입력해주세요.");
 			// HttpSession에 정보를 저장한다. - 뷰에서 사용하고 있음 ${loginUser}- 아이디 / ${loginName} - 이름
 		}
-		UserDTO userDTO = new UserDTO(dbuser.getUserId(), dbuser.getNickname(), dbuser.getPoint(), dbuser.getProfileImage(),jwtUtil.generateToken("access"),jwtUtil.generateToken("refresh"));
+		UserDTO dto = userService.selectUser(dbuser.getUserId());
+		UserDTO userDTO = new UserDTO(dbuser.getUserId(), dbuser.getNickname(), dbuser.getPoint(), dbuser.getProfileImage(),dto.getTier(),jwtUtil.generateToken("access"),jwtUtil.generateToken("refresh"));
 		System.out.println(userDTO);
 		return new ResponseEntity(userDTO, HttpStatus.OK);
 	}

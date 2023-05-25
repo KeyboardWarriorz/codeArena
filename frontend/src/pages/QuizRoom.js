@@ -289,7 +289,12 @@ export default function QuizRoom({ match }) {
   let roomName = useParams();
   // const [title, setTitle] = useState("123");
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-
+  const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
+  const [point, setPoint] = useState(window.localStorage.getItem("point"));
+  const [tier, setTier] = useState(window.localStorage.getItem("tier"));
+  const [nickname, setNickname] = useState(
+    window.localStorage.getItem("nickname")
+  );
   function setAnswer(n) {
     setSelected(n);
   }
@@ -297,6 +302,10 @@ export default function QuizRoom({ match }) {
   const [data, setData] = useState({
     room_name: roomName.room_id,
     user_id: userId,
+    nickname: nickname,
+    profile_image: profileImage,
+    tier: tier,
+    point: point
   });
 
   function startGame() {
@@ -323,6 +332,7 @@ export default function QuizRoom({ match }) {
       .then((res) => {
         if (res.status === 200) {
           console.log("test");
+          console.log(res.data)
           setUsers(res.data.userList);
         }
       })
@@ -341,6 +351,10 @@ export default function QuizRoom({ match }) {
         "/topic/messages/" + roomName.room_id,
         function (response) {
           let data = JSON.parse(response.body);
+          if (data.master){
+            console.log("someone joined")
+            console.log(data)
+          }
           if (data.type == "message") {
             // 이전 리스트의 상태를 가져와 새로운 아이템을 추가한 새로운 배열 생성
             const MsgData = [...Chatting, data];
