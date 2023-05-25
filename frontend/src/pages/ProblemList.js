@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import api from "../interceptor";
+import swal from "sweetalert";
 
 export default function ProblemList() {
   const navigate = useNavigate();
@@ -49,7 +50,9 @@ export default function ProblemList() {
           setProblems(res.data.data.Problem);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
+      );
   }, [page, selected]);
 
   return (

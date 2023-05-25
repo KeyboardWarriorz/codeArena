@@ -2,11 +2,31 @@ import React from "react";
 import { styled } from "styled-components";
 import { useState } from "react";
 
+export default function WordCard(props) {
+  // 삭제 모달 관리
+  const [showModal, setShowModal] = useState(false);
+  const clickModal = () => setShowModal(!showModal);
+
+  return (
+    <Div>
+      <Title>
+        <p>{props.name}</p>
+        {props.user ? (
+          <span onClick={props.modal} className="material-icons">
+            delete
+          </span>
+        ) : null}
+      </Title>
+
+      <div id="hr"></div>
+      <Content>{props.content}</Content>
+    </Div>
+  );
+}
+
 const Div = styled.div`
-  width: 24%;
   border-radius: 10px;
   background-color: #f9f5d7;
-  margin: 1rem 0.5rem 0 0.5rem;
   box-shadow: 2px 2px 5px #6d6d6d60;
   padding: 40px;
   display: flex;
@@ -45,25 +65,3 @@ const Content = styled.div`
   font-size: 13px;
   line-height: 1.25rem;
 `;
-
-export default function WordCard(props) {
-  // 삭제 모달 관리
-  const [showModal, setShowModal] = useState(false);
-  const clickModal = () => setShowModal(!showModal);
-
-  return (
-    <Div>
-      <Title>
-        <p>{props.name}</p>
-        {props.user ? (
-          <span onClick={props.modal} className="material-icons">
-            delete
-          </span>
-        ) : null}
-      </Title>
-
-      <div id="hr"></div>
-      <Content>{props.content}</Content>
-    </Div>
-  );
-}

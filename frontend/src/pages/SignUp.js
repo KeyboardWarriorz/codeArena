@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
-import {SHA256} from 'crypto-js';
+import { SHA256 } from "crypto-js";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AuthDiv from "../components/organisms/AuthDiv";
@@ -190,7 +190,6 @@ export default function SignUp() {
         axios
           .post("http://localhost:8080/user/signup", data)
           .then((res) => {
-            console.log(res);
             if (res.status === 200) {
               navigate("/login");
             }

@@ -17,14 +17,12 @@ export default function SubmitResult() {
 
   const [problem, setProblem] = useState([]);
   const [category, setCategory] = useState("");
-  console.log(result);
 
   function getProblem() {
     api
       .get(`http://localhost:8080/problem/${result.problem_id}`)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
           setProblem(res.data);
           setCategory(res.data.subcategory.category.categoryName);
         }
@@ -37,7 +35,6 @@ export default function SubmitResult() {
       .post(`http://localhost:8080/problemAnswer/${userId}`, result)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data.data);
           if (result.success == 1 && res.data.data.result === false) {
             swal("정답입니다! 😎", "", "success");
           } else if (result.success == 1 && res.data.data.result === true) {
@@ -64,7 +61,6 @@ export default function SubmitResult() {
     } else {
       navigate("/problem");
     }
-    console.log(result);
   }, []);
 
   return (

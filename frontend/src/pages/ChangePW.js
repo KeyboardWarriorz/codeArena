@@ -113,7 +113,6 @@ export default function ChangePW() {
         api
           .post(`http://localhost:8080/user/password/${userId}`, data)
           .then((res) => {
-            console.log(res);
             if (res.status === 200) {
               navigate("/login");
               api

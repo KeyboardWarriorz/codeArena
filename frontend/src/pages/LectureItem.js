@@ -29,7 +29,7 @@ export default function LectureItem() {
         if (res.status === 200) {
           // console.log(res.data);
           setData(res.data);
-          console.log(res.data);
+          // console.log(res.data);
         }
       })
       .catch((e) => console.log(""));
@@ -76,7 +76,7 @@ export default function LectureItem() {
 
         setTooltipPosition({ top: tooltipTop, left: tooltipLeft });
       }
-      console.log("Selected text:", selectedText);
+      // console.log("Selected text:", selectedText);
     }
   }
 
@@ -95,7 +95,7 @@ export default function LectureItem() {
     api
       .get(`http://localhost:8080/word/${t}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setLoading(false);
         setName(res.data.name);
         setShowTooltip(true);
@@ -104,10 +104,7 @@ export default function LectureItem() {
       })
       .catch((e) => {
         setLoading(false);
-        swal("에러 발생!", "다시 시도해 주세요 😥", "error", {
-          buttonColor: "red",
-        });
-        console.log(e);
+        swal("에러 발생!", "다시 시도해 주세요 😥", "error");
       });
   }
 
@@ -123,13 +120,12 @@ export default function LectureItem() {
           );
         }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        swal("", "이미 저장한 단어입니다!", "error");
       });
   }
 
   function moveTo() {
-    console.log(`http://localhost:8080/problemRan/${data.subcategory_id}`);
     api
       .get(`http://localhost:8080/problemRan/${data.subcategory_id}`)
       .then((res) => {
@@ -138,9 +134,7 @@ export default function LectureItem() {
         }
       })
       .catch((e) => {
-        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error", {
-          buttonColor: "red",
-        });
+        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error");
       });
   }
 
@@ -327,6 +321,7 @@ const Tooltip = styled.div`
 `;
 
 const Button = styled.button`
+z-index: -1;
   color: white;
   font-family: "NanumSquareNeo-Variable";
   font-size: 1.5rem;
