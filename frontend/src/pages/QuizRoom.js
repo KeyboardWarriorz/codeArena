@@ -11,6 +11,7 @@ import api from "../interceptor";
 import axios from "axios";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import swal from "sweetalert";
 
 const RoomTitle = styled.div`
   display: flex;
@@ -268,7 +269,7 @@ export default function QuizRoom({ match }) {
   const url = "http://localhost:8080";
   const stompUserClient = useRef();
   let subscription = useRef();
-  let timeoutId = false;
+  const timeoutId = useRef();
   let description = "";
 
   const navigate = useNavigate();
@@ -324,15 +325,22 @@ export default function QuizRoom({ match }) {
       setQuestionType(1);
     }
   }
+
   const [users, setUsers] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const [roomdata, setRoomdata] = useState();
+  useEffect(() => {
+    setUserList(users);
+  }, [users]);
+
   useEffect(() => {
     axios
       .post(url + "/game/room/join", data)
       .then((res) => {
         if (res.status === 200) {
-          setUsers(res.data.userList);
           console.log(res.data);
-          console.log(res.data.userList);
+          setUsers(res.data.users);
+          setRoomdata(res.data);
         }
       })
       .catch((e) => console.log(e));
@@ -353,6 +361,8 @@ export default function QuizRoom({ match }) {
           if (data.master) {
             console.log("someone joined");
             console.log(data);
+            setUsers(data.users);
+            console.log(data.users);
           }
           if (data.type == "message") {
             // 리스트 상태 업데이트
@@ -361,10 +371,8 @@ export default function QuizRoom({ match }) {
             // render(data);
           } else if (data.type == "question") {
             setRoomState(true);
-
             setQuestion(() => data);
-            console.log(data);
-            timeoutId = setTimeout(sendAnswer, 10000, isCorrect);
+            timeoutId.current = setTimeout(sendAnswer, 10000, isCorrect);
           } else if (data.type == "end") {
             setRoomState(false);
           }
@@ -396,14 +404,31 @@ export default function QuizRoom({ match }) {
     return () => {};
   }, [location]);
 
+  const [answerData, setAnswerData] = useState({
+    room_name: roomName.room_id,
+    user_name: userId,
+    isCorrect: 0,
+  });
+
+  useEffect(() => {
+    setAnswerData({
+      room_name: roomName.room_id,
+      user_name: userId,
+      isCorrect: isCorrect,
+    });
+  }, [isCorrect]);
+
   function sendAnswer() {
-    if (isCorrect == "1") {
+    if (isCorrect === "1") {
+      swal("정답.");
       // $("#answerList").html("정답입니다\n\n"+description);
     } else {
+      swal("오답.", "error");
       // $("#answerList").html("오답입니다\n\n"+description);
     }
     console.log("isCorrect  " + isCorrect);
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId.current);
+
     setTimeout(function () {
       axios
         .post(url + "/game/answer", {
@@ -413,9 +438,7 @@ export default function QuizRoom({ match }) {
         })
         .then(function (response) {
           // 성공적으로 응답을 받았을 때 실행될 콜백 함수
-          console.log("res = ");
           console.log(response);
-          console.log("isCorrect = " + isCorrect);
           SetIsCorrect(0);
           setSelected(0);
         })
@@ -493,9 +516,9 @@ export default function QuizRoom({ match }) {
   useEffect(() => {
     if (question != null) {
       if (selected == question.answer_index) {
-        SetIsCorrect(1);
+        SetIsCorrect("1");
       } else {
-        SetIsCorrect(0);
+        SetIsCorrect("0");
       }
     }
   }, [selected]);
@@ -504,11 +527,16 @@ export default function QuizRoom({ match }) {
     <div>
       <RoomTitle>
         <RoomData>
-          <div>자바 고수 방</div>
-          <div>|</div>
-          <div>java</div>
-          <div>|</div>
-          <div>인원수</div>
+          {roomdata && (
+            <>
+              <div>{roomdata.roomName}</div>
+              <div>|</div>
+              <div>{roomdata.category_id}</div>
+              <div>|</div>
+              <div>{users.length}명</div>
+            </>
+          )}
+          {selected} : {isCorrect}
         </RoomData>
         <RoomData>
           {/* {comments.length > 0 ? (
@@ -518,13 +546,14 @@ export default function QuizRoom({ match }) {
           <Remain>
             {users.length > 0 && (
               <div>
-                {users.map((user, idx) => {
+                {userList.map((user, idx) => {
                   return <div key={idx}>{user.userId}</div>;
                 })}
               </div>
             )}
             <div>남은 문제 </div>
             <div>0개</div>
+            <div></div>
           </Remain>
           <ExitBtn onClick={leaveRoom}>나가기</ExitBtn>
         </RoomData>
