@@ -16,6 +16,8 @@ import com.kw.entity.User;
 import com.kw.repository.UserRepository;
 import com.kw.repository.UserWordRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -142,7 +144,7 @@ public class WordServiceImpl implements WordService {
 	/**
 	 * 유저가 등록한 Word들의 List 받아오기
 	 * */
-	
+
 	@Override
 	public List<WordDTO> UserWordList(String userId){
 		List<WordDTO> lst = new ArrayList<WordDTO>();
@@ -156,8 +158,8 @@ public class WordServiceImpl implements WordService {
 
 		return lst;
 	}
-	
-	
+
+
 	/**
 	 * 유저가 등록한 Word들의 List 3개만 받아오기
 	 * */
@@ -191,6 +193,20 @@ public class WordServiceImpl implements WordService {
 		// 비어 있지 않다면 삭제
 		userWordRep.delete(userWord);
 		return 1;
+	}
+
+	@Override
+	public List<String[]> getRandomWords(Integer count) {
+		Pageable pageable = PageRequest.of(0, count);
+		List<Word> randomWords = wordRep.getRandomWords(pageable);
+		List<String[]> ret = new ArrayList<>();
+		for (Word word : randomWords) {
+			String[] temp = new String[2];
+			temp[0] = word.getName();
+			temp[1] = word.getDescription();
+			ret.add(temp);
+		}
+		return ret;
 	}
 
 
