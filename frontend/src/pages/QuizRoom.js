@@ -271,25 +271,18 @@ export default function QuizRoom({ match }) {
   let timeoutId = false;
   let description = "";
 
-  const [chatList, setChatList] = useState([]);
-  const [chat, setChat] = useState("");
-
-  const { apply_id } = useParams();
-  // const [stompUserClient, setStompUserClient] = useState();
-
   const navigate = useNavigate();
 
-  // const typeArr = ["객관식", "O / X"];
   const [selected, setSelected] = useState(0);
   const [problemType, setProblemType] = useState(0);
   const problemId = window.location.pathname;
   const [problem, setProblem] = useState([]);
-  // const [category, setCategory] = useState("");
 
   let roomName = useParams();
-  // const [title, setTitle] = useState("123");
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
+  const [profileImage, setProfileImage] = useState(
+    window.localStorage.getItem("profileImage")
+  );
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));
   const [nickname, setNickname] = useState(
@@ -305,7 +298,7 @@ export default function QuizRoom({ match }) {
     nickname: nickname,
     profile_image: profileImage,
     tier: tier,
-    point: point
+    point: point,
   });
 
   function startGame() {
@@ -325,15 +318,21 @@ export default function QuizRoom({ match }) {
   const [isCorrect, SetIsCorrect] = useState("0");
   const [Chatting, setChatting] = useState([]);
   const [question, setQuestion] = useState();
+  const [questionType, setQuestionType] = useState(0);
+  if (question != null) {
+    if (question.answer[2] == null) {
+      setQuestionType(1);
+    }
+  }
   const [users, setUsers] = useState([]);
   useEffect(() => {
     axios
       .post(url + "/game/room/join", data)
       .then((res) => {
         if (res.status === 200) {
-          console.log("test");
-          console.log(res.data)
           setUsers(res.data.userList);
+          console.log(res.data);
+          console.log(res.data.userList);
         }
       })
       .catch((e) => console.log(e));
@@ -351,13 +350,11 @@ export default function QuizRoom({ match }) {
         "/topic/messages/" + roomName.room_id,
         function (response) {
           let data = JSON.parse(response.body);
-          if (data.master){
-            console.log("someone joined")
-            console.log(data)
+          if (data.master) {
+            console.log("someone joined");
+            console.log(data);
           }
           if (data.type == "message") {
-            // 이전 리스트의 상태를 가져와 새로운 아이템을 추가한 새로운 배열 생성
-            const MsgData = [...Chatting, data];
             // 리스트 상태 업데이트
             setChatting((Chatting) => [...Chatting, data]);
 
@@ -366,8 +363,7 @@ export default function QuizRoom({ match }) {
             setRoomState(true);
 
             setQuestion(() => data);
-            // console.log(data);
-            // console.log(question);
+            console.log(data);
             timeoutId = setTimeout(sendAnswer, 10000, isCorrect);
           } else if (data.type == "end") {
             setRoomState(false);
@@ -406,7 +402,7 @@ export default function QuizRoom({ match }) {
     } else {
       // $("#answerList").html("오답입니다\n\n"+description);
     }
-    console.log(isCorrect);
+    console.log("isCorrect  " + isCorrect);
     clearTimeout(timeoutId);
     setTimeout(function () {
       axios
@@ -417,7 +413,11 @@ export default function QuizRoom({ match }) {
         })
         .then(function (response) {
           // 성공적으로 응답을 받았을 때 실행될 콜백 함수
+          console.log("res = ");
           console.log(response);
+          console.log("isCorrect = " + isCorrect);
+          SetIsCorrect(0);
+          setSelected(0);
         })
         .catch(function (error) {
           // 요청이 실패했을 때 실행될 콜백 함수
@@ -480,6 +480,7 @@ export default function QuizRoom({ match }) {
     axios
       .post(url + "/game/room/leave", data)
       .then(function (data) {
+        console.log("ASdasdsad");
         console.log(data);
         navigate("/multiquiz/");
       })
@@ -487,6 +488,17 @@ export default function QuizRoom({ match }) {
         console.log(jqXHR);
       });
   }
+
+  // 1. 사용자가 선택한 답과 answerIndex 비교
+  useEffect(() => {
+    if (question != null) {
+      if (selected == question.answer_index) {
+        SetIsCorrect(1);
+      } else {
+        SetIsCorrect(0);
+      }
+    }
+  }, [selected]);
 
   return (
     <div>
@@ -499,7 +511,18 @@ export default function QuizRoom({ match }) {
           <div>인원수</div>
         </RoomData>
         <RoomData>
+          {/* {comments.length > 0 ? (
+          <div>
+            {comments.map((c, idx) => {
+              return ( */}
           <Remain>
+            {users.length > 0 && (
+              <div>
+                {users.map((user, idx) => {
+                  return <div key={idx}>{user.userId}</div>;
+                })}
+              </div>
+            )}
             <div>남은 문제 </div>
             <div>0개</div>
           </Remain>
@@ -512,37 +535,37 @@ export default function QuizRoom({ match }) {
           <Qbox>
             <Box>
               <span>Q.</span>
-              <span>{problem.question}</span>
+              <span>{question.question}</span>
             </Box>
-            {problemType === 1 ? (
+            {questionType === 0 ? (
               <MCQ>
                 <Option
                   onClick={() => {
                     setAnswer(1);
                   }}
                 >
-                  1. {problem.answer1}
+                  1. {question.answer[0]}
                 </Option>
                 <Option
                   onClick={() => {
                     setAnswer(2);
                   }}
                 >
-                  2. {problem.answer2}
+                  2. {question.answer[1]}
                 </Option>
                 <Option
                   onClick={() => {
                     setAnswer(3);
                   }}
                 >
-                  3. {problem.answer3}
+                  3. {question.answer[2]}
                 </Option>
                 <Option
                   onClick={() => {
                     setAnswer(4);
                   }}
                 >
-                  4. {problem.answer4}
+                  4. {question.answer[3]}
                 </Option>
               </MCQ>
             ) : (
