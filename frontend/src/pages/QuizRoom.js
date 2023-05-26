@@ -17,6 +17,9 @@ export default function QuizRoom({ match }) {
   const navigate = useNavigate();
   const url = "http://localhost:8080";
 
+  // 남은 문제수
+  const [questionCount, setquestionCount] = useState(0);
+
   // 현재 게임중인지 (true-게임중)
   const [roomState, setRoomState] = useState(false);
 
@@ -54,6 +57,7 @@ export default function QuizRoom({ match }) {
       .then(function (response) {
         // 성공적으로 응답을 받았을 때 실행될 콜백 함수
         // console.log(response);
+        setquestionCount(roomdata.gameScenarioDto.problem_cnt - 1);
       })
       .catch(function (error) {
         // 요청이 실패했을 때 실행될 콜백 함수
@@ -73,9 +77,11 @@ export default function QuizRoom({ match }) {
     }
   }
 
-  const [users, setUsers] = useState([]);
   const [userList, setUserList] = useState([]);
   const [roomdata, setRoomdata] = useState();
+  const [users, setUsers] = useState([]);
+  const [changed, setChanged] = useState(false);
+
   useEffect(() => {
     setUserList(users);
   }, [users]);
@@ -131,8 +137,6 @@ export default function QuizRoom({ match }) {
         function (response) {
           let data = JSON.parse(response.body);
           if (data.master) {
-            console.log("someone joined");
-            console.log(data);
             setUsers(data.users);
             console.log(data.users);
           }
@@ -147,8 +151,7 @@ export default function QuizRoom({ match }) {
             timeoutId.current = setTimeout(() => {
               sendAnswer(isCorrect.current);
               console.log("send", isCorrect.current);
-            }, 5000);
-            console.log("왜 자꾸 0이 뜨냐고 이 자식아" + isCorrect.current);
+            }, 10000);
           } else if (data.type == "end") {
             swal("종료");
             setRoomState(false);
@@ -287,6 +290,7 @@ export default function QuizRoom({ match }) {
   };
   console.log("현재 채팅 상황", Chatting);
   console.log("resultData", resultData);
+  console.log("resultData", questionCount);
 
   function sendMsg() {
     // console.log(stompUserClient);
@@ -298,27 +302,28 @@ export default function QuizRoom({ match }) {
     setContent("");
   }
   function leaveRoom() {
-    console.log(data);
     sendBroadcast(" leaved the room");
     subscription.current.unsubscribe();
     axios
       .post(url + "/game/room/leave", data)
       .then(function (data) {
-        console.log("ASdasdsad");
-        console.log(data);
+        setChanged(!changed);
+        console.log("leave data", data);
         navigate("/multiquiz/");
+        // setUsers(roomdata.users);
       })
       .catch(function (jqXHR) {
         console.log(jqXHR);
       });
   }
-  console.log(userList);
 
+  // 시간초
   const [count, setCount] = useState(10);
 
+  // 문제가 들어오면 시간초 + 문제수
   useEffect(() => {
-    // question이 변경될 때마다 count를 초기화
     setCount(10);
+    setquestionCount((prevCount) => prevCount - 1);
   }, [question]);
 
   useEffect(() => {
@@ -326,10 +331,14 @@ export default function QuizRoom({ match }) {
       setCount((prevCount) => prevCount - 1);
     }, 1000);
 
+    if (count === 0) {
+      clearInterval(interval);
+    }
+
     return () => {
       clearInterval(interval);
     };
-  }, [question]);
+  }, [count, question]);
 
   return (
     <div>
@@ -352,9 +361,14 @@ export default function QuizRoom({ match }) {
             {comments.map((c, idx) => {
               return ( */}
           <Remain>
-            <div>남은 문제 </div>
-            <div>0개</div>
-            <div></div>
+            {questionCount < 0 ? (
+              ""
+            ) : (
+              <>
+                <div>남은 문제 </div>
+                <div>{questionCount}개</div>
+              </>
+            )}
           </Remain>
           <ExitBtn onClick={leaveRoom}>나가기</ExitBtn>
         </RoomData>
@@ -420,13 +434,14 @@ export default function QuizRoom({ match }) {
               </TFQ>
             )}
             <TimerBox>
-              <Timer>
-                <div>{count}</div>
-                <div>초</div>
-              </Timer>
+              <Timer>{count === 0 ? "종료" : count + " 초"}</Timer>
               <RankBox>
                 현재 1위
-                {/* {resultData.winner.length > 0 && resultData.winner[0]} */}
+                {Object.keys(resultData).length
+                  ? resultData.winner.map((w) => {
+                      return <>&nbsp;"{w}"&nbsp;</>;
+                    })
+                  : ""}
               </RankBox>
             </TimerBox>
           </Qbox>
@@ -443,7 +458,11 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[0].nickname}</div>
-                  {/* {resultData.userScore && <div>{resultData.userScore[0]}</div>} */}
+                  {/* {resultData.userScore ? (
+                    <div>test</div>
+                  ) : (
+                    <div>{resultData.userScore}</div>
+                  )} */}
                 </UserName>
               </UDB1>
             )}
@@ -493,12 +512,18 @@ export default function QuizRoom({ match }) {
           <ChatBox>
             <div className="App">
               <div>
-                <h1>Messages</h1>
+                <p>chat</p>
                 <div>
                   {Chatting.map((chat, idx) => {
                     return (
-                      <div key={idx}>
-                        {chat.fromLogin}|{chat.message}
+                      <div id="chatline" key={idx}>
+                        <div>
+                          <span id="id">아이디</span>
+                          <span>&nbsp;|</span>
+                        </div>
+
+                        <span>{chat.message}</span>
+                        {/* {chat.fromLogin} */}
                       </div>
                     );
                   })}
@@ -506,7 +531,6 @@ export default function QuizRoom({ match }) {
               </div>
 
               <div>
-                <h1>Chat Box</h1>
                 <input
                   placeholder="메세지를 입력하세요"
                   value={content}
@@ -514,7 +538,7 @@ export default function QuizRoom({ match }) {
                   onKeyPress={handleKeyPress}
                 />
                 <button onClick={sendMsg} disabled={!content}>
-                  Send Message
+                  전송
                 </button>
               </div>
             </div>
@@ -667,6 +691,7 @@ const TFQ = styled.div`
 `;
 
 const UDBG = styled.div`
+  background-color: yellow;
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 1rem;
@@ -735,8 +760,23 @@ const UserName = styled.div`
 `;
 
 const ChatBox = styled.div`
-  border: blue 1px solid;
+  background-color: #f9f2fb;
+  // border: blue 1px solid;
   border-radius: 10px;
+  box-shadow: 3px 2px 5px #00000025;
+  width: ;
+
+  #chatline {
+    display: flex;
+
+    #id {
+      color: red;
+      width: 10000px;
+      text-align: start;
+      margin-left: 10px;
+      display: inline-block;
+    }
+  }
 `;
 
 const TimerBox = styled.div`
