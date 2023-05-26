@@ -45,7 +45,6 @@ export default function ProblemList() {
         )}`
       )
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setTotal(res.data.data.totalProblem);
           setProblems(res.data.data.Problem);

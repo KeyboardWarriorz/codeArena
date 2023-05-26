@@ -34,8 +34,11 @@ export default function Board() {
   useEffect(() => {
     api
       .get(
-        `${baseURL}/board/boardList/${boards.indexOf(curr)}?page=${page}&size=6`
-      ,{withCredentials: true})
+        `${baseURL}/board/boardList/${boards.indexOf(
+          curr
+        )}?page=${page}&size=6`,
+        { withCredentials: true }
+      )
       .then((res) => {
         if (res.status === 200) {
           setIsSearching(false);
@@ -54,9 +57,8 @@ export default function Board() {
   }
 
   function search() {
-    console.log(`/board/search?keyword=${searchText}`);
     api
-      .get(`/board/search?keyword=${searchText}`,{withCredentials: true})
+      .get(`/board/search?keyword=${searchText}`, { withCredentials: true })
       .then((res) => {
         setIsSearching(true);
         setArticles(res.data.data.articleList);

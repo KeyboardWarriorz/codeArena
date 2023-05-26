@@ -13,7 +13,6 @@ function Header() {
   const baseURL = process.env.REACT_APP_API_URL;
 
   const curPage = window.location.pathname;
-  console.log(curPage);
 
   function logout() {
     axios
@@ -60,12 +59,12 @@ function Header() {
             <div>😍 커뮤니티</div>
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             to="/multiquiz"
             className={({ isActive }) => (isActive ? "selected" : "")}
           >
             <div>🎮 단체 퀴즈</div>
-          </NavLink>
+          </NavLink> */}
         </Contents>
       )}
 

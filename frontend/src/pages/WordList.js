@@ -79,7 +79,7 @@ export default function WordList() {
           window.location.href = `/user/${userId}/word`;
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(""));
   }
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function WordList() {
           setWords(res.data.user_word);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(""));
   }, []);
 
   useEffect(() => {
