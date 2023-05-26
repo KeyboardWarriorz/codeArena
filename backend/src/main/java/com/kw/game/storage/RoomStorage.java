@@ -46,6 +46,7 @@ public class RoomStorage {
         for (UserDTO userDTO : rooms.get(roomName).getUsers()) {
             if (userDTO.getUserId().equals(userId)) {
                 rooms.get(roomName).getUsers().remove(userDTO);
+                break;
             }
         }
     }
