@@ -512,12 +512,18 @@ export default function QuizRoom({ match }) {
           <ChatBox>
             <div className="App">
               <div>
-                <h1>Messages</h1>
+                <p>chat</p>
                 <div>
                   {Chatting.map((chat, idx) => {
                     return (
-                      <div key={idx}>
-                        {chat.fromLogin}|{chat.message}
+                      <div id="chatline" key={idx}>
+                        <div>
+                          <span id="id">아이디</span>
+                          <span>&nbsp;|</span>
+                        </div>
+
+                        <span>{chat.message}</span>
+                        {/* {chat.fromLogin} */}
                       </div>
                     );
                   })}
@@ -525,7 +531,6 @@ export default function QuizRoom({ match }) {
               </div>
 
               <div>
-                <h1>Chat Box</h1>
                 <input
                   placeholder="메세지를 입력하세요"
                   value={content}
@@ -533,7 +538,7 @@ export default function QuizRoom({ match }) {
                   onKeyPress={handleKeyPress}
                 />
                 <button onClick={sendMsg} disabled={!content}>
-                  Send Message
+                  전송
                 </button>
               </div>
             </div>
@@ -686,6 +691,7 @@ const TFQ = styled.div`
 `;
 
 const UDBG = styled.div`
+  background-color: yellow;
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 1rem;
@@ -754,8 +760,23 @@ const UserName = styled.div`
 `;
 
 const ChatBox = styled.div`
-  border: blue 1px solid;
+  background-color: #f9f2fb;
+  // border: blue 1px solid;
   border-radius: 10px;
+  box-shadow: 3px 2px 5px #00000025;
+  width: ;
+
+  #chatline {
+    display: flex;
+
+    #id {
+      color: red;
+      width: 10000px;
+      text-align: start;
+      margin-left: 10px;
+      display: inline-block;
+    }
+  }
 `;
 
 const TimerBox = styled.div`
