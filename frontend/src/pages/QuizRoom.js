@@ -458,11 +458,11 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[0].nickname}</div>
-                  {/* {resultData.userScore ? (
+                  {resultData.userScore ? (
                     <div>test</div>
                   ) : (
                     <div>{resultData.userScore}</div>
-                  )} */}
+                  )}
                 </UserName>
               </UDB1>
             )}
@@ -510,25 +510,24 @@ export default function QuizRoom({ match }) {
             )}
           </UDBG>
           <ChatBox>
-            <div className="App">
-              <div>
-                <p>chat</p>
-                <div>
-                  {Chatting.map((chat, idx) => {
-                    return (
-                      <div id="chatline" key={idx}>
-                        <div>
-                          <span id="id">아이디</span>
-                          <span>&nbsp;|</span>
-                        </div>
+            <h3 id="chattitle">💬&nbsp;chat</h3>
+            <div>
+              {Chatting.map((chat, idx) => {
+                return (
+                  <>
+                    <div id="chatline" key={idx}>
+                      <span id="id">아이디아이디아이</span>
+                      <span>&nbsp;|&nbsp;&nbsp;</span>
+                      <span>{chat.message}</span>
 
-                        <span>{chat.message}</span>
-                        {/* {chat.fromLogin} */}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+                      {/* {chat.fromLogin} */}
+                    </div>
+                    <div id="chatb">
+                      <div id="hr" />
+                    </div>
+                  </>
+                );
+              })}
 
               <div>
                 <input
@@ -576,6 +575,7 @@ const ContentBox = styled.div`
   display : flex;
   direction row;
   justify-content : space-around;
+  
   padding : 0;
   margin : 0;
 `;
@@ -586,6 +586,9 @@ const Qbox = styled.div`
 
 const UserBox = styled.div`
   width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Remain = styled.div`
@@ -691,10 +694,11 @@ const TFQ = styled.div`
 `;
 
 const UDBG = styled.div`
-  background-color: yellow;
+  width: 100%;
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 1rem;
+  // background-color: red;
 `;
 
 const UDB1 = styled.div`
@@ -702,7 +706,7 @@ const UDB1 = styled.div`
   height: 150px;
   border: none;
   border-radius: 10px;
-  background-color: #f5f1ca;
+  background-color: #fff7aa;
   > div img {
     max-height: 110px;
     height: 50%;
@@ -761,21 +765,67 @@ const UserName = styled.div`
 
 const ChatBox = styled.div`
   background-color: #f9f2fb;
-  // border: blue 1px solid;
+  font-size: 0.8rem;
   border-radius: 10px;
   box-shadow: 3px 2px 5px #00000025;
-  width: ;
+  width: 86%;
 
+  #hr {
+    width: 90%;
+    border-top: 1px solid #d7d7d7;
+    height: 8px;
+    margin: 5px 0;
+  }
+
+  #chattitle {
+    color: #9b3ca4;
+    font-weight: bold;
+    text-align: start;
+    padding: 10px;
+    // background-color: blue;
+    margin-top: 0;
+  }
+
+  #chatb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   #chatline {
     display: flex;
+    // flex-direction: column;
+    align-items: center;
+    padding: 3px 0;
 
     #id {
-      color: red;
-      width: 10000px;
+      width: 100px;
       text-align: start;
       margin-left: 10px;
       display: inline-block;
     }
+
+    > span:nth-of-type(3) {
+      text-align: start;
+    }
+  }
+
+  input {
+    width: 80%;
+    background-color: #ffffff00;
+    border: none;
+    height: 20px;
+    margin-bottom: 10px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    color: white;
+    background-color: #6e6053;
+    font-family: "NanumSquareNeo-Variable";
+    border-radius: 5px;
   }
 `;
 

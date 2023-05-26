@@ -55,7 +55,10 @@ public class RoomService {
             gameServiceMap.remove(roomName);
         }
         room = roomStorage.getRoomByRoomName(roomName);
-        simpMessagingTemplate.convertAndSend("/topic/messages/" + roomName, room);
+        System.out.println("room dto = " + room);
+        if (room != null) {
+            simpMessagingTemplate.convertAndSend("/topic/messages/" + roomName, room);
+        }
 
     }
 }

@@ -62,7 +62,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
         return false;
     }
 
