@@ -1,0 +1,653 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>제목 없음</title><style>
+    /* cspell:disable-file */
+    /* webkit printing magic: print all background colors */
+   
+    a,
+    a.visited {
+        color: inherit;
+        text-decoration: underline;
+    }
+    
+    .pdf-relative-link-path {
+        font-size: 80%;
+        color: #444;
+    }
+    
+    h1,
+    h2,
+    h3 {
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 0.75em;
+    }
+    
+    h1 {
+        font-size: 1.875rem;
+        margin-top: 1.875rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+        margin-top: 1.25rem;
+    }
+    
+    .source {
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 1.5em;
+        word-break: break-all;
+    }
+    
+    .callout {
+        border-radius: 3px;
+        padding: 1rem;
+    }
+    
+    figure {
+        margin: 1.25em 0;
+        page-break-inside: avoid;
+    }
+    
+    figcaption {
+        opacity: 0.5;
+        font-size: 85%;
+        margin-top: 0.5em;
+    }
+    
+    mark {
+        background-color: transparent;
+    }
+    
+    .indented {
+        padding-left: 1.5em;
+    }
+    
+    hr {
+        background: transparent;
+        display: block;
+        width: 100%;
+        height: 1px;
+        visibility: visible;
+        border: none;
+        border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+    }
+    
+    img {
+        max-width: 100%;
+    }
+    
+    @media only print {
+        img {
+            max-height: 100vh;
+            object-fit: contain;
+        }
+    }
+    
+    @page {
+        margin: 1in;
+    }
+    
+    .collection-content {
+        font-size: 0.875rem;
+    }
+    
+    .column-list {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .column {
+        padding: 0 1em;
+    }
+    
+    .column:first-child {
+        padding-left: 0;
+    }
+    
+    .column:last-child {
+        padding-right: 0;
+    }
+    
+    .table_of_contents-item {
+        display: block;
+        font-size: 0.875rem;
+        line-height: 1.3;
+        padding: 0.125rem;
+    }
+    
+    .table_of_contents-indent-1 {
+        margin-left: 1.5rem;
+    }
+    
+    .table_of_contents-indent-2 {
+        margin-left: 3rem;
+    }
+    
+    .table_of_contents-indent-3 {
+        margin-left: 4.5rem;
+    }
+    
+    .table_of_contents-link {
+        text-decoration: none;
+        opacity: 0.7;
+        border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+    }
+    
+    table,
+    th,
+    td {
+        border: 1px solid rgba(55, 53, 47, 0.09);
+        border-collapse: collapse;
+    }
+    
+    table {
+        border-left: none;
+        border-right: none;
+    }
+    
+    th,
+    td {
+        font-weight: normal;
+        padding: 0.25em 0.5em;
+        line-height: 1.5;
+        min-height: 1.5em;
+        text-align: left;
+    }
+    
+    th {
+        color: rgba(55, 53, 47, 0.6);
+    }
+    
+    ol,
+    ul {
+        margin: 0;
+        margin-block-start: 0.6em;
+        margin-block-end: 0.6em;
+    }
+    
+    li > ol:first-child,
+    li > ul:first-child {
+        margin-block-start: 0.6em;
+    }
+    
+    ul > li {
+        list-style: disc;
+    }
+    
+    ul.to-do-list {
+        padding-inline-start: 0;
+    }
+    
+    ul.to-do-list > li {
+        list-style: none;
+    }
+    
+    .to-do-children-checked {
+        text-decoration: line-through;
+        opacity: 0.375;
+    }
+    
+    ul.toggle > li {
+        list-style: none;
+    }
+    
+    ul {
+        padding-inline-start: 1.7em;
+    }
+    
+    ul > li {
+        padding-left: 0.1em;
+    }
+    
+    ol {
+        padding-inline-start: 1.6em;
+    }
+    
+    ol > li {
+        padding-left: 0.2em;
+    }
+    
+    .mono ol {
+        padding-inline-start: 2em;
+    }
+    
+    .mono ol > li {
+        text-indent: -0.4em;
+    }
+    
+    .toggle {
+        padding-inline-start: 0em;
+        list-style-type: none;
+    }
+    
+    /* Indent toggle children */
+    .toggle > li > details {
+        padding-left: 1.7em;
+    }
+    
+    .toggle > li > details > summary {
+        margin-left: -1.1em;
+    }
+    
+    .selected-value {
+        display: inline-block;
+        padding: 0 0.5em;
+        background: rgba(206, 205, 202, 0.5);
+        border-radius: 3px;
+        margin-right: 0.5em;
+        margin-top: 0.3em;
+        margin-bottom: 0.3em;
+        white-space: nowrap;
+    }
+    
+    .collection-title {
+        display: inline-block;
+        margin-right: 1em;
+    }
+    
+    .simple-table {
+        margin-top: 1em;
+        font-size: 0.875rem;
+        empty-cells: show;
+    }
+    .simple-table td {
+        height: 29px;
+        min-width: 120px;
+    }
+    
+    .simple-table th {
+        height: 29px;
+        min-width: 120px;
+    }
+    
+    .simple-table-header-color {
+        background: rgb(247, 246, 243);
+        color: black;
+    }
+    .simple-table-header {
+        font-weight: 500;
+    }
+    
+    time {
+        opacity: 0.5;
+    }
+    
+    .icon {
+        display: inline-block;
+        max-width: 1.2em;
+        max-height: 1.2em;
+        text-decoration: none;
+        vertical-align: text-bottom;
+        margin-right: 0.5em;
+    }
+    
+    img.icon {
+        border-radius: 3px;
+    }
+    
+    .user-icon {
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 100%;
+        margin-right: 0.5rem;
+    }
+    
+    .user-icon-inner {
+        font-size: 0.8em;
+    }
+    
+    .text-icon {
+        border: 1px solid #000;
+        text-align: center;
+    }
+    
+    .page-cover-image {
+        display: block;
+        object-fit: cover;
+        width: 100%;
+        max-height: 30vh;
+    }
+    
+    .page-header-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .page-header-icon-with-cover {
+        margin-top: -0.72em;
+        margin-left: 0.07em;
+    }
+    
+    .page-header-icon img {
+        border-radius: 3px;
+    }
+    
+    .link-to-page {
+        margin: 1em 0;
+        padding: 0;
+        border: none;
+        font-weight: 500;
+    }
+    
+    p > .user {
+        opacity: 0.5;
+    }
+    
+    td > .user,
+    td > time {
+        white-space: nowrap;
+    }
+    
+    input[type="checkbox"] {
+        transform: scale(1.5);
+        margin-right: 0.6em;
+        vertical-align: middle;
+    }
+    
+    p {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    
+    .image {
+        border: none;
+        margin: 1.5em 0;
+        padding: 0;
+        border-radius: 0;
+        text-align: center;
+    }
+    
+    .code,
+    code {
+        background: rgba(135, 131, 120, 0.15);
+        border-radius: 3px;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 85%;
+        tab-size: 2;
+    }
+    
+    code {
+        color: #eb5757;
+    }
+    
+    .code {
+        padding: 1.5em 1em;
+    }
+    
+    .code-wrap {
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    
+    .code > code {
+        background: none;
+        padding: 0;
+        font-size: 100%;
+        color: inherit;
+    }
+    
+    blockquote {
+        font-size: 1.25em;
+        margin: 1em 0;
+        padding-left: 1em;
+        border-left: 3px solid rgb(55, 53, 47);
+    }
+    
+    .bookmark {
+        text-decoration: none;
+        max-height: 8em;
+        padding: 0;
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+    }
+    
+    .bookmark-title {
+        font-size: 0.85em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 1.75em;
+        white-space: nowrap;
+    }
+    
+    .bookmark-text {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .bookmark-info {
+        flex: 4 1 180px;
+        padding: 12px 14px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .bookmark-image {
+        width: 33%;
+        flex: 1 1 180px;
+        display: block;
+        position: relative;
+        object-fit: cover;
+        border-radius: 1px;
+    }
+    
+    .bookmark-description {
+        color: rgba(55, 53, 47, 0.6);
+        font-size: 0.75em;
+        overflow: hidden;
+        max-height: 4.5em;
+        word-break: break-word;
+    }
+    
+    .bookmark-href {
+        font-size: 0.75em;
+        margin-top: 0.25em;
+    }
+    
+    .sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+    .code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+    .serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+    .mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+    .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+    .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+    .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+    .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+    .pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+    .pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+    .pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+    .pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+    .pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+    .pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+    .pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+    .pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+    .pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+    .pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+    .pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+    .pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+    .highlight-default {
+        color: rgba(55, 53, 47, 1);
+    }
+    .highlight-gray {
+        color: rgba(120, 119, 116, 1);
+        fill: rgba(120, 119, 116, 1);
+    }
+    .highlight-brown {
+        color: rgba(159, 107, 83, 1);
+        fill: rgba(159, 107, 83, 1);
+    }
+    .highlight-orange {
+        color: rgba(217, 115, 13, 1);
+        fill: rgba(217, 115, 13, 1);
+    }
+    .highlight-yellow {
+        color: rgba(203, 145, 47, 1);
+        fill: rgba(203, 145, 47, 1);
+    }
+    .highlight-teal {
+        color: rgba(68, 131, 97, 1);
+        fill: rgba(68, 131, 97, 1);
+    }
+    .highlight-blue {
+        color: rgba(51, 126, 169, 1);
+        fill: rgba(51, 126, 169, 1);
+    }
+    .highlight-purple {
+        color: rgba(144, 101, 176, 1);
+        fill: rgba(144, 101, 176, 1);
+    }
+    .highlight-pink {
+        color: rgba(193, 76, 138, 1);
+        fill: rgba(193, 76, 138, 1);
+    }
+    .highlight-red {
+        color: rgba(212, 76, 71, 1);
+        fill: rgba(212, 76, 71, 1);
+    }
+    .highlight-gray_background {
+        background: rgba(241, 241, 239, 1);
+    }
+    .highlight-brown_background {
+        background: rgba(244, 238, 238, 1);
+    }
+    .highlight-orange_background {
+        background: rgba(251, 236, 221, 1);
+    }
+    .highlight-yellow_background {
+        background: rgba(251, 243, 219, 1);
+    }
+    .highlight-teal_background {
+        background: rgba(237, 243, 236, 1);
+    }
+    .highlight-blue_background {
+        background: rgba(231, 243, 248, 1);
+    }
+    .highlight-purple_background {
+        background: rgba(244, 240, 247, 0.8);
+    }
+    .highlight-pink_background {
+        background: rgba(249, 238, 243, 0.8);
+    }
+    .highlight-red_background {
+        background: rgba(253, 235, 236, 1);
+    }
+    .block-color-default {
+        color: inherit;
+        fill: inherit;
+    }
+    .block-color-gray {
+        color: rgba(120, 119, 116, 1);
+        fill: rgba(120, 119, 116, 1);
+    }
+    .block-color-brown {
+        color: rgba(159, 107, 83, 1);
+        fill: rgba(159, 107, 83, 1);
+    }
+    .block-color-orange {
+        color: rgba(217, 115, 13, 1);
+        fill: rgba(217, 115, 13, 1);
+    }
+    .block-color-yellow {
+        color: rgba(203, 145, 47, 1);
+        fill: rgba(203, 145, 47, 1);
+    }
+    .block-color-teal {
+        color: rgba(68, 131, 97, 1);
+        fill: rgba(68, 131, 97, 1);
+    }
+    .block-color-blue {
+        color: rgba(51, 126, 169, 1);
+        fill: rgba(51, 126, 169, 1);
+    }
+    .block-color-purple {
+        color: rgba(144, 101, 176, 1);
+        fill: rgba(144, 101, 176, 1);
+    }
+    .block-color-pink {
+        color: rgba(193, 76, 138, 1);
+        fill: rgba(193, 76, 138, 1);
+    }
+    .block-color-red {
+        color: rgba(212, 76, 71, 1);
+        fill: rgba(212, 76, 71, 1);
+    }
+    .block-color-gray_background {
+        background: rgba(241, 241, 239, 1);
+    }
+    .block-color-brown_background {
+        background: rgba(244, 238, 238, 1);
+    }
+    .block-color-orange_background {
+        background: rgba(251, 236, 221, 1);
+    }
+    .block-color-yellow_background {
+        background: rgba(251, 243, 219, 1);
+    }
+    .block-color-teal_background {
+        background: rgba(237, 243, 236, 1);
+    }
+    .block-color-blue_background {
+        background: rgba(231, 243, 248, 1);
+    }
+    .block-color-purple_background {
+        background: rgba(244, 240, 247, 0.8);
+    }
+    .block-color-pink_background {
+        background: rgba(249, 238, 243, 0.8);
+    }
+    .block-color-red_background {
+        background: rgba(253, 235, 236, 1);
+    }
+    .select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+    .select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+    .select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+    .select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+    .select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+    .select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+    .select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+    .select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+    .select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+    .select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+    
+    .checkbox {
+        display: inline-flex;
+        vertical-align: text-bottom;
+        width: 16;
+        height: 16;
+        background-size: 16px;
+        margin-left: 2px;
+        margin-right: 5px;
+    }
+    
+    .checkbox-on {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+    }
+    
+    .checkbox-off {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+    }
+        
+    </style></head><body><article id="328c419a-95bd-4f65-ab0e-9ad9c1c15241" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h3 id="23bea9fc-6fd8-4473-9b99-573d813830ea" class="">input</h3><ul id="12e01c9d-6784-4f8c-a256-7f081f58fbaf" class="bulleted-list"><li style="list-style-type:disc">다양한 타입을 가지는 입력 데이터 유형과 위젯이 제공됨</li></ul><ul id="f0cb7ce0-b71b-46c2-bb9f-1497327dd3b4" class="bulleted-list"><li style="list-style-type:disc">&lt; input &gt; 대표적인 속성<ul id="4a68ddaa-398f-4e2e-9124-a21b984df7ab" class="bulleted-list"><li style="list-style-type:circle">name : form control에 적용되는 이름 (이름/값 페어로 전송됨)</li></ul><ul id="6691459c-adfe-49e4-91ca-8db88bbf817d" class="bulleted-list"><li style="list-style-type:circle">value : form contrl에 적용되는 값 (이름/값 페어로 전송됨)</li></ul><ul id="395af38f-9620-4a03-9b7e-5dea9a9edfff" class="bulleted-list"><li style="list-style-type:circle">required, readonly, autofocus, autocomplete, disabled 등</li></ul><pre id="fa22c708-fa95-47e9-9038-199df53a2289" class="code code-wrap"><code>&lt;form action=&quot;/search&quot; method=&quot;GET&quot;&gt;
+      &lt;input type=&quot;text&quot; name=&#x27;q&#x27;&gt;
+    &lt;/form&gt;
+    
+    &lt;!-- https://www.google.com/search?q=HTML --!&gt;</code></pre></li></ul><ul id="390b8c24-a883-42e3-947a-33f24198c42f" class="bulleted-list"><li style="list-style-type:disc"><strong>input label</strong><ul id="134c18cf-27d8-489e-abb3-455d6adb016c" class="bulleted-list"><li style="list-style-type:circle">label을 클릭하여 input 자체의 초점을 맞추거나 활성화시킬 수 있음<ul id="3110b9e9-ed6a-424d-963c-a9e08e2e8e6e" class="bulleted-list"><li style="list-style-type:square">사용자는 선택할 수 있는 영역이 늘어나 웹 / 모바일(터치) 환경에서 편하게 사용할 수 있음</li></ul><ul id="d90d64b9-c8fd-46e4-b847-246868ab899a" class="bulleted-list"><li style="list-style-type:square">label과 input 입력의 관계가 시각적 뿐만 아니라 화면리더기에서도 label을 읽어 쉽게 내용을 확인할 수 있도록 함</li></ul></li></ul><ul id="47cd10a6-e92a-4049-a8e1-40fb47af1645" class="bulleted-list"><li style="list-style-type:circle">&lt; input &gt;에 id 속성을, &lt; label &gt;에는 for 속성을 활용하여 상호 연관을 시킴</li></ul><pre id="2cfe7d22-ef09-4780-85ef-b7df76b1e024" class="code code-wrap"><code>&lt;label for=&quot;agreement&quot;&gt;개인정보 수집에 동의합니다.&lt;/label&gt;
+    &lt;input type=&quot;checkbox&quot; name=&quot;agreement&quot; id=&quot;agreement&quot;&gt;</code></pre></li></ul><ul id="4451a6a4-cd55-4d14-94ee-e4805aac68f6" class="bulleted-list"><li style="list-style-type:disc"><strong>input 유형 -</strong> <strong>일반</strong><ul id="a8d83365-125d-4cb2-878d-3ff39de61b24" class="bulleted-list"><li style="list-style-type:circle">일반적으로 입력을 받기 위하여 제공되며 타입별로 HTML 기본 검증 혹은 추가 속성을 활용할 수 있음<ul id="0172012e-9739-4602-a012-78edeb94c31e" class="bulleted-list"><li style="list-style-type:square">text : 일반 텍스트 입력</li></ul><ul id="127738f7-fc51-4dbc-991d-8e67ac71874f" class="bulleted-list"><li style="list-style-type:square">password : 입력 시 값이 보이지 않고 문자를 특수기호(*)로 표현</li></ul><ul id="e1ea0e22-1a49-4782-9f2d-8a5906dfa9e9" class="bulleted-list"><li style="list-style-type:square">email : 이메일 형식이 아닌 경우 form 제출 불가</li></ul><ul id="83eee0e8-93b4-44a3-9959-3da46e2a5db1" class="bulleted-list"><li style="list-style-type:square">number : min, max, step 속성을 활용하여 숫자 범위 설정 가능</li></ul><ul id="91f9a8fa-b8e3-4d84-b183-f27bec0f72d1" class="bulleted-list"><li style="list-style-type:square">file : accept 속성을 활용하여 파일 타입 지정 가능</li></ul></li></ul></li></ul><ul id="572d10cc-1452-4d9b-8821-24ac0d459dea" class="bulleted-list"><li style="list-style-type:disc"><strong>input 유형 - 항목 중 선택</strong><ul id="409bfdbe-75b4-414e-ad45-652bfad3cff2" class="bulleted-list"><li style="list-style-type:circle">일반적으로 label을 사용하여 내용을 작성하여 항목 중 선택할 수 있는 input을 제공</li></ul><ul id="8c0f81d0-8691-41f1-b3a9-6abf027ec9ed" class="bulleted-list"><li style="list-style-type:circle">동일 항목에 대하여는 name을 지정하고 선택된 항목에 대한 value를 지정해야 함<ul id="346d4395-dd4b-487f-9ac7-2a130cf7e518" class="bulleted-list"><li style="list-style-type:square">checkbox : 다중 선택</li></ul><ul id="fefad282-4da7-4eee-9f5c-a0a9b7a014dc" class="bulleted-list"><li style="list-style-type:square">radio : 단일 선택</li></ul></li></ul></li></ul><ul id="685f40d4-30ee-481b-a976-4b49563b7dfe" class="bulleted-list"><li style="list-style-type:disc"><strong>input 유형 - 기타</strong><ul id="88270527-6a12-493c-8361-19d1f0a2c40e" class="bulleted-list"><li style="list-style-type:circle">다양한 종류의 input을 위한 picker를 제공<ul id="fbc23a9a-f815-479f-aa04-a26de2cfaaab" class="bulleted-list"><li style="list-style-type:square">color : color picker</li></ul><ul id="f433ddc4-23ed-4861-bd47-31eefeb3118b" class="bulleted-list"><li style="list-style-type:square">date : date picker</li></ul></li></ul><ul id="2f5ca471-a948-4714-ac4e-300448b4432e" class="bulleted-list"><li style="list-style-type:circle">hidden input을 활용하여 사용자 입력을 받지 않고 서버에 전송되어야 하는 값을 설정<ul id="cc66dc7c-8a4e-4217-8cde-cc0b204f9a84" class="bulleted-list"><li style="list-style-type:square">hidden : 사용자에게 보이지 않는 input</li></ul></li></ul></li></ul><ul id="696d5f1b-dcf7-41a8-8ced-c7e559281d79" class="bulleted-list"><li style="list-style-type:disc"><strong>input 유형 - 종합</strong><ul id="d7e4ead4-af0c-4cf4-a71b-41294fd0f7dd" class="bulleted-list"><li style="list-style-type:circle">&lt; input &gt; 요소의 동작은 type에 따라 달라지므로, 각각의 내용을 숙지할 것<p id="1e92d441-e2ee-487e-b1dc-9b90a2c4eba1" class=""><a href="https://developer.mozilla.org/ko/docs/Web/HTML/Element/Input">https://developer.mozilla.org/ko/docs/Web/HTML/Element/Input</a></p><p id="4395c821-e2ea-4629-b389-31f76bbb80c5" class="">
+    </p><p id="cacd4f48-4b82-444b-b6bc-a710b319b026" class="">
+    </p><p id="3f7d1275-c2db-4796-88f3-a36f4e5f3bea" class="">
+    </p></li></ul></li></ul><table id="b00f4f13-7fa9-4a12-9247-23c07f29a45c" class="simple-table"><tbody><tr id="dc4fdd70-ab10-4217-8f35-9195b51eba81"><td id="s:x^" class=""><strong>태그/속성</strong></td><td id="Hwl=" class="" style="width:684px"><strong>설명</strong></td></tr><tr id="575f68d2-22ac-47bc-a821-340a4e4228ba"><td id="s:x^" class=""><code><strong>&lt;input&gt;</strong></code></td><td id="Hwl=" class="" style="width:684px">사용자로부터 데이터를 입력받는 요소를 생성합니다.</td></tr><tr id="d0294f52-0e62-4cc6-966a-fc4a44969ca7"><td id="s:x^" class=""><code><strong>type</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소의 타입을 지정합니다. (<code><strong>text</strong></code>, <code><strong>password</strong></code>, <code><strong>checkbox</strong></code>, <code><strong>radio</strong></code>, <code><strong>file</strong></code>, <code><strong>date</strong></code>, 등)</td></tr><tr id="6bae1f2d-b964-40df-87f4-c4013f5690b8"><td id="s:x^" class=""><code><strong>name</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소의 이름을 지정합니다.</td></tr><tr id="5a3b7095-dc88-4b8b-a825-a64db6d9588d"><td id="s:x^" class=""><code><strong>value</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소의 초기값을 지정합니다.</td></tr><tr id="f3f4a9eb-28e7-4573-92a2-1238ef3dc32b"><td id="s:x^" class=""><code><strong>placeholder</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소에 힌트 또는 예시 값을 제공합니다.</td></tr><tr id="02a44117-1703-44b5-8323-7d18725616e1"><td id="s:x^" class=""><code><strong>required</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소가 필수 입력인지를 나타냅니다.</td></tr><tr id="f1792b0c-8143-4a71-ad74-8ea5409eb285"><td id="s:x^" class=""><code><strong>disabled</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소를 비활성화합니다.</td></tr><tr id="8bb4cacb-f162-4f31-aca6-f74ad8c6042f"><td id="s:x^" class=""><code><strong>readonly</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소를 읽기 전용으로 지정합니다.</td></tr><tr id="3409fc0c-1f22-4524-b1c9-c945aa5cdafd"><td id="s:x^" class=""><code><strong>checked</strong></code></td><td id="Hwl=" class="" style="width:684px">체크박스나 라디오 버튼의 기본 선택 상태를 지정합니다.</td></tr><tr id="7329ffc7-3974-435b-bca3-c61993d8645c"><td id="s:x^" class=""><code><strong>maxlength</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소에 입력 가능한 최대 문자 수를 제한합니다.</td></tr><tr id="d30ff994-eb4a-4ef5-a9eb-3f149050515e"><td id="s:x^" class=""><code><strong>min</strong></code></td><td id="Hwl=" class="" style="width:684px">숫자 입력 요소의 최소값을 지정합니다.</td></tr><tr id="709e6362-47c8-4775-8f0f-9ced43fe828e"><td id="s:x^" class=""><code><strong>max</strong></code></td><td id="Hwl=" class="" style="width:684px">숫자 입력 요소의 최대값을 지정합니다.</td></tr><tr id="0ad9d17c-50a2-4139-866e-af9678d0339a"><td id="s:x^" class=""><code><strong>step</strong></code></td><td id="Hwl=" class="" style="width:684px">숫자 입력 요소의 단계 크기를 지정합니다.</td></tr><tr id="0226a275-9349-4ef8-97e2-73bd7b2f0243"><td id="s:x^" class=""><code><strong>pattern</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소의 유효성 검사에 사용할 정규 표현식을 지정합니다.</td></tr><tr id="4c01d7fa-789b-49f5-b682-1f2c88dbdabb"><td id="s:x^" class=""><code><strong>autocomplete</strong></code></td><td id="Hwl=" class="" style="width:684px">입력 요소에 자동 완성 기능을 활성화합니다.</td></tr><tr id="73bd8d7b-876b-4029-bf62-9fcd1cca76c9"><td id="s:x^" class=""><code><strong>autofocus</strong></code></td><td id="Hwl=" class="" style="width:684px">페이지가 로드될 때 입력 요소에 자동으로 포커스를 줍니다.</td></tr></tbody></table></div></article></body></html>
