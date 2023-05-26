@@ -14,7 +14,6 @@ const Div = styled.div`
     margin-top: 0;
   }
 `;
-const baseURL = process.env.REACT_APP_API_URL;
 
 const RoomDiv = styled.div`
   display: flex;
@@ -345,7 +344,7 @@ const Hr = styled.div`
 `;
 
 export default function MultiQuiz() {
-  const baseURL = "http://localhost:8080";
+  const baseURL = process.env.REACT_APP_API_URL;
   let stompUserClient;
   let selectedRoom;
   let subscription = null;
