@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 			return null;
 		} else {
 			// 조회된결과가 있으면 비밀번호 일치확인 후 틀리면 로그인 불가;
-			String pw = hashSHA256(user.getUserPw());
+			String pw = user.getUserPw();
 			if (!login.getUserPw().equals(pw)) {
 				return null;
 			}

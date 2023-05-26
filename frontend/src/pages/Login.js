@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { SHA256 } from "crypto-js";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AuthDiv from "../components/organisms/AuthDiv";
@@ -87,7 +88,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    setLogin({ userId: id, userPw: pw });
+    setLogin({ userId: id, userPw: SHA256(pw).toString() });
   }, [id, pw]); // id와 pw값이 변경될때마다 제출용 object에 반영
 
   function onEnter(e) {
