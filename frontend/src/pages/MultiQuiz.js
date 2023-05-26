@@ -14,6 +14,7 @@ const Div = styled.div`
     margin-top: 0;
   }
 `;
+const baseURL = process.env.REACT_APP_API_URL;
 
 const RoomDiv = styled.div`
   display: flex;
@@ -344,7 +345,7 @@ const Hr = styled.div`
 `;
 
 export default function MultiQuiz() {
-  const url = "http://localhost:8080";
+  const baseURL = "http://localhost:8080";
   let stompUserClient;
   let selectedRoom;
   let subscription = null;
@@ -454,7 +455,7 @@ export default function MultiQuiz() {
     // let roomName = document.getElementById("roomName").value;
     console.log(data);
     axios
-      .post(url + "/game/room", data)
+      .post(baseURL + "/game/room", data)
       .then(function (data) {
         console.log(data);
         navigate("/multiquiz/" + title);
@@ -466,7 +467,7 @@ export default function MultiQuiz() {
 
   useEffect(() => {
     console.log("connecting to server...");
-    let socket = new SockJS(url + "/room");
+    let socket = new SockJS(baseURL + "/room");
     stompUserClient = Stomp.over(socket);
     window.localStorage.setItem("stompUserClient", stompUserClient);
     stompUserClient.connect({}, function (frame) {

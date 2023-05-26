@@ -16,6 +16,7 @@ import swal from "sweetalert";
 export default function QuizRoom({ match }) {
   const navigate = useNavigate();
   const url = "http://localhost:8080";
+  const baseURL = process.env.REACT_APP_API_URL;
 
   // 남은 문제수
   const [questionCount, setquestionCount] = useState(0);
@@ -53,7 +54,7 @@ export default function QuizRoom({ match }) {
   // start버튼 누르면 실행되는 함수 (게임시작)
   function startGame() {
     axios
-      .post(url + "/game/start", { room_name: roomName.room_id })
+      .post(baseURL + "/game/start", { room_name: roomName.room_id })
       .then(function (response) {
         // 성공적으로 응답을 받았을 때 실행될 콜백 함수
         // console.log(response);
@@ -111,7 +112,7 @@ export default function QuizRoom({ match }) {
   // useEffect 시작
   useEffect(() => {
     axios
-      .post(url + "/game/room/join", data)
+      .post(baseURL + "/game/room/join", data)
       .then((res) => {
         if (res.status === 200) {
           console.log(res.data);
@@ -123,7 +124,7 @@ export default function QuizRoom({ match }) {
 
     console.log("connecting to server...");
 
-    let socket = new SockJS(url + "/room");
+    let socket = new SockJS(baseURL + "/room");
     stompUserClient.current = Stomp.over(socket);
     // setStompUserClient(stompClient);
     console.log(stompUserClient.current);
@@ -182,7 +183,7 @@ export default function QuizRoom({ match }) {
 
     setTimeout(function () {
       axios
-        .post(url + "/game/answer", {
+        .post(baseURL + "/game/answer", {
           room_name: roomName.room_id,
           user_name: userId,
           isCorrect: isCorrect.current,
@@ -305,7 +306,7 @@ export default function QuizRoom({ match }) {
     sendBroadcast(" leaved the room");
     subscription.current.unsubscribe();
     axios
-      .post(url + "/game/room/leave", data)
+      .post(baseURL + "/game/room/leave", data)
       .then(function (data) {
         setChanged(!changed);
         console.log("leave data", data);
