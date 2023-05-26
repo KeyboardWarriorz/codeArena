@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,11 +18,14 @@ import java.util.Objects;
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
     private final JwtUtil jwtUtil;
+    @Value("${remote.url}")
+    private String remote_url;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         // 요청 전에 처리할 작업을 여기에 구현합니다.
         // 예를 들어, 토큰의 유효성 검사, 인증, 권한 검사 등을 수행할 수 있습니다.
+
 
         System.out.println("prehandle called");
         System.out.println(request.getMethod());
@@ -33,7 +37,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         // 토큰 검사 로직 예시:
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Origin", remote_url);
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
         response.setHeader("Access-Control-Allow-Credentials", "true");

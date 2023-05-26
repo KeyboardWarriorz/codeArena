@@ -35,7 +35,7 @@ public class ArticleController {
 		Map<String, Object> response = new HashMap<>();
 		List<ArticleListDTO> articleList = articleService.selectArticle(pageable,boardId );
 		Long articleCnt = articleService.totalArticleCount(boardId);
-				
+
 		response.put("statusCode", 200);
 		response.put("message", "게시판 글 리스트 조회 성공");
 		Map<String, Object> data = new HashMap<>();
