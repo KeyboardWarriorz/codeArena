@@ -41,7 +41,7 @@ public class UserController {
 		User dbuser = userService.loginCheck(user);
 		System.out.println(dbuser);
 		if (dbuser == null) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 혹은 비밀번호를 다시 입력해주세요.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이디 혹은 비밀번호를 다시 입력해주세요.");
 			// HttpSession에 정보를 저장한다. - 뷰에서 사용하고 있음 ${loginUser}- 아이디 / ${loginName} - 이름
 		}
 		UserDTO dto = userService.selectUser(dbuser.getUserId());
@@ -67,7 +67,7 @@ public class UserController {
 	@GetMapping("/check/nickname/{nickname}")
 	public ResponseEntity<?> checkNickname(@PathVariable("nickname") String nickname) {
 		if (userService.checkNickname(nickname)) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("닉네임 중복");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 존재하는 닉네임입니다.");
 		}
 
 		return new ResponseEntity(HttpStatus.OK);
@@ -80,7 +80,7 @@ public class UserController {
 	public ResponseEntity<?> checkEmail(@PathVariable("userId") String userId) {
 
 		if (userService.checkId(userId)) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이디 중복");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 존재하는 아이디입니다.");
 		}
 
 		return new ResponseEntity(HttpStatus.OK);
