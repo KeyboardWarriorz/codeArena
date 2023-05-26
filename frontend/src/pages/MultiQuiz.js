@@ -413,7 +413,7 @@ export default function MultiQuiz() {
 
   function fetchAll() {
     axios
-      .get(baseURL+"/game/roomList"")
+      .get(baseURL+"/game/roomList1")
       .then((res) => {
         console.log(res.data);
         if (res.status === 200) {
