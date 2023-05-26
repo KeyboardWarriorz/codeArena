@@ -35,7 +35,7 @@ export default function Board() {
     api
       .get(
         `${baseURL}/board/boardList/${boards.indexOf(curr)}?page=${page}&size=6`
-      )
+      ,{withCredentials: true})
       .then((res) => {
         if (res.status === 200) {
           setIsSearching(false);
