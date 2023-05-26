@@ -30,13 +30,11 @@ export default function ProblemItem() {
     setSelected(n);
   }
 
-  console.log(selected);
   useEffect(() => {
     api
       .get(`${baseURL}${problemId}`)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
           setProblem(res.data);
           setCategory(res.data.subcategory.category.categoryName);
         }

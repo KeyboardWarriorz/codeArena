@@ -16,14 +16,14 @@ api.interceptors.request.use(
     // 요청 전에 원하는 동작을 수행할 수 있습니다.
     // 예: 헤더에 토큰을 추가하는 등
     // console.log("interceptor called");
-    console.log(process.env.REACT_APP_API_URL)
+    // console.log(process.env.REACT_APP_API_URL)
 
     const access_token = window.localStorage.getItem("accessToken");
     const refresh_token = window.localStorage.getItem("refreshToken");
     if (access_token) {
       config.headers.access_token = access_token;
       config.headers.refresh_token = refresh_token;
-      //   console.log(config);
+      // console.log(config);
       return config;
     }
     // console.log(config);

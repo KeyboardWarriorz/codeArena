@@ -114,15 +114,14 @@ export default function Login() {
           window.localStorage.setItem("profileImage", res.data.profile_image);
           window.localStorage.setItem("accessToken", res.data.access_token);
           window.localStorage.setItem("refreshToken", res.data.refresh_token);
-          window.localStorage.setItem("point",res.data.point)
-          window.localStorage.setItem("tier",res.data.tier)
+          window.localStorage.setItem("point", res.data.point);
+          window.localStorage.setItem("tier", res.data.tier);
           // console.log(res.data.access_token);
           // console.log(res.data.refresh_token);
           navigate("/");
         }
       })
       .catch((e) => {
-        console.log(e);
         // console.log(e.response.data);
         swal(e.response.data);
       });

@@ -207,13 +207,13 @@ export default function Main() {
               <p>자유롭게 얘기하고 질문도 해보자</p>
               <BoxTitle>😍 커뮤니티</BoxTitle>
             </Box>
-            <Box onClick={() => navigate("/multiquiz")}>
+            {/* <Box onClick={() => navigate("/multiquiz")}>
               <LectureBox>
                 <SmallImg src={an4} />
               </LectureBox>
               <p>다른 사람들도 이겨봐용</p>
               <BoxTitle>🎮 단체 퀴즈</BoxTitle>
-            </Box>
+            </Box> */}
           </ListBox>
         </SubContainer>
       </MainContainer>

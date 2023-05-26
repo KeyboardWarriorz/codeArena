@@ -164,7 +164,7 @@ export default function ProblemSolved() {
   useEffect(() => {
     api
       .get(
-        `${baseURL}/${userId}/1?size=10&page=${page}&category_id=${categories.indexOf(
+        `${baseURL}/ProblemSet/${userId}/1?size=10&page=${page}&category_id=${categories.indexOf(
           selected
         )}`
       )
@@ -174,7 +174,7 @@ export default function ProblemSolved() {
           setProblems(res.data.data.Problem);
         }
       })
-      .catch((e) => window.alert(e.response.data));
+      .catch((e) => console.log(e));
   }, [page, selected]);
 
   return (

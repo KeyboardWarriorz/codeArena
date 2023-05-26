@@ -131,7 +131,7 @@ const Paginate = styled(ReactPaginate)`
   }
 `;
 
-export default function ProblemSolved() {
+export default function ProblemFailed() {
   const navigate = useNavigate();
   const userId = window.localStorage.getItem("userId");
 
@@ -173,7 +173,6 @@ export default function ProblemSolved() {
       )
       .then((res) => {
         if (res.status === 200) {
-          console.log(res);
           setTotal(res.data.data.totalProblem);
           setProblems(res.data.data.Problem);
         }
@@ -222,8 +221,8 @@ export default function ProblemSolved() {
               }}
             >
               <Problem>
-                <span className="material-icons" style={{ color: "green" }}>
-                  check_circle_outline
+                <span className="material-icons" style={{ color: "red" }}>
+                  highlight_off
                 </span>
 
                 <span>{p.problem.subcategory.category.categoryName}</span>

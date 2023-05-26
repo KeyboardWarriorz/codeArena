@@ -106,8 +106,6 @@ export default function BoardDetail() {
       .catch((e) => window.alert(e.response.data));
   }, [content]);
 
-  console.log(article);
-
   return (
     <Div>
       <div>

@@ -27,7 +27,7 @@ export default function ProblemDesc() {
           setCategory(res.data.subcategory.category.categoryName);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(""));
   }, []);
 
   return (

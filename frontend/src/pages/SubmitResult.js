@@ -28,7 +28,7 @@ export default function SubmitResult() {
           setCategory(res.data.subcategory.category.categoryName);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(""));
   }
 
   function getResult() {
@@ -52,7 +52,7 @@ export default function SubmitResult() {
           }
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(""));
   }
 
   useEffect(() => {
