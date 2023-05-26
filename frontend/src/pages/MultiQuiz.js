@@ -379,7 +379,9 @@ export default function MultiQuiz() {
     window.localStorage.getItem("nickname")
   );
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
+  const [profileImage, setProfileImage] = useState(
+    window.localStorage.getItem("profileImage")
+  );
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));
 
@@ -390,8 +392,8 @@ export default function MultiQuiz() {
     problem_cnt: Cnt,
     nickname: nickname,
     tier: tier,
-    profile_image : profileImage,
-    point: point
+    profile_image: profileImage,
+    point: point,
   });
 
   const navigate = useNavigate();
@@ -415,7 +417,7 @@ export default function MultiQuiz() {
       .then((res) => {
         console.log(res.data);
         if (res.status === 200) {
-          console.log(res.data);
+          // console.log(res.data);
           setRoom(res.data);
         }
       })
@@ -443,8 +445,8 @@ export default function MultiQuiz() {
       problem_cnt: Cnt,
       nickname: nickname,
       tier: tier,
-      profile_image : profileImage,
-      point: point
+      profile_image: profileImage,
+      point: point,
     });
   }, [title, categoryId, Cnt]);
 

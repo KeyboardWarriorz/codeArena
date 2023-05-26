@@ -164,6 +164,7 @@ export default function QuizRoom({ match }) {
 
   console.log("cur", isCorrect.current);
 
+  // 답 확인하는 함수
   function sendAnswer(cor) {
     if (cor === "1") {
       swal("정답.");
@@ -284,6 +285,7 @@ export default function QuizRoom({ match }) {
       sendMsg();
     }
   };
+  console.log("현재 채팅 상황", Chatting);
   console.log("resultData", resultData);
 
   function sendMsg() {
@@ -310,6 +312,24 @@ export default function QuizRoom({ match }) {
         console.log(jqXHR);
       });
   }
+  console.log(userList);
+
+  const [count, setCount] = useState(10);
+
+  useEffect(() => {
+    // question이 변경될 때마다 count를 초기화
+    setCount(10);
+  }, [question]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [question]);
 
   return (
     <div>
@@ -332,13 +352,6 @@ export default function QuizRoom({ match }) {
             {comments.map((c, idx) => {
               return ( */}
           <Remain>
-            {users.length > 0 && (
-              <div>
-                {userList.map((user, idx) => {
-                  return <div key={idx}>{user.userId}</div>;
-                })}
-              </div>
-            )}
             <div>남은 문제 </div>
             <div>0개</div>
             <div></div>
@@ -408,7 +421,7 @@ export default function QuizRoom({ match }) {
             )}
             <TimerBox>
               <Timer>
-                <div>시간</div>
+                <div>{count}</div>
                 <div>초</div>
               </Timer>
               <RankBox>
@@ -420,54 +433,76 @@ export default function QuizRoom({ match }) {
         )}
         <UserBox>
           <UDBG>
-            <UDB1>
-              <div>
-                <img src={an1} />
-              </div>
-              <UserName>
-                <div>유저 이름</div>
-                <div>100</div>
-              </UserName>
-            </UDB1>
-            <UDB2>
-              <div>
-                <img src={an2} />
-              </div>
-              <UserName>
-                <div>유저 이름</div>
-                <div>100</div>
-              </UserName>
-            </UDB2>
-          </UDBG>
-          <UDBG>
-            <UDB3>
-              <div>
-                <img src={an3} />
-              </div>
-              <UserName>
-                <div>유저 이름</div>
-                <div>100</div>
-              </UserName>
-            </UDB3>
-            <UDB4>
-              <div>
-                <img src={an4} />
-              </div>
-              <UserName>
-                <div>유저 이름</div>
-                <div>100</div>
-              </UserName>
-            </UDB4>
+            {userList.length > 0 && (
+              <UDB1>
+                <div>
+                  <img
+                    alt="profile1"
+                    src={require(`../assets/images/${userList[0].profile_image}.svg`)}
+                  />
+                </div>
+                <UserName>
+                  <div>{userList[0].nickname}</div>
+                  {/* {resultData.userScore && <div>{resultData.userScore[0]}</div>} */}
+                </UserName>
+              </UDB1>
+            )}
+            {userList.length > 1 && (
+              <UDB2>
+                <div>
+                  <img
+                    alt="profile2"
+                    src={require(`../assets/images/${userList[1].profile_image}.svg`)}
+                  />
+                </div>
+                <UserName>
+                  <div>{userList[1].nickname}</div>
+                  <div>{userList[1].point}</div>
+                </UserName>
+              </UDB2>
+            )}
+            {userList.length > 2 && (
+              <UDB3>
+                <div>
+                  <img
+                    alt="profile3"
+                    src={require(`../assets/images/${userList[2].profile_image}.svg`)}
+                  />
+                </div>
+                <UserName>
+                  <div>{userList[2].nickname}</div>
+                  <div>{userList[2].point}</div>
+                </UserName>
+              </UDB3>
+            )}
+            {userList.length > 3 && (
+              <UDB4>
+                <div>
+                  <img
+                    alt="profile4"
+                    src={require(`../assets/images/${userList[3].profile_image}.svg`)}
+                  />
+                </div>
+                <UserName>
+                  <div>{userList[3].nickname}</div>
+                  <div>{userList[3].point}</div>
+                </UserName>
+              </UDB4>
+            )}
           </UDBG>
           <ChatBox>
             <div className="App">
               <div>
                 <h1>Messages</h1>
-                <ul>
+                <div>
                   {Chatting.map((chat, idx) => {
-                    return <li key={idx}>{chat.message}</li>;
+                    return (
+                      <div key={idx}>
+                        {chat.fromLogin}|{chat.message}
+                      </div>
+                    );
                   })}
-                </ul>
+                </div>
               </div>
 
               <div>
@@ -740,4 +775,10 @@ const ExitBtn = styled.button`
   cursor: pointer;
 `;
 
-const StartBtn = styled.btn``;
+const StartBtn = styled.button`
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+  font-size: 50px;
+  color: #fab809;
+`;
