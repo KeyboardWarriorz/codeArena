@@ -49,7 +49,7 @@ api.interceptors.response.use(
 
   function (error) {
     // const navigate = useNavigate();
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.status === 417) {
       // 410 Unauthorized 에러 처리
       // 예: 로그아웃, 세션 만료 등의 동작 수행
       //   alert("만료");
