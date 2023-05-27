@@ -259,6 +259,10 @@
         margin-right: 1em;
     }
     
+    .page-description {
+        margin-bottom: 2em;
+    }
+    
     .simple-table {
         margin-top: 1em;
         font-size: 0.875rem;
@@ -460,11 +464,7 @@
         margin-top: 0.25em;
     }
     
-    .sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-    .code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-    .serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-    .mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-    .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+   .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
     .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
     .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
     .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
@@ -642,7 +642,20 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-
-    </style></head><body>
-        <article id="328c419a-95bd-4f65-ab0e-9ad9c1c15241" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><p id="288d9d6a-7ac9-430a-a15f-349eba9d1224" class="">
-    </p><ul id="1f78bf6e-06a7-40b8-837d-7b4ee6f3e18c" class="bulleted-list"><li style="list-style-type:disc"><strong>html</strong> : 문서의 최상위(root) 요소</li></ul><ul id="bb1fcb87-cbd9-4447-aa76-2ea9a0d0ca11" class="bulleted-list"><li style="list-style-type:disc"><strong>head</strong> : 문서 메타데이터 요소<ul id="6ad9bb5a-05d8-4575-9122-08af19ea2302" class="bulleted-list"><li style="list-style-type:circle">메타데이터란? - 데이터를 설명해주는 데이터 (ex. 사진을 찍으면 확인할 수 있는 날짜, 조리개값, 노출 등)</li></ul><ul id="7aa3fcee-39ab-443f-a666-428481be23e4" class="bulleted-list"><li style="list-style-type:circle">문서 제목, 인코딩, 스타일, 외부 파일 로딩 등</li></ul><ul id="12adc56e-7b18-43d7-9fa6-636cbef591b5" class="bulleted-list"><li style="list-style-type:circle">일반적으로 브라우저에 나타나지 않는 내용</li></ul></li></ul><ul id="f0179748-f36a-4059-8ca2-af21583ffbae" class="bulleted-list"><li style="list-style-type:disc"><strong>body</strong> : 문서 본문 요소<ul id="5dc8e64c-26f7-448f-8eeb-2c289fa1d935" class="bulleted-list"><li style="list-style-type:circle">실제 화면 구성과 관련된 내용</li></ul></li></ul><ul id="b1384ec0-47da-4f2d-946c-aa2a37a52290" class="bulleted-list"><li style="list-style-type:disc">head 예시<ul id="62bea189-f5eb-4a08-bf68-aedc7c46cca3" class="bulleted-list"><li style="list-style-type:circle">&lt; title &gt; : 브라우저 상단 타이틀</li></ul><ul id="f8eeb021-626f-493f-9e47-9348893d4228" class="bulleted-list"><li style="list-style-type:circle">&lt; meta &gt; : 문서 레벨 메타데이터 요소</li></ul><ul id="9435f434-b036-4b1c-a1e5-fffdbf3b8443" class="bulleted-list"><li style="list-style-type:circle">&lt; link &gt; : 외부 리소스 연결 요소 (CSS 파일, favicon 등)</li></ul><ul id="42c961d8-b35f-4541-b4bc-cdb0ea564bc5" class="bulleted-list"><li style="list-style-type:circle">&lt; script &gt; : 스크립트 요소 (JavaScript 파일/코드)</li></ul><ul id="3e4da188-cf05-42b8-8521-219e1a9df0e9" class="bulleted-list"><li style="list-style-type:circle">&lt; style &gt; : CSS 직접 작성</li></ul></li></ul><figure id="2ddb36e6-f25a-4500-910e-8eb0ec31c623" class="image"><a href="https://github.com/drsuneamer/TIL/raw/master/SSAFY_2022/2_web/01_HTML&amp;CSS.assets/image-20220826011428903.png"><img src="https://github.com/drsuneamer/TIL/raw/master/SSAFY_2022/2_web/01_HTML&amp;CSS.assets/image-20220826011428903.png"/></a></figure><ul id="8fa49fe9-6e6c-4ddb-b015-a9c970cda022" class="bulleted-list"><li style="list-style-type:disc">head 예시 : <strong>Open Graph Protocol</strong><ul id="4542f718-5d38-49b9-baaf-5330961f8eed" class="bulleted-list"><li style="list-style-type:circle">메타 데이터를 표현하는 새로운 규약<ul id="82f9deed-2d28-41c9-b841-582a2939996e" class="bulleted-list"><li style="list-style-type:square">HTML 문서의 메타 데이터를 통해 문서의 정보를 전달</li></ul><ul id="3614297c-4c41-405d-98b3-1edfe1674396" class="bulleted-list"><li style="list-style-type:square">메타정보에 해당하는 제목, 설명 등을 쓸 수 있도록 정의</li></ul></li></ul></li></ul></div></article></body></html>
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1><p class="page-description"></p></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="948fd209-80d1-4159-9720-a01e218bb32c" class=""><strong>HTML의 기본 구조에 대해 살펴보겠습니다!</strong></p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><h3 id="12bc77d0-4d92-4b81-ad00-8c6a81d5dc80" class="">HTML 기본 구조</h3><pre id="4546a4cc-eacd-4042-9954-d68f160de9fc" class="code"><code>```html
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        &lt;title&gt;문서 제목&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- 문서의 내용을 작성 --&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    ```</code></pre><p id="4f4e4e58-042d-4a6f-a2e1-1e018f8ca9ad" class="">▲ <em>가장 기본적인 HTML 구조입니다. </em><em><code><strong>&lt;head&gt;</strong></code></em><em>와 </em><em><code><strong>&lt;body&gt;</strong></code></em><em> 사이에는 문서의 메타데이터 및 외부 리소스 연결, 스타일 및 스크립트 등을 추가할 수 있습니다. </em><em><code><strong>&lt;body&gt;</strong></code></em><em> 내에는 실제 웹 페이지의 내용을 작성하게 됩니다.</em></p><p id="7b0d6ef0-ffce-4304-b289-bea761f88ea2" class="">
+    </p><table id="7cf382b6-46f6-400c-8d38-fa43e41f920b" class="simple-table"><thead class="simple-table-header"><tr id="e44a8b98-e13c-42e8-8f4b-b7b3edd11ef3"><th id="jFl;" class="simple-table-header-color simple-table-header" style="width:349px"><strong>태그</strong></th><th id="^SHB" class="simple-table-header-color simple-table-header" style="width:349px"><strong>설명</strong></th></tr></thead><tbody><tr id="010aec91-c6b2-443d-91f5-fcf07a6fa440"><td id="jFl;" class="" style="width:349px"><code><strong>&lt;!DOCTYPE html&gt;</strong></code></td><td id="^SHB" class="" style="width:349px">HTML5 문서를 사용한다고 선언합니다.</td></tr><tr id="fa507704-c482-4f20-9126-d90f687a3fe8"><td id="jFl;" class="" style="width:349px"><code><strong>&lt;html&gt;</strong></code></td><td id="^SHB" class="" style="width:349px">문서의 최상위(root) 요소를 정의합니다.</td></tr><tr id="5cc97671-58e3-4225-8bed-c136d72f4389"><td id="jFl;" class="" style="width:349px"><code><strong>&lt;head&gt;</strong></code></td><td id="^SHB" class="" style="width:349px">문서의 메타데이터를 담는 요소입니다.</td></tr><tr id="4be5df86-d6cf-4df4-9318-1c863a496619"><td id="jFl;" class="" style="width:349px"><code><strong>&lt;meta&gt;</strong></code></td><td id="^SHB" class="" style="width:349px">문서의 메타정보를 지정합니다.</td></tr><tr id="666a5bcf-afce-4a38-b9ca-f38fe8026553"><td id="jFl;" class="" style="width:349px"><code><strong>&lt;title&gt;</strong></code></td><td id="^SHB" class="" style="width:349px">문서의 제목을 정의합니다.</td></tr><tr id="cf5df1aa-d51a-4859-a060-64d478028868"><td id="jFl;" class="" style="width:349px"><code><strong>&lt;body&gt;</strong></code></td><td id="^SHB" class="" style="width:349px">문서의 본문을 담는 요소입니다.</td></tr></tbody></table><p id="356f7990-0477-4d3c-87e0-6cbebf3b8166" class="">
+    </p><hr id="e619ba97-e54a-4dce-8a39-38efac0b1036"/><h1 id="8f3f1bcd-f82a-4bb8-9815-dc8f713ff2b4" class="">👩‍🏫</h1><p id="17087d4d-3c65-4c49-927a-9ee3a3f96ff5" class=""><mark class="highlight-blue"><strong>수고하셨습니다!
+    </strong></mark></p><p id="e74f3b6c-6bac-429b-8df8-ada23fdde569" class="">
+    </p></div></article></body></html>
