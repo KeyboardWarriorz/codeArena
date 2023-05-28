@@ -114,11 +114,7 @@ export default function LectureItem() {
       .post(`${baseURL}/word`, { user_id: userId, name: n })
       .then((res) => {
         if (res.status === 201) {
-          swal(
-            "저장 성공!",
-            "마이페이지에서 저장한 단어를 확인할 수 있어요",
-            "success"
-          );
+          swal("저장 성공!", "마이페이지에서 저장한 단어를 확인할 수 있어요", "success");
         }
       })
       .catch((error) => {
@@ -154,21 +150,14 @@ export default function LectureItem() {
 
           <span>검색 모드</span>
           <label>
-            <Switch
-              onChange={handleChange}
-              checked={checked}
-              onColor="#D2ACB2"
-            />
+            <Switch onChange={handleChange} checked={checked} onColor="#D2ACB2" />
           </label>
         </div>
       </Title>
       <div id="hr" />
 
-      <div style={{ height: "50vh" }}>
-        <Content
-          onMouseUp={handleSelect}
-          dangerouslySetInnerHTML={{ __html: data.content }}
-        />
+      <div>
+        <Content onMouseUp={handleSelect} dangerouslySetInnerHTML={{ __html: data.content }} />
         {showTooltip && desc !== "" && (
           <Tooltip top={tooltipPosition.top} left={tooltipPosition.left}>
             <div>
@@ -322,7 +311,6 @@ const Tooltip = styled.div`
 `;
 
 const Button = styled.button`
-z-index: -1;
   color: white;
   font-family: "NanumSquareNeo-Variable";
   font-size: 1.5rem;
@@ -331,13 +319,13 @@ z-index: -1;
   border: none;
   background-color: #fab809;
   border-radius: 5px;
-  box-shadow: 4px 3px 3px #fab809;                                                                                                                                                                           0
+  box-shadow: 4px 3px 3px #fab809;
+  margin-top: 10px;                                                                                                                                                                           0
   margin-bottom: 10px;
   padding: 10px;
   height: 60px;
   cursor: pointer;
 
-  position: fixed;
   left: 50px;
   bottom: 20px;
 

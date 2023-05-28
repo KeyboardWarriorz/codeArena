@@ -62,8 +62,6 @@ export default function MyPage() {
           }
         })
         .catch((e) => {
-          console.log(e.response.status);
-          console.log(e.response.staus === "417");
           if (e.response.staus === "417") {
             swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error");
           }

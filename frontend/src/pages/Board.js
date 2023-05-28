@@ -38,7 +38,6 @@ export default function Board() {
       })
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data.data.totalArticle);
           setIsSearching(false);
           setArticles(res.data.data.articleList);
           setTotal(res.data.data.totalArticle);
