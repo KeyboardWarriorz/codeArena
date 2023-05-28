@@ -92,6 +92,7 @@ public class ProblemServiceImpl implements ProblemService {
 				problem_type = 1;
 			}
 			Solved sol = solvedRep.findProAndUser(userId, p.getProblemId());
+			check = 0;
 			if (sol != null) {
 				if (sol.getSuccess() == 1) {
 					check = 1;
