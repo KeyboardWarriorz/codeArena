@@ -2,7 +2,8 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>제목 없음</title><style>
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
-  
+   
+    
     a,
     a.visited {
         color: inherit;
@@ -460,7 +461,7 @@
         margin-top: 0.25em;
     }
     
- .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+    .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
     .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
     .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
     .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
@@ -638,12 +639,36 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="9bd14b16-5a6b-4593-9495-1900e0f4ecae" class="">데이터베이스 <strong>뷰(View)</strong>는 <mark class="highlight-red"><strong>데이터베이스에서 테이블이나 다른 뷰를 기반으로 생성된 가상의 테이블</strong></mark>입니다. 뷰는 <mark class="highlight-red"><strong>데이터베이스 사용자에게 데이터의 일부 또는 특정 조합을 제공하거나 복잡한 쿼리를 간단하게 작성</strong></mark>할 수 있도록 도와줍니다. <mark class="highlight-red"><strong>뷰는 물리적인 데이터를 변경하지 않고도 데이터의 조작, 질의, 보고 등을 수행</strong></mark>할 수 있도록 합니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">
-    </p><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">뷰의 목적</h3><h3 id="4f437c54-6382-4afd-b8d4-9e321346c4c1" class="">데이터의 보안과 접근 제어</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>사용자에게 필요한 데이터만 노출</strong></span>하고, <span style="border-bottom:0.05em solid"><strong>중요한 데이터에 대한 접근을 제한</strong></span>할 수 있습니다. 뷰를 통해 사용자는 <span style="border-bottom:0.05em solid"><strong>특정 열에 대한 읽기 또는 쓰기 권한</strong></span>을 가질 수 있습니다.</div></figure><p id="c9371db4-53cc-4fda-9b09-c0f9d41ece50" class="">
-    </p><h3 id="2a28b9ca-c88e-4a53-8399-1c11d133d9fb" class="">복잡한 쿼리의 간소화</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ee61d2dd-9683-4c04-89ad-1127559b7406"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">복잡한 조인, 필터링, 계산 등을 수행하는 <span style="border-bottom:0.05em solid"><strong>복잡한 쿼리를 뷰로 작성하면 간단한 쿼리로 대체</strong></span>할 수 있습니다. 이는 개발자가 쿼리 작성을 간소화하고 성능을 향상시킬 수 있습니다.</div></figure><p id="435b39a0-a1a5-4fd5-83fd-8276c1a8aaf8" class="">
-    </p><h3 id="3db36ed6-00af-4f1c-907c-d10d3839fa9f" class="">데이터의 일관성 유지</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c181d39f-a687-45cc-aeb2-a537f1196253"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>여러 테이블의 데이터를 조합하고 가상의 테이블로 표현</strong></span>할 수 있습니다. 이를 통해 데이터의 일관성을 유지하고 중복을 피할 수 있습니다.</div></figure><p id="a03dbd09-4881-4f16-a253-3de7bab8f869" class="">
-    </p><h3 id="980c39ec-fd3d-47fc-9400-8f9df8750c1a" class="">데이터의 가상화</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="020e4612-278e-40f2-9160-c7ef3e46ae19"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>실제 데이터의 논리적인 구조를 숨길 수 있습니다.</strong></span> 사용자는 뷰를 통해 데이터를 조회하거나 조작할 수 있지만, 뷰를 통해 데이터베이스의 실제 구조를 알 필요가 없습니다.</div></figure><p id="de3a2348-a92a-4dbf-83b2-546b3f0b776d" class="">
-    </p><h3 id="7de632dc-d993-4ee6-b841-f0952ecba2e8" class="">뷰의 예시</h3><pre id="9da53e37-10e4-4a30-8d01-e83c68f4de18" class="code"><code>CREATE VIEW department_view AS
-    SELECT employee_name, department
-    FROM employees;</code></pre><p id="c87f5e64-197f-44bc-999d-33733fb1dd82" class="">▲ &quot;department_view&quot;라는 뷰가 생성되었습니다. 이 뷰는 &quot;employees&quot; 테이블에서 &quot;employee_name&quot;과 &quot;department&quot; 열만 선택하여 표시하는 가상의 테이블입니다. 이제 사용자는 &quot;department_view&quot;를 통해 &quot;employees&quot; <strong>테이블의 일부 데이터에 접근</strong>할 수 있습니다.</p><p id="f2e94c83-d82b-4011-9488-db27d966fc69" class="">
-    </p></div></article></body></html>
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="9bd14b16-5a6b-4593-9495-1900e0f4ecae" class="">자바 <strong>인터페이스(Interface)</strong>는 <mark class="highlight-red"><strong>클래스와 클래스 간의 계약(Contract)을 정의하는 추상 형태</strong></mark>입니다. <mark class="highlight-red"><strong>인터페이스는 클래스가 어떤 메서드를 구현해야 하는지를 명시</strong></mark>하고, <mark class="highlight-red"><strong>클래스 간의 일관성을 유지</strong></mark>하며, <span style="border-bottom:0.05em solid"><strong><mark class="highlight-red">다형성을 구현하는 데 사용</mark></strong></span>됩니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="78112b8c-a423-4f56-85fa-21b25bee1a14" class="">
+    </p><h3 id="960085aa-00d9-406f-9a14-8a5c110952be" class="">인터페이스</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6be955bb-ef88-4072-aa99-aa810d275605"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">인터페이스는 메서드의 선언만을 포함하며, 구현 내용은 가지지 않습니다.<p id="b5938aa4-e900-4549-8f82-72f2fed2304e" class="">클래스가 인터페이스를 구현(Implement)할 때, 인터페이스에서 정의된 메서드를 모두 구현해야 합니다.</p><p id="1537349e-da15-40b1-9559-1b8bf9b01d05" class="">인터페이스는 다중 상속이 가능하며, 클래스는 여러 개의 인터페이스를 동시에 구현할 수 있습니다.</p></div></figure><p id="99f912f0-8d66-46b3-8f98-57798595a6b1" class="">
+    </p><h3 id="73ed0674-33a0-4f46-9a25-1f65a1ad13f2" class="">인터페이스 예시</h3><pre id="2b2a42cf-2e34-4ee3-81ec-006743116ac3" class="code"><code>// 인터페이스 정의
+    interface Drawable {
+        void draw(); // 추상 메서드
+    }
+    
+    // 인터페이스 구현
+    class Circle implements Drawable {
+        @Override
+        public void draw() {
+            System.out.println(&quot;Drawing a circle&quot;);
+        }
+    }
+    
+    class Rectangle implements Drawable {
+        @Override
+        public void draw() {
+            System.out.println(&quot;Drawing a rectangle&quot;);
+        }
+    }
+    
+    public class InterfaceExample {
+        public static void main(String[] args) {
+            Drawable circle = new Circle();
+            circle.draw(); // Circle 클래스의 draw() 메서드 호출
+    
+            Drawable rectangle = new Rectangle();
+            rectangle.draw(); // Rectangle 클래스의 draw() 메서드 호출
+        }
+    }</code></pre><p id="85648f78-566d-411f-a1c4-ae92877a9aaa" class="">
+    </p><p id="ef1f9bd8-878f-47a1-bb22-c2488f59f4dd" class="">0️⃣ <code><strong>Drawable</strong></code> 인터페이스에 <code><strong>draw()</strong></code> 메서드가 선언되어 있습니다.</p><p id="3dced305-3311-4ac1-939c-0dd6cace10a6" class="">1️⃣  <code><strong>Circle</strong></code> 클래스와 <code><strong>Rectangle</strong></code> 클래스는 <code><strong>Drawable</strong></code> 인터페이스를 구현하여 <code><strong>draw()</strong></code> 메서드를 구현합니다.</p><p id="b2bbda10-5e34-42bf-bf1c-29cf3009d46b" class="">2️⃣ <code><strong>main</strong></code> 메서드에서 <code><strong>Drawable</strong></code> 인터페이스 타입의 객체를 생성하고, <code><strong>draw()</strong></code> 메서드를 호출합니다.</p><p id="6b16b2ac-c6e4-46f0-b293-729c23368de5" class="">3️⃣ 실제 객체는 <code><strong>Circle</strong></code>과 <code><strong>Rectangle</strong></code> 클래스의 인스턴스이며, 각 클래스에서 <code><strong>draw()</strong></code> 메서드를 구현한 내용이 실행됩니다.</p><p id="af5d49d3-b73d-41d6-a9ef-2e946daecef9" class="">
+    </p><hr id="ebc51aff-8075-47cc-88ad-1e114edd535f"/><h1 id="f6a34645-a74a-4afc-9962-8e9773441423" class="">👩‍🏫</h1><p id="88cef80c-f8f9-4ef5-a603-53de1e37329a" class=""><strong>인터페이스</strong>를 사용하면 <span style="border-bottom:0.05em solid"><strong>다형성을 구현</strong></span>할 수 있고, <span style="border-bottom:0.05em solid"><strong>클래스 간의 일관성을 유지</strong></span>할 수 있습니다. <span style="border-bottom:0.05em solid"><strong>인터페이스는 클래스가 가져야 하는 기능을 정의하는데 사용</strong></span>되며, <span style="border-bottom:0.05em solid"><strong>클래스가 인터페이스를 구현하면 인터페이스에 선언된 메서드를 반드시 구현</strong></span>해야 합니다. 이를 통해 <span style="border-bottom:0.05em solid"><strong>코드의 일관성과 유연성을 확보</strong></span>할 수 있습니다.</p></div></article></body></html>

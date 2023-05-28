@@ -2,7 +2,8 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>제목 없음</title><style>
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
- 
+  
+    
     a,
     a.visited {
         color: inherit;
@@ -259,6 +260,10 @@
         margin-right: 1em;
     }
     
+    .page-description {
+        margin-bottom: 2em;
+    }
+    
     .simple-table {
         margin-top: 1em;
         font-size: 0.875rem;
@@ -460,11 +465,7 @@
         margin-top: 0.25em;
     }
     
-    .sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-    .code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-    .serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-    .mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-    .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+   .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
     .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
     .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
     .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
@@ -642,4 +643,23 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="328c419a-95bd-4f65-ab0e-9ad9c1c15241" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h3 id="d60b8dc9-94d1-4bb8-afd5-b243a0816d4e" class="">요소(element)</h3><ul id="1362d1d0-115f-445b-8a3e-b8bc01f36de9" class="bulleted-list"><li style="list-style-type:disc">HTML의 요소는 태그와 내용(contents)로 구성되어 있다.</li></ul><figure id="a06c88a3-1894-4616-b944-13aa4b114e91" class="image"><a href="https://github.com/drsuneamer/TIL/raw/master/SSAFY_2022/2_web/01_HTML&amp;CSS.assets/image-20220826011442124.png"><img src="https://github.com/drsuneamer/TIL/raw/master/SSAFY_2022/2_web/01_HTML&amp;CSS.assets/image-20220826011442124.png"/></a></figure><ul id="f1182443-538c-42e6-b409-1e82a2ce33ab" class="bulleted-list"><li style="list-style-type:disc">HTML 요소는 시작 태그와 종료 태그 그리고 태그 사이에 위치한 내용으로 구성<ul id="26695ea0-d158-4e73-8935-477a38f6ebef" class="bulleted-list"><li style="list-style-type:circle">태그(Element, 요소)는 컨텐츠(내용)를 감싸는 것으로 그 정보의 성격과 의미를 정의</li></ul></li></ul><ul id="ca3c93f5-b7ff-4f17-98f9-2a546a28e0ca" class="bulleted-list"><li style="list-style-type:disc">내용이 없는 태그들<ul id="213b0cb0-ba30-4b37-b8da-6bf7a336175d" class="bulleted-list"><li style="list-style-type:circle">br(break line), hr(horizental rule), img, input, link, meta</li></ul></li></ul><ul id="8d76c0b7-580c-42ba-8213-e8db39f5866d" class="bulleted-list"><li style="list-style-type:disc">요소는 중첩(nested) 될 수 있음<ul id="8bcc3417-5333-405f-a0ae-3706cfae54a1" class="bulleted-list"><li style="list-style-type:circle">요소의 중첩을 통해 하나의 문서를 구조화</li></ul><ul id="fcecb0a4-efed-40de-93df-5eff283bd460" class="bulleted-list"><li style="list-style-type:circle">여는 태그와 닫는 태그의 쌍을 잘 확인해야 함<ul id="884dc6e1-a2f8-4e8c-a91b-f9bf8c293936" class="bulleted-list"><li style="list-style-type:square">오류를 반환하는 것이 아닌 그냥 레이아웃이 깨진 상태로 출력되기 때문에, 디버깅이 힘들어 질 수 있음</li></ul></li></ul></li></ul></div></article></body></html>
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1><p class="page-description"></p></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="948fd209-80d1-4159-9720-a01e218bb32c" class=""><strong>HTML의 요소(Element)</strong>는 <mark class="highlight-red"><strong>태그와 태그 사이에 위치한 내용(contents)로 구성</strong></mark>됩니다. 요소는 컨텐츠를 감싸는 것으로,<mark class="highlight-red"><strong> 정보의 성격과 의미를 정의</strong></mark>합니다. 시작 태그와 종료 태그 사이에 내용이 들어갈 수 있으며, 일부 요소는 내용이 없는 경우도 있습니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><h3 id="12bc77d0-4d92-4b81-ad00-8c6a81d5dc80" class="">HTML 요소</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="743ecb6f-9e48-4334-a94d-309c541544d4"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">요소는 HTML <strong>문서의 구조를 형성</strong>하고, <strong>중첩</strong>될 수 있습니다. <span style="border-bottom:0.05em solid"><strong>중첩된 요소는 부모 요소와 자식 요소의 관계</strong></span>를 가지며, 이를 통해 <span style="border-bottom:0.05em solid"><strong>문서의 구조와 계층</strong></span>을 나타낼 수 있습니다. 중요한 점은 <mark class="highlight-red"><strong>요소의 시작 태그와 종료 태그의 쌍을 잘 맞춰야 한다는 것</strong></mark>입니다. 시작 태그와 종료 태그의 쌍이 맞지 않으면 올바른 구조가 되지 않고, 레이아웃이 깨진 상태로 출력될 수 있습니다.</div></figure><p id="e0211b06-5c37-4d11-9bd2-c4f6384f8a14" class="">
+    </p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="aa792e26-ea0e-4ec1-bbb1-0bdbf2b20b86"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%"><mark class="highlight-red"><strong>일부 내용이 없는 태그들도 존재</strong></mark>합니다. 예를 들어, <code><strong>&lt;br&gt;</strong></code>은 줄 바꿈을 위해 사용되는 빈 태그이고, <code><strong>&lt;hr&gt;</strong></code>은 수평 줄을 표시하는 데 사용됩니다. <code><strong>&lt;img&gt;</strong></code>, <code><strong>&lt;input&gt;</strong></code>, <code><strong>&lt;link&gt;</strong></code>, <code><strong>&lt;meta&gt;</strong></code> 등도 내용이 없는 태그의 예시입니다.</div></figure><p id="73f5083a-6704-4bf2-acc8-14fd3e646253" class="">
+    </p><h3 id="6ceb5e41-7614-461d-875f-4184aec5124a" class=""><code>&lt;h1&gt;</code></h3><pre id="d841fe9c-9712-4570-be6a-bfb08b74308c" class="code"><code>//제목을 나타내는 요소
+    &lt;h1&gt;Welcome to my Website&lt;/h1&gt;</code></pre><h3 id="f57cb499-7edd-4ce1-9495-5cc6cef071ca" class=""><code><strong>&lt;p&gt;</strong></code></h3><pre id="ac27022c-b0c1-40ca-8ccd-bbbdded4c1a5" class="code code-wrap"><code>//문단을 나타내는 요소
+    &lt;p&gt;This is a paragraph of text.&lt;/p&gt;</code></pre><p id="1d19ff16-ed17-4037-8ea8-e222d973ec90" class="">
+    </p><h3 id="e4166bef-7034-488a-a6d3-67bc76ce736e" class=""><code>&lt;a&gt;</code></h3><pre id="50aabb8b-f9fd-4448-99ea-59efe06a04d4" class="code"><code>//링크를 생성하는 요소
+    &lt;a href=&quot;https://www.example.com&quot;&gt;Visit Example Website&lt;/a&gt;</code></pre><p id="aa5f71e0-fbc7-4027-993e-c29d65c90ab4" class="">
+    </p><h3 id="98ef133e-63db-4a3b-8402-f51fcde87939" class=""><code>&lt;ul&gt;</code>, <code>&lt;li&gt;</code></h3><pre id="de019bf4-100a-41c5-a664-492f2544e519" class="code"><code>//순서 없는 목록을 생성하는 요소
+    &lt;ul&gt;
+      &lt;li&gt;Item 1&lt;/li&gt;
+      &lt;li&gt;Item 2&lt;/li&gt;
+      &lt;li&gt;Item 3&lt;/li&gt;
+    &lt;/ul&gt;</code></pre><p id="c24d62e4-51d5-4fe1-a51c-d853680ddb6b" class="">
+    </p><h3 id="04c49a6a-c03f-4527-9e2a-66de3deadede" class=""><code>&lt;div&gt;</code></h3><pre id="3762ad33-4e5b-4f20-aac2-7a40f235d317" class="code"><code>//구획을 만들거나 스타일을 적용하기 위한 컨테이너 요소
+    &lt;div class=&quot;container&quot;&gt;
+      &lt;h2&gt;Section Title&lt;/h2&gt;
+      &lt;p&gt;This is some content inside a div.&lt;/p&gt;
+    &lt;/div&gt;</code></pre><h3 id="fcf33b8a-a5ee-4dbb-8798-cc12faf0494e" class=""></h3><hr id="e619ba97-e54a-4dce-8a39-38efac0b1036"/><h1 id="0b333983-66e4-4379-8f41-72589d7a187a" class="">👩‍🏫</h1><p id="654fd281-a131-4fc6-8a68-7638ae21e027" class=""><mark class="highlight-blue"><strong>수고하셨습니다!</strong></mark></p><p id="04da6e76-3cc6-4ccc-a179-676f8d08caab" class="">
+    </p><p id="e74f3b6c-6bac-429b-8df8-ada23fdde569" class="">
+    </p></div></article></body></html>

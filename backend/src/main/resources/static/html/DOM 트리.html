@@ -2,7 +2,7 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>제목 없음</title><style>
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
-  
+   
     
     a,
     a.visited {
@@ -260,6 +260,10 @@
         margin-right: 1em;
     }
     
+    .page-description {
+        margin-bottom: 2em;
+    }
+    
     .simple-table {
         margin-top: 1em;
         font-size: 0.875rem;
@@ -461,11 +465,7 @@
         margin-top: 0.25em;
     }
     
-    .sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-    .code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-    .serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-    .mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-    .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+   .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
     .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
     .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
     .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
@@ -643,5 +643,38 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="328c419a-95bd-4f65-ab0e-9ad9c1c15241" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><p id="288d9d6a-7ac9-430a-a15f-349eba9d1224" class="">
-    </p><h3 id="980825c7-7fdb-4a25-bf17-22ae80ecbdef" class="">DOM(Document Object Model) 트리</h3><ul id="2f813184-463b-44f8-b4f0-46c177a4c076" class="bulleted-list"><li style="list-style-type:disc">텍스트 파일인 HTML 문서를 브라우저에서 렌더링 하기 위한 구조<ul id="a30b930c-c86e-48a1-ba77-de23bb2d505a" class="bulleted-list"><li style="list-style-type:circle">HTML 문서에 대한 모델을 구성함</li></ul><ul id="27ccdb2b-f627-4046-bdaa-a7438b8458b4" class="bulleted-list"><li style="list-style-type:circle">HTML 문서 내의 각 요소에 접근 / 수정에 필요한 프로퍼티와 메서드를 제공함</li></ul></li></ul><figure id="0bf34931-cd85-44f3-8962-bdeed5228274" class="image"><a href="https://github.com/drsuneamer/TIL/raw/master/SSAFY_2022/2_web/01_HTML&amp;CSS.assets/image-20220826011435414.png"><img src="https://github.com/drsuneamer/TIL/raw/master/SSAFY_2022/2_web/01_HTML&amp;CSS.assets/image-20220826011435414.png"/></a></figure></div></article></body></html>
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1><p class="page-description"></p></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="948fd209-80d1-4159-9720-a01e218bb32c" class=""><strong>HTML DOM(Document Object Model)</strong>은 <mark class="highlight-red"><strong>HTML 문서를 브라우저에서 렌더링하기 위한 구조</strong></mark>로, <mark class="highlight-red"><strong>텍스트 파일인 HTML 문서를 구조화하여 처리하는 방식</strong></mark>입니다. <mark class="highlight-red"><strong>HTML DOM은 HTML 문서에 대한 모델을 구성하며, 각 요소에 접근하고 수정하는 데 필요한 프로퍼티와 메서드를 제공</strong></mark>합니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><h3 id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">DOM의 특징</h3><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">트리 구조</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">HTML DOM은 <strong>트리 구조로 표현</strong>됩니다. <span style="border-bottom:0.05em solid"><strong>HTML 문서의 각 요소는 노드로 표현되며, 부모-자식 관계를 통해 요소 간의 계층 구조를 나타냅니다.</strong></span> 이를 통해 <strong>요소의 위치를 파악하고 조작</strong>할 수 있습니다.</div></figure><p id="7dd193c9-bfb4-46d5-a1e9-41efd09cc977" class="">
+    </p><h3 id="39fe7d9b-e85e-4562-8c8c-6eef1cb266b4" class="">노드 유형</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4ebf39ac-f1ef-4df2-8d17-1ebf0b4702fd"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">HTML DOM은 다양한 유형의 노드를 포함합니다. <strong>요소 노드(element node), 속성 노드(attribute node), 텍스트 노드(text node), 주석 노드(comment node) 등</strong>이 있으며, <span style="border-bottom:0.05em solid"><strong>각각의 노드 유형은 특정한 정보를 나타냅니다.</strong></span></div></figure><p id="764cf8cc-ab92-40d2-98a4-02af2f2b8a09" class="">
+    </p><h3 id="823792ec-da5a-40fc-bc33-2416bb5735e7" class="">속성 및 메서드</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5a87d43c-4730-449b-a35c-7aaa892bce28"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">HTML DOM은 각 요소에 대한 속성과 메서드를 제공합니다. <strong>속성</strong>을 통해 <span style="border-bottom:0.05em solid"><strong>요소의 속성 값을 읽고 수정</strong></span>할 수 있으며, <strong>메서드</strong>를 사용하여 <span style="border-bottom:0.05em solid"><strong>요소를 조작하고 추가 동작을 수행</strong></span>할 수 있습니다.</div></figure><p id="a2511af8-314a-4aa7-ae2f-2a5b9bf70bb1" class="">
+    </p><pre id="df9cfcf5-140d-444b-aeb7-772cf03adfb1" class="code"><code>&lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;HTML DOM Example&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1 id=&quot;title&quot;&gt;Hello, DOM!&lt;/h1&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Item 1&lt;/li&gt;
+        &lt;li&gt;Item 2&lt;/li&gt;
+        &lt;li&gt;Item 3&lt;/li&gt;
+      &lt;/ul&gt;
+    
+      &lt;script&gt;
+        // HTML DOM을 사용하여 요소에 접근하고 수정
+        // 요소 선택
+        const titleElement = document.getElementById(&#x27;title&#x27;);
+        const paragraphElement = document.querySelector(&#x27;p&#x27;);
+        const listItemElements = document.querySelectorAll(&#x27;li&#x27;);
+    
+        // 요소 수정
+        titleElement.innerHTML = &#x27;Hello, Updated DOM!&#x27;;
+        paragraphElement.style.color = &#x27;red&#x27;;
+        listItemElements[0].textContent = &#x27;Modified Item 1&#x27;;
+      &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre><p id="90df8b4e-cf32-406e-b2fc-e11cdea36f91" class="">▲ <em>위 예시에서는 HTML DOM을 사용하여 </em><em><code><strong>getElementById()</strong></code></em><em>와 </em><em><code><strong>querySelector()</strong></code></em><em> 메서드를 사용하여 요소를 선택하고, 선택한 요소의 프로퍼티와 메서드를 사용하여 내용이나 스타일을 수정하고 있습니다.</em></p><p id="67d36d47-c852-444d-a3e7-d69c0da0111a" class="">
+    </p><hr id="e619ba97-e54a-4dce-8a39-38efac0b1036"/><p id="9d333c28-94c5-4825-97bc-cacadb5cfd6a" class="">
+    </p><h1 id="0b333983-66e4-4379-8f41-72589d7a187a" class="">👩‍🏫</h1><p id="654fd281-a131-4fc6-8a68-7638ae21e027" class=""><mark class="highlight-blue"><strong>수고하셨습니다!</strong></mark></p><p id="04da6e76-3cc6-4ccc-a179-676f8d08caab" class="">
+    </p><p id="e74f3b6c-6bac-429b-8df8-ada23fdde569" class="">
+    </p></div></article></body></html>

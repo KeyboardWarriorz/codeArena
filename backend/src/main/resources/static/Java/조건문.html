@@ -2,7 +2,7 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>제목 없음</title><style>
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
-  
+   
     a,
     a.visited {
         color: inherit;
@@ -460,7 +460,7 @@
         margin-top: 0.25em;
     }
     
- .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+  .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
     .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
     .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
     .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
@@ -638,12 +638,31 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="9bd14b16-5a6b-4593-9495-1900e0f4ecae" class="">데이터베이스 <strong>뷰(View)</strong>는 <mark class="highlight-red"><strong>데이터베이스에서 테이블이나 다른 뷰를 기반으로 생성된 가상의 테이블</strong></mark>입니다. 뷰는 <mark class="highlight-red"><strong>데이터베이스 사용자에게 데이터의 일부 또는 특정 조합을 제공하거나 복잡한 쿼리를 간단하게 작성</strong></mark>할 수 있도록 도와줍니다. <mark class="highlight-red"><strong>뷰는 물리적인 데이터를 변경하지 않고도 데이터의 조작, 질의, 보고 등을 수행</strong></mark>할 수 있도록 합니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">
-    </p><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">뷰의 목적</h3><h3 id="4f437c54-6382-4afd-b8d4-9e321346c4c1" class="">데이터의 보안과 접근 제어</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>사용자에게 필요한 데이터만 노출</strong></span>하고, <span style="border-bottom:0.05em solid"><strong>중요한 데이터에 대한 접근을 제한</strong></span>할 수 있습니다. 뷰를 통해 사용자는 <span style="border-bottom:0.05em solid"><strong>특정 열에 대한 읽기 또는 쓰기 권한</strong></span>을 가질 수 있습니다.</div></figure><p id="c9371db4-53cc-4fda-9b09-c0f9d41ece50" class="">
-    </p><h3 id="2a28b9ca-c88e-4a53-8399-1c11d133d9fb" class="">복잡한 쿼리의 간소화</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ee61d2dd-9683-4c04-89ad-1127559b7406"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">복잡한 조인, 필터링, 계산 등을 수행하는 <span style="border-bottom:0.05em solid"><strong>복잡한 쿼리를 뷰로 작성하면 간단한 쿼리로 대체</strong></span>할 수 있습니다. 이는 개발자가 쿼리 작성을 간소화하고 성능을 향상시킬 수 있습니다.</div></figure><p id="435b39a0-a1a5-4fd5-83fd-8276c1a8aaf8" class="">
-    </p><h3 id="3db36ed6-00af-4f1c-907c-d10d3839fa9f" class="">데이터의 일관성 유지</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c181d39f-a687-45cc-aeb2-a537f1196253"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>여러 테이블의 데이터를 조합하고 가상의 테이블로 표현</strong></span>할 수 있습니다. 이를 통해 데이터의 일관성을 유지하고 중복을 피할 수 있습니다.</div></figure><p id="a03dbd09-4881-4f16-a253-3de7bab8f869" class="">
-    </p><h3 id="980c39ec-fd3d-47fc-9400-8f9df8750c1a" class="">데이터의 가상화</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="020e4612-278e-40f2-9160-c7ef3e46ae19"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>실제 데이터의 논리적인 구조를 숨길 수 있습니다.</strong></span> 사용자는 뷰를 통해 데이터를 조회하거나 조작할 수 있지만, 뷰를 통해 데이터베이스의 실제 구조를 알 필요가 없습니다.</div></figure><p id="de3a2348-a92a-4dbf-83b2-546b3f0b776d" class="">
-    </p><h3 id="7de632dc-d993-4ee6-b841-f0952ecba2e8" class="">뷰의 예시</h3><pre id="9da53e37-10e4-4a30-8d01-e83c68f4de18" class="code"><code>CREATE VIEW department_view AS
-    SELECT employee_name, department
-    FROM employees;</code></pre><p id="c87f5e64-197f-44bc-999d-33733fb1dd82" class="">▲ &quot;department_view&quot;라는 뷰가 생성되었습니다. 이 뷰는 &quot;employees&quot; 테이블에서 &quot;employee_name&quot;과 &quot;department&quot; 열만 선택하여 표시하는 가상의 테이블입니다. 이제 사용자는 &quot;department_view&quot;를 통해 &quot;employees&quot; <strong>테이블의 일부 데이터에 접근</strong>할 수 있습니다.</p><p id="f2e94c83-d82b-4011-9488-db27d966fc69" class="">
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="fef4c1a8-33af-4fc8-a0ef-148581db5817" class="">자바의 <strong>조건문</strong>은 <mark class="highlight-red"><strong>프로그램의 흐름을 조건에 따라 분기</strong></mark>하고, <mark class="highlight-red"><strong>다양한 상황에 따라 다른 코드 블록을 실행하는 데 사용</strong></mark>됩니다. 주요한 조건문으로는<strong> if문과 switch문</strong>이 있습니다. </p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="78112b8c-a423-4f56-85fa-21b25bee1a14" class="">
+    </p><h3 id="960085aa-00d9-406f-9a14-8a5c110952be" class="">if문</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6be955bb-ef88-4072-aa99-aa810d275605"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">if문은 주어진 <span style="border-bottom:0.05em solid"><strong>조건식이 참일 경우에만 특정 코드 블록을 실행</strong></span>합니다.<p id="ed63af05-b4d1-4fae-911b-a5f7d80ed7f6" class="">조건식이 참이면 if문 블록 내의 코드가 실행되고, 거짓이면 if문을 건너뛰고 다음 코드로 진행합니다.</p><p id="69a6ed5e-ea49-4343-affa-06112334daca" class="">필요에 따라 <span style="border-bottom:0.05em solid"><strong>else문을 추가하여 조건식이 거짓일 때 실행될 코드를 작성</strong></span>할 수 있습니다.</p></div></figure><h3 id="99f912f0-8d66-46b3-8f98-57798595a6b1" class="">if문의 예시 </h3><pre id="82f32e66-2db7-429b-8599-e95850f66e53" class="code"><code>int num = 10;
+    
+    if (num &gt; 0) {
+        System.out.println(&quot;양수입니다.&quot;);
+    } else if (num &lt; 0) {
+        System.out.println(&quot;음수입니다.&quot;);
+    } else {
+        System.out.println(&quot;0입니다.&quot;);
+    }</code></pre><p id="1f52b3cc-1661-4c2e-bf2d-0a4c1d087af1" class="">
+    </p><hr id="ebc51aff-8075-47cc-88ad-1e114edd535f"/><h3 id="769ed60e-60a7-4603-a348-befad3c81f33" class="">switch문</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="172c1ec9-a5f4-4fae-addd-97153a5faf99"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><strong>switch문</strong>은 <span style="border-bottom:0.05em solid"><strong>변수나 식의 값에 따라 다른 코드 블록을 실행</strong></span>합니다.<p id="ac6ab8fb-9dc6-4f12-ae90-91e843edc0f3" class="">변수나 식의 값과 일치하는 케이스 라벨을 찾아 해당하는 코드 블록을 실행하며, <span style="border-bottom:0.05em solid"><strong>break 문을 만나면 switch문을 빠져나와 다음 코드로 진행</strong></span>합니다.</p><p id="90629499-a902-4e02-b41c-3eaa935db43e" class="">필요에 따라 <span style="border-bottom:0.05em solid"><strong>default 문</strong></span>을 추가하여 어떤 케이스에도 해당하지 않을 때 실행될 코드를 작성할 수 있습니다.</p></div></figure><h3 id="e22487ce-67b0-452d-8249-989244a5a8da" class="">switch문의 예시 </h3><pre id="b39baa6e-8769-4956-a741-13aca08eb7f0" class="code"><code>char grade = &#x27;B&#x27;;
+    
+    switch (grade) {
+        case &#x27;A&#x27;:
+            System.out.println(&quot;훌륭합니다!&quot;);
+            break;
+        case &#x27;B&#x27;:
+            System.out.println(&quot;잘했습니다!&quot;);
+            break;
+        case &#x27;C&#x27;:
+            System.out.println(&quot;노력이 필요합니다.&quot;);
+            break;
+        default:
+            System.out.println(&quot;점수를 확인해주세요.&quot;);
+    }</code></pre><p id="400914b8-50a4-4e1c-8f7e-961cedfd1948" class="">
+    </p><p id="e4011fc8-21f3-4a7b-833d-4a037c7879c8" class="">
+    </p><hr id="aebf0a3d-5bf9-45f2-adf1-f75acf3644f9"/><h1 id="c5295f5e-c925-4d2c-b64f-fea9b63f1049" class="">👩‍🏫</h1><p id="4968a899-c002-4113-a025-70fbd8271950" class=""><strong>조건문</strong>을 사용하면 <span style="border-bottom:0.05em solid"><strong>특정 조건에 따라 코드를 실행하고, 다양한 상황에 대응</strong></span>할 수 있습니다. if문은 조건식의 <span style="border-bottom:0.05em solid"><strong>참/거짓에 따라 분기</strong></span>하고, <span style="border-bottom:0.05em solid"><strong>switch문은 값에 따라 다른 선택지를 처리</strong></span>합니다.</p><p id="3d82554f-0a42-4018-bf65-399634663c2b" class="">
     </p></div></article></body></html>

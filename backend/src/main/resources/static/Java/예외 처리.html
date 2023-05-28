@@ -3,6 +3,7 @@
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
   
+    
     a,
     a.visited {
         color: inherit;
@@ -460,7 +461,7 @@
         margin-top: 0.25em;
     }
     
- .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+   .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
     .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
     .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
     .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
@@ -638,12 +639,62 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="9bd14b16-5a6b-4593-9495-1900e0f4ecae" class="">데이터베이스 <strong>뷰(View)</strong>는 <mark class="highlight-red"><strong>데이터베이스에서 테이블이나 다른 뷰를 기반으로 생성된 가상의 테이블</strong></mark>입니다. 뷰는 <mark class="highlight-red"><strong>데이터베이스 사용자에게 데이터의 일부 또는 특정 조합을 제공하거나 복잡한 쿼리를 간단하게 작성</strong></mark>할 수 있도록 도와줍니다. <mark class="highlight-red"><strong>뷰는 물리적인 데이터를 변경하지 않고도 데이터의 조작, 질의, 보고 등을 수행</strong></mark>할 수 있도록 합니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">
-    </p><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">뷰의 목적</h3><h3 id="4f437c54-6382-4afd-b8d4-9e321346c4c1" class="">데이터의 보안과 접근 제어</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>사용자에게 필요한 데이터만 노출</strong></span>하고, <span style="border-bottom:0.05em solid"><strong>중요한 데이터에 대한 접근을 제한</strong></span>할 수 있습니다. 뷰를 통해 사용자는 <span style="border-bottom:0.05em solid"><strong>특정 열에 대한 읽기 또는 쓰기 권한</strong></span>을 가질 수 있습니다.</div></figure><p id="c9371db4-53cc-4fda-9b09-c0f9d41ece50" class="">
-    </p><h3 id="2a28b9ca-c88e-4a53-8399-1c11d133d9fb" class="">복잡한 쿼리의 간소화</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ee61d2dd-9683-4c04-89ad-1127559b7406"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">복잡한 조인, 필터링, 계산 등을 수행하는 <span style="border-bottom:0.05em solid"><strong>복잡한 쿼리를 뷰로 작성하면 간단한 쿼리로 대체</strong></span>할 수 있습니다. 이는 개발자가 쿼리 작성을 간소화하고 성능을 향상시킬 수 있습니다.</div></figure><p id="435b39a0-a1a5-4fd5-83fd-8276c1a8aaf8" class="">
-    </p><h3 id="3db36ed6-00af-4f1c-907c-d10d3839fa9f" class="">데이터의 일관성 유지</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c181d39f-a687-45cc-aeb2-a537f1196253"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>여러 테이블의 데이터를 조합하고 가상의 테이블로 표현</strong></span>할 수 있습니다. 이를 통해 데이터의 일관성을 유지하고 중복을 피할 수 있습니다.</div></figure><p id="a03dbd09-4881-4f16-a253-3de7bab8f869" class="">
-    </p><h3 id="980c39ec-fd3d-47fc-9400-8f9df8750c1a" class="">데이터의 가상화</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="020e4612-278e-40f2-9160-c7ef3e46ae19"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">뷰를 사용하여 <span style="border-bottom:0.05em solid"><strong>실제 데이터의 논리적인 구조를 숨길 수 있습니다.</strong></span> 사용자는 뷰를 통해 데이터를 조회하거나 조작할 수 있지만, 뷰를 통해 데이터베이스의 실제 구조를 알 필요가 없습니다.</div></figure><p id="de3a2348-a92a-4dbf-83b2-546b3f0b776d" class="">
-    </p><h3 id="7de632dc-d993-4ee6-b841-f0952ecba2e8" class="">뷰의 예시</h3><pre id="9da53e37-10e4-4a30-8d01-e83c68f4de18" class="code"><code>CREATE VIEW department_view AS
-    SELECT employee_name, department
-    FROM employees;</code></pre><p id="c87f5e64-197f-44bc-999d-33733fb1dd82" class="">▲ &quot;department_view&quot;라는 뷰가 생성되었습니다. 이 뷰는 &quot;employees&quot; 테이블에서 &quot;employee_name&quot;과 &quot;department&quot; 열만 선택하여 표시하는 가상의 테이블입니다. 이제 사용자는 &quot;department_view&quot;를 통해 &quot;employees&quot; <strong>테이블의 일부 데이터에 접근</strong>할 수 있습니다.</p><p id="f2e94c83-d82b-4011-9488-db27d966fc69" class="">
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="fef4c1a8-33af-4fc8-a0ef-148581db5817" class="">자바 <strong>예외 처리(Exception Handling)</strong>는 <mark class="highlight-red"><strong>프로그램이 예상치 못한 상황 또는 오류를 대응하고 처리하는 메커니즘</strong></mark>입니다. 예외 처리는 <mark class="highlight-red"><strong>프로그램의 안정성</strong></mark>을 높이고 <mark class="highlight-red"><strong>예외 상황을 제어</strong></mark>할 수 있도록 도와줍니다. </p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="78112b8c-a423-4f56-85fa-21b25bee1a14" class="">
+    </p><h3 id="960085aa-00d9-406f-9a14-8a5c110952be" class="">예외(Exception)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6be955bb-ef88-4072-aa99-aa810d275605"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><strong>예외</strong>는 <span style="border-bottom:0.05em solid"><strong>프로그램 실행 중 발생할 수 있는 오류 또는 예상치 못한 상황</strong></span>을 의미합니다.<p id="dde32811-5006-47b9-8ee1-1309982e6481" class="">자바에서는 예외를 Checked Exception과 Unchecked Exception으로 나눌 수 있습니다. <strong>Checked Exception</strong>은 <span style="border-bottom:0.05em solid">컴파일러에 의해 체크되고 처리가 필요한 예외</span>이며, <strong>Unchecked Exception</strong>은 <span style="border-bottom:0.05em solid"><strong>컴파일러가 체크하지 않고 실행 중에 발생하는 예외</strong></span>입니다.</p></div></figure><p id="99f912f0-8d66-46b3-8f98-57798595a6b1" class="">
+    </p><hr id="8e21da8c-dafc-4950-b08c-9724b8af38a1"/><h3 id="ea1de25c-ecbb-416d-b3f9-3b28d54233ce" class="">⛔ 예외 처리 방법</h3><p id="703fb62d-ef7d-4a20-a9d0-95dc02ec7cd8" class="">
+    </p><h3 id="6272546f-3a0a-44d7-bc73-fc3aee3853e0" class="">0️⃣ try-catch 블록</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d4ccf471-0e98-4b93-9434-29d76ca26699"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><span style="border-bottom:0.05em solid"><strong>예외가 발생할 수 있는 코드를 try 블록 안에 작성</strong></span>하고, <span style="border-bottom:0.05em solid"><strong>해당 예외를 처리할 수 있는 catch 블록을 사용</strong></span>하여 예외를 처리합니다.</div></figure><pre id="4f82d47b-84cd-446f-82fb-5fd48db10d9f" class="code"><code>public class ExceptionExample {
+        public static void main(String[] args) {
+            try {
+                int[] numbers = {1, 2, 3};
+                System.out.println(numbers[4]); // 존재하지 않는 인덱스에 접근
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println(&quot;배열 인덱스를 벗어났습니다.&quot;);
+            }
+        }
+    }</code></pre><p id="ae8bba8d-cf37-4439-a9dc-4a96a706980d" class="">
+    </p><hr id="888d7394-ce87-4581-88d4-9d26979c0927"/><h3 id="ceeca1a8-4f65-433b-abff-6a710a479dbf" class="">1️⃣ throws 선언</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="150a8e8d-cf5f-4f45-8191-ff4783b6dea5"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">메서드에서 발생할 수 있는 <span style="border-bottom:0.05em solid"><strong>예외를 throws 키워드를 사용하여 해당 메서드를 호출한 곳으로 예외 처리를 넘깁니다.</strong></span></div></figure><pre id="37aff058-79cf-4be8-86fc-e650cb442ca8" class="code"><code>public class ExceptionExample {
+        public static void main(String[] args) {
+            try {
+                divide(10, 0); // divide 메서드에서 발생한 예외 처리를 호출한 곳으로 넘김
+            } catch (ArithmeticException e) {
+                System.out.println(&quot;0으로 나눌 수 없습니다.&quot;);
+            }
+        }
+    
+        public static void divide(int num1, int num2) throws ArithmeticException {
+            if (num2 == 0) {
+                throw new ArithmeticException();
+            }
+            int result = num1 / num2;
+            System.out.println(&quot;나눈 결과: &quot; + result);
+        }
+    }</code></pre><p id="eea88cdf-681a-4e1c-b3c1-842742c6ba40" class="">
+    </p><hr id="232ccd27-a3e3-4d86-93fc-4d8a0a54d409"/><h3 id="469cb4a5-88ad-4b16-862e-38f71a2e6b89" class="">2️⃣ finally 블록</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="110d7b02-048d-4d86-8c67-f0f8c358e135"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><span style="border-bottom:0.05em solid"><strong>예외 발생 여부와 관계없이 항상 실행되어야 하는 코드</strong></span>를 finally 블록에 작성합니다.</div></figure><pre id="52b0ce67-688e-49b7-9e52-1b9c6d20badc" class="code"><code>import java.io.*;
+    
+    public class FinallyExample {
+        public static void main(String[] args) {
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(&quot;myfile.txt&quot;));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println(&quot;파일을 찾을 수 없습니다.&quot;);
+            } catch (IOException e) {
+                System.out.println(&quot;파일을 읽는 도중 오류가 발생했습니다.&quot;);
+            } finally {
+                try {
+                    if (br != null) {
+                        br.close();
+                    }
+                } catch (IOException e) {
+                    System.out.println(&quot;파일 닫기 도중 오류가 발생했습니다.&quot;);
+                }
+            }
+        }
+    }</code></pre><p id="29105d8f-33bf-4b7e-9af2-ac6cc876f77b" class="">
+    </p><p id="73ed0674-33a0-4f46-9a25-1f65a1ad13f2" class="">
+    </p><hr id="ebc51aff-8075-47cc-88ad-1e114edd535f"/><h1 id="55a2d76b-d9d3-4a18-abd6-31a00d85eafa" class="">👩‍🏫</h1><p id="895e9001-452c-495e-a32d-c5d35fed5a76" class=""><strong>예외 처리</strong>를 통해 <span style="border-bottom:0.05em solid"><strong>예외 상황에 대응하고 프로그램의 안정성을 유지</strong></span>할 수 있습니다. 예외 처리는 예외를 잡아내고 적절한 조치를 취함으로써 <span style="border-bottom:0.05em solid"><strong>프로그램의 실행 흐름을 제어</strong></span>할 수 있도록 도와줍니다.</p><p id="76f38bd9-548b-434e-87c3-73ea8001af38" class="">
     </p></div></article></body></html>
