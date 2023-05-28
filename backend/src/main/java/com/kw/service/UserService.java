@@ -28,5 +28,5 @@ public interface UserService {
 
     Long getUserRank(String userId);
 
-    List<UserDTO> getUserByRank();
+    List<UserDTO> getUserByRank(int num);
 }

@@ -171,11 +171,11 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body("프로필 변경 성공");
 	}
 
-	@GetMapping("/top10Rank")
-	public ResponseEntity<?> getUserWord() {
+	@GetMapping("/rank/{num}")
+	public ResponseEntity<?> getUserWord(@PathVariable("num") Integer num) {
 		List<UserDTO> dto = null;
 		try {
-			dto = userService.getUserByRank();
+			dto = userService.getUserByRank(num);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("랭킹 가져오기 실패");
 		}

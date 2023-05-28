@@ -164,11 +164,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDTO> getUserByRank() {
+	public List<UserDTO> getUserByRank(int num) {
 		List<User> list = userRep.getUsersByRank();
 		List<UserDTO> ret = new ArrayList<>();
+		int i=0;
 		for (User user : list) {
+			i++;
 			ret.add(new UserDTO(user.getNickname(),user.getPoint(),getTier(user.getPoint())));
+			if (i == num) {
+				break;
+			}
 		}
 		return ret;
 	}
