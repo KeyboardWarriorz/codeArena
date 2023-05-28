@@ -3,6 +3,7 @@
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
   
+    
     a,
     a.visited {
         color: inherit;
@@ -259,6 +260,10 @@
         margin-right: 1em;
     }
     
+    .page-description {
+        margin-bottom: 2em;
+    }
+    
     .simple-table {
         margin-top: 1em;
         font-size: 0.875rem;
@@ -460,7 +465,7 @@
         margin-top: 0.25em;
     }
     
-   .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+    .pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
     .pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
     .pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
     .pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
@@ -638,5 +643,33 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="6d8171f9-afb0-4040-bad6-fa30bb2d1af3" class="">📢</h1><p id="eb5e2d2c-eb3a-485e-b89f-557fb529a173" class=""><strong>EL(Expression Language)</strong>은 <mark class="highlight-red"><strong>JSP에서 변수 값을 표현하고 조작</strong></mark>하는 간단하고 강력한 <mark class="highlight-red"><strong>표현 언어</strong></mark>입니다. JSTL(JSP Standard Tag Library)은 JSP에서 자주 사용되는 작업을 수행하는 태그 라이브러리로, 코드의 간결성과 가독성을 향상시켜 줍니다.</p><p id="62593490-5523-427d-b029-1144953298b6" class="">
-    </p><h1 id="fb8962bb-d784-4677-b199-650a7bd148f9" class="">📒</h1><h3 id="c11ac5d8-4fbe-49ee-8b6e-625f12bf55ab" class=""><strong>EL 문법</strong></h3><table id="51982b08-3056-461b-a940-ac91abb458d0" class="simple-table"><thead class="simple-table-header"><tr id="50debde1-8a3b-44b9-b23e-ebf9fc4d0ab1"><th id="j~hR" class="simple-table-header-color simple-table-header" style="width:232.66666666666666px"><strong>문법</strong></th><th id="{XRR" class="simple-table-header-color simple-table-header" style="width:232.66666666666666px"><strong>설명</strong></th><th id="VsLR" class="simple-table-header-color simple-table-header" style="width:232.66666666666666px"><strong>예시</strong></th></tr></thead><tbody><tr id="458d42f2-bc44-4cbd-97f1-c13fdd4b4fde"><td id="j~hR" class="" style="width:232.66666666666666px">${표현식}</td><td id="{XRR" class="" style="width:232.66666666666666px">EL 표현식의 시작과 끝을 나타냅니다.</td><td id="VsLR" class="" style="width:232.66666666666666px">${name}</td></tr><tr id="e5b22681-791c-462f-a79b-9c2f60c89d42"><td id="j~hR" class="" style="width:232.66666666666666px">변수</td><td id="{XRR" class="" style="width:232.66666666666666px">EL에서 변수를 사용할 수 있습니다.</td><td id="VsLR" class="" style="width:232.66666666666666px">${count}</td></tr><tr id="2cd4eae3-3358-4149-a2b5-ddf11e5af01a"><td id="j~hR" class="" style="width:232.66666666666666px">속성 접근자</td><td id="{XRR" class="" style="width:232.66666666666666px">객체의 속성에 접근할 때 사용합니다.</td><td id="VsLR" class="" style="width:232.66666666666666px">${user.name}</td></tr><tr id="dbea7482-01b9-4376-8188-5159ab9c681a"><td id="j~hR" class="" style="width:232.66666666666666px">연산자</td><td id="{XRR" class="" style="width:232.66666666666666px">산술, 관계, 논리 연산을 수행할 때 사용합니다.</td><td id="VsLR" class="" style="width:232.66666666666666px">${num1 + num2}, ${score &gt;= 80 &amp;&amp; passed}</td></tr><tr id="f014c1a0-4582-450f-b564-f74a59c38dfa"><td id="j~hR" class="" style="width:232.66666666666666px">EL 함수</td><td id="{XRR" class="" style="width:232.66666666666666px">EL에서 제공하는 함수를 호출하여 작업을 수행합니다.</td><td id="VsLR" class="" style="width:232.66666666666666px">${fn:length(list)}, ${fn:toUpperCase(str)}</td></tr><tr id="04f830be-c4c0-4c0c-985a-d87911fc55b2"><td id="j~hR" class="" style="width:232.66666666666666px">조건식</td><td id="{XRR" class="" style="width:232.66666666666666px">조건문을 사용하여 조건에 따라 값을 출력하거나 처리합니다.</td><td id="VsLR" class="" style="width:232.66666666666666px">${age &gt;= 18 ? &#x27;성인&#x27; : &#x27;미성년자&#x27;}</td></tr><tr id="8a80f25e-882c-4581-9932-6b8afa93d0bb"><td id="j~hR" class="" style="width:232.66666666666666px">Empty 연산자</td><td id="{XRR" class="" style="width:232.66666666666666px">변수 또는 컬렉션이 비어있는지 확인합니다.</td><td id="VsLR" class="" style="width:232.66666666666666px">${empty list}, ${not empty name}</td></tr></tbody></table></div></article></body></html>
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1><p class="page-description"></p></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="9bd14b16-5a6b-4593-9495-1900e0f4ecae" class=""><strong>스프링 보안(Spring Security)</strong>은 <mark class="highlight-red"><strong>스프링 프레임워크에서 제공하는 인증(Authentication)과 권한 부여(Authorization)를 처리하기 위한 모듈</strong></mark>입니다. 스프링 보안은 웹 및 애플리케이션 수준에서 보안 기능을 구현하고 관리할 수 있도록 지원합니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">
+    </p><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">인증(Authentication)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">인증은 사용자가 <strong>자신의 신원을 확인하는 과정</strong>을 의미합니다. 스프링 보안은 다양한 인증 방식을 지원하며, <span style="border-bottom:0.05em solid"><strong>사용자 이름과 비밀번호, 소셜 미디어 로그인, SSO(Single Sign-On) </strong></span>등의 방식을 통해 사용자를 인증할 수 있습니다.</div></figure><pre id="e605859e-d828-409d-b63c-1d4ee75785a5" class="code"><code>@Configuration
+    public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth
+                .inMemoryAuthentication()
+                .withUser(&quot;user&quot;)
+                .password(&quot;{noop}password&quot;)
+                .roles(&quot;USER&quot;);
+        }
+    }</code></pre><p id="0338ffec-3b14-4988-9519-b74b632400cb" class="">▲  <em><code><strong>configure()</strong></code></em><em> 메서드를 통해 인메모리 방식으로 사용자를 정의하고 인증 정보를 설정합니다. 이 예시에서는 </em><strong><em>사용자 이름이 &quot;user&quot;이고 비밀번호가 &quot;password&quot;인 사용자를 정의</em></strong><em>하고, </em><strong><em>&quot;USER&quot; 역할을 부여하여 인증을 처리</em></strong><em>합니다.</em></p><p id="444baa97-5672-46b6-8bee-6c4df3fd651c" class="">
+    </p><h3 id="2b3f1077-7c15-4747-b851-47ed02feb9ba" class="">권한 부여(Authorization)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4ebf39ac-f1ef-4df2-8d17-1ebf0b4702fd"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">권한 부여는 <strong>인증된 사용자에게 특정 작업이나 자원에 대한 접근 권한을 부여하는 과정</strong>을 의미합니다. 스프링 보안은 <span style="border-bottom:0.05em solid"><strong>역할 기반 접근 제어(RBAC) 모델을 기반</strong></span>으로 <span style="border-bottom:0.05em solid"><strong>사용자에게 권한을 할당하고, URL 경로, HTTP 메소드, 메뉴 항목 등을 기준으로 접근 제어를 설정</strong></span>할 수 있습니다.</div></figure><pre id="662ac600-457f-47ce-b09a-0d92b60e8f52" class="code"><code>@Configuration
+    public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                .authorizeRequests()
+                    .antMatchers(&quot;/admin/**&quot;).hasRole(&quot;ADMIN&quot;)
+                    .antMatchers(&quot;/user/**&quot;).hasRole(&quot;USER&quot;)
+                    .anyRequest().authenticated()
+                .and()
+                .formLogin();
+        }
+    }</code></pre><p id="cb0e6344-ae85-4cb9-ad13-775aea13380e" class="">▲  <em><code><strong>configure()</strong></code></em><em> </em><em><strong>메서드를 통해 URL 경로에 대한 접근 제어를 설정</strong></em><em>합니다. &quot;/admin/</em><em><strong>&quot; 경로는 &quot;ADMIN&quot; 역할을 가진 사용자만 접근할 수 있으며, &quot;/user/</strong></em><em>&quot; 경로는 </em><span style="border-bottom:0.05em solid"><strong><em>&quot;USER&quot; 역할을 가진 사용자만 접근할 수 있도록 설정</em></strong></span><em>됩니다. 그 외의 모든 요청은 인증된 사용자만 접근할 수 있도록 설정되고, 로그인 페이지를 제공하여 사용자 인증을 처리합니다.</em></p><p id="764cf8cc-ab92-40d2-98a4-02af2f2b8a09" class="">
+    </p><hr id="e619ba97-e54a-4dce-8a39-38efac0b1036"/><p id="9d333c28-94c5-4825-97bc-cacadb5cfd6a" class="">
+    </p><h1 id="0b333983-66e4-4379-8f41-72589d7a187a" class="">👩‍🏫</h1><p id="6e532c19-5f77-41c3-8c6d-c8b576f9eec5" class="">스프링 보안은 다양한 인증 및 권한 부여 방식을 지원하며, 애플리케이션의 보안 요구사항에 맞게 설정하여 안전한 인증 및 인가 프로세스를 구현할 수 있도록 도와줍니다.</p><p id="7b00158e-33ce-47db-8863-8719d660ad88" class="">
+    </p></div></article></body></html>

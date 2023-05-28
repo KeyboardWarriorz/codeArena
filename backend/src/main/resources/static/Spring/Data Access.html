@@ -3,6 +3,7 @@
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
   
+    
     a,
     a.visited {
         color: inherit;
@@ -257,6 +258,10 @@
     .collection-title {
         display: inline-block;
         margin-right: 1em;
+    }
+    
+    .page-description {
+        margin-bottom: 2em;
     }
     
     .simple-table {
@@ -638,24 +643,32 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="46bce283-adcf-468a-b02b-dfc2a69bc4cb" class="">📢</h1><p id="299e4428-97a1-4054-a328-7c6922b6ce5e" class=""><strong>JSTL(JSP Standard Tag Library)</strong>은 JSP에서 자주 사용되는 작업을 간편하게 처리하기 위한 태그 라이브러리로, <mark class="highlight-red"><strong>변수 출력, 조건문, 반복문, URL 생성 등을 쉽게 구현</strong></mark>할 수 있도록 도와줍니다.</p><p id="60c9f1c7-88c5-4c8b-8dc0-92101cabae92" class="">
-    </p><h1 id="885c6096-2da0-4a30-b58d-031541494e4c" class="">📒</h1><h3 id="5d0e6c5e-7f3d-4142-bb72-03f0c380b778" class=""><strong>JSTL 요소</strong></h3><table id="b7de2b72-9ad4-474f-b2c5-c38463beaf4b" class="simple-table"><thead class="simple-table-header"><tr id="a426c073-24a0-4bbc-8969-c95f6e89ba2a"><th id="oXgM" class="simple-table-header-color simple-table-header" style="width:232.66666666666666px"><strong>태그</strong></th><th id="H^EV" class="simple-table-header-color simple-table-header" style="width:232.66666666666666px"><strong>설명</strong></th><th id="YLq&gt;" class="simple-table-header-color simple-table-header" style="width:232.66666666666666px"><strong>예시</strong></th></tr></thead><tbody><tr id="3378a396-a080-4970-ba17-ff1df5ba9f87"><td id="oXgM" class="" style="width:232.66666666666666px">&lt;c:out&gt;</td><td id="H^EV" class="" style="width:232.66666666666666px">변수의 값을 출력합니다.</td><td id="YLq&gt;" class="" style="width:232.66666666666666px">&lt;c:out value=&quot;${name}&quot; /&gt;</td></tr><tr id="fc430ff4-47cc-4355-bf58-40cc0a77b699"><td id="oXgM" class="" style="width:232.66666666666666px">&lt;c:set&gt;</td><td id="H^EV" class="" style="width:232.66666666666666px">변수에 값을 설정합니다.</td><td id="YLq&gt;" class="" style="width:232.66666666666666px">&lt;c:set var=&quot;count&quot; value=&quot;10&quot; /&gt;</td></tr><tr id="0899ea20-1914-45e0-9e87-3d7badf6cfe3"><td id="oXgM" class="" style="width:232.66666666666666px">&lt;c:if&gt;</td><td id="H^EV" class="" style="width:232.66666666666666px">조건에 따라 내용을 실행합니다.</td><td id="YLq&gt;" class="" style="width:232.66666666666666px">&lt;c:if test=&quot;${score &gt;= 80}&quot;&gt;합격&lt;/c:if&gt;</td></tr><tr id="ecdc9732-3e34-4c91-b2c2-10cdad188ce8"><td id="oXgM" class="" style="width:232.66666666666666px">&lt;c:choose&gt;</td><td id="H^EV" class="" style="width:232.66666666666666px">여러 조건 중 하나를 선택하여 실행합니다.</td><td id="YLq&gt;" class="" style="width:232.66666666666666px">&lt;c:choose&gt;&lt;c:when test=&quot;${age &gt;= 18}&quot;&gt;성인&lt;/c:when&gt;&lt;c:otherwise&gt;미성년자&lt;/c:otherwise&gt;&lt;/c:choose&gt;</td></tr><tr id="da49de66-9c37-42d8-9024-e7edf7b18457"><td id="oXgM" class="" style="width:232.66666666666666px">&lt;c:forEach&gt;</td><td id="H^EV" class="" style="width:232.66666666666666px">컬렉션을 순회하며 반복 작업을 수행합니다.</td><td id="YLq&gt;" class="" style="width:232.66666666666666px">&lt;c:forEach items=&quot;${list}&quot; var=&quot;item&quot;&gt;&lt;c:out value=&quot;${item}&quot; /&gt;&lt;/c:forEach&gt;</td></tr><tr id="e973d74e-7998-42ef-bd4e-84633a383c72"><td id="oXgM" class="" style="width:232.66666666666666px">&lt;c:url&gt;</td><td id="H^EV" class="" style="width:232.66666666666666px">URL을 생성하고 매개변수를 추가합니다.</td><td id="YLq&gt;" class="" style="width:232.66666666666666px">&lt;c:url value=&quot;page.jsp&quot;&gt;&lt;c:param name=&quot;id&quot; value=&quot;1&quot; /&gt;&lt;/c:url&gt;</td></tr><tr id="ae041299-0b1f-4d48-a502-01d979169448"><td id="oXgM" class="" style="width:232.66666666666666px">&lt;c:import&gt;</td><td id="H^EV" class="" style="width:232.66666666666666px">외부 리소스를 포함하거나 다른 JSP 페이지를 포함합니다.</td><td id="YLq&gt;" class="" style="width:232.66666666666666px">&lt;c:import url=&quot;common.jsp&quot; /&gt;</td></tr></tbody></table><hr id="d6afae37-fbef-4bd5-98d2-de77b1678ea0"/><p id="801ed130-707f-4f7f-aaae-2a1a4cd038af" class="">
-    </p><h3 id="c129eb6f-3e8a-419e-874e-64f1f7893368" class="">JSTL 사용</h3><p id="c88a0af5-8940-4b73-aef7-27b5755db4c4" class="">
-    </p><p id="644c11c1-4825-4a9a-bc76-5c2e6a331eca" class="">0️⃣ <strong>JSTL 라이브러리 선언</strong></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6af3d3b8-b74e-405b-9cfd-2730684e1bde"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">JSTL을 사용하기 위해서는 JSTL 라이브러리를 프로젝트에 추가하고 JSP 페이지에서 해당 라이브러리를 선언해야 합니다. 다음과 같이 <code><strong>taglib</strong></code> 디렉티브를 사용하여 JSTL 라이브러리를 선언합니다.</div></figure><pre id="246afdbf-c78c-452e-9392-96bf02caad4a" class="code code-wrap"><code>&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;</code></pre><p id="e4f4935d-8e88-4af9-9ffe-05ccf9623ec2" class="">
-    </p><p id="d58bd030-0e41-44e7-9830-32d735486e14" class="">1️⃣ <strong>JSTL Core 태그 사용</strong></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="053b5987-cc66-4355-bc71-c03bea0c8b0b"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">JSTL Core 태그는 JSTL의 핵심 태그로, 반복문, 조건문, 변수 설정 등의 기능을 제공합니다. 아래는 JSTL Core 태그를 사용한 예시입니다.</div></figure><pre id="138fa270-8ec0-4d26-b242-9494e2ef6e73" class="code code-wrap"><code>&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;
-        &lt;!DOCTYPE html&gt;
-        &lt;html&gt;
-        &lt;head&gt;
-            &lt;title&gt;JSTL 예시&lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-            &lt;c:set var=&quot;name&quot; value=&quot;John&quot; /&gt;
-            &lt;c:if test=&quot;${name eq &#x27;John&#x27;}&quot;&gt;
-                &lt;p&gt;안녕하세요, ${name}님!&lt;/p&gt;
-            &lt;/c:if&gt;
-            &lt;c:forEach var=&quot;i&quot; begin=&quot;1&quot; end=&quot;5&quot;&gt;
-                &lt;p&gt;반복문 ${i}&lt;/p&gt;
-            &lt;/c:forEach&gt;
-        &lt;/body&gt;
-        &lt;/html&gt;</code></pre><p id="499eaf6d-3c90-4eba-85ba-29ff65443b24" class="">▲ <em>위의 예시에서 </em><code><em><strong>&lt;c:set&gt;</strong></em></code><em> 태그를 사용하여 변수 </em><code><em><strong>name</strong></em></code><em>을 설정하고, </em><code><em><strong>&lt;c:if&gt;</strong></em></code><em> 태그를 사용하여 변수 </em><code><em><strong>name</strong></em></code><em>이 &#x27;John&#x27;인 경우에만 내용을 출력하고 있습니다. 또한, </em><code><em><strong>&lt;c:forEach&gt;</strong></em></code><em> 태그를 사용하여 1부터 5까지의 숫자를 반복하면서 내용을 출력하고 있습니다.</em></p><p id="503ee746-3782-435d-b66c-59436964490e" class="">
-    </p><hr id="6b3126ee-4c92-4e3e-9517-e04fe16fc2f2"/><h1 id="27ce6abd-f9b6-4d6a-b02a-920bc7548ddc" class="">👩‍🏫</h1><p id="cfafcfcc-fb4c-4f8e-991a-286b070aac00" class=""><strong>JSTL</strong>을 사용하면 <span style="border-bottom:0.05em solid"><strong>자바 코드 없이도 JSP 페이지에서 반복문, 조건문, 변수 설정 등의 기능을 사용</strong></span>할 수 있습니다. JSTL은 JSP 개발을 간편하고 <span style="border-bottom:0.05em solid"><strong>가독성 </strong></span>좋게 만들어주며, <span style="border-bottom:0.05em solid"><strong>재사용 </strong></span>가능한 태그들을 제공하여 개발 생산성을 향상시킵니다.</p></div></article></body></html>
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1><p class="page-description"></p></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="9bd14b16-5a6b-4593-9495-1900e0f4ecae" class="">스프링은 <strong>데이터 액세스</strong> 계층의 개발을 지원하기 위해 다양한 기능과 모듈을 제공합니다. 데이터 액세스는 <mark class="highlight-red"><strong>데이터베이스와의 상호작용</strong></mark>을 의미하며, <mark class="highlight-red"><strong>스프링은 이를 간편하게 처리하고 유연한 데이터 액세스를 가능</strong></mark>하게 합니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">
+    </p><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">JDBC (Java Database Connectivity)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">JDBC는 <strong>자바에서 데이터베이스에 접근하기 위한 API</strong>입니다. 스프링은 JDBC를 기반으로 데이터베이스와의 <span style="border-bottom:0.05em solid"><strong>연결, SQL 실행, 결과 처리 등을 추상화</strong></span>하여 개발자가 간편하게 데이터베이스를 다룰 수 있도록 합니다.</div></figure><pre id="79accd08-f676-4666-9b20-e2c0b2a7d2e3" class="code"><code>// JDBC를 사용하여 데이터베이스 연결 및 쿼리 실행
+    String sql = &quot;SELECT * FROM users&quot;;
+    List&lt;User&gt; users = jdbcTemplate.query(sql, new BeanPropertyRowMapper&lt;&gt;(User.class));</code></pre><h3 id="81ebe54f-085f-4f21-a52b-1a52ae48ff74" class="">ORM (Object-Relational Mapping)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="35eefd7f-cbe5-48f4-b317-b93280c4cbc2"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">ORM은 <span style="border-bottom:0.05em solid"><strong>객체와 데이터베이스 간의 매핑을 자동화하기 위한 기술</strong></span>입니다. 스프링은 다양한 ORM 프레임워크와 통합하여 객체와 데이터베이스의 변환을 처리하고, <span style="border-bottom:0.05em solid"><strong>개발자가 객체 지향적인 방식으로 데이터 액세스를 할 수 있도록 </strong></span>도와줍니다. 대표적인 스프링 ORM 프레임워크로는 <strong><mark class="highlight-red">Hibernate, MyBatis</mark></strong> 등이 있습니다.</div></figure><pre id="074175bd-e273-493d-b31a-e73dd4de556c" class="code"><code>// Hibernate를 사용하여 객체와 데이터베이스 간의 매핑
+    @Entity
+    @Table(name = &quot;users&quot;)
+    public class User {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+    
+        @Column(name = &quot;username&quot;)
+        private String username;
+    
+        // ...
+    }</code></pre><p id="b4f9017f-70c1-4ebf-8fe8-5fb170da775a" class=""><mark class="highlight-red">▲</mark> <em><mark class="highlight-red"><strong>실제로 많이 쓰입니다!</strong></mark></em></p><h3 id="0338ffec-3b14-4988-9519-b74b632400cb" class="">트랜잭션 관리</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4ebf39ac-f1ef-4df2-8d17-1ebf0b4702fd"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">스프링은 데이터 액세스에서 발생하는 작업을 <strong>트랜잭션 단위로 관리</strong>할 수 있는 기능을 제공합니다. 트랜잭션은 <strong>데이터베이스 작업의 일련의 단위</strong>를 의미하며, <mark class="highlight-red"><strong>일부 작업이 실패할 경우 롤백하거나 모두 성공한 경우에만 커밋하는 등의 처리</strong></mark>를 할 수 있습니다.</div></figure><pre id="662ac600-457f-47ce-b09a-0d92b60e8f52" class="code"><code>// 스프링에서 트랜잭션 설정 및 관리
+    @Transactional
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }</code></pre><p id="cb0e6344-ae85-4cb9-ad13-775aea13380e" class="">
+    </p><h3 id="f7fea760-b152-4324-9b76-9bf3b3b80d70" class="">데이터 액세스 예외 처리</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f1d01437-d16b-48a6-80ea-b13adb17e9ae"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">스프링은 데이터 액세스에서 발생할 수 있는 <strong>예외를 일관된 방식으로 처리할 수 있는 기능을 제공</strong>합니다. 예외 처리를 통해 데<span style="border-bottom:0.05em solid"><strong>이터베이스 연결 오류, 쿼리 실행 오류 등의 상황에 대한 처리를 일관성 있게 구현</strong></span>할 수 있습니다.</div></figure><pre id="cafdd15f-11fd-4813-91ff-f51338447576" class="code"><code>// 스프링에서 데이터 액세스 예외 처리
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity&lt;String&gt; handleDataAccessException(DataAccessException ex) {
+        // 예외 처리 로직
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(&quot;데이터 액세스 오류&quot;);
+    }</code></pre><p id="aceb1d7d-f7d9-4020-a0f8-5f12cc2e53e5" class="">
+    </p><p id="764cf8cc-ab92-40d2-98a4-02af2f2b8a09" class="">
+    </p><hr id="e619ba97-e54a-4dce-8a39-38efac0b1036"/><p id="9d333c28-94c5-4825-97bc-cacadb5cfd6a" class="">
+    </p><h1 id="0b333983-66e4-4379-8f41-72589d7a187a" class="">👩‍🏫</h1><p id="eddd7821-ad82-45e7-9912-74e0690001c4" class="">이번 개념에서는 스프링의 데이터 액세스에 대한 간략한 개념과 예시를 살펴보았습니다. 스프링은 이외에도 다양한 데이터 액세스 기능을 제공하며, 개발자가 원하는 방식으로 데이터 액세스를 구현할 수 있도록 유연성을 제공합니다.</p></div></article></body></html>

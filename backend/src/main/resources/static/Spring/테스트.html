@@ -3,6 +3,7 @@
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
  
+    
     a,
     a.visited {
         color: inherit;
@@ -257,6 +258,10 @@
     .collection-title {
         display: inline-block;
         margin-right: 1em;
+    }
+    
+    .page-description {
+        margin-bottom: 2em;
     }
     
     .simple-table {
@@ -638,11 +643,35 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="27024ede-561a-400d-bf3a-ddfd97fa7ecf" class="">📢</h1><p id="64273f3a-12b0-40c5-9d9f-ba8a1c00f5a5" class=""><strong>Servlet 리스너</strong>는 <mark class="highlight-red"><strong>Java 웹 애플리케이션에서 발생하는 이벤트에 대한 처리를 담당하는 컴포넌트</strong></mark>입니다. 서블릿 리스너는 웹 애플리케이션의 <strong><mark class="highlight-red">생명주기 이벤트, 세션 이벤트, 요청 및 응답 이벤트 등을 모니터링하고 이벤트 발생 시 특정 작업을 수행</mark></strong>할 수 있습니다. 이를 통해 애플리케이션의 초기화, 세션 관리, 로깅 등과 같은 중요한 작업을 처리할 수 있습니다.</p><p id="ecb6b01f-5765-4590-8e04-31a49281cd2b" class="">
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1><p class="page-description"></p></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="9bd14b16-5a6b-4593-9495-1900e0f4ecae" class="">스프링 프레임워크는 <strong>테스트(Test)</strong>를 위한 다양한 기능과 도구를 제공합니다. 테스트는 <mark class="highlight-red"><strong>개발자가 애플리케이션의 동작을 검증하고 버그를 발견하기 위해 사용되는 중요한 활동</strong></mark>입니다. </p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">
+    </p><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">단위 테스트(Unit Testing)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">단위 테스트는 <mark class="highlight-red"><strong>소스 코드의 개별 단위(주로 메서드 또는 클래스)를 격리하여 테스트</strong></mark>하는 것을 말합니다. 스프링은 <strong>JUnit</strong>과 함께 사용되어 단위 테스트를 수행할 수 있는 기능을 제공합니다.</div></figure><pre id="e605859e-d828-409d-b63c-1d4ee75785a5" class="code"><code>@Service
+    public class MyService {
+        public int addNumbers(int a, int b) {
+            return a + b;
+        }
+    }</code></pre><p id="0338ffec-3b14-4988-9519-b74b632400cb" class="">▲   <em><code><strong>MyService</strong></code></em><em> 클래스의 </em><em><code><strong>addNumbers()</strong></code></em><em> 메서드를 단위 테스트하고 싶다고 가정해봅시다! 단위 테스트를 작성할 때는 JUnit 프레임워크를 사용하여 아래와 같이 테스트 메서드를 작성할 수 있습니다:</em></p><pre id="b0198e81-5d43-47bd-8291-fbf4e87e5020" class="code"><code>import org.junit.jupiter.api.Test;
+    import static org.junit.jupiter.api.Assertions.assertEquals;
     
-    </p><h1 id="5756be18-ebf8-45bd-a488-a6d4069f8a64" class="">📒</h1><h3 id="54d0b2ae-6672-4b68-83d9-b3f58847da6c" class=""><strong>웹 애플리케이션의 생명주기 이벤트 처리</strong></h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f5bfe1d2-bb2d-43c5-b365-dc4117318cf1"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">웹 애플리케이션이 시작될 때, 종료될 때, 세션 생성 및 소멸 시점 등과 같은 이벤트에 대한 처리를 담당합니다. 예를 들어, 웹 애플리케이션이 시작될 때 데이터베이스 연결을 설정하거나 초기화 작업을 수행하고, 종료될 때 리소스 정리 등의 작업을 처리할 수 있습니다.</div></figure><p id="8ab981a5-bea7-4965-a193-875a343ef618" class="">
-    </p><h3 id="dcc7c736-56af-4b45-a3e1-f66284b8c88b" class=""><strong>세션 이벤트 처리</strong></h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3141092f-b161-439a-8680-af669c62177b"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">세션이 생성되거나 소멸될 때, 세션 속성이 추가되거나 제거될 때와 같은 세션 이벤트에 대한 작업을 수행할 수 있습니다. 이를 통해 사용자 세션 관리, 로그인 및 로그아웃 처리, 세션 데이터의 초기화 등을 수행할 수 있습니다.</div></figure><p id="47bdaf0d-e6b1-42b1-aeb0-7e44a3239e30" class="">
-    </p><h3 id="3c103114-a692-425b-b5d0-6f45275d37d5" class=""><strong>요청 및 응답 이벤트 처리</strong></h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f5c7db41-23f8-4a45-9d3a-692b95fa3ff2"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">웹 애플리케이션의 각 요청과 응답에 대한 작업을 수행할 수 있습니다. 예를 들어, 요청이 들어올 때 로깅 작업을 수행하거나, 응답이 전송되기 전에 특정 데이터를 수정하는 작업을 처리할 수 있습니다.</div></figure><p id="e106dad3-7265-4279-9fdc-db553e7b4d4e" class="">
-    </p><hr id="03a9472f-dac5-48c6-b90b-1389d00e3a42"/><p id="76b09b4d-8588-4f40-9363-13a7585f474d" class="">
-    </p><h1 id="7589a532-1479-4279-94cf-5d6100728ffe" class="">👩‍🏫</h1><p id="3df830db-6ca0-454f-8ee9-bf62202267cb" class=""><strong>서블릿 리스너</strong>는 <span style="border-bottom:0.05em solid"><strong>Java 웹 애플리케이션에서 발생하는 이벤트에 대한 처리를 담당하는 컴포넌트</strong></span>입니다. 생명주기 이벤트, 세션 이벤트, 요청 및 응답 이벤트를 모니터링하고, 이벤트 발생 시 특정 작업을 수행할 수 있습니다. <span style="border-bottom:0.05em solid"><strong>서블릿 리스너를 사용하여 애플리케이션 초기화, 세션 관리, 로깅 </strong></span>등의 작업을 처리</p><p id="db252330-68f9-47c8-8ef6-7ba23af2f55d" class="">
+    public class MyServiceTest {
+    
+        @Test
+        public void testAddNumbers() {
+            MyService myService = new MyService();
+            int result = myService.addNumbers(2, 3);
+            assertEquals(5, result);
+        }
+    }</code></pre><p id="2b3f1077-7c15-4747-b851-47ed02feb9ba" class="">▲  <em>위의 예시에서는 </em><em><code><strong>testAddNumbers()</strong></code></em><em> 메서드를 작성하여 </em><em><code><strong>MyService</strong></code></em><em>의 </em><em><code><strong>addNumbers()</strong></code></em><em> 메서드를 테스트합니다. 예상되는 결과와 실제 결과를 비교하여 테스트를 수행합니다.</em></p><h3 id="7dd193c9-bfb4-46d5-a1e9-41efd09cc977" class=""></h3><h3 id="39fe7d9b-e85e-4562-8c8c-6eef1cb266b4" class="">통합 테스트(Integration Testing)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4ebf39ac-f1ef-4df2-8d17-1ebf0b4702fd"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">통합 테스트는 <strong>여러 개의 컴포넌트나 레이어가 함께 동작하는 상황에서 애플리케이션의 동작을 테스트</strong>합니다. 스프링은 통합 테스트를 위한 기능을 제공하며, <span style="border-bottom:0.05em solid"><strong>애플리케이션 컨텍스트를 로드하고 실제로 컴포넌트들이 함께 동작하도록 테스트 환경을 구성</strong></span>할 수 있습니다.</div></figure><pre id="662ac600-457f-47ce-b09a-0d92b60e8f52" class="code"><code>@SpringBootTest
+    public class MyIntegrationTest {
+    
+        @Autowired
+        private MyService myService;
+    
+        @Test
+        public void testAddNumbers() {
+            int result = myService.addNumbers(2, 3);
+            assertEquals(5, result);
+        }
+    }</code></pre><p id="cb0e6344-ae85-4cb9-ad13-775aea13380e" class="">▲  <em><code><strong>@SpringBootTest</strong></code></em><em> Annotation을 사용하여 스프링 부트 애플리케이션의 컨텍스트를 로드합니다. </em><em><code><strong>@Autowired</strong></code></em><em>를 통해 </em><em><code><strong>MyService</strong></code></em><em> 빈을 주입받고, 실제로 </em><em><code><strong>addNumbers()</strong></code></em><em> 메서드를 테스트합니다.</em></p><p id="764cf8cc-ab92-40d2-98a4-02af2f2b8a09" class="">
+    </p><hr id="e619ba97-e54a-4dce-8a39-38efac0b1036"/><p id="9d333c28-94c5-4825-97bc-cacadb5cfd6a" class="">
+    </p><h1 id="0b333983-66e4-4379-8f41-72589d7a187a" class="">👩‍🏫</h1><p id="6e532c19-5f77-41c3-8c6d-c8b576f9eec5" class="">스프링은 다양한 테스트 관련 애노테이션과 기능을 제공하여 테스트의 편의성과 유연성을 높여줍니다.</p><p id="7b00158e-33ce-47db-8863-8719d660ad88" class="">
     </p></div></article></body></html>

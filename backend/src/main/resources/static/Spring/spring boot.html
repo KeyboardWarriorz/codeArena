@@ -2,8 +2,7 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>제목 없음</title><style>
     /* cspell:disable-file */
     /* webkit printing magic: print all background colors */
-  
-    
+   
     a,
     a.visited {
         color: inherit;
@@ -258,6 +257,10 @@
     .collection-title {
         display: inline-block;
         margin-right: 1em;
+    }
+    
+    .page-description {
+        margin-bottom: 2em;
     }
     
     .simple-table {
@@ -639,62 +642,9 @@
         background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
     }
         
-    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="fef4c1a8-33af-4fc8-a0ef-148581db5817" class="">자바 <strong>예외 처리(Exception Handling)</strong>는 <mark class="highlight-red"><strong>프로그램이 예상치 못한 상황 또는 오류를 대응하고 처리하는 메커니즘</strong></mark>입니다. 예외 처리는 <mark class="highlight-red"><strong>프로그램의 안정성</strong></mark>을 높이고 <mark class="highlight-red"><strong>예외 상황을 제어</strong></mark>할 수 있도록 도와줍니다. </p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><p id="78112b8c-a423-4f56-85fa-21b25bee1a14" class="">
-    </p><h3 id="960085aa-00d9-406f-9a14-8a5c110952be" class="">예외(Exception)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6be955bb-ef88-4072-aa99-aa810d275605"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><strong>예외</strong>는 <span style="border-bottom:0.05em solid"><strong>프로그램 실행 중 발생할 수 있는 오류 또는 예상치 못한 상황</strong></span>을 의미합니다.<p id="dde32811-5006-47b9-8ee1-1309982e6481" class="">자바에서는 예외를 Checked Exception과 Unchecked Exception으로 나눌 수 있습니다. <strong>Checked Exception</strong>은 <span style="border-bottom:0.05em solid">컴파일러에 의해 체크되고 처리가 필요한 예외</span>이며, <strong>Unchecked Exception</strong>은 <span style="border-bottom:0.05em solid"><strong>컴파일러가 체크하지 않고 실행 중에 발생하는 예외</strong></span>입니다.</p></div></figure><p id="99f912f0-8d66-46b3-8f98-57798595a6b1" class="">
-    </p><hr id="8e21da8c-dafc-4950-b08c-9724b8af38a1"/><h3 id="ea1de25c-ecbb-416d-b3f9-3b28d54233ce" class="">⛔ 예외 처리 방법</h3><p id="703fb62d-ef7d-4a20-a9d0-95dc02ec7cd8" class="">
-    </p><h3 id="6272546f-3a0a-44d7-bc73-fc3aee3853e0" class="">0️⃣ try-catch 블록</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d4ccf471-0e98-4b93-9434-29d76ca26699"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><span style="border-bottom:0.05em solid"><strong>예외가 발생할 수 있는 코드를 try 블록 안에 작성</strong></span>하고, <span style="border-bottom:0.05em solid"><strong>해당 예외를 처리할 수 있는 catch 블록을 사용</strong></span>하여 예외를 처리합니다.</div></figure><pre id="4f82d47b-84cd-446f-82fb-5fd48db10d9f" class="code"><code>public class ExceptionExample {
-        public static void main(String[] args) {
-            try {
-                int[] numbers = {1, 2, 3};
-                System.out.println(numbers[4]); // 존재하지 않는 인덱스에 접근
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println(&quot;배열 인덱스를 벗어났습니다.&quot;);
-            }
-        }
-    }</code></pre><p id="ae8bba8d-cf37-4439-a9dc-4a96a706980d" class="">
-    </p><hr id="888d7394-ce87-4581-88d4-9d26979c0927"/><h3 id="ceeca1a8-4f65-433b-abff-6a710a479dbf" class="">1️⃣ throws 선언</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="150a8e8d-cf5f-4f45-8191-ff4783b6dea5"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">메서드에서 발생할 수 있는 <span style="border-bottom:0.05em solid"><strong>예외를 throws 키워드를 사용하여 해당 메서드를 호출한 곳으로 예외 처리를 넘깁니다.</strong></span></div></figure><pre id="37aff058-79cf-4be8-86fc-e650cb442ca8" class="code"><code>public class ExceptionExample {
-        public static void main(String[] args) {
-            try {
-                divide(10, 0); // divide 메서드에서 발생한 예외 처리를 호출한 곳으로 넘김
-            } catch (ArithmeticException e) {
-                System.out.println(&quot;0으로 나눌 수 없습니다.&quot;);
-            }
-        }
-    
-        public static void divide(int num1, int num2) throws ArithmeticException {
-            if (num2 == 0) {
-                throw new ArithmeticException();
-            }
-            int result = num1 / num2;
-            System.out.println(&quot;나눈 결과: &quot; + result);
-        }
-    }</code></pre><p id="eea88cdf-681a-4e1c-b3c1-842742c6ba40" class="">
-    </p><hr id="232ccd27-a3e3-4d86-93fc-4d8a0a54d409"/><h3 id="469cb4a5-88ad-4b16-862e-38f71a2e6b89" class="">2️⃣ finally 블록</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="110d7b02-048d-4d86-8c67-f0f8c358e135"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%"><span style="border-bottom:0.05em solid"><strong>예외 발생 여부와 관계없이 항상 실행되어야 하는 코드</strong></span>를 finally 블록에 작성합니다.</div></figure><pre id="52b0ce67-688e-49b7-9e52-1b9c6d20badc" class="code"><code>import java.io.*;
-    
-    public class FinallyExample {
-        public static void main(String[] args) {
-            BufferedReader br = null;
-            try {
-                br = new BufferedReader(new FileReader(&quot;myfile.txt&quot;));
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            } catch (FileNotFoundException e) {
-                System.out.println(&quot;파일을 찾을 수 없습니다.&quot;);
-            } catch (IOException e) {
-                System.out.println(&quot;파일을 읽는 도중 오류가 발생했습니다.&quot;);
-            } finally {
-                try {
-                    if (br != null) {
-                        br.close();
-                    }
-                } catch (IOException e) {
-                    System.out.println(&quot;파일 닫기 도중 오류가 발생했습니다.&quot;);
-                }
-            }
-        }
-    }</code></pre><p id="29105d8f-33bf-4b7e-9af2-ac6cc876f77b" class="">
-    </p><p id="73ed0674-33a0-4f46-9a25-1f65a1ad13f2" class="">
-    </p><hr id="ebc51aff-8075-47cc-88ad-1e114edd535f"/><h1 id="55a2d76b-d9d3-4a18-abd6-31a00d85eafa" class="">👩‍🏫</h1><p id="895e9001-452c-495e-a32d-c5d35fed5a76" class=""><strong>예외 처리</strong>를 통해 <span style="border-bottom:0.05em solid"><strong>예외 상황에 대응하고 프로그램의 안정성을 유지</strong></span>할 수 있습니다. 예외 처리는 예외를 잡아내고 적절한 조치를 취함으로써 <span style="border-bottom:0.05em solid"><strong>프로그램의 실행 흐름을 제어</strong></span>할 수 있도록 도와줍니다.</p><p id="76f38bd9-548b-434e-87c3-73ea8001af38" class="">
+    </style></head><body><article id="de39db80-b402-44bb-b89c-07883ebc4408" class="page sans"><header><h1 class="page-title"></h1><p class="page-description"></p></header><div class="page-body"><h1 id="0ed739af-c8ab-4b6b-9a51-e51f1cd8c6ca" class="">📢</h1><p id="948fd209-80d1-4159-9720-a01e218bb32c" class=""><strong>스프링 부트(Spring Boot)</strong>는 <mark class="highlight-red"><strong>스프링 기반의 애플리케이션을 빠르고 간편하게 개발하고 실행할 수 있도록 도와주는 프레임워크</strong></mark>입니다. 스프링 부트는 <mark class="highlight-red"><strong>개발자가 복잡한 설정을 준비하거나 관리하지 않아도 되도록 기본 설정과 자동 구성을 제공</strong></mark>하여 개발 생산성을 향상시킵니다.</p><h1 id="54ac9305-133b-46ca-98af-0d56e6a10ce1" class="">📒</h1><h3 id="8d7904ff-3616-4409-9845-adcf9dee77bc" class="">스프링 부트의 특징</h3><h3 id="a463d6b6-02dd-433d-b5cf-be3cb3066a09" class="">자동 구성(Auto-Configuration)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be365d39-50c5-40c4-8f66-a24ead8788cf"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">스프링 부트는 다양한 스프링 프로젝트의 자동 구성을 제공합니다. <strong>자동 구성</strong>은 <span style="border-bottom:0.05em solid"><strong>애플리케이션에 필요한 설정을 스프링 부트가 자동으로 수행하여 개발자가 추가적인 설정을 하지 않아도 원하는 기능을 사용</strong></span>할 수 있도록 합니다.</div></figure><p id="7dd193c9-bfb4-46d5-a1e9-41efd09cc977" class="">
+    </p><h3 id="39fe7d9b-e85e-4562-8c8c-6eef1cb266b4" class="">스타터 의존성(Starter Dependencies)</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4ebf39ac-f1ef-4df2-8d17-1ebf0b4702fd"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">스프링 부트는 스타터 의존성을 제공하여<strong> 필요한 라이브러리들을 쉽게 추가할 수 있도록 지원</strong>합니다. 스타터 의존성은 <span style="border-bottom:0.05em solid"><strong>특정 기능이나 라이브러리를 사용하기 위한 필수 의존성들을 묶어놓은 것</strong></span>으로, 개발자가 직접 <mark class="highlight-red"><strong>필요한 라이브러리를 찾고 추가하는 번거로움을 줄여줍니다.</strong></mark></div></figure><p id="764cf8cc-ab92-40d2-98a4-02af2f2b8a09" class="">
+    </p><h3 id="823792ec-da5a-40fc-bc33-2416bb5735e7" class="">스프링 애플리케이션 실행과 배포</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5a87d43c-4730-449b-a35c-7aaa892bce28"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">스프링 부트는 애플리케이션을 실행하고 패키징하여 배포할 수 있는 다양한 방법을 제공합니다. <strong>내장된 서블릿 컨테이너를 사용하여 애플리케이션을 실행</strong>하거나, <strong>JAR 파일로 패키징하여 독립적으로 실행</strong>할 수 있습니다. 또한, 스프링 부트는 클라우드 환경에 배포하기 위한 기능들도 제공합니다.</div></figure><p id="a2511af8-314a-4aa7-ae2f-2a5b9bf70bb1" class="">
+    </p><hr id="e619ba97-e54a-4dce-8a39-38efac0b1036"/><p id="9d333c28-94c5-4825-97bc-cacadb5cfd6a" class="">
+    </p><h1 id="0b333983-66e4-4379-8f41-72589d7a187a" class="">👩‍🏫</h1><p id="654fd281-a131-4fc6-8a68-7638ae21e027" class="">스프링 부트는 <mark class="highlight-red"><strong>애플리케이션의 개발, 구성, 실행, 배포를 단순화하고 편의성을 제공</strong></mark>하여 스프링 기반 애플리케이션의 개발 생산성을 크게 향상시켜줍니다.</p><p id="e74f3b6c-6bac-429b-8df8-ada23fdde569" class="">
     </p></div></article></body></html>
