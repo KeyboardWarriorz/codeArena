@@ -25,6 +25,8 @@ export default function QuizRoom({ match }) {
   // 현재 게임중인지 (true-게임중)
   const [roomState, setRoomState] = useState(false);
 
+
+
   // 서버 데이터 받아오기
   const stompUserClient = useRef();
   let subscription = useRef();
@@ -59,7 +61,7 @@ export default function QuizRoom({ match }) {
       .then(function (response) {
         // 성공적으로 응답을 받았을 때 실행될 콜백 함수
         // console.log(response);
-        setquestionCount(roomdata.gameScenarioDto.problem_cnt - 1);
+        setquestionCount(roomdata.gameScenarioDto.problem_cnt);
       })
       .catch(function (error) {
         // 요청이 실패했을 때 실행될 콜백 함수
@@ -73,17 +75,12 @@ export default function QuizRoom({ match }) {
   const [Chatting, setChatting] = useState([]);
   const [question, setQuestion] = useState();
   const [questionType, setQuestionType] = useState(0);
-  if (question != null) {
-    if (question.answer[2] == null) {
-      setQuestionType(1);
-    }
-  }
 
   const [userList, setUserList] = useState([]);
   const [roomdata, setRoomdata] = useState();
   const [users, setUsers] = useState([]);
   const [changed, setChanged] = useState(false);
-
+  const [master, setMaster] = useState();
   useEffect(() => {
     setUserList(users);
   }, [users]);
@@ -118,6 +115,7 @@ export default function QuizRoom({ match }) {
         if (res.status === 200) {
           console.log(res.data);
           setUsers(res.data.users);
+          setMaster(res.data.users[0].userId);
           setRoomdata(res.data);
         }
       })
@@ -134,6 +132,7 @@ export default function QuizRoom({ match }) {
         let data = JSON.parse(response.body);
         if (data.master) {
           setUsers(data.users);
+          setMaster(data.users[0].userId);
           console.log(data.users);
         }
         if (data.type == "message") {
@@ -144,6 +143,13 @@ export default function QuizRoom({ match }) {
         } else if (data.type == "question") {
           setRoomState(true);
           setQuestion(() => data);
+          
+          if(data.answer[3] === null){
+            setQuestionType(1);
+          }else{
+            setQuestionType(0);
+          }
+
           timeoutId.current = setTimeout(() => {
             sendAnswer(isCorrect.current);
             console.log("send", isCorrect.current);
@@ -151,6 +157,7 @@ export default function QuizRoom({ match }) {
         } else if (data.type == "end") {
           swal("종료");
           setRoomState(false);
+          setResultData([]);
         } else if (data.type == "result") {
           setResultData(data);
           console.log("result: ", data);
@@ -166,11 +173,11 @@ export default function QuizRoom({ match }) {
   // 답 확인하는 함수
   function sendAnswer(cor) {
     if (cor === "1") {
-      swal("정답.");
+      swal({icon : 'success', title : "정답입니당",text:"정답이에영",timer:3000});
       // console.log("cor" + cor);
       // $("#answerList").html("정답입니다\n\n"+description);
     } else {
-      swal("오답.", "error");
+      swal({icon : 'error', title : "오답입니당",text:"해설",timer:3000});
       // $("#answerList").html("오답입니다\n\n"+description);
     }
     console.log("isCorrect  " + cor);
@@ -285,9 +292,8 @@ export default function QuizRoom({ match }) {
     }
   };
   console.log("현재 채팅 상황", Chatting);
-  console.log("resultData", resultData);
-  console.log("resultData", questionCount);
-
+  console.log("resultData", userList);
+  console.log("resultData", master);
   function sendMsg() {
     // console.log(stompUserClient);
     stompUserClient.current.send(
@@ -321,6 +327,7 @@ export default function QuizRoom({ match }) {
     setCount(10);
     setquestionCount((prevCount) => prevCount - 1);
   }, [question]);
+  console.log("test", questionCount)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -370,8 +377,19 @@ export default function QuizRoom({ match }) {
         </RoomData>
       </RoomTitle>
       <ContentBox>
-        {!roomState && <StartBtn onClick={startGame}>startgame</StartBtn>}
-        {roomState && (
+
+        {!roomState ? <StartBtn onClick={startGame}>Start Game</StartBtn> : <></>}
+        {/* 문제 남았을 때 대기 */}
+        {roomState && count === 0 && questionCount != 0 && <div>중간</div>}
+        {/* 문제 다 풀고 */}
+        {roomState && count === 0 && questionCount == 0 && <div>1등은
+                {Object.keys(resultData).length
+                  ? resultData.winner.map((w) => {
+                      return <>&nbsp;"{w}"&nbsp;</>;
+                    })
+                  : ""}</div>}
+        {/* 문제를 푸는중 */}
+        {roomState && count != 0 && (
           <Qbox>
             <Box>
               <span>Q.</span>
@@ -429,6 +447,7 @@ export default function QuizRoom({ match }) {
                 </span>
               </TFQ>
             )}
+
             <TimerBox>
               <Timer>{count === 0 ? "종료" : count + " 초"}</Timer>
               <RankBox>
@@ -455,9 +474,9 @@ export default function QuizRoom({ match }) {
                 <UserName>
                   <div>{userList[0].nickname}</div>
                   {resultData.userScore ? (
-                    <div>test</div>
+                    <div>{resultData.userScore[0]}</div>
                   ) : (
-                    <div>{resultData.userScore}</div>
+                    <div>0</div>
                   )}
                 </UserName>
               </UDB1>
@@ -472,10 +491,15 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[1].nickname}</div>
-                  <div>{userList[1].point}</div>
+                  {resultData.userScore ? (
+                    <div>{resultData.userScore[1]}</div>
+                  ) : (
+                    <div>0</div>
+                  )}
                 </UserName>
               </UDB2>
-            )}
+            )}</UDBG>
+            <UDBG>
             {userList.length > 2 && (
               <UDB3>
                 <div>
@@ -486,7 +510,11 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[2].nickname}</div>
-                  <div>{userList[2].point}</div>
+                  {resultData.userScore ? (
+                    <div>{resultData.userScore[2]}</div>
+                  ) : (
+                    <div>0</div>
+                  )}
                 </UserName>
               </UDB3>
             )}
@@ -500,7 +528,11 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[3].nickname}</div>
-                  <div>{userList[3].point}</div>
+                  {resultData.userScore ? (
+                    <div>{resultData.userScore[4]}</div>
+                  ) : (
+                    <div>0</div>
+                  )}
                 </UserName>
               </UDB4>
             )}
@@ -508,11 +540,12 @@ export default function QuizRoom({ match }) {
           <ChatBox>
             <h3 id="chattitle">💬&nbsp;chat</h3>
             <div>
+            <div>
               {Chatting.map((chat, idx) => {
                 return (
                   <>
                     <div id="chatline" key={idx}>
-                      <span id="id">아이디아이디아이</span>
+                      <span id="id">{chat.fromLogin}</span>
                       <span>&nbsp;|&nbsp;&nbsp;</span>
                       <span>{chat.message}</span>
 
@@ -524,7 +557,7 @@ export default function QuizRoom({ match }) {
                   </>
                 );
               })}
-
+              </div>
               <div>
                 <input
                   placeholder="메세지를 입력하세요"
@@ -765,7 +798,20 @@ const ChatBox = styled.div`
   border-radius: 10px;
   box-shadow: 3px 2px 5px #00000025;
   width: 86%;
-
+  > div:nth-of-type(1) {
+    > div:nth-of-type(1){
+      overflow-y:scroll;
+      height : 150px;  
+        &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 20px;
+      background: #816843;
+    }
+    }
+    
+  }
   #hr {
     width: 90%;
     border-top: 1px solid #d7d7d7;
