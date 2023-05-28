@@ -53,7 +53,7 @@ api.interceptors.response.use(
       // 410 Unauthorized 에러 처리
       // 예: 로그아웃, 세션 만료 등의 동작 수행
       //   alert("만료");
-      swal("세션이 만료되었습니다.").then(() => {
+      swal("로그인이 필요한 페이지입니다.").then(() => {
         window.localStorage.clear();
         window.location.href = "/login";
       });

@@ -32,9 +32,9 @@ const Box = styled.div`
 
   #added {
     margin-left: 7px;
-    font-size: 4px;
+    font-size: 0.8rem;
     color: #006e61;
-    margin-bottom: 0;
+    margin-bottom: 4px;
   }
 `;
 export default function AuthDiv(props) {

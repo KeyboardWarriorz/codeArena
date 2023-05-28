@@ -223,16 +223,11 @@ export default function SignUp() {
           added={idstate}
           isbutton={true}
           buttonfunc={idCheck}
-        ></AuthDiv>
+        />
       </div>
 
       <div onChange={onChange1}>
-        <AuthDiv
-          title="비밀번호"
-          es={true}
-          type="password"
-          placeholder="영문, 숫자 포함 6~12자"
-        />
+        <AuthDiv title="비밀번호" es={true} type="password" placeholder="영문, 숫자 포함 6~12자" />
       </div>
 
       <div onChange={onChange2}>

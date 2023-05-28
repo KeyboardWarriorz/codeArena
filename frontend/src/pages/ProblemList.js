@@ -8,15 +8,7 @@ import swal from "sweetalert";
 export default function ProblemList() {
   const navigate = useNavigate();
 
-  const categories = [
-    "ALL",
-    "JAVA",
-    "JSP&Servlet",
-    "Spring",
-    "DataBase",
-    "JavaScript",
-    "HTML/CSS",
-  ];
+  const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
 
   const typeArr = ["객관식", "O / X"];
   const [page, setPage] = useState(1);
@@ -50,8 +42,9 @@ export default function ProblemList() {
           setProblems(res.data.data.Problem);
         }
       })
-      .catch((e) =>
-        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
+      .catch(
+        (e) => console.log("")
+        // swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
       );
   }, [page, selected]);
 
@@ -176,7 +169,6 @@ const Select = styled.div`
   padding-top: 10px;
   margin-left: 10px;
   padding-bottom: 10px;
-  // background-color: pink;
 
   .line {
     >span: nth-of-type(1) {
@@ -243,7 +235,7 @@ const Paginate = styled(ReactPaginate)`
   align-items: center;
   justify-content: center;
   list-style: none;
-  margin-bottom: 500px;
+  // margin-bottom: 500px;
 
   li {
     margin: 1.25rem;
