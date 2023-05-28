@@ -14,8 +14,8 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>, Quer
 
 	
 	
-    //댓글 총 개수 
-    @Query(value = "SELECT a FROM Comment a WHERE a.article.articleId = ?1", nativeQuery = false)
+   
+    @Query(value = "SELECT a FROM Comment a WHERE a.article.articleId = ?1 order by a.createdTime desc", nativeQuery = false)
     List<CommentDTO> selectComment(Long articleId);
   
     //댓글 총 개수 
