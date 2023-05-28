@@ -16,10 +16,6 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 
 import styled from "styled-components";
 
-// import iu1 from "../assets/images/아이유1.jpg";
-// import iu2 from "../assets/images/아이유2.jpg";
-// import iu3 from "../assets/images/아이유3.jpg";
-
 import banner1 from "../assets/images/banner1.png";
 import banner2 from "../assets/images/banner2.png";
 import banner3 from "../assets/images/banner3.png";
@@ -30,6 +26,11 @@ import an2 from "../assets/images/Seongwhan.svg";
 import an3 from "../assets/images/Eunhyo.svg";
 import an4 from "../assets/images/Junseo.svg";
 import an5 from "../assets/images/Sunyeong.svg";
+
+import bear from "../assets/images/bear.png";
+import rabbit from "../assets/images/rabbit.png";
+import brocolli from "../assets/images/brocolli.png";
+import alpaca from "../assets/images/alpaca.png";
 
 const ImgBanner = styled.img`
   object-fit: cover;
@@ -141,8 +142,8 @@ const BoxTitle = styled.h3`
 `;
 
 const SmallImg = styled.img`
-  width: 55px;
-  height: 55px;
+  width: 80px;
+  height: 80px;
 `;
 
 export default function Main() {
@@ -188,28 +189,28 @@ export default function Main() {
           <ListBox>
             <Box onClick={() => navigate("/lecture")}>
               <LectureBox>
-                <SmallImg src={an1} />
+                <SmallImg src={bear} />
               </LectureBox>
               <p>기초 지식부터 시작하고 싶을 때</p>
               <BoxTitle>📚 기초 개념</BoxTitle>
             </Box>
             <Box onClick={() => navigate("/problem")}>
               <LectureBox>
-                <SmallImg src={an2} />
+                <SmallImg src={alpaca} />
               </LectureBox>
               <p>문제풀이로 실력을 다지고 싶을 때</p>
               <BoxTitle>📝 문제 풀이</BoxTitle>
             </Box>
             <Box onClick={() => navigate("/board")}>
               <LectureBox>
-                <SmallImg src={an3} />
+                <SmallImg src={rabbit} />
               </LectureBox>
               <p>자유롭게 얘기하고 질문도 해보자</p>
               <BoxTitle>😍 커뮤니티</BoxTitle>
             </Box>
             {/* <Box onClick={() => navigate("/multiquiz")}>
               <LectureBox>
-                <SmallImg src={an4} />
+                <SmallImg src={brocolli} />
               </LectureBox>
               <p>다른 사람들도 이겨봐용</p>
               <BoxTitle>🎮 단체 퀴즈</BoxTitle>
