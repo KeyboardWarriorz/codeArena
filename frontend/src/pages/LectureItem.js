@@ -128,7 +128,7 @@ export default function LectureItem() {
 
   function moveTo() {
     api
-      .get(`${baseURL}/${data.subcategory_id}`)
+      .get(`${baseURL}/problemRan/${data.subcategory_id}`)
       .then((res) => {
         if (res.status === 200) {
           navigate(`/problem/${res.data.data}`);
