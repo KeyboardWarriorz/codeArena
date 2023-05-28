@@ -46,6 +46,8 @@ export default function ProblemItem() {
   useEffect(() => {
     if (selected === problem.answerIndex) {
       setRight(1);
+    } else {
+      setRight(2);
     }
   }, [selected]);
 

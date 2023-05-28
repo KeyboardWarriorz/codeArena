@@ -144,7 +144,7 @@ export default function Login() {
       </Nav>
 
       <div onChange={onChangeId} className="margin">
-        <AuthDiv title="아이디" placeholder="ex. ca412@gmail.com" />
+        <AuthDiv title="아이디" placeholder="ex. sunzzang412" />
       </div>
       <div onChange={onChangePW} className="margin" onKeyDown={onEnter}>
         <AuthDiv title="비밀번호" type="password" />

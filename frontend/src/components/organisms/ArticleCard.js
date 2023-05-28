@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const Div = styled.div`
   border-radius: 10px;
   width: 270px;
-  height: 270px;
+  height: 25vh;
   background-color: #f9f5d7;
   margin: 1rem 0.5rem 0 0.5rem;
   box-shadow: 2px 2px 5px #6d6d6d60;
