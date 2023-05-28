@@ -45,7 +45,7 @@ public class UserController {
 			// HttpSession에 정보를 저장한다. - 뷰에서 사용하고 있음 ${loginUser}- 아이디 / ${loginName} - 이름
 		}
 		UserDTO dto = userService.selectUser(dbuser.getUserId());
-		UserDTO userDTO = new UserDTO(dbuser.getUserId(), dbuser.getNickname(), dbuser.getPoint(), dbuser.getProfileImage(),dto.getTier(),jwtUtil.generateToken("access"),jwtUtil.generateToken("refresh"));
+		UserDTO userDTO = new UserDTO(dbuser.getUserId(), dbuser.getNickname(), dbuser.getPoint(), dbuser.getProfileImage(), dto.getTier(), jwtUtil.generateToken("access"), jwtUtil.generateToken("refresh"));
 		System.out.println(userDTO);
 		return new ResponseEntity(userDTO, HttpStatus.OK);
 	}
@@ -110,9 +110,9 @@ public class UserController {
 		List<SolvedDTO> success_solved = solvedService.selectSolved_user(userId, 1);
 		List<SolvedDTO> failed_solved = solvedService.selectSolved_user(userId, 2);
 		List<WordDTO> user_word = wordService.UserWordList3(userId);
-
-		MypageDTO dto = new MypageDTO(user, success_solved, failed_solved, user_word);
-
+		Long rank = userService.getUserRank(userId);
+		MypageDTO dto = new MypageDTO(user, success_solved, failed_solved, user_word, rank + 1L);
+		System.out.println(dto.getUser_rank());
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
@@ -133,10 +133,10 @@ public class UserController {
 
 	/**
 	 * 비밀번호 변경
-	 * */
+	 */
 	@PostMapping("/password/{userId}")
 	public ResponseEntity<?> ChangePw(@PathVariable("userId") String userId, @RequestBody Map<String, String> map) {
-		if (!userService.checkPassword(userId,map.get("now_pw"))) {
+		if (!userService.checkPassword(userId, map.get("now_pw"))) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호가 맞지 않습니다.");
 		}
 		userService.ChangePw(userId, map.get("change_pw"));
@@ -145,22 +145,22 @@ public class UserController {
 
 	/**
 	 * 단어목록 조회
-	 * */
+	 */
 	@GetMapping("/word/{userId}")
 	public ResponseEntity<?> getUserWord(@PathVariable("userId") String userId) {
 
 		UserDTO user = userService.selectUser(userId);
 		List<WordDTO> user_word = wordService.UserWordList(userId);
 
-		MypageDTO dto = new MypageDTO(user,user_word);
+		MypageDTO dto = new MypageDTO(user, user_word);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
 	/**
 	 * 프로필 변경
-	 * */
+	 */
 	@PostMapping("/profile")
-	public ResponseEntity<?> ChangeProfile(@RequestBody Map<String, String> request){
+	public ResponseEntity<?> ChangeProfile(@RequestBody Map<String, String> request) {
 		String profileImage = request.get("profileImage");
 		String userId = request.get("user_id");
 		try {
@@ -171,4 +171,14 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body("프로필 변경 성공");
 	}
 
+	@GetMapping("/rank/{num}")
+	public ResponseEntity<?> getUserWord(@PathVariable("num") Integer num) {
+		List<UserDTO> dto = null;
+		try {
+			dto = userService.getUserByRank(num);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("랭킹 가져오기 실패");
+		}
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 }

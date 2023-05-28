@@ -53,6 +53,8 @@ export default function MyPage() {
         .get(`${baseURL}/user/mypage/${userId}`)
         .then((res) => {
           if (res.status === 200) {
+            const rank = res.data.user_rank //랭킹
+            console.log("rank is " + rank)
             setSolved(res.data.success_solved);
             setFailed(res.data.failed_solved);
             setWords(res.data.user_word);
@@ -62,8 +64,6 @@ export default function MyPage() {
           }
         })
         .catch((e) => {
-          console.log(e.response.status);
-          console.log(e.response.staus === "417");
           if (e.response.staus === "417") {
             swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error");
           }

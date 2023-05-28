@@ -29,7 +29,7 @@ function Footer() {
         </Content>
       </Main>
       <div id="hr" />
-      <p id="cr">ⓒ 2022 Team KeyboardWarriorZ All rights reserved</p>
+      <p id="cr">ⓒ 2023 Team KeyboardWarriorZ All rights reserved</p>
     </Div>
   );
 }

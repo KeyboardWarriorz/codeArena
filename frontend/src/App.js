@@ -1,13 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Fragment } from "react";
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from "recoil";
+import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from "recoil";
 import React from "react";
 
 import Main from "./pages/Main";
@@ -38,7 +32,7 @@ import MultiQuiz from "./pages/MultiQuiz";
 import QuizRoom from "./pages/QuizRoom";
 
 import Notfound from "./pages/NotFound";
-import MainLayout from "./MainLayout";
+import MainLayout from "./components/MainLayout";
 
 function App() {
   return (
@@ -55,10 +49,7 @@ function App() {
               <Route path="/user/:user_id" element={<Mypage />} />
 
               <Route path="/board" element={<Board />} />
-              <Route
-                path="/board/detail/:article_id"
-                element={<BoardDetail />}
-              />
+              <Route path="/board/detail/:article_id" element={<BoardDetail />} />
               <Route path="/board/regist" element={<BoardRegist />} />
 
               <Route path="/lecture" element={<LectureList />} />
@@ -66,23 +57,16 @@ function App() {
 
               <Route path="/problem" element={<ProblemList />} />
               <Route path="/" element={<Main />} />
-              <Route
-                path="/problem/desc/:problem_id"
-                element={<ProblemDesc />}
-              />
+              <Route path="/problem/desc/:problem_id" element={<ProblemDesc />} />
               <Route path="/problem/:problem_id" element={<ProblemItem />} />
 
-              <Route
-                path="/problem/result/:problem_id"
-                element={<SubmitResult />}
-              />
+              <Route path="/problem/result/:problem_id" element={<SubmitResult />} />
 
               <Route path="/user/:user_id/word" element={<WordList />} />
               <Route path="/user/:user_id/solved" element={<ProblemSolved />} />
               <Route path="/user/:user_id/failed" element={<ProblemFailed />} />
 
               <Route path="/multiquiz" element={<MultiQuiz />} />
-              
             </Route>
           </Routes>
         </Router>

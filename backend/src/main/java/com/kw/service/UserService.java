@@ -3,6 +3,8 @@ package com.kw.service;
 import com.kw.dto.UserDTO;
 import com.kw.entity.User;
 
+import java.util.List;
+
 public interface UserService {
     public User loginCheck(User user);
 
@@ -23,4 +25,8 @@ public interface UserService {
     void changeProfile(String userId, String profileImage);
 
     Integer selectPoint(String userId);
+
+    Long getUserRank(String userId);
+
+    List<UserDTO> getUserByRank(int num);
 }

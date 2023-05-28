@@ -19,7 +19,7 @@ public class MypageDTO {
 	private List<SolvedDTO> success_solved;
 	private List<SolvedDTO> failed_solved;
 	private List<WordDTO> user_word;
-	
+	private Long user_rank;
 	public MypageDTO(UserDTO user, List<WordDTO> user_word) {
 		this.user = user;
 		this.user_word = user_word;

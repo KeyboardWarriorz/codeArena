@@ -19,6 +19,13 @@ const Tag = styled.span`
     `}
 
   ${(props) =>
+    props.brown &&
+    css`
+      background-color: #6e6053;
+    `}
+  
+
+  ${(props) =>
     props.red &&
     css`
       background-color: #c25450;
