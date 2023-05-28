@@ -132,19 +132,9 @@ const Paginate = styled(ReactPaginate)`
 
 export default function ProblemSolved() {
   const userId = window.localStorage.getItem("userId");
-  const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
-  );
+  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
   const navigate = useNavigate();
-  const categories = [
-    "ALL",
-    "JAVA",
-    "JSP&Servlet",
-    "Spring",
-    "DataBase",
-    "JavaScript",
-    "HTML/CSS",
-  ];
+  const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
 
   const typeArr = ["객관식", "O / X"];
   const [page, setPage] = useState(1);
@@ -174,7 +164,7 @@ export default function ProblemSolved() {
           setProblems(res.data.data.Problem);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(""));
   }, [page, selected]);
 
   return (

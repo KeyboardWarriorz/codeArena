@@ -19,9 +19,9 @@ export default function ProblemItem() {
   const problemId = window.location.pathname;
   const [problem, setProblem] = useState([]);
   const [category, setCategory] = useState("");
+  const [sub, setSub] = useState("");
 
   const [result, setResult] = useRecoilState(resultState);
-  console.log("result", result);
 
   const [right, setRight] = useState(2);
   const baseURL = process.env.REACT_APP_API_URL;
@@ -37,9 +37,10 @@ export default function ProblemItem() {
         if (res.status === 200) {
           setProblem(res.data);
           setCategory(res.data.subcategory.category.categoryName);
+          setSub(res.data.subcategory.subcategoryName);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(""));
   }, []);
 
   // 1. 사용자가 선택한 답과 answerIndex 비교
@@ -65,6 +66,7 @@ export default function ProblemItem() {
     <Div>
       <Tags>
         <MiniTag text={category} />
+        <MiniTag text={sub} brown="true" />
         <MiniTag text={typeArr[problem.problem_type]} green="true" />
       </Tags>
       <Box>
