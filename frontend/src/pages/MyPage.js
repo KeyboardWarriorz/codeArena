@@ -22,6 +22,7 @@ export default function MyPage() {
   const [words, setWords] = useState([]);
   const [tier, setTier] = useState("");
   const [point, setPoint] = useState(0);
+  const [rank, setRank] = useState("");
 
   function goSolved() {
     navigate(`/user/${userId}/solved`);
@@ -53,8 +54,7 @@ export default function MyPage() {
         .get(`${baseURL}/user/mypage/${userId}`)
         .then((res) => {
           if (res.status === 200) {
-            const rank = res.data.user_rank //랭킹
-            console.log("rank is " + rank)
+            setRank(res.data.user_rank); //랭킹
             setSolved(res.data.success_solved);
             setFailed(res.data.failed_solved);
             setWords(res.data.user_word);
@@ -101,6 +101,7 @@ export default function MyPage() {
               {tier}
             </span>
             <span>{point}P</span>
+            <span>전체 유저 중 {rank}위</span>
             {/* <span>다음 레벨까지 20349P</span> */}
           </ProdataBox>
         </NameBox>

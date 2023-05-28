@@ -23,7 +23,7 @@ const Div = styled.div`
 
 const RoomDiv = styled.div`
   display: flex;
-  gap: 5rem;
+  gap: 2rem;
 `;
 
 const Problems = styled.div`
@@ -31,8 +31,9 @@ const Problems = styled.div`
   padding-bottom: 7px;
   height: 50px;
   border-bottom: 1px #bcbfc180 solid;
+  font-weight: bold;
   #name {
-    color: #6b6b6b;
+    // color: #6b6b6b;
   }
 `;
 
@@ -84,9 +85,10 @@ const ProblemHover = styled.div`
     #hr {
       background-color: #d9d9d930;
       color: black;
-      border-top: 1px solid #bcbfc180;
+      border-top: 1px solid red;
       height: 8px;
       margin-top: 7px;
+      width: 100%;
     }
   }
 `;
@@ -115,8 +117,8 @@ const Problem = styled.div`
   }
 
   > span:nth-of-type(4) {
-    width: 15%;
-    text-align: center;
+    width: 10%;
+    text-align: end;
   }
 `;
 const Select = styled.div`
@@ -162,6 +164,7 @@ const Select = styled.div`
 `;
 
 const MakeRoom = styled.div`
+  width: 20%;
   display: flex;
   justify-content: space-between;
 `;
@@ -348,6 +351,57 @@ const Hr = styled.div`
   margin-top: 20px;
 `;
 
+const RankBox = styled.div`
+  width: 20%;
+  background-color: #f8f8f8;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px 2px #dddddd;
+  padding: 20px 10px 10px 10px;
+
+  #hr {
+    width: 100%;
+    border-top: 1px solid #d7d7d7;
+    height: 8px;
+    margin: 10px 0;
+  }
+
+  #hr2 {
+    width: 100%;
+    border-top: 1px solid #d7d7d760;
+    height: 8px;
+    margin: 5px 0;
+  }
+
+  .tiers {
+    font-weight: bold;
+    font-size: 0.7rem;
+  }
+
+  #BRONZE {
+    color: #ad5600;
+  }
+
+  #SILVER {
+    color: #435f7a;
+  }
+
+  #GOLD {
+    color: #ec9a00;
+  }
+
+  #PLATINUM {
+    color: #27e2a4;
+  }
+
+  #DIAMOND {
+    color: #00b4fc;
+  }
+
+  #RUBY {
+    color: #ff0062aa;
+  }
+`;
+
 export default function MultiQuiz() {
   const baseURL = process.env.REACT_APP_API_URL;
   let stompUserClient = getStompUserClient();
@@ -361,8 +415,11 @@ export default function MultiQuiz() {
   const [categoryId, setCategoryId] = useState("");
   const [Cnt, setCnt] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState("ALL");
 
   console.log(room);
+  console.log(categoryId);
+  console.log(selected);
 
   function titleChange(e) {
     setTitle(e.target.value);
@@ -379,6 +436,9 @@ export default function MultiQuiz() {
   const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));
+  const [rankers, setRankers] = useState([]);
+
+  const ranks = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"];
 
   const [data, setData] = useState({
     room_name: title,
@@ -403,14 +463,20 @@ export default function MultiQuiz() {
     axios
       .get(baseURL + "/game/roomList")
       .then((res) => {
-        console.log(res.data);
         if (res.status === 200) {
-          // console.log(res.data);
           setRoom(res.data);
         }
       })
       .catch((e) => console.log(e));
   }
+
+  // useEffect(() => {
+  //   console.log(room);
+  //   console.log("********", selected);
+  //   console.log(room.map((r) => categories[r.category_id]));
+
+  // }, [selected]);
+  // console.log(rooms);
 
   function sendBroadcast(message) {
     let username = nickname;
@@ -440,7 +506,6 @@ export default function MultiQuiz() {
 
   function addRoom() {
     // let roomName = document.getElementById("roomName").value;
-    console.log(data);
     axios
       .post(baseURL + "/game/room", data)
       .then(function (data) {
@@ -453,7 +518,7 @@ export default function MultiQuiz() {
   }
 
   useEffect(() => {
-    console.log("connecting to server...");
+    // console.log("connecting to server...");
     if (!stompUserClient) {
       let socket = new SockJS(baseURL + "/room");
       stompUserClient = Stomp.over(socket);
@@ -476,7 +541,6 @@ export default function MultiQuiz() {
       }
       subscription = stompUserClient.subscribe("/topic/room", function (response) {
         let data = JSON.parse(response.body);
-        console.log(data.message);
         fetchAll();
       });
       setStompUserClient(stompUserClient);
@@ -484,9 +548,11 @@ export default function MultiQuiz() {
       setLoading(false);
     }
     fetchAll();
-  }, []);
 
-  const [selected, setSelected] = useState("ALL");
+    axios.get(baseURL + "/user/rank/10").then((res) => {
+      setRankers(res.data);
+    });
+  }, []);
 
   function setCategory(e) {
     setSelected(e.target.innerText);
@@ -497,7 +563,7 @@ export default function MultiQuiz() {
   }
 
   function submit() {
-    console.log("submit");
+    // console.log("submit");
   }
 
   return (
@@ -507,16 +573,16 @@ export default function MultiQuiz() {
         <MakeRoom>
           <RoomMakeBox>
             <Select>
-              {categories.map((c) => {
+              {categories.map((c, idx) => {
                 if (selected === c) {
                   return (
-                    <div key={c} className="line" id="selected" onClick={setCategory}>
-                      <span>{c}</span>
+                    <div key={idx} className="line" id="selected" onClick={setCategory}>
+                      <span id={idx}>{c}</span>
                     </div>
                   );
                 } else {
                   return (
-                    <div key={c} className="line" onClick={setCategory}>
+                    <div key={idx} className="line" onClick={setCategory}>
                       <span>{c}</span>
                     </div>
                   );
@@ -534,37 +600,99 @@ export default function MultiQuiz() {
               <span>제목</span>
               <span>인원</span>
             </Problem>
-            <div id="hr"></div>
+            <div id="hr" />
           </Problems>
           <ProblemScroll id="style-2">
-            {room.map((r, idx) => {
-              if (!r.playing) {
-                return (
-                  <ProblemHover
-                    key={idx}
-                    onClick={() => {
-                      navigate(`/multiquiz/${r.roomName}`);
-                    }}
-                  >
-                    <div>{categories[r.category_id]}</div>
-                    <div>대기중</div>
-                    <div>{r.roomName}</div>
-                    <div>{r.users.length}</div>
-                  </ProblemHover>
-                );
-              } else {
-                return (
-                  <ProblemHover key={idx}>
-                    <div>{idx + 1}</div>
-                    <div style={{ color: "red" }}>게임중</div>
-                    <div>{r.roomName}</div>
-                    <div>{r.users.length}</div>
-                  </ProblemHover>
-                );
-              }
-            })}
+            {selected === "ALL" ? (
+              <>
+                {room.map((r, idx) => {
+                  if (!r.playing) {
+                    return (
+                      <ProblemHover
+                        key={idx}
+                        onClick={() => {
+                          navigate(`/multiquiz/${r.roomName}`);
+                        }}
+                      >
+                        <div>{categories[r.category_id]}</div>
+                        <div>대기중</div>
+                        <div>{r.roomName}</div>
+                        <div>{r.users.length}</div>
+                      </ProblemHover>
+                    );
+                  } else {
+                    return (
+                      <ProblemHover key={idx}>
+                        <div>{idx + 1}</div>
+                        <div style={{ color: "red" }}>게임중</div>
+                        <div>{r.roomName}</div>
+                        <div>{r.users.length}</div>
+                      </ProblemHover>
+                    );
+                  }
+                })}
+              </>
+            ) : (
+              <>
+                {room
+                  .filter((r) => categories[r.category_id] === selected)
+                  .map((r, idx) => {
+                    if (!r.playing) {
+                      return (
+                        <ProblemHover
+                          key={idx}
+                          onClick={() => {
+                            navigate(`/multiquiz/${r.roomName}`);
+                          }}
+                        >
+                          <div>{categories[r.category_id]}</div>
+                          <div>대기중</div>
+                          <div>{r.roomName}</div>
+                          <div>{r.users.length}</div>
+                        </ProblemHover>
+                      );
+                    } else {
+                      return (
+                        <ProblemHover key={idx}>
+                          <div>{idx + 1}</div>
+                          <div style={{ color: "red" }}>게임중</div>
+                          <div>{r.roomName}</div>
+                          <div>{r.users.length}</div>
+                        </ProblemHover>
+                      );
+                    }
+                  })}
+              </>
+            )}
           </ProblemScroll>
         </ProblemBox>
+        <RankBox>
+          <div style={{ fontWeight: "bold", paddingTop: "10px", paddingBottom: "13px" }}>
+            🏅 유저 랭킹
+          </div>
+
+          <div id="hr" />
+          {rankers.map((r, idx) => (
+            <div key={idx}>
+              <div style={{ display: "flex" }}>
+                <div style={{ width: "15%" }}>
+                  <div>{ranks[idx]}</div>
+                </div>
+                <div style={{ width: "50%" }}>
+                  <div>{r.nickname}</div>
+                  <div className="tiers" id={r.tier}>
+                    {r.tier}
+                  </div>
+                </div>
+                <div style={{ width: "35%", textAlign: "right" }}>
+                  <div>{r.point}</div>
+                </div>
+              </div>
+
+              <div id="hr2" />
+            </div>
+          ))}
+        </RankBox>
       </RoomDiv>
       {showModal && (
         <ModalBox>

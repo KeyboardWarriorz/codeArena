@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
+import { ClockLoader } from "react-spinners";
 
 import an1 from "../assets/images/Jieun.svg";
 import an2 from "../assets/images/Seongwhan.svg";
@@ -47,6 +48,8 @@ export default function QuizRoom({ match }) {
     tier: tier,
     point: point,
   });
+
+  const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
 
   // start버튼 누르면 실행되는 함수 (게임시작)
   function startGame() {
@@ -341,7 +344,7 @@ export default function QuizRoom({ match }) {
             <>
               <div>{roomdata.roomName}</div>
               <div>|</div>
-              <div>{roomdata.category_id}</div>
+              <div>{categories[roomdata.category_id]}</div>
               <div>|</div>
               <div>{users.length}명</div>
             </>
@@ -375,7 +378,11 @@ export default function QuizRoom({ match }) {
           <></>
         )}
         {/* 문제 남았을 때 대기 */}
-        {roomState && count === 0 && questionCount != 0 && <div></div>}
+        {roomState && count === 0 && questionCount != 0 && (
+          <div>
+            <ClockLoader color="#F8A70C" />
+          </div>
+        )}
         {/* 문제 다 풀고 */}
         {roomState && count === 0 && questionCount == 0 && (
           <div>
@@ -453,7 +460,11 @@ export default function QuizRoom({ match }) {
                 현재 1위
                 {Object.keys(resultData).length
                   ? resultData.winner.map((w) => {
-                      return <>&nbsp;"{w}"&nbsp;</>;
+                      return (
+                        <span style={{ color: "#006e61", fontSize: "2rem", fontWeight: "bold" }}>
+                          &nbsp;{w}&nbsp;
+                        </span>
+                      );
                     })
                   : ""}
               </RankBox>
@@ -863,8 +874,8 @@ const Timer = styled.div`
   height: 40px;
   align-items: end;
   display: flex;
-  font-size: 20px;
-  color: red;
+  font-size: 2rem;
+  color: #c25450;
 `;
 
 const RankBox = styled.div`
@@ -880,6 +891,7 @@ const RankBox = styled.div`
 `;
 
 const ExitBtn = styled.button`
+  font-family: "NanumSquareNeo-Variable";
   background-color: #c25450;
   color: #ffffff;
   height: 40px;
@@ -888,6 +900,7 @@ const ExitBtn = styled.button`
   border-radius: 10px;
   border: 0px;
   cursor: pointer;
+  box-shadow: 3px 2px 5px gray;
 `;
 
 const StartBtn = styled.button`
