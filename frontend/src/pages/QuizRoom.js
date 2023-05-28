@@ -12,6 +12,7 @@ import axios from "axios";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import swal from "sweetalert";
+import {setStompUserClient, getStompUserClient} from "../recoil/stompClient"
 
 export default function QuizRoom({ match }) {
   const navigate = useNavigate();
@@ -123,47 +124,41 @@ export default function QuizRoom({ match }) {
       .catch((e) => console.log(e));
 
     console.log("connecting to server...");
-
-    let socket = new SockJS(baseURL + "/room");
-    stompUserClient.current = Stomp.over(socket);
+    stompUserClient.current = getStompUserClient();
     // setStompUserClient(stompClient);
     console.log(stompUserClient.current);
-
-    stompUserClient.current.connect({}, function (frame) {
-      console.log("connected to: " + frame);
-      sendBroadcast(" logined");
-
-      subscription.current = stompUserClient.current.subscribe(
-        "/topic/messages/" + roomName.room_id,
-        function (response) {
-          let data = JSON.parse(response.body);
-          if (data.master) {
-            setUsers(data.users);
-            console.log(data.users);
-          }
-          if (data.type == "message") {
-            // 리스트 상태 업데이트
-            setChatting((Chatting) => [...Chatting, data]);
-
-            // render(data);
-          } else if (data.type == "question") {
-            setRoomState(true);
-            setQuestion(() => data);
-            timeoutId.current = setTimeout(() => {
-              sendAnswer(isCorrect.current);
-              console.log("send", isCorrect.current);
-            }, 10000);
-          } else if (data.type == "end") {
-            swal("종료");
-            setRoomState(false);
-          } else if (data.type == "result") {
-            setResultData(data);
-            console.log("result: ", data);
-          }
+    sendBroadcast(" logined");
+    subscription.current = stompUserClient.current.subscribe(
+      "/topic/messages/" + roomName.room_id,
+      function (response) {
+        let data = JSON.parse(response.body);
+        if (data.master) {
+          setUsers(data.users);
+          console.log(data.users);
         }
-      );
-      sendBroadcast("message");
-    });
+        if (data.type == "message") {
+          // 리스트 상태 업데이트
+          setChatting((Chatting) => [...Chatting, data]);
+
+          // render(data);
+        } else if (data.type == "question") {
+          setRoomState(true);
+          setQuestion(() => data);
+          timeoutId.current = setTimeout(() => {
+            sendAnswer(isCorrect.current);
+            console.log("send", isCorrect.current);
+          }, 10000);
+        } else if (data.type == "end") {
+          swal("종료");
+          setRoomState(false);
+        } else if (data.type == "result") {
+          setResultData(data);
+          console.log("result: ", data);
+        }
+      }
+    );
+    setStompUserClient(stompUserClient.current)
+    sendBroadcast("message");
   }, []); // useEffect 끝
 
   console.log("cur", isCorrect.current);

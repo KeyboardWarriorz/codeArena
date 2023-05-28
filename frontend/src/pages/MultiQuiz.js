@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-
+import {setStompUserClient, getStompUserClient, getSubscription, setSubscription} from "../recoil/stompClient"
 const Div = styled.div`
   cursor: default;
   text-align: left;
@@ -345,25 +345,17 @@ const Hr = styled.div`
 
 export default function MultiQuiz() {
   const baseURL = process.env.REACT_APP_API_URL;
-  let stompUserClient;
-  let selectedRoom;
-  let subscription = null;
-  let timeoutId = false;
-  let description = "";
-
+  let stompUserClient = getStompUserClient();
+  let subscription = getSubscription();
   const [room, setRoom] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const clickModal = () => {
     setShowModal(!showModal);
     console.log("modal");
   };
-  // const [stompUserClient, setStompUserClient] = useState("");
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [Cnt, setCnt] = useState("");
-  // const [stompUserClient, setStompUserClient] = useState(
-  //   window.localStorage.getItem("stompUserClient")
-  // );
 
   function titleChange(e) {
     setTitle(e.target.value);
@@ -412,6 +404,7 @@ export default function MultiQuiz() {
   const [page, setPage] = useState(1);
 
   function fetchAll() {
+    console.log("fetchAll Called")
     axios
       .get(baseURL+"/game/roomList")
       .then((res) => {
@@ -466,18 +459,34 @@ export default function MultiQuiz() {
 
   useEffect(() => {
     console.log("connecting to server...");
-    let socket = new SockJS(baseURL + "/room");
-    stompUserClient = Stomp.over(socket);
-    window.localStorage.setItem("stompUserClient", stompUserClient);
-    stompUserClient.connect({}, function (frame) {
-      console.log("connected to: " + frame);
-      // sendBroadcast(userName + " logined");
-      stompUserClient.subscribe("/topic/room", function (response) {
+    if (!stompUserClient){
+      let socket = new SockJS(baseURL + "/room");
+      stompUserClient = Stomp.over(socket);
+      window.localStorage.setItem("stompUserClient", stompUserClient);
+      stompUserClient.connect({}, function (frame) {
+        console.log("connected to: " + frame);
+        // sendBroadcast(userName + " logined");
+        subscription = stompUserClient.subscribe("/topic/room", function (response) {
+          let data = JSON.parse(response.body);
+          console.log(data.message);
+          fetchAll();
+        });
+        setStompUserClient(stompUserClient)
+        setSubscription(subscription)
+      });
+    }
+    else{
+      if (subscription){
+        subscription.unsubscribe();
+      }
+      subscription = stompUserClient.subscribe("/topic/room", function (response) {
         let data = JSON.parse(response.body);
         console.log(data.message);
         fetchAll();
       });
-    });
+      setStompUserClient(stompUserClient)
+      setSubscription(subscription)
+    }
     fetchAll();
   }, []);
 
