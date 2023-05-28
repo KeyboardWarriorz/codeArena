@@ -148,7 +148,7 @@ const SmallImg = styled.img`
 
 export default function Main() {
   const navigate = useNavigate();
-
+  const [userId, setUserId] = useState(window.localStorage.userId);
   const imagelist = [banner1, banner2, banner3, banner4];
 
   const imageCarousel = imagelist.map((image, idx) => {
@@ -215,6 +215,13 @@ export default function Main() {
               <p>다른 사람들도 이겨봐용</p>
               <BoxTitle>🎮 단체 퀴즈</BoxTitle>
             </Box> */}
+            <Box onClick={() => navigate(`user/${userId}`)}>
+              <LectureBox>
+                <SmallImg src={brocolli} />
+              </LectureBox>
+              <p>난 얼마나 성장했을까?</p>
+              <BoxTitle>⭐ 마이페이지</BoxTitle>
+            </Box>
           </ListBox>
         </SubContainer>
       </MainContainer>
