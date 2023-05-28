@@ -6,14 +6,13 @@ import WordCard from "../components/organisms/WordCard";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "../components/modals/ProfileModal";
 import TierModal from "../components/modals/TierModal";
+import swal from "sweetalert";
 
 // CSS 코드 아래에 있음
 export default function MyPage() {
   const navigate = useNavigate();
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
-  );
+  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
   const [profile, setProfile] = useState("Eunhyo");
   const baseURL = process.env.REACT_APP_API_URL;
 
@@ -46,20 +45,30 @@ export default function MyPage() {
 
   useEffect(() => {
     setProfile(window.localStorage.getItem("profileImage"));
-
-    axios
-      .get(`${baseURL}/user/mypage/${userId}`)
-      .then((res) => {
-        if (res.status === 200) {
-          setSolved(res.data.success_solved);
-          setFailed(res.data.failed_solved);
-          setWords(res.data.user_word);
-          setTier(res.data.user.tier);
-          window.localStorage.setItem("tier", res.data.user.tier);
-          setPoint(res.data.user.point);
-        }
-      })
-      .catch((e) => window.alert(e));
+    if (userId === null) {
+      swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error");
+      navigate("/login");
+    } else {
+      axios
+        .get(`${baseURL}/user/mypage/${userId}`)
+        .then((res) => {
+          if (res.status === 200) {
+            setSolved(res.data.success_solved);
+            setFailed(res.data.failed_solved);
+            setWords(res.data.user_word);
+            setTier(res.data.user.tier);
+            window.localStorage.setItem("tier", res.data.user.tier);
+            setPoint(res.data.user.point);
+          }
+        })
+        .catch((e) => {
+          console.log(e.response.status);
+          console.log(e.response.staus === "417");
+          if (e.response.staus === "417") {
+            swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error");
+          }
+        });
+    }
   }, []);
 
   // 프로필 변경 모달 관리
@@ -80,7 +89,7 @@ export default function MyPage() {
       <ProfileBox>
         <CharBox>
           <Profile>
-            <img src={require(`../assets/images/${profile}.svg`)} />
+            {userId !== null && <img src={require(`../assets/images/${profile}.svg`)} />}
           </Profile>
         </CharBox>
         <NameBox>
