@@ -7,7 +7,7 @@ export default function MainLayout() {
   return (
     <Fragment>
       <Header />
-      <div style={{ minHeight: "100vh", overflow: "hidden" }}>
+      <div style={{ minHeight: "100vh", overflow: "auto" }}>
         <Outlet />
       </div>
 

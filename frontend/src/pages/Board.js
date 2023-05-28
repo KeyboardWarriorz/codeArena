@@ -33,14 +33,12 @@ export default function Board() {
 
   useEffect(() => {
     api
-      .get(
-        `${baseURL}/board/boardList/${boards.indexOf(
-          curr
-        )}?page=${page}&size=6`,
-        { withCredentials: true }
-      )
+      .get(`${baseURL}/board/boardList/${boards.indexOf(curr)}?page=${page}&size=6`, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data.data.totalArticle);
           setIsSearching(false);
           setArticles(res.data.data.articleList);
           setTotal(res.data.data.totalArticle);
@@ -155,7 +153,7 @@ export default function Board() {
               })}
             </Cards>
             <Paginate
-              pageCount={Math.ceil(total / 10)}
+              pageCount={Math.ceil(total / 6)}
               pageRangeDisplayed={5}
               marginPagesDisplayed={0}
               breakLabel={""}
