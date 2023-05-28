@@ -43,7 +43,7 @@ export default function BoardDetail() {
   // 게시물 및 댓글 삭제 API
   function onDelete(w) {
     if (w === "article") {
-      api.post(`${baseURL}/delete/${article.article_id}`).then((res) => {
+      api.post(`${baseURL}/board/delete/${article.article_id}`).then((res) => {
         if (res.status === 200) {
           navigate("/board");
         }
