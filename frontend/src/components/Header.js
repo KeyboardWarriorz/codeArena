@@ -38,33 +38,25 @@ function Header() {
 
       {curPage != "/" && (
         <Contents>
-          <NavLink
-            to="/lecture"
-            className={({ isActive }) => (isActive ? "selected" : "")}
-          >
+          <NavLink to="/lecture" className={({ isActive }) => (isActive ? "selected" : "")}>
             <div>📚 기초 개념</div>
           </NavLink>
 
-          <NavLink
-            to="/problem"
-            className={({ isActive }) => (isActive ? "selected" : "")}
-          >
+          <NavLink to="/problem" className={({ isActive }) => (isActive ? "selected" : "")}>
             <div>📝 문제 풀이</div>
           </NavLink>
 
-          <NavLink
-            to={`/board`}
-            className={({ isActive }) => (isActive ? "selected" : "")}
-          >
+          <NavLink to={`/board`} className={({ isActive }) => (isActive ? "selected" : "")}>
             <div>😍 커뮤니티</div>
           </NavLink>
 
-          {/* <NavLink
-            to="/multiquiz"
-            className={({ isActive }) => (isActive ? "selected" : "")}
-          >
+          {/* <NavLink to="/multiquiz" className={({ isActive }) => (isActive ? "selected" : "")}>
             <div>🎮 단체 퀴즈</div>
           </NavLink> */}
+
+          <NavLink to={`user/${userId}`} className={({ isActive }) => (isActive ? "selected" : "")}>
+            <div>⭐ 마이페이지</div>
+          </NavLink>
         </Contents>
       )}
 
