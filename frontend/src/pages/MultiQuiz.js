@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-import {setStompUserClient, getStompUserClient, getSubscription, setSubscription} from "../recoil/stompClient"
+import {
+  setStompUserClient,
+  getStompUserClient,
+  getSubscription,
+  setSubscription,
+} from "../recoil/stompClient";
 const Div = styled.div`
   cursor: default;
   text-align: left;
@@ -150,7 +156,6 @@ const Select = styled.div`
 
     >span: nth-of-type(1) {
       cursor: pointer;
-      color: #006e61;
       font-weight: bold;
     }
   }
@@ -177,8 +182,8 @@ const MiniButton = styled.button`
   font-weight: bold;
   font-family: "NanumSquareNeo-Variable";
   box-shadow: 2px 2px 2px 2px #f8a70c;
-  color: #006e61;
   cursor: pointer;
+  color: white;
   margin: 10px 0 0 10px;
 
   &: hover {
@@ -351,11 +356,13 @@ export default function MultiQuiz() {
   const [showModal, setShowModal] = useState(false);
   const clickModal = () => {
     setShowModal(!showModal);
-    console.log("modal");
   };
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [Cnt, setCnt] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  console.log(room);
 
   function titleChange(e) {
     setTitle(e.target.value);
@@ -367,13 +374,9 @@ export default function MultiQuiz() {
     setCnt(e.target.value);
   }
 
-  const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
-  );
+  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [profileImage, setProfileImage] = useState(
-    window.localStorage.getItem("profileImage")
-  );
+  const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));
 
@@ -389,24 +392,16 @@ export default function MultiQuiz() {
   });
 
   const navigate = useNavigate();
-  const categories = [
-    "ALL",
-    "JAVA",
-    "JSP&Servlet",
-    "Spring",
-    "DataBase",
-    "JavaScript",
-    "HTML/CSS",
-  ];
+  const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
   const totalRecords = 400;
 
   const typeArr = ["객관식", "O / X"];
   const [page, setPage] = useState(1);
 
   function fetchAll() {
-    console.log("fetchAll Called")
+    console.log("fetchAll Called");
     axios
-      .get(baseURL+"/game/roomList")
+      .get(baseURL + "/game/roomList")
       .then((res) => {
         console.log(res.data);
         if (res.status === 200) {
@@ -459,7 +454,7 @@ export default function MultiQuiz() {
 
   useEffect(() => {
     console.log("connecting to server...");
-    if (!stompUserClient){
+    if (!stompUserClient) {
       let socket = new SockJS(baseURL + "/room");
       stompUserClient = Stomp.over(socket);
       window.localStorage.setItem("stompUserClient", stompUserClient);
@@ -471,12 +466,12 @@ export default function MultiQuiz() {
           console.log(data.message);
           fetchAll();
         });
-        setStompUserClient(stompUserClient)
-        setSubscription(subscription)
+        setStompUserClient(stompUserClient);
+        setSubscription(subscription);
+        setLoading(false);
       });
-    }
-    else{
-      if (subscription){
+    } else {
+      if (subscription) {
         subscription.unsubscribe();
       }
       subscription = stompUserClient.subscribe("/topic/room", function (response) {
@@ -484,8 +479,9 @@ export default function MultiQuiz() {
         console.log(data.message);
         fetchAll();
       });
-      setStompUserClient(stompUserClient)
-      setSubscription(subscription)
+      setStompUserClient(stompUserClient);
+      setSubscription(subscription);
+      setLoading(false);
     }
     fetchAll();
   }, []);
@@ -514,12 +510,7 @@ export default function MultiQuiz() {
               {categories.map((c) => {
                 if (selected === c) {
                   return (
-                    <div
-                      key={c}
-                      className="line"
-                      id="selected"
-                      onClick={setCategory}
-                    >
+                    <div key={c} className="line" id="selected" onClick={setCategory}>
                       <span>{c}</span>
                     </div>
                   );
@@ -532,13 +523,13 @@ export default function MultiQuiz() {
                 }
               })}
             </Select>
-            <MiniButton onClick={clickModal}>방 생성</MiniButton>
+            <MiniButton onClick={clickModal}>방만들기</MiniButton>
           </RoomMakeBox>
         </MakeRoom>
         <ProblemBox>
           <Problems>
             <Problem id="name">
-              <span>번호</span>
+              <span>분야</span>
               <span>상태</span>
               <span>제목</span>
               <span>인원</span>
@@ -555,8 +546,8 @@ export default function MultiQuiz() {
                       navigate(`/multiquiz/${r.roomName}`);
                     }}
                   >
-                    <div>{idx + 1}</div>
-                    <div>대기</div>
+                    <div>{categories[r.category_id]}</div>
+                    <div>대기중</div>
                     <div>{r.roomName}</div>
                     <div>{r.users.length}</div>
                   </ProblemHover>
@@ -565,7 +556,7 @@ export default function MultiQuiz() {
                 return (
                   <ProblemHover key={idx}>
                     <div>{idx + 1}</div>
-                    <div>플레이중</div>
+                    <div style={{ color: "red" }}>게임중</div>
                     <div>{r.roomName}</div>
                     <div>{r.users.length}</div>
                   </ProblemHover>
@@ -586,10 +577,7 @@ export default function MultiQuiz() {
             <div>
               <InputDiv>
                 <div>방 제목</div>
-                <input
-                  onChange={titleChange}
-                  placeholder="방 제목을 입력해 주세요."
-                ></input>
+                <input onChange={titleChange} placeholder="방 제목을 입력해 주세요."></input>
               </InputDiv>
               <InputDiv>
                 <div>카테고리</div>
@@ -603,21 +591,17 @@ export default function MultiQuiz() {
                   <option value="" disabled hidden>
                     카테고리를 설정해주세요.
                   </option>
-                  <option value="1">cate1</option>
-                  <option value="2">cate2</option>
-                  <option value="3">cate3</option>
-                  <option value="4">cate4</option>
+                  <option value="1">JAVA</option>
+                  <option value="2">JSP&Servlet</option>
+                  <option value="3">Spring</option>
+                  <option value="4">DataBase</option>
+                  <option value="5">JavaScript</option>
+                  <option value="6">HTML/CSS</option>
                 </select>
               </InputDiv>
               <InputDiv>
                 <div>문제 수</div>
-                <select
-                  name="order"
-                  form="num"
-                  required
-                  defaultValue=""
-                  onChange={CntChange}
-                >
+                <select name="order" form="num" required defaultValue="" onChange={CntChange}>
                   <option value="" disabled hidden>
                     문제 수를 설정해주세요.
                   </option>
@@ -635,6 +619,7 @@ export default function MultiQuiz() {
           </ModalContent>
         </ModalBox>
       )}
+      {loading && <Loader />}
     </Div>
   );
 }

@@ -24,8 +24,8 @@ public class RoomService {
     @Autowired
     private UserService userService;
     public Map<String, GameService> gameServiceMap=new HashMap<>();
-    public void registerRoom(String roomName, UserDTO userDto, GameScenarioDto gameScenarioDto) throws Exception{
-        roomStorage.addRoom(roomName, userDto.getUserId(),gameScenarioDto);
+    public void registerRoom(String roomName, UserDTO userDto, GameScenarioDto gameScenarioDto,int category_id) throws Exception{
+        roomStorage.addRoom(roomName, userDto.getUserId(), category_id,gameScenarioDto);
         roomStorage.getRoomByRoomName(roomName).users.add(userDto);
         System.out.println("addRoom ended");
     }

@@ -45,7 +45,7 @@ public class RoomController {
         }
         System.out.println("handling register room request: " + roomName);
         try {
-            roomService.registerRoom(roomName, getUser(map),gameScenarioDto);
+            roomService.registerRoom(roomName, getUser(map),gameScenarioDto,Integer.parseInt(map.get("problem_category_id")));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

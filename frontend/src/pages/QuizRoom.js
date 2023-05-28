@@ -12,7 +12,7 @@ import axios from "axios";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import swal from "sweetalert";
-import {setStompUserClient, getStompUserClient} from "../recoil/stompClient"
+import { setStompUserClient, getStompUserClient } from "../recoil/stompClient";
 
 export default function QuizRoom({ match }) {
   const navigate = useNavigate();
@@ -25,8 +25,6 @@ export default function QuizRoom({ match }) {
   // 현재 게임중인지 (true-게임중)
   const [roomState, setRoomState] = useState(false);
 
-
-
   // 서버 데이터 받아오기
   const stompUserClient = useRef();
   let subscription = useRef();
@@ -35,14 +33,10 @@ export default function QuizRoom({ match }) {
 
   let roomName = useParams();
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [profileImage, setProfileImage] = useState(
-    window.localStorage.getItem("profileImage")
-  );
+  const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));
-  const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
-  );
+  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
 
   // 인원에 변경이 생기면 서버에 인원 정보 전송
   const [data, setData] = useState({
@@ -143,10 +137,10 @@ export default function QuizRoom({ match }) {
         } else if (data.type == "question") {
           setRoomState(true);
           setQuestion(() => data);
-          
-          if(data.answer[3] === null){
+
+          if (data.answer[3] === null) {
             setQuestionType(1);
-          }else{
+          } else {
             setQuestionType(0);
           }
 
@@ -164,7 +158,7 @@ export default function QuizRoom({ match }) {
         }
       }
     );
-    setStompUserClient(stompUserClient.current)
+    setStompUserClient(stompUserClient.current);
     sendBroadcast("message");
   }, []); // useEffect 끝
 
@@ -173,11 +167,11 @@ export default function QuizRoom({ match }) {
   // 답 확인하는 함수
   function sendAnswer(cor) {
     if (cor === "1") {
-      swal({icon : 'success', title : "정답입니당",text:"정답이에영",timer:3000});
+      swal({ icon: "success", title: "정답입니당", text: "정답이에영", timer: 3000 });
       // console.log("cor" + cor);
       // $("#answerList").html("정답입니다\n\n"+description);
     } else {
-      swal({icon : 'error', title : "오답입니당",text:"해설",timer:3000});
+      swal({ icon: "error", title: "오답입니당", text: "해설", timer: 3000 });
       // $("#answerList").html("오답입니다\n\n"+description);
     }
     console.log("isCorrect  " + cor);
@@ -296,11 +290,7 @@ export default function QuizRoom({ match }) {
   console.log("resultData", master);
   function sendMsg() {
     // console.log(stompUserClient);
-    stompUserClient.current.send(
-      "/app/chat/" + roomName.room_id,
-      {},
-      JSON.stringify(Msg)
-    );
+    stompUserClient.current.send("/app/chat/" + roomName.room_id, {}, JSON.stringify(Msg));
     setContent("");
   }
   function leaveRoom() {
@@ -327,7 +317,7 @@ export default function QuizRoom({ match }) {
     setCount(10);
     setquestionCount((prevCount) => prevCount - 1);
   }, [question]);
-  console.log("test", questionCount)
+  console.log("test", questionCount);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -356,7 +346,6 @@ export default function QuizRoom({ match }) {
               <div>{users.length}명</div>
             </>
           )}
-          {selected} : {isCorrect.current}
         </RoomData>
         <RoomData>
           {/* {comments.length > 0 ? (
@@ -377,17 +366,27 @@ export default function QuizRoom({ match }) {
         </RoomData>
       </RoomTitle>
       <ContentBox>
-
-        {!roomState ? <StartBtn onClick={startGame}>Start Game</StartBtn> : <></>}
+        {!roomState ? (
+          <StartBtn onClick={startGame}>
+            GAME
+            <br /> START
+          </StartBtn>
+        ) : (
+          <></>
+        )}
         {/* 문제 남았을 때 대기 */}
-        {roomState && count === 0 && questionCount != 0 && <div>중간</div>}
+        {roomState && count === 0 && questionCount != 0 && <div></div>}
         {/* 문제 다 풀고 */}
-        {roomState && count === 0 && questionCount == 0 && <div>1등은
-                {Object.keys(resultData).length
-                  ? resultData.winner.map((w) => {
-                      return <>&nbsp;"{w}"&nbsp;</>;
-                    })
-                  : ""}</div>}
+        {roomState && count === 0 && questionCount == 0 && (
+          <div>
+            1등은
+            {Object.keys(resultData).length
+              ? resultData.winner.map((w) => {
+                  return <>&nbsp;"{w}"&nbsp;</>;
+                })
+              : ""}
+          </div>
+        )}
         {/* 문제를 푸는중 */}
         {roomState && count != 0 && (
           <Qbox>
@@ -473,11 +472,7 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[0].nickname}</div>
-                  {resultData.userScore ? (
-                    <div>{resultData.userScore[0]}</div>
-                  ) : (
-                    <div>0</div>
-                  )}
+                  {resultData.userScore ? <div>{resultData.userScore[0]}</div> : <div>0</div>}
                 </UserName>
               </UDB1>
             )}
@@ -491,15 +486,12 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[1].nickname}</div>
-                  {resultData.userScore ? (
-                    <div>{resultData.userScore[1]}</div>
-                  ) : (
-                    <div>0</div>
-                  )}
+                  {resultData.userScore ? <div>{resultData.userScore[1]}</div> : <div>0</div>}
                 </UserName>
               </UDB2>
-            )}</UDBG>
-            <UDBG>
+            )}
+          </UDBG>
+          <UDBG>
             {userList.length > 2 && (
               <UDB3>
                 <div>
@@ -510,11 +502,7 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[2].nickname}</div>
-                  {resultData.userScore ? (
-                    <div>{resultData.userScore[2]}</div>
-                  ) : (
-                    <div>0</div>
-                  )}
+                  {resultData.userScore ? <div>{resultData.userScore[2]}</div> : <div>0</div>}
                 </UserName>
               </UDB3>
             )}
@@ -528,11 +516,7 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[3].nickname}</div>
-                  {resultData.userScore ? (
-                    <div>{resultData.userScore[4]}</div>
-                  ) : (
-                    <div>0</div>
-                  )}
+                  {resultData.userScore ? <div>{resultData.userScore[4]}</div> : <div>0</div>}
                 </UserName>
               </UDB4>
             )}
@@ -540,23 +524,23 @@ export default function QuizRoom({ match }) {
           <ChatBox>
             <h3 id="chattitle">💬&nbsp;chat</h3>
             <div>
-            <div>
-              {Chatting.map((chat, idx) => {
-                return (
-                  <>
-                    <div id="chatline" key={idx}>
-                      <span id="id">{chat.fromLogin}</span>
-                      <span>&nbsp;|&nbsp;&nbsp;</span>
-                      <span>{chat.message}</span>
+              <div>
+                {Chatting.map((chat, idx) => {
+                  return (
+                    <>
+                      <div id="chatline" key={idx}>
+                        <span id="id">{chat.fromLogin}</span>
+                        <span>&nbsp;|&nbsp;&nbsp;</span>
+                        <span>{chat.message}</span>
 
-                      {/* {chat.fromLogin} */}
-                    </div>
-                    <div id="chatb">
-                      <div id="hr" />
-                    </div>
-                  </>
-                );
-              })}
+                        {/* {chat.fromLogin} */}
+                      </div>
+                      <div id="chatb">
+                        <div id="hr" />
+                      </div>
+                    </>
+                  );
+                })}
               </div>
               <div>
                 <input
@@ -799,18 +783,17 @@ const ChatBox = styled.div`
   box-shadow: 3px 2px 5px #00000025;
   width: 86%;
   > div:nth-of-type(1) {
-    > div:nth-of-type(1){
-      overflow-y:scroll;
-      height : 150px;  
-        &::-webkit-scrollbar {
-      width: 10px;
+    > div:nth-of-type(1) {
+      overflow-y: scroll;
+      height: 150px;
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+        background: #816843;
+      }
     }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 20px;
-      background: #816843;
-    }
-    }
-    
   }
   #hr {
     width: 90%;
@@ -911,6 +894,8 @@ const StartBtn = styled.button`
   background-color: transparent;
   border: 0px;
   cursor: pointer;
-  font-size: 50px;
-  color: #fab809;
+  font-size: 40px;
+  color: blue;
+  font-family: "Press Start 2P";
+  text-shadow: 2px 2px 2px gray;
 `;

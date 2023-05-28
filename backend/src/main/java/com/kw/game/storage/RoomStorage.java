@@ -34,11 +34,11 @@ public class RoomStorage {
         rooms.get(roomName).getUsers().add(userDTO);
     }
 
-    public void addRoom(String roomName, String userId, GameScenarioDto gameScenarioDto) throws Exception {
+    public void addRoom(String roomName, String userId, int category_id, GameScenarioDto gameScenarioDto) throws Exception {
         if (rooms.containsKey(roomName)) {
             throw new Exception("Room already exists with roomName: " + roomName);
         }
-        rooms.put(roomName,new RoomDto(roomName,1,new HashSet<>(),userId,4, gameScenarioDto,false)); //수정되어야 함
+        rooms.put(roomName,new RoomDto(roomName,category_id,new HashSet<>(),userId,4, gameScenarioDto,false)); //수정되어야 함
         System.out.println("room "+roomName+" included");
     }
 
