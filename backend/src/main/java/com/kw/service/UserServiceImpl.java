@@ -1,5 +1,6 @@
 package com.kw.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -97,17 +98,7 @@ public class UserServiceImpl implements UserService {
     @Override 
     public UserDTO selectUser(String userId) {
 		User user = userRep.findById(userId).orElse(null);
-		List<Tier> list = tierRep.findAll(); //Tier의 정보를 가져온다
-		System.out.println(list);
-		Integer point = user.getPoint(); //사용자의 현재 포인트
-		String tier = "";
-		for(Tier t : list){
-			if( point >= t.getTierLow() && point < t.getTierHigh()){
-				tier = t.getTierName(); //범위에 해당하는 티어
-				break;
-			}
-		}
-		UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint(),user.getProfileImage(), tier);
+		UserDTO dto = new UserDTO(user.getUserId(), user.getNickname(), user.getPoint(),user.getProfileImage(), getTier(user.getPoint()));
 		return dto;
     }
 
@@ -167,7 +158,35 @@ public class UserServiceImpl implements UserService {
 		return user.getPoint();
 	}
 
+	@Override
+	public Long getUserRank(String userId) {
+		return userRep.getUserRank(userId);
+	}
+
+	@Override
+	public List<UserDTO> getUserByRank() {
+		List<User> list = userRep.getUsersByRank();
+		List<UserDTO> ret = new ArrayList<>();
+		for (User user : list) {
+			ret.add(new UserDTO(user.getNickname(),user.getPoint(),getTier(user.getPoint())));
+		}
+		return ret;
+	}
+
 	public static String hashSHA256(String input) {
 		return DigestUtils.sha256Hex(input);
+	}
+
+	public String getTier(int point) {
+		List<Tier> list = tierRep.findAll(); //Tier의 정보를 가져온다
+		System.out.println(list);
+		String tier = "";
+		for(Tier t : list){
+			if( point >= t.getTierLow() && point < t.getTierHigh()){
+				tier = t.getTierName(); //범위에 해당하는 티어
+				break;
+			}
+		}
+		return tier;
 	}
 }

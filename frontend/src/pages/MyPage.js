@@ -53,6 +53,8 @@ export default function MyPage() {
         .get(`${baseURL}/user/mypage/${userId}`)
         .then((res) => {
           if (res.status === 200) {
+            const rank = res.data.user_rank //랭킹
+            console.log("rank is " + rank)
             setSolved(res.data.success_solved);
             setFailed(res.data.failed_solved);
             setWords(res.data.user_word);

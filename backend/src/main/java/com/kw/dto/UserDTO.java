@@ -18,6 +18,12 @@ public class UserDTO {
 	private String access_token;
 	private String refresh_token;
 
+	public UserDTO(String nickname, int point, String tier) {
+		this.nickname = nickname;
+		this.point = point;
+		this.tier = tier;
+	}
+
 	public UserDTO(String userId, String nickname, int point, String profile_image) {
 		this.userId = userId;
 		this.nickname = nickname;
@@ -41,6 +47,7 @@ public class UserDTO {
 		this.access_token = access_token;
 		this.refresh_token = refresh_token;
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(userId);
