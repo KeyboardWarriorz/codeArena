@@ -45,7 +45,7 @@ export default function Board() {
         }
       })
       .catch((e) => console.log(""));
-  }, [curr]);
+  }, [curr, page]);
 
   const [searchText, setSearchText] = useState("");
   const [isSearching, setIsSearching] = useState(false);
