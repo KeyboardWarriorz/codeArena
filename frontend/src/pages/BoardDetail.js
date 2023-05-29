@@ -5,16 +5,13 @@ import DeleteModal from "../components/modals/DeleteModal";
 import api from "../interceptor";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-import {GetUserId, GetNickname} from "../recoil/user"
+import { GetUserId, GetNickname } from "../recoil/user";
+
 export default function BoardDetail() {
   const navigate = useNavigate();
   const [board, setBoard] = useState("자유게시판");
-  const [profile, setProfile] = useState(
-    window.localStorage.getItem("profileImage")
-  );
-  const [nickname, setNickname] = useState(
-    GetNickname()
-  );
+  const [profile, setProfile] = useState(window.localStorage.getItem("profileImage"));
+  const [nickname, setNickname] = useState(GetNickname());
   const userId = GetUserId();
   const articlePath = window.location.pathname;
   const [commentId, setCommentId] = useState(0);
@@ -24,6 +21,7 @@ export default function BoardDetail() {
   const [which, setWhich] = useState("");
   const [content, setContent] = useState("");
   const [articleProfile, setArticleProfile] = useState("Junseo");
+  const [date, setDate] = useState("");
 
   const [commentData, setCommentData] = useState({
     article_id: article.articleId,
@@ -56,9 +54,7 @@ export default function BoardDetail() {
             window.location.reload();
           }
         })
-        .catch((e) =>
-          swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
-        );
+        .catch((e) => swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error"));
     }
   }
 
@@ -76,9 +72,7 @@ export default function BoardDetail() {
           setContent("");
         }
       })
-      .catch((e) =>
-        swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error")
-      );
+      .catch((e) => swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error"));
   }
 
   function changeComment(e) {
@@ -98,17 +92,28 @@ export default function BoardDetail() {
       .get(`${baseURL}${articlePath}`)
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data.data);
           setArticle(res.data.data);
           setComments(res.data.data.comment);
           setArticleProfile(res.data.data.profile_image);
-          console.log(res.data.data.tier)
-          let comments=res.data.data.comment
-          for(let i=0;i<comments.length;i++){
-            console.log(comments[i].tier)
+          setDate(
+            new Date(res.data.data.createdTime).toLocaleString("ko-KR", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+              formatMatcher: "basic",
+            })
+          );
+
+          console.log(res.data.data.tier);
+          let comments = res.data.data.comment;
+          for (let i = 0; i < comments.length; i++) {
+            console.log(comments[i].tier);
             //코멘트 티어정보
           }
-          //res.data.data.tier로 쓰시면 됩니당
-
         }
       })
       .catch((e) => window.alert(e.response.data));
@@ -122,6 +127,7 @@ export default function BoardDetail() {
       <Info>
         <div>
           <Title>{article.title}</Title>
+
           {userId === article.user_id ? (
             <span
               className="material-icons"
@@ -132,9 +138,13 @@ export default function BoardDetail() {
               delete_forever
             </span>
           ) : null}
+          <span id="date">{date}</span>
         </div>
 
         <div className="user">
+          <span className="tier" id={article.tier}>
+            {article.tier}
+          </span>
           <span>{article.nickname}</span>
           <Profile>
             <img src={require(`../assets/images/${articleProfile}.svg`)} />
@@ -152,10 +162,13 @@ export default function BoardDetail() {
             {comments.map((c, idx) => {
               return (
                 <Comment key={idx}>
-                  <img
-                    src={require(`../assets/images/${c.profile_image}.svg`)}
-                  />
-                  <span id="nickname">{c.nickName}</span>
+                  <img src={require(`../assets/images/${c.profile_image}.svg`)} />
+                  <span id="nickname">
+                    {c.nickName}
+                    <span className="tier" id={c.tier}>
+                      {c.tier}
+                    </span>
+                  </span>
                   <div>
                     <span>{c.content}</span>
                     {c.user_id === userId ? (
@@ -178,11 +191,7 @@ export default function BoardDetail() {
         )}
       </Comments>
 
-      <Input
-        onChange={changeComment}
-        placeholder="내용을 입력해 주세요"
-        value={content}
-      />
+      <Input onChange={changeComment} placeholder="내용을 입력해 주세요" value={content} />
 
       <Button onClick={submitComment}>등록</Button>
 
@@ -271,6 +280,42 @@ const Info = styled.div`
     color: #006e61;
     font-weight: bold;
   }
+
+  #date {
+    color: grey;
+    font-size: 13px;
+    margin-left: 10px;
+    padding-top: 10px;
+  }
+
+  .tier {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  #BRONZE {
+    color: #ad5600;
+  }
+
+  #SILVER {
+    color: #435f7a;
+  }
+
+  #GOLD {
+    color: #ec9a00;
+  }
+
+  #PLATINUM {
+    color: #27e2a4;
+  }
+
+  #DIAMOND {
+    color: #00b4fc;
+  }
+
+  #RUBY {
+    color: #ff0062aa;
+  }
 `;
 
 const Comments = styled.div`
@@ -289,6 +334,35 @@ const Comment = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+
+  .tier {
+    font-size: 10px;
+    margin-left: 5px;
+  }
+
+  #BRONZE {
+    color: #ad5600;
+  }
+
+  #SILVER {
+    color: #435f7a;
+  }
+
+  #GOLD {
+    color: #ec9a00;
+  }
+
+  #PLATINUM {
+    color: #27e2a4;
+  }
+
+  #DIAMOND {
+    color: #00b4fc;
+  }
+
+  #RUBY {
+    color: #ff0062aa;
+  }
 
   div {
     display: flex;
@@ -315,7 +389,7 @@ const Comment = styled.div`
   #nickname {
     color: #506bb1;
     font-weight: bold;
-    width: 10%;
+    width: 15%;
   }
 `;
 

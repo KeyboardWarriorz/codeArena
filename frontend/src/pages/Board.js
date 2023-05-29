@@ -17,6 +17,7 @@ export default function Board() {
 
   const [page, setPage] = useState(1);
   const [articles, setArticles] = useState([]);
+  const [date, setDate] = useState("");
 
   function categoryChange(c) {
     setCurr(c);
@@ -41,7 +42,7 @@ export default function Board() {
           setIsSearching(false);
           setArticles(res.data.data.articleList);
           setTotal(res.data.data.totalArticle);
-          console.log(res.data.data.articleList[0].tier)
+          console.log(res.data.data.articleList[0].tier);
         }
       })
       .catch((e) => console.log(""));
@@ -54,12 +55,25 @@ export default function Board() {
     setSearchText(e.target.value);
   }
 
+  console.log(articles);
+
   function search() {
     api
       .get(`/board/search?keyword=${searchText}`, { withCredentials: true })
       .then((res) => {
         setIsSearching(true);
         setArticles(res.data.data.articleList);
+        setDate(
+          new Date(res.data.data.articleList.createdTime).toLocaleString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            formatMatcher: "basic",
+          })
+        );
       })
       .catch((e) => {
         swal("", "에러가 발생했어요! 잠시 후에 다시 시도해주세요", "error", {
@@ -147,7 +161,16 @@ export default function Board() {
                       cnt={a.totalComment}
                       profile={a.profile_image}
                       board={a.boardName.slice(0, 2)}
-                      //tier = {a.tier} 쓰시면 됩니당
+                      tier={a.tier}
+                      date={new Date(a.createdTime).toLocaleString("ko-KR", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false,
+                        formatMatcher: "basic",
+                      })}
                     />
                   </div>
                 );
