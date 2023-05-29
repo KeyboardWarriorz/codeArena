@@ -7,13 +7,14 @@ import resultState from "../recoil/result.js";
 import { useRecoilState } from "recoil";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+import { GetUserId } from "../recoil/user";
 
 export default function SubmitResult() {
   const navigate = useNavigate();
   // recoil state 이용하여 결과 받고, axios 요청 전송
   const [result, setResult] = useRecoilState(resultState);
   const typeArr = ["객관식", "O / X"];
-  const userId = window.localStorage.getItem("userId");
+  const userId = GetUserId();
 
   const [problem, setProblem] = useState([]);
   const [category, setCategory] = useState("");

@@ -29,7 +29,6 @@ import com.kw.repository.UserRepository;
 public class ArticleServiceImpl implements ArticleService{
 
 
-	
 	@Autowired
 	private ArticleRepository articleRep;
 	@Autowired
@@ -38,15 +37,14 @@ public class ArticleServiceImpl implements ArticleService{
 	private UserRepository userRep;
 	@Autowired
 	private BoardRepository boardRep;
-	
-	
-	
+
+
 	@Override
 	public List<ArticleListDTO> selectArticle(Pageable pageable,Long boardId) {
 		Page<Article> articlePageList = articleRep.findByBoard_BoardIdWithPagingAndSum(boardId, pageable);
 		List<ArticleListDTO> articleDTOList = new ArrayList<>();
 
-				
+
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
 			Long CommentTotal = commentRep.selectCommentCount(articleId);
@@ -57,17 +55,19 @@ public class ArticleServiceImpl implements ArticleService{
 		return articleDTOList;
 	}
 
-	
-	//게시글 상세조회 
+
+	//게시글 상세조회
 	@Override
 	public ArticleDTO selectArticleOne(Long articleId) {
 		Article articleOne = articleRep.selectArticleOne(articleId);
 		List<CommentDTO> comment = commentRep.selectComment(articleId);
+		for (CommentDTO commentDTO : comment) {
+			System.out.println(commentDTO);
+		}
 		Long CommentCnt = commentRep.selectCommentCount(articleId);
-		
+
 		return new ArticleDTO(articleOne,comment,CommentCnt);
 	}
-
 
 
 	@Override
@@ -75,7 +75,7 @@ public class ArticleServiceImpl implements ArticleService{
 		Long totalArticle = articleRep.selectBoardTotalCount(boardId);
 		return totalArticle;
 	}
-	
+
 	@Override
 	public Integer insertArticle( Map<String, Object> param) {
 		Integer code = 1;
@@ -87,19 +87,18 @@ public class ArticleServiceImpl implements ArticleService{
 		calendar.set(Calendar.MILLISECOND, 0);
 
 		Date truncatedDate = calendar.getTime();
-				
+
 		Article article =
 				new Article(null,
 						user, board, (String)param.get("title")
-				, (String)param.get("content"), 
-				truncatedDate);
+						, (String)param.get("content"),
+						truncatedDate);
 
 		if(article != null) {
 
-				articleRep.save(article);
-				return code;
-		}
-		else {
+			articleRep.save(article);
+			return code;
+		} else {
 			code = 0;
 			return code;
 		}
@@ -111,23 +110,22 @@ public class ArticleServiceImpl implements ArticleService{
 	public Integer deleteArticle(Long articleId) {
 		Integer code = 1;
 		Article article = articleRep.selectArticleOne(articleId);
-		
+
 		if(article != null) {
 			commentRep.deleteByArticleArticleId(articleId);
 			articleRep.delete(article);
-		}
-		else {
+		} else {
 			code = 0;
 		}
 		return code;
 	}
-	
+
 	@Override
 	public List<ArticleListDTO> searchArticle(String keyword, Pageable pageable) {
-		
+
 		Page<Article> articlePageList = articleRep.findByContentContainingOrTitleContaining(keyword,keyword, pageable);
 		List<ArticleListDTO> articleDTOList = new ArrayList<>();
-				
+
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
 			Long CommentTotal = commentRep.selectCommentCount(articleId);
@@ -136,11 +134,11 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		return articleDTOList;
 	}
-	
+
 	@Override
 	public Long searchArticleCnt(String keyword) {
 		Long count = articleRep.searchArticleCnt(keyword);
 		return count;
 	}
-	
+
 }

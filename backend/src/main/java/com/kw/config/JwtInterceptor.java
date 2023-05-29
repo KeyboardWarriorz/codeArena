@@ -58,7 +58,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             if (refreshToken != null && jwtUtil.validateToken(refreshToken)) {
                 System.out.println("if2");
                 // 토큰이 유효한 경우 요청을 진행합니다.
-                response.setHeader("refreshToken", jwtUtil.generateToken("refresh"));
+                response.setHeader("refreshToken", jwtUtil.generateToken());
                 return true;
             }
         }

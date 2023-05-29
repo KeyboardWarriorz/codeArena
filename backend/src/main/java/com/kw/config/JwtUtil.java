@@ -17,14 +17,9 @@ public class JwtUtil {
     private static final long REFRESH_EXPIRATION_TIME = 3*60*60 * 1000;
 
     // JWT 토큰 생성
-    public static String generateToken(String type) {
+    public static String generateToken() {
         Date now = new Date();
-        Date expiration;
-        if (type.equals("access")) {
-            expiration = new Date(now.getTime() + ACCESS_EXPIRATION_TIME);
-        } else {
-            expiration = new Date(now.getTime() + REFRESH_EXPIRATION_TIME);
-        }
+        Date expiration= new Date(now.getTime() + REFRESH_EXPIRATION_TIME);
         JwtBuilder builder = Jwts.builder()
                 .setIssuedAt(now)
                 .setExpiration(expiration)
@@ -32,6 +27,18 @@ public class JwtUtil {
         return builder.compact();
     }
 
+    public static String generateToken(String userId, String nickname) {
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + ACCESS_EXPIRATION_TIME);
+        JwtBuilder builder = Jwts.builder()
+                .setIssuedAt(now)
+                .setExpiration(expiration)
+                .claim("userId", userId)
+                .claim("nickname", nickname)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY);
+        System.out.println("token generated");
+        return builder.compact();
+    }
 
 
 

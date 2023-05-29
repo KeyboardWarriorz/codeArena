@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../interceptor";
 import swal from "sweetalert";
+import {GetUserId, GetNickname} from "../recoil/user"
 
 export default function BoardRegist() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const userId = window.localStorage.getItem("userId");
+  const userId = GetUserId();
   const [boardId, setBoardId] = useState("");
   const baseURL = process.env.REACT_APP_API_URL;
 

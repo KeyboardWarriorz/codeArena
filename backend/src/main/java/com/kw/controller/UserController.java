@@ -45,8 +45,8 @@ public class UserController {
 			// HttpSession에 정보를 저장한다. - 뷰에서 사용하고 있음 ${loginUser}- 아이디 / ${loginName} - 이름
 		}
 		UserDTO dto = userService.selectUser(dbuser.getUserId());
-		UserDTO userDTO = new UserDTO(dbuser.getUserId(), dbuser.getNickname(), dbuser.getPoint(), dbuser.getProfileImage(), dto.getTier(), jwtUtil.generateToken("access"), jwtUtil.generateToken("refresh"));
-		System.out.println(userDTO);
+		UserDTO userDTO = new UserDTO(dbuser.getUserId(), dbuser.getNickname(), dbuser.getPoint(), dbuser.getProfileImage(), dto.getTier(), jwtUtil.generateToken(dbuser.getUserId(),dbuser.getNickname()), jwtUtil.generateToken());
+		System.out.println(userDTO.getAccess_token());
 		return new ResponseEntity(userDTO, HttpStatus.OK);
 	}
 

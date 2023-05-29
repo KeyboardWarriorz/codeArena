@@ -5,7 +5,7 @@ import DeleteModal from "../components/modals/DeleteModal";
 import api from "../interceptor";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-
+import {GetUserId, GetNickname} from "../recoil/user"
 export default function BoardDetail() {
   const navigate = useNavigate();
   const [board, setBoard] = useState("자유게시판");
@@ -13,9 +13,9 @@ export default function BoardDetail() {
     window.localStorage.getItem("profileImage")
   );
   const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
+    GetNickname()
   );
-  const userId = window.localStorage.getItem("userId");
+  const userId = GetUserId();
   const articlePath = window.location.pathname;
   const [commentId, setCommentId] = useState(0);
 

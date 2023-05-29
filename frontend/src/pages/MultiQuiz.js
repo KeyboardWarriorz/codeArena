@@ -11,6 +11,8 @@ import {
   getSubscription,
   setSubscription,
 } from "../recoil/stompClient";
+import {GetUserId, GetNickname} from "../recoil/user"
+
 const Div = styled.div`
   cursor: default;
   text-align: left;
@@ -431,8 +433,8 @@ export default function MultiQuiz() {
     setCnt(e.target.value);
   }
 
-  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
-  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [nickname, setNickname] = useState(GetNickname());
+  const [userId, setUserId] = useState(GetUserId());
   const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));

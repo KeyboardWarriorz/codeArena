@@ -3,6 +3,7 @@ import api from "../interceptor";
 import { styled } from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import { GetNickname, GetUserId } from "../recoil/user";
 
 const Div = styled.div`
   cursor: default;
@@ -133,10 +134,10 @@ const Paginate = styled(ReactPaginate)`
 
 export default function ProblemFailed() {
   const navigate = useNavigate();
-  const userId = window.localStorage.getItem("userId");
+  const userId = GetUserId();
 
   const [nickname, setNickname] = useState(
-    window.localStorage.getItem("nickname")
+    GetNickname()
   );
   const categories = [
     "ALL",

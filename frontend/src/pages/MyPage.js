@@ -7,12 +7,13 @@ import { useNavigate } from "react-router-dom";
 import ProfileModal from "../components/modals/ProfileModal";
 import TierModal from "../components/modals/TierModal";
 import swal from "sweetalert";
+import {GetUserId, GetNickname} from "../recoil/user"
 
 // CSS 코드 아래에 있음
 export default function MyPage() {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
+  const [userId, setUserId] = useState(GetUserId);
+  const [nickname, setNickname] = useState(GetNickname());
   const [profile, setProfile] = useState("Eunhyo");
   const baseURL = process.env.REACT_APP_API_URL;
 
