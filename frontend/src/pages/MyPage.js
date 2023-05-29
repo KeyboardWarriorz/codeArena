@@ -89,7 +89,7 @@ export default function MyPage() {
     <MainContainer>
       <ProfileBox>
         <CharBox>
-          <Profile>
+          <Profile onClick={changeProfile}>
             {userId !== null && <img src={require(`../assets/images/${profile}.svg`)} />}
           </Profile>
         </CharBox>
@@ -287,6 +287,7 @@ const Profile = styled.div`
   align-items: center;
   justify-content: center;
   border: 5px solid #efefef;
+  cursor: pointer;
 
   img {
     width: 70px;
