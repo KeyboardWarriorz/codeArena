@@ -50,9 +50,9 @@ function Header() {
             <div>😍 커뮤니티</div>
           </NavLink>
 
-          {/* <NavLink to="/multiquiz" className={({ isActive }) => (isActive ? "selected" : "")}>
+          <NavLink to="/multiquiz" className={({ isActive }) => (isActive ? "selected" : "")}>
             <div>🎮 단체 퀴즈</div>
-          </NavLink> */}
+          </NavLink>
 
           <NavLink to={`user/${userId}`} className={({ isActive }) => (isActive ? "selected" : "")}>
             <div>⭐ 마이페이지</div>
@@ -120,7 +120,7 @@ const Arena = styled.p`
 `;
 
 const Contents = styled.div`
-  width: 40%;
+  width: 50%;
   // min-width: 500px;
   display: flex;
   justify-content: space-between;
