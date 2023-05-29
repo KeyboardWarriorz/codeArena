@@ -61,7 +61,7 @@ public class ArticleServiceImpl implements ArticleService{
 		Article articleOne = articleRep.selectArticleOne(articleId);
 		List<CommentDTO> comment = commentRep.selectComment(articleId);
 		for (CommentDTO commentDTO : comment) {
-			System.out.println(commentDTO);
+			commentDTO.setTier(userService.getTier(userRep.findByUserId(commentDTO.getUser_id()).getPoint()));
 		}
 		Long CommentCnt = commentRep.selectCommentCount(articleId);
 		String tier = userService.getTier(articleOne.getUser().getPoint());
