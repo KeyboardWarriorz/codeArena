@@ -102,7 +102,13 @@ export default function BoardDetail() {
           setComments(res.data.data.comment);
           setArticleProfile(res.data.data.profile_image);
           console.log(res.data.data.tier)
+          let comments=res.data.data.comment
+          for(let i=0;i<comments.length;i++){
+            console.log(comments[i].tier)
+            //코멘트 티어정보
+          }
           //res.data.data.tier로 쓰시면 됩니당
+
         }
       })
       .catch((e) => window.alert(e.response.data));
