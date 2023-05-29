@@ -33,6 +33,12 @@ export default function Board() {
   const baseURL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
+    if (!window.localStorage.getItem("accessToken")){
+      swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error").then(() => {
+        window.localStorage.clear();
+        navigate("/login");
+      });
+    }
     api
       .get(`${baseURL}/board/boardList/${boards.indexOf(curr)}?page=${page}&size=6`, {
         withCredentials: true,

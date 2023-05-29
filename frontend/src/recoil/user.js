@@ -17,6 +17,9 @@ export function GetNickname() {
     if (isExpired) {
         return null;
     }
+    if (!decoded){
+        return null;
+    }
     return decoded.nickname;
 }
 
@@ -33,6 +36,9 @@ export function GetUserId() {
         console.log('Invalid token');
     }
     if (isExpired) {
+        return null;
+    }
+    if (!decoded){
         return null;
     }
     return decoded.userId;

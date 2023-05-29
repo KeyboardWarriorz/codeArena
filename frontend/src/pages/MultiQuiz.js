@@ -12,6 +12,7 @@ import {
   setSubscription,
 } from "../recoil/stompClient";
 import { GetUserId, GetNickname } from "../recoil/user";
+import swal from "sweetalert";
 
 const Div = styled.div`
   cursor: default;
@@ -405,6 +406,14 @@ const RankBox = styled.div`
 `;
 
 export default function MultiQuiz() {
+  useEffect(()=>{
+    if (!window.localStorage.getItem("accessToken")){
+      swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error").then(() => {
+        window.localStorage.clear();
+        navigate("/login");
+      });
+    }
+  },[])
   const baseURL = process.env.REACT_APP_API_URL;
   let stompUserClient = getStompUserClient();
   let subscription = getSubscription();
@@ -492,6 +501,7 @@ export default function MultiQuiz() {
       })
     );
   }
+  
 
   useEffect(() => {
     setData({
@@ -508,15 +518,25 @@ export default function MultiQuiz() {
 
   function addRoom() {
     // let roomName = document.getElementById("roomName").value;
-    axios
-      .post(baseURL + "/game/room", data)
-      .then(function (data) {
-        // console.log(data);
-        navigate("/multiquiz/" + title);
-      })
-      .catch(function (jqXHR) {
-        // console.log(jqXHR);
-      });
+
+    if (!title) {
+      swal("방 제목을 입력해 주세요", "", "error");
+    } else if (!categoryId) {
+      swal("카테고리를 설정해주세요.", "", "error");
+      return;
+    } else if (!Cnt) {
+      swal("문제 수를 설정해주세요.", "", "error");
+    } else {
+      axios
+        .post(baseURL + "/game/room", data)
+        .then(function (data) {
+          // console.log(data);
+          navigate("/multiquiz/" + title);
+        })
+        .catch(function (jqXHR) {
+          // console.log(jqXHR);
+        });
+    }
   }
 
   useEffect(() => {
