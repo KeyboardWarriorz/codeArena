@@ -101,6 +101,8 @@ export default function BoardDetail() {
           setArticle(res.data.data);
           setComments(res.data.data.comment);
           setArticleProfile(res.data.data.profile_image);
+          console.log(res.data.data.tier)
+          //res.data.data.tier로 쓰시면 됩니당
         }
       })
       .catch((e) => window.alert(e.response.data));

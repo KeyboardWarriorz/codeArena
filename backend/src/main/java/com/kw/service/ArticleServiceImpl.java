@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import com.kw.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +20,6 @@ import com.kw.dto.CommentDTO;
 import com.kw.entity.Article;
 import com.kw.entity.Board;
 import com.kw.entity.User;
-import com.kw.repository.ArticleRepository;
-import com.kw.repository.BoardRepository;
-import com.kw.repository.CommentRepository;
-import com.kw.repository.UserRepository;
 
 @Service
 @Transactional
@@ -37,7 +34,8 @@ public class ArticleServiceImpl implements ArticleService{
 	private UserRepository userRep;
 	@Autowired
 	private BoardRepository boardRep;
-
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public List<ArticleListDTO> selectArticle(Pageable pageable,Long boardId) {
@@ -48,8 +46,9 @@ public class ArticleServiceImpl implements ArticleService{
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
 			Long CommentTotal = commentRep.selectCommentCount(articleId);
-			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal);
-			System.out.println(articleDTO.toString());
+			String tier = userService.getTier(article.getUser().getPoint()) ;
+			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal, tier);
+			System.out.println(articleDTO);
 			articleDTOList.add(articleDTO);
 		}
 		return articleDTOList;
@@ -65,8 +64,8 @@ public class ArticleServiceImpl implements ArticleService{
 			System.out.println(commentDTO);
 		}
 		Long CommentCnt = commentRep.selectCommentCount(articleId);
-
-		return new ArticleDTO(articleOne,comment,CommentCnt);
+		String tier = userService.getTier(articleOne.getUser().getPoint());
+		return new ArticleDTO(articleOne,comment,CommentCnt, tier);
 	}
 
 
@@ -129,7 +128,8 @@ public class ArticleServiceImpl implements ArticleService{
 		for(Article article : articlePageList) {
 			Long articleId = article.getArticleId();
 			Long CommentTotal = commentRep.selectCommentCount(articleId);
-			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal);
+			String tier = userService.getTier(article.getUser().getPoint());
+			ArticleListDTO articleDTO = ArticleListDTO.convertToDTO(article, CommentTotal, tier);
 			articleDTOList.add(articleDTO);
 		}
 		return articleDTOList;

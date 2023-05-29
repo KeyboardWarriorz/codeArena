@@ -25,10 +25,10 @@ public class ArticleDTO {
     private String profile_image;
     private Long commentTotal;
     private List<CommentDTO> comment;
-
+    private String tier;
  
     
-    public ArticleDTO(Article article, List<CommentDTO> comment, Long commentTotal) {
+    public ArticleDTO(Article article, List<CommentDTO> comment, Long commentTotal, String tier) {
     	if(article != null) {
         	this.article_id = article.getArticleId();
         	this.title = article.getTitle();
@@ -40,6 +40,7 @@ public class ArticleDTO {
         	this.user_id = article.getUser().getUserId();
         	this.comment = comment;
         	this.commentTotal = commentTotal;
+            this.tier = tier;
     	}
     }
     

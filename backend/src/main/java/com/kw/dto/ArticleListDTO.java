@@ -20,9 +20,10 @@ public class ArticleListDTO {
     private Long totalComment;
     private String profile_image;
     private String userId;
+    private String tier;
 
     
-    public ArticleListDTO(Article article, Long totalComment) {
+    public ArticleListDTO(Article article, Long totalComment, String tier) {
     	if(article != null) {
         	this.articleId = article.getArticleId();
         	this.title = article.getTitle();
@@ -33,11 +34,12 @@ public class ArticleListDTO {
         	this.profile_image = article.getUser().getProfileImage();
         	this.userId = article.getUser().getUserId();
         	this.totalComment = totalComment;
+            this.tier = tier;
     	}
     }
 
 
-	public static ArticleListDTO convertToDTO(Article article, Long totalComment) {
-        return new ArticleListDTO(article, totalComment);
+	public static ArticleListDTO convertToDTO(Article article, Long totalComment, String tier) {
+        return new ArticleListDTO(article, totalComment, tier);
     }
 }
