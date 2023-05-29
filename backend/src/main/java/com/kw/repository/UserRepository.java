@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, String>, QuerydslPredicateExecutor<User> {
 
     User findByUserId(String userId);
-
+    User findByNickname(String nickname);
     boolean existsByNickname(String nickname);
 
     boolean existsByuserId(String userId);

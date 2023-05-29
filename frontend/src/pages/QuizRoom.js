@@ -187,7 +187,7 @@ export default function QuizRoom({ match }) {
       axios
         .post(baseURL + "/game/answer", {
           room_name: roomName.room_id,
-          user_name: userId,
+          user_name: GetNickname(),
           isCorrect: isCorrect.current,
         })
         .then(function (response) {

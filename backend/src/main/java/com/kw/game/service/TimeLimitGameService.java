@@ -28,7 +28,7 @@ public class TimeLimitGameService implements GameService{
         this.userService = userService;
         this.roomStorage = roomStorage;
         for (UserDTO user : room.getUsers()) {
-            user_score.put(user.getUserId(), 0);
+            user_score.put(user.getNickname(), 0);
         }
         simpMessagingTemplate.convertAndSend("/topic/room",new MessageDto());
         getProblems();
@@ -41,22 +41,22 @@ public class TimeLimitGameService implements GameService{
         List<String> winner = new ArrayList<>();
         Integer cur_max = 0;
         for (Map.Entry<String, Integer> entry : user_score.entrySet()) {
-            String userId = entry.getKey();
+            String nickname = entry.getKey();
             Integer userScore = entry.getValue();
             if (cur_max < userScore) {
-                winner = new ArrayList<>(Arrays.asList(userId));
+                winner = new ArrayList<>(Arrays.asList(nickname));
                 cur_max = userScore;
             }
             else if (cur_max == userScore) {
-                winner.add(userId);
+                winner.add(nickname);
             }
-            user.add(userId);
+            user.add(nickname);
             score.add(userScore);
         }
         ResultDto result = new ResultDto(messageType, "", winner, user, score);
         if (messageType.equals("end")) {
             for (String win_user : winner) {
-                userService.addUserPoint(win_user, 100);
+                userService.addUserPointByNickname(win_user, 100);
             }
             roomStorage.getRoomByRoomName(roomName).setPlaying(false);
             System.out.println("message sended");
@@ -69,12 +69,12 @@ public class TimeLimitGameService implements GameService{
         simpMessagingTemplate.convertAndSend("/topic/messages/" + roomName,this.question_list.get(question_cnt));
     }
     @Override
-    public synchronized void receiveAnswer(String userId, boolean isCorrect) {
+    public synchronized void receiveAnswer(String nickname, boolean isCorrect) {
         this.answer_cnt += 1;
         System.out.println(isCorrect);
         if (isCorrect) {
-            user_score.put(userId, user_score.get(userId) + 10);
-            System.out.println(user_score.get(userId));
+            user_score.put(nickname, user_score.get(nickname) + 10);
+            System.out.println(user_score.get(nickname));
         }
         if (answer_cnt == roomStorage.getRoomByRoomName(roomName).getUsers().size()) {
             this.answer_cnt=0;
