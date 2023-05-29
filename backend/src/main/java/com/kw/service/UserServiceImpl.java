@@ -189,7 +189,7 @@ public class UserServiceImpl implements UserService {
 	public static String hashSHA256(String input) {
 		return DigestUtils.sha256Hex(input);
 	}
-
+	@Override
 	public String getTier(int point) {
 		List<Tier> list = tierRep.findAll(); //Tier의 정보를 가져온다
 		System.out.println(list);

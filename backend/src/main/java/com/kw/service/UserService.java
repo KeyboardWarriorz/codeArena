@@ -31,4 +31,6 @@ public interface UserService {
     Long getUserRank(String userId);
 
     List<UserDTO> getUserByRank(int num);
+
+    String getTier(int point);
 }

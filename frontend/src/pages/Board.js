@@ -41,6 +41,7 @@ export default function Board() {
           setIsSearching(false);
           setArticles(res.data.data.articleList);
           setTotal(res.data.data.totalArticle);
+          console.log(res.data.data.articleList[0].tier)
         }
       })
       .catch((e) => console.log(""));
@@ -146,6 +147,7 @@ export default function Board() {
                       cnt={a.totalComment}
                       profile={a.profile_image}
                       board={a.boardName.slice(0, 2)}
+                      //tier = {a.tier} 쓰시면 됩니당
                     />
                   </div>
                 );
