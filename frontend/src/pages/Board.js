@@ -33,10 +33,10 @@ export default function Board() {
   const baseURL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    if (!window.localStorage.getItem("access_token")){
-      swal("로그인이 필요한 페이지입니다.").then(() => {
+    if (!window.localStorage.getItem("accessToken")){
+      swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error").then(() => {
         window.localStorage.clear();
-        window.location.href = "/login";
+        navigate("/login");
       });
     }
     api

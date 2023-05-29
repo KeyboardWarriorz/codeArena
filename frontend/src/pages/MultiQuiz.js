@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import axios from "axios";
@@ -408,10 +407,10 @@ const RankBox = styled.div`
 
 export default function MultiQuiz() {
   useEffect(()=>{
-    if (!window.localStorage.getItem("access_token")){
-      swal("로그인이 필요한 페이지입니다.").then(() => {
+    if (!window.localStorage.getItem("accessToken")){
+      swal("", "로그인을 해야 볼 수 있는 페이지에요!", "error").then(() => {
         window.localStorage.clear();
-        window.location.href = "/login";
+        navigate("/login");
       });
     }
   },[])
