@@ -9,12 +9,13 @@ import swal from "sweetalert";
 import GPT from "../assets/images/GPT.png";
 import LargeButton from "../components/buttons/LargeButton";
 import { useNavigate } from "react-router";
+import {GetUserId, GetNickname} from "../recoil/user"
 
 export default function LectureItem() {
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
   const [data, setData] = useState([]);
-  const userId = window.localStorage.getItem("userId");
+  const userId = GetUserId();
 
   const lecturePath = window.location.pathname;
   const baseURL = process.env.REACT_APP_API_URL;

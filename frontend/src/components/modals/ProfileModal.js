@@ -7,7 +7,7 @@ import Seongwhan from "../../assets/images/Seongwhan.svg";
 import Eunhyo from "../../assets/images/Eunhyo.svg";
 import Junseo from "../../assets/images/Junseo.svg";
 import Sunyeong from "../../assets/images/Sunyeong.svg";
-
+import {GetUserId, GetNickname} from "../../recoil/user"
 import MiniButton from "../buttons/MiniButton";
 
 export default function GPTModal(props) {
@@ -29,7 +29,7 @@ export default function GPTModal(props) {
   const [selected, setSelected] = useState(
     window.localStorage.getItem("profileImage")
   );
-  const userId = window.localStorage.getItem("userId");
+  const userId = GetUserId();
 
   function changeProflie() {
     axios

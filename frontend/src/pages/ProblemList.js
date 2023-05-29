@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import api from "../interceptor";
 import swal from "sweetalert";
+import { GetUserId } from "../recoil/user";
 
 export default function ProblemList() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function ProblemList() {
   const typeArr = ["객관식", "O / X"];
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
-  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [userId, setUserId] = useState(GetUserId());
   const [problems, setProblems] = useState([]);
 
   const [selected, setSelected] = useState("ALL");

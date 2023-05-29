@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import api from "../interceptor";
+import { GetNickname, GetUserId } from "../recoil/user";
 
 const Div = styled.div`
   cursor: default;
@@ -131,8 +132,8 @@ const Paginate = styled(ReactPaginate)`
 `;
 
 export default function ProblemSolved() {
-  const userId = window.localStorage.getItem("userId");
-  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
+  const userId = GetUserId();
+  const [nickname, setNickname] = useState(GetNickname());
   const navigate = useNavigate();
   const categories = ["ALL", "JAVA", "JSP&Servlet", "Spring", "DataBase", "JavaScript", "HTML/CSS"];
 

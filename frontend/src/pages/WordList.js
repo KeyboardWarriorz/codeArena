@@ -6,6 +6,7 @@ import WordCard from "../components/organisms/WordCard";
 import api from "../interceptor";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { GetUserId } from "../recoil/user";
 
 const Div = styled.div`
   cursor: default;
@@ -64,7 +65,7 @@ export default function WordList() {
   const pageUser = window.location.pathname;
   // 현재 이 단어장이 누구의 것인지
   const nickname = pageUser.split("/")[2];
-  const userId = window.localStorage.getItem("userId");
+  const userId = GetUserId();
 
   const [words, setWords] = useState([]);
   const [deleteId, setDeleteId] = useState(0);

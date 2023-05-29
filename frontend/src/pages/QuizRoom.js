@@ -14,6 +14,7 @@ import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import swal from "sweetalert";
 import { setStompUserClient, getStompUserClient } from "../recoil/stompClient";
+import { GetNickname, GetUserId } from "../recoil/user";
 
 export default function QuizRoom({ match }) {
   const navigate = useNavigate();
@@ -33,11 +34,11 @@ export default function QuizRoom({ match }) {
   let description = "";
 
   let roomName = useParams();
-  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [userId, setUserId] = useState(GetUserId());
   const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));
-  const [nickname, setNickname] = useState(window.localStorage.getItem("nickname"));
+  const [nickname, setNickname] = useState(GetNickname());
 
   // 인원에 변경이 생기면 서버에 인원 정보 전송
   const [data, setData] = useState({
@@ -253,7 +254,7 @@ export default function QuizRoom({ match }) {
   }, [isCorrect]);
 
   function sendBroadcast(message) {
-    let username = window.localStorage.getItem("userId");
+    let username = userId;
     stompUserClient.current.send(
       "/app/room",
       {},
@@ -266,7 +267,7 @@ export default function QuizRoom({ match }) {
   }
 
   const [Msg, setMsg] = useState({
-    fromLogin: window.localStorage.getItem("nickname"),
+    fromLogin: nickname,
     message: "",
     type: "message",
   });
@@ -277,7 +278,7 @@ export default function QuizRoom({ match }) {
 
   useEffect(() => {
     setMsg({
-      fromLogin: window.localStorage.getItem("nickname"),
+      fromLogin: nickname,
       message: content,
       type: "message",
     });
