@@ -9,7 +9,7 @@ import swal from "sweetalert";
 import GPT from "../assets/images/GPT.png";
 import LargeButton from "../components/buttons/LargeButton";
 import { useNavigate } from "react-router";
-import {GetUserId, GetNickname} from "../recoil/user"
+import { GetUserId, GetNickname } from "../recoil/user";
 
 export default function LectureItem() {
   const navigate = useNavigate();
@@ -57,8 +57,7 @@ export default function LectureItem() {
     const text = window.getSelection().toString().trim();
 
     if (checked) {
-      const selectedText = window.getSelection().toString();
-      if (text) {
+      if (text.length <= 20) {
         setSelectedText(text);
         getWord(text);
 
@@ -77,8 +76,9 @@ export default function LectureItem() {
         }
 
         setTooltipPosition({ top: tooltipTop, left: tooltipLeft });
+      } else {
+        swal("", "너무 긴 단어는 GPT가 설명하기 어려워요! 다시 시도해 주세요", "warning");
       }
-      // console.log("Selected text:", selectedText);
     }
   }
 
@@ -97,7 +97,6 @@ export default function LectureItem() {
     api
       .get(`${baseURL}/word/${t}`)
       .then((res) => {
-        // console.log(res.data);
         setLoading(false);
         setName(res.data.name);
         setShowTooltip(true);
