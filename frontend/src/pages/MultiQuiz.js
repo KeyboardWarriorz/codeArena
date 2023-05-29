@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import axios from "axios";
@@ -405,6 +406,14 @@ const RankBox = styled.div`
 `;
 
 export default function MultiQuiz() {
+  useEffect(()=>{
+    if (!window.localStorage.getItem("access_token")){
+      swal("로그인이 필요한 페이지입니다.").then(() => {
+        window.localStorage.clear();
+        window.location.href = "/login";
+      });
+    }
+  },[])
   const baseURL = process.env.REACT_APP_API_URL;
   let stompUserClient = getStompUserClient();
   let subscription = getSubscription();
@@ -492,6 +501,7 @@ export default function MultiQuiz() {
       })
     );
   }
+  
 
   useEffect(() => {
     setData({

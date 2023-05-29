@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../interceptor";
+import swal from "sweetalert";
 import styled from "styled-components";
 import LectureCard from "../components/organisms/LectureCard";
 import { useNavigate } from "react-router-dom";
@@ -59,7 +60,14 @@ export default function LectureList() {
   const [id, setId] = useState(1);
   const [lectures, setLectures] = useState([]);
   // console.log(lectures);
-
+  useEffect(()=>{
+    if (!window.localStorage.getItem("access_token")){
+      swal("로그인이 필요한 페이지입니다.").then(() => {
+        window.localStorage.clear();
+        window.location.href = "/login";
+      });
+    }
+  },[])
   function setCategory(e) {
     setId(categories.indexOf(e.target.innerText) + 1);
     setSelected(e.target.innerText);
