@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileModal from "../components/modals/ProfileModal";
 import TierModal from "../components/modals/TierModal";
 import swal from "sweetalert";
-import {GetUserId, GetNickname} from "../recoil/user"
+import { GetUserId, GetNickname } from "../recoil/user";
 
 // CSS 코드 아래에 있음
 export default function MyPage() {
