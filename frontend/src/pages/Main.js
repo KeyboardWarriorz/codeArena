@@ -2,15 +2,7 @@ import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 
-// import "swiper/css";
-// import "swiper/swiper.min.css";
-// import "swiper/css/pagination";
-// import "swiper/css/navigation";
-
 import "swiper/swiper-bundle.min.css";
-// import "swiper/swiper.min.css";
-// import "swiper/components/navigation/navigation.min.css";
-// import "swiper/components/pagination/pagination.min.css";
 
 import { Autoplay, Pagination, Navigation } from "swiper";
 
@@ -21,16 +13,11 @@ import banner2 from "../assets/images/banner2.png";
 import banner3 from "../assets/images/banner3.png";
 import banner4 from "../assets/images/banner4.png";
 
-import an1 from "../assets/images/Jieun.svg";
-import an2 from "../assets/images/Seongwhan.svg";
-import an3 from "../assets/images/Eunhyo.svg";
-import an4 from "../assets/images/Junseo.svg";
-import an5 from "../assets/images/Sunyeong.svg";
-
 import bear from "../assets/images/bear.png";
 import rabbit from "../assets/images/rabbit.png";
 import brocolli from "../assets/images/brocolli.png";
 import alpaca from "../assets/images/alpaca.png";
+import duck from "../assets/images/duck.png";
 
 const ImgBanner = styled.img`
   object-fit: cover;
@@ -114,6 +101,7 @@ const Box = styled.a`
   align-items: Center;
   align-center: center;
   cursor: pointer;
+  width: 15%;
 
   p {
     color: #858585;
@@ -208,13 +196,13 @@ export default function Main() {
               <p>자유롭게 얘기하고 질문도 해보자</p>
               <BoxTitle>😍 커뮤니티</BoxTitle>
             </Box>
-            {/* <Box onClick={() => navigate("/multiquiz")}>
+            <Box onClick={() => navigate("/multiquiz")}>
               <LectureBox>
-                <SmallImg src={brocolli} />
+                <SmallImg src={duck} />
               </LectureBox>
               <p>다른 사람들도 이겨봐용</p>
               <BoxTitle>🎮 단체 퀴즈</BoxTitle>
-            </Box> */}
+            </Box>
             <Box onClick={() => navigate(`user/${userId}`)}>
               <LectureBox>
                 <SmallImg src={brocolli} />
