@@ -152,9 +152,11 @@ export default function QuizRoom({ match }) {
             console.log("send", isCorrect.current);
           }, 10000);
         } else if (data.type == "end") {
-          swal("종료");
-          setRoomState(false);
-          setResultData([]);
+          swal({title :"게임이 종료되었습니다." , text : "고생하셨습니다"});
+          setTimeout(() => {            
+            setRoomState(false);
+            setResultData([]);
+          }, 10000);
         } else if (data.type == "result") {
           setResultData(data);
           console.log("result: ", data);
@@ -174,7 +176,7 @@ export default function QuizRoom({ match }) {
       // console.log("cor" + cor);
       // $("#answerList").html("정답입니다\n\n"+description);
     } else {
-      swal({ icon: "error", title: "오답입니당", text: "해설", timer: 3000 });
+      swal({ icon: "error", title: "오답입니당", text: "다시 생각해보세요", timer: 3000 });
       // $("#answerList").html("오답입니다\n\n"+description);
     }
     console.log("isCorrect  " + cor);
@@ -365,7 +367,7 @@ export default function QuizRoom({ match }) {
               </>
             )}
           </Remain>
-          <ExitBtn onClick={leaveRoom}>나가기</ExitBtn>
+          {!roomState && <ExitBtn onClick={leaveRoom}>나가기</ExitBtn>}
         </RoomData>
       </RoomTitle>
       <ContentBox>
@@ -379,20 +381,23 @@ export default function QuizRoom({ match }) {
         )}
         {/* 문제 남았을 때 대기 */}
         {roomState && count === 0 && questionCount != 0 && (
-          <div>
+          <CenterClock>
             <ClockLoader color="#F8A70C" />
-          </div>
+          </CenterClock>
         )}
         {/* 문제 다 풀고 */}
+
         {roomState && count === 0 && questionCount == 0 && (
-          <div>
-            1등은
+          <ResultBox>
+            1등
+            <div>
             {Object.keys(resultData).length
               ? resultData.winner.map((w) => {
                   return <>&nbsp;"{w}"&nbsp;</>;
                 })
               : ""}
-          </div>
+            </div>
+          </ResultBox>
         )}
         {/* 문제를 푸는중 */}
         {roomState && count != 0 && (
@@ -902,6 +907,23 @@ const ExitBtn = styled.button`
   cursor: pointer;
   box-shadow: 3px 2px 5px gray;
 `;
+const ResultBox = styled.div`
+margin-top : 4rem;
+font-size : 20px;
+color: blue;
+text-shadow: 2px 2px 2px gray;
+> div{
+  margin-top : 1rem;
+    font-size: 40px;
+
+  }
+`
+
+const CenterClock = styled.div`
+  margin-top : 4rem;
+width : 100px;
+height : 100px;
+`
 
 const StartBtn = styled.button`
   background-color: transparent;
