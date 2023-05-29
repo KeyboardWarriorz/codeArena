@@ -113,6 +113,14 @@ public class UserServiceImpl implements UserService {
 		userRep.save(user);
     }
 
+	@Override
+	public void addUserPointByNickname(String nickname, Integer point) {
+		User user = userRep.findByNickname(nickname);
+		user.setPoint(user.getPoint()+point);
+		System.out.println(user);
+		userRep.save(user);
+	}
+
 
 	/**
 	 * 비밀번호 체크

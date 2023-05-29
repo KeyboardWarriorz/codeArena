@@ -15,6 +15,8 @@ public interface UserService {
     public void signup(User user);
 
     public void addUserPoint(String user_id, Integer point);
+
+    public void addUserPointByNickname(String nickname, Integer point);
     
     public UserDTO selectUser(String userId);
     
