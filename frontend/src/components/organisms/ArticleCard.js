@@ -74,6 +74,7 @@ const User = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-weight: bold;
 
   #comment {
     display: flex;
@@ -82,6 +83,45 @@ const User = styled.div`
     #cnt {
       margin-left: 5px;
     }
+  }
+
+  #date {
+    color: grey;
+    margin-top: 5px;
+    font-size: 10px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .tier {
+    font-size: 12px;
+    margin-left: 5px;
+  }
+
+  #BRONZE {
+    color: #ad5600;
+  }
+
+  #SILVER {
+    color: #435f7a;
+  }
+
+  #GOLD {
+    color: #ec9a00;
+  }
+
+  #PLATINUM {
+    color: #27e2a4;
+  }
+
+  #DIAMOND {
+    color: #00b4fc;
+  }
+
+  #RUBY {
+    color: #ff0062aa;
   }
 `;
 
@@ -104,7 +144,13 @@ export default function ArticleCard(props) {
         <User>
           <div className="user">
             <p>{props.userId}</p>
-            <p>{props.nickname}</p>
+            <p>
+              {props.nickname}
+              <span className="tier" id={props.tier}>
+                {props.tier}
+              </span>
+            </p>
+            <p id="date">{props.date}</p>
           </div>
           <div id="comment">
             <span className="material-icons" style={{ color: "grey" }}>

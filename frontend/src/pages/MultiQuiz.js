@@ -11,7 +11,7 @@ import {
   getSubscription,
   setSubscription,
 } from "../recoil/stompClient";
-import {GetUserId, GetNickname} from "../recoil/user"
+import { GetUserId, GetNickname } from "../recoil/user";
 
 const Div = styled.div`
   cursor: default;
@@ -419,9 +419,9 @@ export default function MultiQuiz() {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState("ALL");
 
-  console.log(room);
-  console.log(categoryId);
-  console.log(selected);
+  // console.log(room);
+  // console.log(categoryId);
+  // console.log(selected);
 
   function titleChange(e) {
     setTitle(e.target.value);
@@ -461,7 +461,7 @@ export default function MultiQuiz() {
   const [page, setPage] = useState(1);
 
   function fetchAll() {
-    console.log("fetchAll Called");
+    // console.log("fetchAll Called");
     axios
       .get(baseURL + "/game/roomList")
       .then((res) => {
@@ -511,11 +511,11 @@ export default function MultiQuiz() {
     axios
       .post(baseURL + "/game/room", data)
       .then(function (data) {
-        console.log(data);
+        // console.log(data);
         navigate("/multiquiz/" + title);
       })
       .catch(function (jqXHR) {
-        console.log(jqXHR);
+        // console.log(jqXHR);
       });
   }
 
@@ -526,11 +526,11 @@ export default function MultiQuiz() {
       stompUserClient = Stomp.over(socket);
       window.localStorage.setItem("stompUserClient", stompUserClient);
       stompUserClient.connect({}, function (frame) {
-        console.log("connected to: " + frame);
+        // console.log("connected to: " + frame);
         // sendBroadcast(userName + " logined");
         subscription = stompUserClient.subscribe("/topic/room", function (response) {
           let data = JSON.parse(response.body);
-          console.log(data.message);
+          // console.log(data.message);
           fetchAll();
         });
         setStompUserClient(stompUserClient);
