@@ -159,7 +159,14 @@ export default function QuizRoom({ match }) {
             setResultData([]);
           }, 10000);
         } else if (data.type == "result") {
-          setResultData(data);
+          let retData = {}
+          for(let i =0;i<data.userList.length;i++){
+            retData[data.userList[i]]=data.userScore[i]
+            console.log(retData)
+          }
+          retData["winner"]=data.winner
+          console.log(retData)
+          setResultData(retData);
           console.log("result: ", data);
         }
       }
@@ -187,7 +194,7 @@ export default function QuizRoom({ match }) {
       axios
         .post(baseURL + "/game/answer", {
           room_name: roomName.room_id,
-          user_name: GetNickname(),
+          user_name: nickname,
           isCorrect: isCorrect.current,
         })
         .then(function (response) {
@@ -489,7 +496,7 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[0].nickname}</div>
-                  {resultData.userScore ? <div>{resultData.userScore[0]}</div> : <div>0</div>}
+                  {resultData.winner ? <div>{resultData[userList[0].nickname]}</div> : <div>0</div>}
                 </UserName>
               </UDB1>
             )}
@@ -503,7 +510,7 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[1].nickname}</div>
-                  {resultData.userScore ? <div>{resultData.userScore[1]}</div> : <div>0</div>}
+                  {resultData.winner ? <div>{resultData[userList[1].nickname]}</div> : <div>0</div>}
                 </UserName>
               </UDB2>
             )}
@@ -519,7 +526,7 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[2].nickname}</div>
-                  {resultData.userScore ? <div>{resultData.userScore[2]}</div> : <div>0</div>}
+                  {resultData.winner ? <div>{resultData[userList[2].nickname]}</div> : <div>0</div>}
                 </UserName>
               </UDB3>
             )}
@@ -533,7 +540,7 @@ export default function QuizRoom({ match }) {
                 </div>
                 <UserName>
                   <div>{userList[3].nickname}</div>
-                  {resultData.userScore ? <div>{resultData.userScore[4]}</div> : <div>0</div>}
+                  {resultData.winner ? <div>{resultData[userList[3].nickname]}</div> : <div>0</div>}
                 </UserName>
               </UDB4>
             )}
