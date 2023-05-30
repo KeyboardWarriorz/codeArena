@@ -37,10 +37,10 @@ export default function QuizRoom({ match }) {
 
   let roomName = useParams();
   const [userId, setUserId] = useState(GetUserId());
+  const [nickname, setNickname] = useState(GetNickname());
   const [profileImage, setProfileImage] = useState(window.localStorage.getItem("profileImage"));
   const [point, setPoint] = useState(window.localStorage.getItem("point"));
   const [tier, setTier] = useState(window.localStorage.getItem("tier"));
-  const [nickname, setNickname] = useState(GetNickname());
 
   // 인원에 변경이 생기면 서버에 인원 정보 전송
   const [data, setData] = useState({
@@ -109,6 +109,13 @@ export default function QuizRoom({ match }) {
 
   // useEffect 시작
   useEffect(() => {
+    if (!nickname){
+      swal("", "로그인 상태를 확인해주세요!", "error").then(() => {
+        window.localStorage.clear();
+        navigate("/login");
+      });
+      return;
+    }
     axios
       .post(baseURL + "/game/room/join", data)
       .then((res) => {
