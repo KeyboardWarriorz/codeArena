@@ -78,6 +78,7 @@ public class RoomController {
         System.out.printf("leave Room called");
         String roomName = map.get("room_name");
         String userId = map.get("user_id");
+        System.out.println("userId is "+ userId);
         try {
             roomService.leaveRoom(roomName, userId);
         } catch (Exception e) {

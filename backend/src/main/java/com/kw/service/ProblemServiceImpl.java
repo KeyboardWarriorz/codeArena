@@ -166,7 +166,8 @@ public class ProblemServiceImpl implements ProblemService {
 		}
 		Set<Integer> ProblemIndexSet = new HashSet<>();
 		while (ProblemIndexSet.size() < problem_cnt) {
-			ProblemIndexSet.add(new Random().nextInt(size));
+			long seed = System.currentTimeMillis(); // 현재 시간을 시드 값으로 사용
+			ProblemIndexSet.add(new Random(seed).nextInt(size));
 		}
 		List<ProblemDTO> ret = new ArrayList<>();
 		for (Integer idx : ProblemIndexSet) {
