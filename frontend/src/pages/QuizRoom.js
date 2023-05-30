@@ -109,13 +109,14 @@ export default function QuizRoom({ match }) {
 
   // useEffect 시작
   useEffect(() => {
-    if (!nickname){
+    if (!nickname || !stompUserClient.current){
       swal("", "로그인 상태를 확인해주세요!", "error").then(() => {
         window.localStorage.clear();
         navigate("/login");
       });
       return;
     }
+    console.log(nickname, userId)
     axios
       .post(baseURL + "/game/room/join", data)
       .then((res) => {
