@@ -34,6 +34,7 @@ IT's your life 3기를 진행하면서 과목 평가에 어려움을 겪는 동�
 | [신선영](https://github.com/drsuneamer)   | [조성환](https://github.com/Chos1) |     |
 
 <br>
+
 #  🤝 협업툴
 
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/jirasoftware-0052CC?style=for-the-badge&logo=jirasoftware&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
