@@ -1,7 +1,7 @@
-# CodeArena
+# 📚 CodeArena
 
 > 2023 KB IT's Your Life 3기 최종 프로젝트<br>
-> 📚 친절한 프로그래밍 지식 설명과 재미있는 퀴즈 풀이까지, 코딩 교육 웹 플랫폼 codeArena
+> 친절한 프로그래밍 지식 설명과 재미있는 퀴즈 풀이까지, 코딩 교육 웹 플랫폼 codeArena
 <br>
 
 # 📌 Project & Members
@@ -20,7 +20,7 @@ IT's your life 3기를 진행하면서 과목 평가에 어려움을 겪는 동�
 
 - 잘 모를 땐 커뮤니티에서 토론의 장을 열어보자! 
 
-
+<br>
 
 
 
@@ -33,4 +33,13 @@ IT's your life 3기를 진행하면서 과목 평가에 어려움을 겪는 동�
 |          |     |
 | [신선영](https://github.com/drsuneamer)   | [조성환](https://github.com/Chos1) |     |
 
+<br>
+#  🤝 협업툴
 
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/jirasoftware-0052CC?style=for-the-badge&logo=jirasoftware&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
+
+# ⚙️ 기술 스택
+
+### **backend**
+
+<img src="https://img.shields.io/badge/IntellijIDEA-000000?style=for-the-badge&logo=IntelliJIDEA&logoColor=white"> <img src="https://img.shields.io/badge/java 11-0058CC?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/Springboot 2.7.3-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security 2.7.3-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/swagger 2.9.2-85EA2D?style=for-the-badge&logo=swagger&logoColor=white"> <img src="https://img.shields.io/badge/mattermost4j core-0058CC?style=for-the-badge&logo=mattermost&logoColor=white"> <img src="https://img.shields.io/badge/spring restdocs-6DB33F?style=for-the-badge&logoColor=white">  
