@@ -1,8 +1,7 @@
 # CodeArena
 
 > 2023 KB IT's Your Life 3기 최종 프로젝트
-
-### 📚 친절한 프로그래밍 지식 설명과 재미있는 퀴즈 풀이까지, 코딩 교육 웹 플랫폼 codeArena
+> 📚 친절한 프로그래밍 지식 설명과 재미있는 퀴즈 풀이까지, 코딩 교육 웹 플랫폼 codeArena
 
 
 # 📌 Project & Members
