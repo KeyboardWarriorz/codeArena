@@ -66,16 +66,21 @@ IT's your life 3기, 과목 평가 준비에 많은 어려움을 겪는 동기�
 ### 0. 로그인/회원가입
 
 ### 1. 기초 개념 강의
+![강의2](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/e2c9b289-5304-4385-a29b-86760a600a6a)
 
-### 2. 단어 저장
+### 2. 단어 조회 및 저장
+![단어](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/8ef60f92-5378-4241-880e-4f7329f28c5c)
 
 ### 3. 문제 풀이
+![문제](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/c872dde9-712c-4fa1-ace6-ce6c4e149b03)
 
 ### 4. 커뮤니티
+![게시판](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/d3890bf8-0313-49ea-9e8c-7f7c3571dfa5)
 
 ### 5. 단체 퀴즈
 
-### 6. 마이페이지
+### 6. 마이페이지 및 프로필 변경
+![마이_프로필](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/f56865a8-6165-43d1-a3e4-1dc138851b45)
 
 <br>
 
