@@ -31,7 +31,7 @@ IT's your life 3기, 과목 평가 준비에 많은 어려움을 겪는 동기�
 |![JE](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/94a94c2b-9907-4187-9256-42aa94248f2a)|![JS](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/b1a30d3d-bf2f-42ed-b728-458eb297dfff)|![EH](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/6d24a743-b9b2-428c-9293-c94cc89475d9)|![SY](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/e3ae9da6-e08d-4b12-95ef-2be9d29c74f4)|![SH](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/bea8b070-b5f6-4a5e-a3f7-f7b4b4f2969c)| 
 | -------------------------------------------- | ------------------------------------------ | ------------------------------------------------ |  ------------------------------------------ | ------------------------------------------------ |
 | [이지은👑](https://github.com/Jieun714) | [김준서](https://github.com/adoo24) | [서은효](https://github.com/seoeunhyo) | [신선영](https://github.com/drsuneamer) | [조성환](https://github.com/Chos1) |
-| - Word API<br> - 답안 제출 API<br> - 문제 랜덤 전송 API<br> - 도메인 및 ACM 연결 | - 데이터베이스 설계<br> - JWT 토큰 인증 구현<br> - 실시간 게임 서비스 <br> - 프로젝트 배포 | - 프로젝트 기획<br> - 커뮤니티 API<br> - 강의 및 퀴즈 데이터 제작<br> - 발표 자료 제작 | - UI 디자인<br> - 단어장 삭제 API<br> - 프로필 변경 API<br> - 전반적인 프론트엔드 개발<br> | - 유저 API 및 문제 API<br> - 개별 강의 내용 조회 API<br> - 단체퀴즈 프론트엔드 개발<br> - 배너 제작, 영상 제작 | 
+| - Word API<br> - 답안 제출 API<br> - 문제 전송 API<br> - 도메인 및 ACM 연결 | - 데이터베이스 설계<br> - JWT 토큰 인증 구현<br> - 실시간 게임 서비스 <br> - 프로젝트 배포 | - 프로젝트 기획<br> - 커뮤니티 API<br> - 강의 및 퀴즈 데이터 제작<br> - 발표 자료 제작 | - UI 디자인<br> - 단어장 삭제 API<br> - 프로필 변경 API<br> - 전반적인 프론트엔드<br> | - 유저 API 및 문제 API<br> - 강의 내용 조회 API<br> - 단체퀴즈 프론트엔드<br> - 배너 제작, 영상 제작 | 
 
 <br>
 
