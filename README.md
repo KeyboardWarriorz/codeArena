@@ -23,12 +23,12 @@ IT's your life 3기, 과목 평가 준비에 많은 어려움을 겪는 동기�
 <br>
 
 ### 프로젝트 구조
-![프로젝트 구조](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/b1dd5a15-f792-4e40-8816-370c43a5f21a)
+![프로젝트_구조](README.assets/Image/프로젝트구조.png)
 <br>
 
 ### 프로젝트 멤버
 
-|![JE](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/94a94c2b-9907-4187-9256-42aa94248f2a)|![JS](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/b1a30d3d-bf2f-42ed-b728-458eb297dfff)|![EH](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/6d24a743-b9b2-428c-9293-c94cc89475d9)|![SY](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/e3ae9da6-e08d-4b12-95ef-2be9d29c74f4)|![SH](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/bea8b070-b5f6-4a5e-a3f7-f7b4b4f2969c)| 
+|![JE](README.assets/Profile/JE.png)|![JS](README.assets/Profile/JS.png)|![EH](README.assets/Profile/EH.jpeg)|![SY](README.assets/Profile/SY.png)|![SH](README.assets/Profile/SH.jpeg)| 
 | -------------------------------------------- | ------------------------------------------ | ------------------------------------------------ |  ------------------------------------------ | ------------------------------------------------ |
 | [이지은👑](https://github.com/Jieun714) | [김준서](https://github.com/adoo24) | [서은효](https://github.com/seoeunhyo) | [신선영](https://github.com/drsuneamer) | [조성환](https://github.com/Chos1) |
 | - Word API<br> - 답안 제출 API<br> - 문제 전송 API<br> - 도메인 및 ACM 연결 | - 데이터베이스 설계<br> - JWT 토큰 인증 구현<br> - 실시간 게임 서비스 <br> - 프로젝트 배포 | - 프로젝트 기획<br> - 커뮤니티 API<br> - 강의 및 퀴즈 데이터 제작<br> - 발표 자료 제작 | - UI 디자인<br> - 단어장 삭제 API<br> - 프로필 변경 API<br> - 전반적인 프론트엔드<br> | - 유저 API 및 문제 API<br> - 강의 내용 조회 API<br> - 단체퀴즈 프론트엔드<br> - 배너 제작, 영상 제작 | 
@@ -63,34 +63,34 @@ IT's your life 3기, 과목 평가 준비에 많은 어려움을 겪는 동기�
 * codeArena는 로그인 후 기능 사용 가능(회원제)
 * 회원가입 시, 아이디와 닉네임 중복 여부 체크<br>
 
-![로그인_회원가입](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/0b9fcbd7-dd8b-4655-9a01-2d80460f2055)
+![로그인_회원가입](README.assets/Gif/로그인.gif)
 
 
 ### 1. 기초 개념 강의
 * Java, JSP&Servlet, Spring, DataBase, JavaScript, HTML/CSS 개념 강의 제공<br>
 
-![강의2](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/e2c9b289-5304-4385-a29b-86760a600a6a)
+![강의](README.assets/Gif/강의.gif)
 
 
 ### 2. 단어 조회 및 저장
 * '검색모드 on'을 한 후, 단어를 드래그하면 해당 단어에 해당하는 의미 확인 가능
 * '내 단어장에 추가' 버튼 클릭 시, 자신의 단어장에 단어 추가 가능 <br>
 
-![단어](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/8ef60f92-5378-4241-880e-4f7329f28c5c)
+![단어](README.assets/Gif/단어.gif)
 
 
 ### 3. 문제 풀이
 * 카테고리별 O/X, 객관식 퀴즈 제공
 * 퀴즈를 처음 맞출 경우, 포인트 지급<br>
 
-![문제](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/c872dde9-712c-4fa1-ace6-ce6c4e149b03)
+![문제풀이](README.assets/Gif/문제풀이.gif)
 
 
 ### 4. 커뮤니티
 * 자유게시판, 질문게시판, 오류 제보 게시판 총 3개의 게시판
   * 게시물 및 댓글 작성, 삭제 가능 <br>
 
-![게시판](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/d3890bf8-0313-49ea-9e8c-7f7c3571dfa5)
+![게시판](README.assets/Gif/게시판.gif)
 
 
 ### 5. 단체 퀴즈
@@ -107,29 +107,28 @@ IT's your life 3기, 과목 평가 준비에 많은 어려움을 겪는 동기�
 * 자신이 맞은 문제와 틀린 문제를 확인
 * 내 단어장을 통해 기초 개념 강의에서 저장한 단어를 확인 가능<br>
 
-![마이_프로필](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/f56865a8-6165-43d1-a3e4-1dc138851b45)
-
+![마이페이지](README.assets/Gif/마이페이지.gif)
 
 # ⚒️ 주요 기술력 소개
 ### ACM(AWS Certificate Manager)
 * 웹 사이트 보완을 위해 AWS에서 제공하는 ACM을 사용하여, 기존 HTTP 환경에서 HTTPS 환경으로 변환.<br><br>
-![기술력_ACM](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/88d2ca6f-fe5d-4d98-b4c0-4316af789dc5) <br><br><br>
+![기술력_ACM](README.assets/Image/기술력_ACM.png) <br><br><br>
 
 ### JWT(Json Web Token)
 * Client가 Server로 로그인 요청을 보내면 Client에게 JWT 토큰을 발급. <br>
 * 만약 Client가 API를 통해 접근하게 되면 JWT토큰을 함께 전달하며, Server가 토큰을 검증한 후 Client에게 응답을 전송. <br><br>
-![기술력_JWT](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/7598bd86-0f2f-4215-ae57-37e699b1b64e)
+![기술력_JWT](README.assets/Image/기술력_JWT.png)
 <br><br><br>
 
 ### WebSocket
 * 단체 퀴즈 기능에서 실시간 소통을 위해 socket 통신이 사용. <br>
 * 게임방이 추가되거나 유저가 게임방을 나가는 등 방 정보에 변동 사항이 생긴다면, 서버에 전달. 서버가 해당 유저가 퀴즈를 진행할 때 서버에서 퀴즈가 전송되고, 유저는 서버로 퀴즈 정답을 전송. <br><br>
-![기술력_Socket](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/6ccf60a1-2b81-49bb-b714-62544b62a8a7)
+![기술력_Socket](README.assets/Image/기술력_Socket.png)
 <br><br><br>
 
 ### OpenAI - GPT-3.5
 * 유저가 단어를 검색하면 우선 DB로 접근하여 해당 단어가 DB에 있는지 유무를 판단. <br>
 * 만약 DB에 존재한다면, 사용자에게 단어의 의미를 전송. 만약 존재하지 않는다면, ChatGPT에 단어의 의미를 요청. <br><br>
-![기술력_chatGPT](https://github.com/KeyboardWarriorz/codeArena/assets/44528897/a671fadd-0c68-47f5-894a-43095a2ea8f3)
+![기술력_chatGPT](README.assets/Image/기술력_chatGPT.png)
 <br><br><br>
 
